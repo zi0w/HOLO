@@ -1,5 +1,5 @@
+import type { Coordinates } from "@/app/map/_types/coordinates";
 import { useEffect, useState } from "react";
-import type { Coordinates } from "../_types/coordinates";
 
 const useKakaoMap = () => {
   const [currentPosition, setCurrentPosition] = useState<Coordinates | null>(

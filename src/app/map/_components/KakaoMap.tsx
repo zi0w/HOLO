@@ -2,7 +2,7 @@
 
 import useKakaoLoader from "@/app/map/_hooks/useKakaoLoader";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import useKakaoMap from "../_hooks/useKakaoMap";
+import useKakaoMap from "@/app/map/_hooks/useKakaoMap";
 
 const KakaoMap = () => {
   useKakaoLoader();
