@@ -53,6 +53,7 @@ const PostInput = () => {
     setContent("");
     setCategory("청소");
     setImages([]);
+    router.push("/honeytips");
   };
 
   // 이미지 파일 업로드
