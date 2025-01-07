@@ -3,8 +3,8 @@
 import type { RegionData } from "@/app/trash/_types/day";
 import { useQuery } from "@tanstack/react-query";
 
+import { fetchOpenAiAnswer } from "@/app/trash/actions";
 import { useState } from "react";
-import { fetchOpenAiAnswer } from "../actions";
 
 const fetchRegionData = async (): Promise<RegionData[]> => {
   const response = await fetch("data/district.json");
@@ -57,7 +57,9 @@ const WasteDaySelector = () => {
     queryFn: fetchRegionData,
   });
 
-  const handleChangeRegion = (e: React.ChangeEvent<HTMLSelectElement>):void => {
+  const handleChangeRegion = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ): void => {
     setRegionSelected(e.target.value);
     setDistrictSelected("");
   };

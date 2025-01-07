@@ -13,7 +13,8 @@ const FoodWasteCheck = () => {
       </form>
       <div>
         <span>#달걀 껍질</span>
-        <img src="https://via.placeholder.com/220x220" alt="쓰레기사진" />
+        {/* TODO: next/Img 태그쓰기 */}
+        <img src="https://via.placeholder.com/220x220" alt="쓰레기사진" /> 
         <p>
           <span>달걀 껍질</span>은(는) 음식물 쓰레기가{" "}
           <strong className="text-red-500">아닙니다!</strong>
