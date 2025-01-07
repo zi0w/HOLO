@@ -1,9 +1,9 @@
 "use client";
 
+import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { addPost, updateProfileImage } from "../../_utils/post";
 
 const PostInput = () => {
   const [title, setTitle] = useState<string>("");
@@ -22,7 +22,7 @@ const PostInput = () => {
       const imageUrls = await Promise.all(
         images.map(async (image) => {
           if (image) {
-            const publicUrl = await updateProfileImage(image);
+            const publicUrl = await uploadPostImageFile(image);
             return publicUrl;
           }
           return null;
