@@ -3,7 +3,7 @@
 import type { RegionData } from "@/app/trash/_types/day";
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchOpenAiAnswer } from "@/app/trash/actions";
+import { fetchOpenAiDay } from "@/app/trash/actions";
 import { useState } from "react";
 
 const fetchRegionData = async (): Promise<RegionData[]> => {
@@ -20,7 +20,7 @@ const WasteDaySelector = () => {
   const handleFetchWasteDay = async (): Promise<void> => {
     setLoading(true);
     try {
-      const result = await fetchOpenAiAnswer(regionSelected, districtSelected);
+      const result = await fetchOpenAiDay(regionSelected, districtSelected);
       if (result && result.length > 0) {
         setWasteDayAnswer(result);
       }
@@ -118,12 +118,7 @@ const WasteDaySelector = () => {
         </button>
       </div>
       {/* TODO: 로딩 수정 */}
-      {loading && (
-        <div>
-          {regionSelected} {districtSelected}의 쓰레기 배출 요일을
-          확인중입니다...
-        </div>
-      )}
+      {loading && <div>쓰레기 배출 요일을 확인중입니다...</div>}
       <ul>
         {wasteDayAnswer ? (
           wasteDayAnswer.length > 0 ? (
