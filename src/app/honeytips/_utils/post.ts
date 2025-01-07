@@ -6,16 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 const supabase = createClient();
 
-// 유저 아이디 가져오기
-export const getId = async (): Promise<string | null> => {
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user) {
-    console.error("유저 아이디 불러오기 실패!", error);
-    return null;
-  }
-  return data.user.id;
-};
-
 export const fetchPostsData = async () => {
   const { data, error } = await supabase
     .from("posts")

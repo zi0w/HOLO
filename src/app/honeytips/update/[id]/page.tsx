@@ -1,6 +1,6 @@
-import DetailCard from "@/app/honeytips/[id]/_components/DetailCard";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
+import UpdatePostCard from "@/app/honeytips/update/[id]/_components/UpdatePostCard";
 
 type Props = {
   params: {
@@ -8,10 +8,10 @@ type Props = {
   };
 };
 
-const DetailPage = async ({ params }: Props) => {
+const UpdatePostPage = async ({ params }: Props) => {
   const data: Post = await fetchPostDetail(params.id);
 
-  return <DetailCard data={data} />;
+  return <UpdatePostCard data={data} />;
 };
 
-export default DetailPage;
+export default UpdatePostPage;

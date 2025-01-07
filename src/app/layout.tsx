@@ -2,6 +2,9 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import TQProvider from "@/components/providers/TQProvider";
 import type { Metadata } from "next";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import "./globals.css";
 
 export const metadata: Metadata = {

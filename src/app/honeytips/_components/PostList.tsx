@@ -77,45 +77,46 @@ const PostList = () => {
       <div className="grid grid-cols-1 gap-4">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
-            <div
-              key={post.id}
-              className="relative flex items-center justify-between gap-2 rounded-lg bg-white p-6 shadow-lg transition-all hover:scale-105 hover:shadow-2xl"
-            >
-              <div className="flex w-full flex-col">
-                <div className="flex items-center gap-3">
-                  <Image
-                    className="rounded-full bg-gray-500"
-                    src={
-                      post.users?.profile_image_url ||
-                      "https://via.placeholder.com/100x100"
-                    }
-                    alt="프로필 이미지"
-                    width={50}
-                    height={50}
-                  />
-                  <p className="font-medium">{post.users?.nickname}</p>
-                  <p className="text-xs text-gray-500">
-                    {formatDate(post.created_at)}
+            <Link href={`/honeytips/${post.id}`} key={post.id}>
+              <li className="relative flex items-center justify-between gap-2 rounded-lg bg-white p-6 shadow-lg transition-all hover:scale-105 hover:shadow-2xl">
+                <div className="flex w-full flex-col">
+                  <div className="flex items-center gap-3">
+                    <Image
+                      className="rounded-full bg-gray-500"
+                      src={
+                        post.users?.profile_image_url ||
+                        "https://via.placeholder.com/100x100"
+                      }
+                      alt="프로필 이미지"
+                      width={50}
+                      height={50}
+                      priority
+                    />
+                    <p className="font-medium">{post.users?.nickname}</p>
+                    <p className="text-xs text-gray-500">
+                      {formatDate(post.created_at)}
+                    </p>
+                  </div>
+                  <h3 className="mb-2 mt-2 text-xl font-bold text-gray-800">
+                    {post.title}
+                  </h3>
+                  <p className="line-clamp-2 text-sm text-gray-600">
+                    {post.content}
                   </p>
                 </div>
-                <h3 className="mb-2 mt-2 text-xl font-bold text-gray-800">
-                  {post.title}
-                </h3>
-                <p className="line-clamp-2 text-sm text-gray-600">
-                  {post.content}
-                </p>
-              </div>
-              <Image
-                className="aspect-square bg-gray-500 object-cover"
-                src={
-                  post.post_image_url?.[0] ||
-                  "https://via.placeholder.com/120x120"
-                }
-                alt="게시글 이미지"
-                width={120}
-                height={120}
-              />
-            </div>
+                <Image
+                  className="aspect-square bg-gray-500 object-cover"
+                  src={
+                    post.post_image_url?.[0] ||
+                    "https://via.placeholder.com/120x120"
+                  }
+                  alt="게시글 이미지"
+                  width={120}
+                  height={120}
+                  priority
+                />
+              </li>
+            </Link>
           ))
         ) : (
           <p className="col-span-full text-center text-gray-500">
