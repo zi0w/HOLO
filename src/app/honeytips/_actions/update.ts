@@ -1,9 +1,9 @@
 "use server";
 
+import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { createClient } from "@/lib/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import type { Post } from "../_types/honeytips.type";
 
 type updatePostProps = {
   updatedTitle: Post["title"];
