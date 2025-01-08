@@ -1,11 +1,13 @@
-import { Result } from "postcss";
+"use client"
+
 import { useState } from "react";
-import { useFunnel } from "../_hooks/useFunnel";
-import type { Answer } from "../_types/answer";
-import Question1 from "./Question1";
-import Question2 from "./Question2";
-import Question3 from "./Question3";
-import Question4 from "./Question4";
+import { useFunnel } from "@/app/recommend/_hooks/useFunnel";
+import type { Answer } from "@/app/recommend/_types/answer";
+import Question1 from "@/app/recommend/_components/Question1";
+import Question2 from "@/app/recommend/_components/Question2";
+import Question3 from "@/app/recommend/_components/Question3";
+import Question4 from "@/app/recommend/_components/Question4";
+import Result from "@/app/recommend/_components/Result"
 
 const steps = ["question1", "question2", "question3", "question4", "result"];
 
