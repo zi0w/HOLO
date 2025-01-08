@@ -1,4 +1,4 @@
-import PostInput from "./_components/PostInput";
+import PostInput from "@/app/honeytips/post/_components/PostInput";
 
 const PostPage = () => {
   return (
