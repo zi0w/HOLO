@@ -16,10 +16,11 @@ export const getId = async (): Promise<string | null> => {
 };
 
 // 코멘트 가져오기
-export const fetchCommentData = async () => {
+export const fetchCommentData = async (postId: Comment["post_id"]) => {
   const { data, error } = await supabase
     .from("comments")
-    .select("*, users(nickname, profile_img)")
+    .select("*, users(nickname, profile_image_url)")
+    .eq("post_id", postId)
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -30,11 +31,21 @@ export const fetchCommentData = async () => {
 };
 
 // 코멘트 저장
-export const addComment = async (newComment: Comment["comment"]) => {
-  const user_id = await getId();
+export const addComment = async (newComment: {
+  comment: Comment["comment"];
+  postId: Comment["post_id"];
+}) => {
+  // const user_id = await getId();
+  const user_id = "9826a705-38ce-4a07-b0dc-cbfb251355e3"; // 예시 user_id
   const { data, error } = await supabase
     .from("comments")
-    .insert([{ comment: newComment, user_id: user_id! }])
+    .insert([
+      {
+        comment: newComment.comment,
+        post_id: newComment.postId,
+        user_id: user_id,
+      },
+    ])
     .select();
 
   if (error) {
@@ -48,16 +59,19 @@ export const addComment = async (newComment: Comment["comment"]) => {
 type updateCommentProps = {
   editingComment: Comment["comment"];
   editingId: Comment["id"];
+  postId: Comment["post_id"];
 };
 
 export const updateComment = async ({
   editingComment,
   editingId,
+  postId,
 }: updateCommentProps) => {
   const { data, error } = await supabase
     .from("comments")
     .update({ comment: editingComment })
     .eq("id", editingId)
+    .eq("post_id", postId)
     .select();
 
   if (error) {
