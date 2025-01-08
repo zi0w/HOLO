@@ -37,21 +37,21 @@ const updateSession = async (request: NextRequest) => {
 
   // IMPORTANT: DO NOT REMOVE auth.getUser()
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
 
-  if (
-    !user && // 인증되지 않은 사용자
-    !request.nextUrl.pathname.startsWith("/sign-up") && // 현재 URL이 '/sign-up'이 아닐 때
-    // !request.nextUrl.pathname.startsWith("/auth") && // 현재 URL이 '/auth'가 아닐 때
-    !request.nextUrl.pathname.startsWith("/sign-in") // 현재 URL이 '/login'도 아닐 때
-  ) {
-    // 인증되지 않은 사용자이므로 로그인 페이지로 리디렉션
-    const url = request.nextUrl.clone();
-    url.pathname = "/sign-up";
-    return NextResponse.redirect(url);
-  }
+  // if (
+  //   !user && // 인증되지 않은 사용자
+  //   !request.nextUrl.pathname.startsWith("/sign-up") && // 현재 URL이 '/sign-up'이 아닐 때
+  //   // !request.nextUrl.pathname.startsWith("/auth") && // 현재 URL이 '/auth'가 아닐 때
+  //   !request.nextUrl.pathname.startsWith("/sign-in") // 현재 URL이 '/login'도 아닐 때
+  // ) {
+  //   // 인증되지 않은 사용자이므로 로그인 페이지로 리디렉션
+  //   const url = request.nextUrl.clone();
+  //   url.pathname = "/sign-up";
+  //   return NextResponse.redirect(url);
+  // }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
   // If you're creating a new response object with NextResponse.next() make sure to:
