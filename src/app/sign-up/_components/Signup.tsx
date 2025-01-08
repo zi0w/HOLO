@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import { signUp, type SignUpData } from "@/app/sign-up/_utils/auth";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 
 export type FormData = {
@@ -87,10 +87,15 @@ const SignUpForm: React.FC = () => {
       await signUp(signUpData);
 
       Swal.fire("회원가입 성공", "환영합니다!", "success");
-      router.push("/");
+      router.push("sign-in");
     } catch (error) {
       Swal.fire("회원가입 실패", (error as Error).message, "error");
     }
+  };
+
+  // 로그인 페이지로 이동하는 함수
+  const handleGoToLogin = () => {
+    router.push("/sign-in"); // 로그인 페이지 경로로 이동
   };
 
   return (
@@ -167,7 +172,16 @@ const SignUpForm: React.FC = () => {
         className="mt-6 w-full rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
         disabled={Object.values(errors).some((error) => error)}
       >
-        회원가입하기
+        회원가입
+      </button>
+
+      {/* 로그인 버튼 */}
+      <button
+        type="button" // 기본 버튼으로 설정하여 폼 제출 방지
+        onClick={handleGoToLogin}
+        className="mt-4 w-full rounded-md bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+      >
+        로그인
       </button>
     </form>
   );
