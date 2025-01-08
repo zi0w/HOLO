@@ -9,6 +9,11 @@ export type Post = Tables<"posts"> & {
 
 export type User = Tables<"users">;
 
-export type Comment = Tables<"comments">;
+export type Comment = Tables<"comments"> & {
+  users: {
+    nickname: string;
+    profile_image_url: string | null;
+  };
+};
 
 export type Like = Tables<"likes">;

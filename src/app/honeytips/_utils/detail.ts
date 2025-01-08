@@ -11,7 +11,6 @@ export const fetchPostDetail = async (id: Post["id"]) => {
     .eq("id", id)
     .single();
 
-  console.log("data.profile_image_url", data);
   if (error) {
     console.error("포스트 상세 정보 불러오기 실패!");
     throw error;
