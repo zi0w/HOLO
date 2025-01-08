@@ -8,7 +8,10 @@ import { CiSearch } from "react-icons/ci";
 const FoodWasteCheck = () => {
   const [foodWaste, setFoodWaste] = useState<string>("");
   const [submittedFoodWaste, setSubmittedFoodWaste] = useState<string>("");
-  const [wasteFoodAnswer, setWasteFoodAnswer] = useState<string | null>(null);
+  const [isWasteFoodAnswer, setIsWasteFoodAnswer] = useState<string | null>(
+    null,
+  );
+  const [wasteFoodAnswer, setWasteFoodAnswer] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleChangeFoodWaste = (
@@ -22,8 +25,10 @@ const FoodWasteCheck = () => {
     setLoading(true);
     try {
       const answer = await fetchOpenAiFoodWaste(foodWaste);
-      if (answer?.choices[0]?.message?.content) {
-        setWasteFoodAnswer(answer.choices[0].message.content);
+      const content = answer?.choices[0]?.message?.content;
+      if (content) {
+        setIsWasteFoodAnswer(content);
+        setWasteFoodAnswer(JSON.parse(content));
       }
     } catch (error) {
       console.error(error);
@@ -59,10 +64,12 @@ const FoodWasteCheck = () => {
           <CiSearch />
         </button>
       </form>
-      {!wasteFoodAnswer && !loading && <div>확인할 쓰레기를 입력해주세요.</div>}
+      {!isWasteFoodAnswer && !loading && (
+        <div>확인할 쓰레기를 입력해주세요.</div>
+      )}
       {/* TODO: 로딩바꾸기 */}
       {loading && <div>음식물 쓰레기 여부를 확인 중입니다...</div>}
-      {wasteFoodAnswer ? (
+      {isWasteFoodAnswer ? (
         <div>
           <strong>#{submittedFoodWaste}</strong>
           {wasteFoodAnswer ? (
