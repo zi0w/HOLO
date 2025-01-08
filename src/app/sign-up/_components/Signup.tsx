@@ -2,7 +2,6 @@
 import { signUp, type SignUpData } from "@/app/sign-up/_utils/auth";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import Swal from "sweetalert2";
 
 export type FormData = {
   email: string;
@@ -68,11 +67,7 @@ const SignUpForm: React.FC = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      Swal.fire(
-        "입력 오류",
-        "입력한 정보에 오류가 있습니다. 다시 확인해주세요.",
-        "warning",
-      );
+      alert("입력한 정보에 오류가 있습니다. 다시 확인해주세요.");
       return;
     }
 
@@ -86,10 +81,10 @@ const SignUpForm: React.FC = () => {
     try {
       await signUp(signUpData);
 
-      Swal.fire("회원가입 성공", "환영합니다!", "success");
+      alert("회원가입 성공");
       router.push("sign-in");
     } catch (error) {
-      Swal.fire("회원가입 실패", (error as Error).message, "error");
+      alert(error);
     }
   };
 
