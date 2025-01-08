@@ -15,8 +15,10 @@ const updateSession = async (request: NextRequest) => {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => // TODO: options
-            request.cookies.set(name, value),
+          cookiesToSet.forEach(
+            (
+              { name, value }, // TODO: options
+            ) => request.cookies.set(name, value),
           );
           supabaseResponse = NextResponse.next({
             request,
@@ -40,13 +42,14 @@ const updateSession = async (request: NextRequest) => {
   // } = await supabase.auth.getUser();
 
   // if (
-  //   !user &&
-  //   !request.nextUrl.pathname.startsWith("/login") &&
-  //   !request.nextUrl.pathname.startsWith("/auth")
+  //   !user && // 인증되지 않은 사용자
+  //   !request.nextUrl.pathname.startsWith("/sign-up") && // 현재 URL이 '/sign-up'이 아닐 때
+  //   // !request.nextUrl.pathname.startsWith("/auth") && // 현재 URL이 '/auth'가 아닐 때
+  //   !request.nextUrl.pathname.startsWith("/sign-in") // 현재 URL이 '/login'도 아닐 때
   // ) {
-  //   // no user, potentially respond by redirecting the user to the login page
+  //   // 인증되지 않은 사용자이므로 로그인 페이지로 리디렉션
   //   const url = request.nextUrl.clone();
-  //   url.pathname = "/login";
+  //   url.pathname = "/sign-up";
   //   return NextResponse.redirect(url);
   // }
 
