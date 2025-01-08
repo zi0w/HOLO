@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchOpenAiFoodWaste } from "@/app/trash/actions";
+import { fetchOpenAiFoodWaste } from "@/app/trash/_actions/actions";
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
@@ -44,7 +44,7 @@ const FoodWasteCheck = () => {
           id="prog"
           className="border border-yellow-500"
           onChange={handleChangeFoodWaste}
-          placeholder="분류할 쓰레기를 입력해주세요."
+          placeholder="확인할 쓰레기를 입력해주세요."
         />
         <button type="submit">
           <CiSearch />
