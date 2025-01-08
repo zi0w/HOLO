@@ -1,6 +1,7 @@
 "use client";
 
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
+import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -68,6 +69,13 @@ const PostInput = () => {
     }
   };
 
+  // 이미지 삭제
+  const handleImageDelete = (index: number) => {
+    const newImages = [...images];
+    newImages.splice(index, 1);
+    setImages(newImages);
+  };
+
   return (
     <div className="mx-auto max-w-4xl p-4">
       <div className="mb-4">
@@ -111,9 +119,11 @@ const PostInput = () => {
       <div className="mt-6 flex justify-end space-x-4">
         <button
           onClick={handleSubmit}
-          className={`rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 ${
-            isLoading ? "cursor-not-allowed opacity-50" : ""
-          }`}
+          className={clsx(
+            "rounded px-4 py-2 text-white hover:bg-blue-600",
+            "bg-blue-500",
+            { "cursor-not-allowed opacity-50": isLoading },
+          )}
           disabled={isLoading}
         >
           {isLoading ? "저장 중..." : "저장"}
@@ -129,30 +139,40 @@ const PostInput = () => {
 
       <div className="mt-6 flex justify-start space-x-4">
         {[0, 1, 2].map((index) => (
-          <label
-            key={index}
-            htmlFor={`image-upload-${index}`}
-            className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-md border bg-gray-200"
-          >
-            {images[index] ? (
-              <Image
-                src={URL.createObjectURL(images[index])}
-                alt={`Preview ${index}`}
-                width={200}
-                height={200}
-                className="h-full w-full rounded-md object-cover"
+          <div key={index} className="relative">
+            <label
+              htmlFor={`image-upload-${index}`}
+              className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-md border bg-gray-200"
+            >
+              {images[index] ? (
+                <Image
+                  src={URL.createObjectURL(images[index])}
+                  alt={`Preview ${index}`}
+                  width={200}
+                  height={200}
+                  className="h-full w-full rounded-md object-cover"
+                />
+              ) : (
+                <span>+</span>
+              )}
+              <input
+                id={`image-upload-${index}`}
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, index)}
+                className="hidden"
               />
-            ) : (
-              <span>+</span>
+            </label>
+            {images[index] && (
+              <button
+                type="button"
+                onClick={() => handleImageDelete(index)}
+                className="absolute right-0 top-0 bg-gray-100 px-1.5 text-black"
+              >
+                &times;
+              </button>
             )}
-            <input
-              id={`image-upload-${index}`}
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageChange(e, index)}
-              className="hidden"
-            />
-          </label>
+          </div>
         ))}
       </div>
     </div>
