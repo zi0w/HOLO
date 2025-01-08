@@ -18,7 +18,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning={true}>
       <body>
         <Header />
         <TQProvider>
