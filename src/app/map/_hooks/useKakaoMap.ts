@@ -1,3 +1,5 @@
+"use client";
+
 import type { Coordinates } from "@/app/map/_types/coordinates";
 import { useEffect, useState } from "react";
 
@@ -38,33 +40,14 @@ const useKakaoMap = () => {
       }
     };
 
+    // resize 이벤트를 통해 화면 크기가 변경될 때 지도 중심을 currentPosition으로 업데이트
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [currentPosition]);
-
-  const onClickGetCurrentPosition = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-
-          setCurrentPosition({ lat: latitude, lng: longitude });
-          // 지도 중심 업데이트
-          setMapCenter({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error("위치를 가져올 수 없습니다.", error.message);
-        },
-      );
-    } else {
-      alert("Geolocation을 사용할 수 없습니다.");
-    }
-  };
   return {
     mapCenter,
     setMapCenter,
     currentPosition,
-    onClickGetCurrentPosition,
   };
 };
 
