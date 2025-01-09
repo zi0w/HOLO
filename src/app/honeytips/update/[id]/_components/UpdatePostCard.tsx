@@ -166,7 +166,6 @@ const UpdatePostCard = ({ data }: UpdatePostCardProps) => {
                   alt={`Preview ${index}`}
                   width={200}
                   height={200}
-                  priority
                   className="h-full w-full rounded-md object-cover"
                 />
               ) : (
