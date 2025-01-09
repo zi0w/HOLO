@@ -48,7 +48,7 @@ export const fetchOpenAiFoodWaste = async (foodWasteData: string) => {
       messages: [
         {
           role: "user",
-          content: `${foodWasteData}(이)가 음식물 쓰레기이면 "음식물 쓰레기입니다"로, 아니면 "음식물 쓰레기가 아닙니다"로 알려줘`,
+          content: `${foodWasteData}(이)가 음식물 쓰레기이면 true로 음식물 쓰레기가 아니면 false로 불리언값만 줘`,
         },
       ],
     });
