@@ -7,6 +7,8 @@ export type Place = {
   y: string; // 위도
   opening_hours?: string[];
   category_name: string;
+  place_url: string;
+  road_address_name: string;
 };
 
 export type Status = "OK" | "ZERO_RESULT" | "ERROR";

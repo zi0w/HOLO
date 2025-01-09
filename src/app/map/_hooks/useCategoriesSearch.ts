@@ -30,9 +30,7 @@ const useCategoriesSearch = (
       }
       const data = await response.json();
       const result = data.documents[0];
-      console.log(data);
       if (result) {
-        console.log(result);
         setPlaceDetail(result);
       } else {
         alert("장소 정보를 가져오는데 실패했습니다.");
@@ -86,6 +84,8 @@ const useCategoriesSearch = (
     onClickMarker,
     selectedPlace,
     placeDetail,
+    setSelectedPlace,
+    setPlaceDetail,
   };
 };
 export default useCategoriesSearch;
