@@ -1,7 +1,7 @@
 "use server"
 
 import OpenAI from "openai"
-import type { Answer } from "../_types/answer";
+import type { Answer } from "@/app/recommend/_types/answer";
 
 const fetchRecommendation = async (answerData: Answer): Promise<string> => {
     const openai = new OpenAI({apiKey: process.env.OPEN_AI_API_KEY});

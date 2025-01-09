@@ -1,6 +1,7 @@
 "use server";
 
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
+import { getId } from "@/app/honeytips/_utils/auth";
 import { createClient } from "@/lib/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -21,7 +22,13 @@ export const updatePost = async ({
   updatedCategory,
 }: updatePostProps) => {
   const supabase = await createClient();
-  const user_id = "9826a705-38ce-4a07-b0dc-cbfb251355e3";
+  const user_id = await getId();
+
+  if (!user_id) {
+    console.error("유저 아이디를 찾을 수 없습니다.");
+    throw new Error("유저 아이디를 찾을 수 없습니다.");
+  }
+
   await supabase
     .from("posts")
     .update({

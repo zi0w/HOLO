@@ -1,6 +1,8 @@
 "use client";
 
+import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
+import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost } from "@/app/honeytips/_utils/detail";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -19,7 +21,6 @@ type DetailCardProps = {
 const DetailCard = ({ data }: DetailCardProps) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const router = useRouter();
-  dayjs.locale("ko");
 
   const categories = ["청소", "요리", "문화", "기타"];
 
@@ -29,10 +30,11 @@ const DetailCard = ({ data }: DetailCardProps) => {
 
   useEffect(() => {
     const fetchUserId = async () => {
-      // const userId = await getId();
-      const userId = "9826a705-38ce-4a07-b0dc-cbfb251355e3";
+      const userId = await getId();
+
       setCurrentId(userId);
     };
+    dayjs.locale("ko");
     fetchUserId();
   }, []);
 
@@ -57,7 +59,7 @@ const DetailCard = ({ data }: DetailCardProps) => {
           {categories.map((category) => (
             <span
               key={category}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+              className={`rounded px-4 py-2 text-sm font-semibold transition-colors ${
                 data.categories === category
                   ? "bg-blue-500 text-white"
                   : "bg-gray-200 text-gray-700"
@@ -67,10 +69,13 @@ const DetailCard = ({ data }: DetailCardProps) => {
             </span>
           ))}
         </div>
+        <div className="flex items-center justify-between px-2">
+          <h1 className="my-6 text-2xl font-bold">{data.title}</h1>
+          {/* 좋아요 버튼 */}
+          <LikeButton postId={data.id} />
+        </div>
 
-        <h1 className="my-6 text-2xl font-bold">{data.title}</h1>
-
-        <div className="mb-7 flex items-center justify-between">
+        <div className="mb-7 flex items-center justify-between px-2">
           <div className="flex items-center gap-4">
             {data.users?.profile_image_url && (
               <Image
@@ -110,7 +115,7 @@ const DetailCard = ({ data }: DetailCardProps) => {
           ))}
         </Swiper>
 
-        <p className="whitespace-pre-wrap">{data.content}</p>
+        <p className="whitespace-pre-wrap px-2">{data.content}</p>
 
         {/* 현재 사용자 id === 포스트 작성자 id 일 때만 수정/삭제 버튼 보여주기 */}
         {currentId === data.user_id && (

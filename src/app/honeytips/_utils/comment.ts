@@ -1,6 +1,7 @@
 "use client";
 
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
+import { getId } from "@/app/honeytips/_utils/auth";
 import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();
@@ -25,8 +26,13 @@ export const addComment = async (newComment: {
   comment: Comment["comment"];
   postId: Comment["post_id"];
 }) => {
-  // const user_id = await getId();
-  const user_id = "9826a705-38ce-4a07-b0dc-cbfb251355e3"; // 예시 user_id
+  const user_id = await getId();
+
+  if (!user_id) {
+    console.error("유저 아이디를 찾을 수 없습니다.");
+    throw new Error("유저 아이디를 찾을 수 없습니다.");
+  }
+
   const { data, error } = await supabase
     .from("comments")
     .insert([
@@ -83,15 +89,15 @@ export const deleteComment = async (id: Comment["id"]) => {
 };
 
 // 코멘트 개수 세기
-export const countComments = async (id: Comment['post_id']) => {
+export const countComments = async (id: Comment["post_id"]) => {
   const { count, error } = await supabase
     .from("comments")
     .select("*", { count: "exact", head: true })
-    .eq("post_id", id)
+    .eq("post_id", id);
 
-    if (error) {
-      console.error("코멘트 개수 세기 실패!", error);
-      throw error;
-    }
-    return count ?? 0;
+  if (error) {
+    console.error("코멘트 개수 세기 실패!", error);
+    throw error;
+  }
+  return count ?? 0;
 };

@@ -1,7 +1,9 @@
 "use client";
 
+import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { countComments } from "@/app/honeytips/_utils/comment";
+import { countLikes } from "@/app/honeytips/_utils/like";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
 import clsx from "clsx";
 import dayjs from "dayjs";
@@ -9,6 +11,7 @@ import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaRegCommentAlt, FaRegHeart } from "react-icons/fa";
 
@@ -16,12 +19,18 @@ dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
 const PostList = () => {
+  const isAuthenticated = useAuth();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [likesCount, setLikesCount] = useState<{
+    [postId: Post["id"]]: number;
+  }>({});
   const [commentsCount, setCommentsCount] = useState<{
     [postId: Post["id"]]: number;
   }>({});
+
+  const router = useRouter();
 
   // 마운트 시 전체 포스트 불러오기
   useEffect(() => {
@@ -30,13 +39,33 @@ const PostList = () => {
       setPosts(data);
       setFilteredPosts(data);
 
-      // 각 포스트의 댓글 개수 가져오기
-      const counts: { [postId: string]: number } = {};
-      for (const post of data) {
-        counts[post.id] = await countComments(post.id);
-      }
-      setCommentsCount(counts);
+      // 댓글 및 좋아요 개수를 병렬로 불러오기
+      const [commentCounts, likeCounts] = await Promise.all([
+        Promise.all(data.map((post) => countComments(post.id))),
+        Promise.all(data.map((post) => countLikes(post.id))),
+      ]);
+
+      // 각 포스트의 댓글과 좋아요 개수를 매핑
+      const commentCountMap: { [postId: string]: number } = data.reduce(
+        (acc, post, idx) => {
+          acc[post.id] = commentCounts[idx];
+          return acc;
+        },
+        {} as { [postId: string]: number },
+      );
+
+      const likeCountMap: { [postId: string]: number } = data.reduce(
+        (acc, post, idx) => {
+          acc[post.id] = likeCounts[idx];
+          return acc;
+        },
+        {} as { [postId: string]: number },
+      );
+
+      setCommentsCount(commentCountMap);
+      setLikesCount(likeCountMap);
     };
+
     fetchPosts();
   }, []);
 
@@ -62,6 +91,15 @@ const PostList = () => {
     return createdAt.format("YY.MM.DD");
   };
 
+  // 글 작성하기 버튼 클릭 시 로그인 상태 확인
+  const handleGoToPost = () => {
+    if (isAuthenticated) {
+      router.push("/honeytips/post");
+    } else {
+      alert("로그인이 필요합니다.");
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       <div className="mb-6 flex justify-center space-x-4">
@@ -69,7 +107,7 @@ const PostList = () => {
           <button
             key={category}
             className={clsx(
-              "rounded-full px-6 py-2 text-sm font-semibold transition-colors",
+              "rounded px-4 py-2 text-sm font-semibold transition-colors",
               selectedCategory === category
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-blue-300",
@@ -81,18 +119,18 @@ const PostList = () => {
         ))}
       </div>
       <div className="mb-6 flex justify-end">
-        <Link
-          href="/honeytips/post"
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+        <button
+          onClick={handleGoToPost}
+          className="rounded bg-blue-500 px-4 py-2 text-sm text-white hover:bg-blue-700"
         >
           글 작성하기
-        </Link>
+        </button>
       </div>
       <div className="grid grid-cols-1 gap-4">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
             <div key={post.id}>
-              <div className="mb-2 flex items-center justify-between px-1">
+              <div className="mb-1 flex items-center justify-between px-1">
                 <div className="flex items-center gap-3">
                   <Image
                     className="h-10 w-10 rounded-full border-2"
@@ -119,7 +157,7 @@ const PostList = () => {
                   )}
                 >
                   <div className="flex w-full flex-col">
-                    <h3 className="mb-2 text-xl font-bold text-gray-800">
+                    <h3 className="mb-2 font-bold text-gray-800">
                       {post.title}
                     </h3>
                     <p className="line-clamp-2 text-sm text-gray-600">
@@ -127,7 +165,9 @@ const PostList = () => {
                     </p>
                     <div className="mt-4 flex items-center gap-1">
                       <FaRegHeart />
-                      <span className="mr-2 text-xs">0</span>
+                      <span className="mr-2 text-xs">
+                        {likesCount[post.id] || 0}
+                      </span>
                       <FaRegCommentAlt />
                       <span className="text-xs">
                         {commentsCount[post.id] || 0}
@@ -135,7 +175,7 @@ const PostList = () => {
                     </div>
                   </div>
                   <Image
-                    className="aspect-square bg-gray-500 object-cover"
+                    className="aspect-square rounded bg-gray-500 object-cover"
                     src={
                       post.post_image_url?.[0] ||
                       "https://via.placeholder.com/120x120"
