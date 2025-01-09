@@ -2,6 +2,7 @@
 
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { countComments } from "@/app/honeytips/_utils/comment";
+import { countLikes } from "@/app/honeytips/_utils/like";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
 import clsx from "clsx";
 import dayjs from "dayjs";
@@ -19,6 +20,9 @@ const PostList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [likesCount, setLikesCount] = useState<{
+    [postId: Post["id"]]: number;
+  }>({});
   const [commentsCount, setCommentsCount] = useState<{
     [postId: Post["id"]]: number;
   }>({});
@@ -30,13 +34,19 @@ const PostList = () => {
       setPosts(data);
       setFilteredPosts(data);
 
-      // 각 포스트의 댓글 개수 가져오기
-      const counts: { [postId: string]: number } = {};
+      // 각 포스트의 댓글 및 좋아요 개수 가져오기
+      const commentCounts: { [postId: string]: number } = {};
+      const likeCounts: { [postId: string]: number } = {};
+
       for (const post of data) {
-        counts[post.id] = await countComments(post.id);
+        commentCounts[post.id] = await countComments(post.id);
+        likeCounts[post.id] = await countLikes(post.id);
       }
-      setCommentsCount(counts);
+
+      setCommentsCount(commentCounts);
+      setLikesCount(likeCounts);
     };
+
     fetchPosts();
   }, []);
 
@@ -127,7 +137,9 @@ const PostList = () => {
                     </p>
                     <div className="mt-4 flex items-center gap-1">
                       <FaRegHeart />
-                      <span className="mr-2 text-xs">0</span>
+                      <span className="mr-2 text-xs">
+                        {likesCount[post.id] || 0}
+                      </span>
                       <FaRegCommentAlt />
                       <span className="text-xs">
                         {commentsCount[post.id] || 0}

@@ -1,5 +1,6 @@
 "use client";
 
+import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { deletePost } from "@/app/honeytips/_utils/detail";
 import dayjs from "dayjs";
@@ -19,7 +20,6 @@ type DetailCardProps = {
 const DetailCard = ({ data }: DetailCardProps) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const router = useRouter();
-  dayjs.locale("ko");
 
   const categories = ["청소", "요리", "문화", "기타"];
 
@@ -33,6 +33,7 @@ const DetailCard = ({ data }: DetailCardProps) => {
       const userId = "9826a705-38ce-4a07-b0dc-cbfb251355e3";
       setCurrentId(userId);
     };
+    dayjs.locale("ko");
     fetchUserId();
   }, []);
 
@@ -67,8 +68,10 @@ const DetailCard = ({ data }: DetailCardProps) => {
             </span>
           ))}
         </div>
-
-        <h1 className="my-6 text-2xl font-bold">{data.title}</h1>
+        <div className="flex items-center justify-between p-1">
+          <h1 className="my-6 text-2xl font-bold">{data.title}</h1>
+          <LikeButton postId={data.id} />
+        </div>
 
         <div className="mb-7 flex items-center justify-between">
           <div className="flex items-center gap-4">
