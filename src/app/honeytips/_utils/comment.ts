@@ -81,3 +81,17 @@ export const deleteComment = async (id: Comment["id"]) => {
   }
   return data;
 };
+
+// 코멘트 개수 세기
+export const countComments = async (id: Comment['post_id']) => {
+  const { count, error } = await supabase
+    .from("comments")
+    .select("*", { count: "exact", head: true })
+    .eq("post_id", id)
+
+    if (error) {
+      console.error("코멘트 개수 세기 실패!", error);
+      throw error;
+    }
+    return count ?? 0;
+};
