@@ -1,7 +1,7 @@
 "use client";
 import { signUp, type SignUpData } from "@/app/sign-up/_utils/auth";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export type FormData = {
   email: string;
