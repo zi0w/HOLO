@@ -4,18 +4,15 @@ import type { Answer } from "@/app/recommend/_types/answer";
 import clsx from "clsx";
 
 type AnswerListProps = {
-  prevSelectedAnswer: Answer["answer3"];
   selectedAnswer: Answer["answer3"];
   onAnswerSelect: (answer3: Answer["answer3"]) => void;
 };
 
 const answerItems = ["좋아요", "싫어요"];
 const AnswerList3 = ({
-  prevSelectedAnswer,
   selectedAnswer,
   onAnswerSelect,
 }: AnswerListProps) => {
-  const initialSelectedAnswer = prevSelectedAnswer || selectedAnswer;
 
   const handleClick = (answer3: Answer["answer3"]) => {
     onAnswerSelect(answer3);
@@ -28,7 +25,7 @@ const AnswerList3 = ({
           type="button"
           onClick={() => handleClick(item)}
           className={clsx("border", {
-            "bg-blue-500 text-white": initialSelectedAnswer === item,
+            "bg-blue-500 text-white": selectedAnswer === item,
           })}
         >
           {item}
