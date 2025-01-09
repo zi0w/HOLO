@@ -1,5 +1,3 @@
-"use client";
-
 import type { Coordinates } from "@/app/map/_types/coordinates";
 import { useEffect, useState } from "react";
 
@@ -7,11 +5,22 @@ const useKakaoMap = () => {
   const [currentPosition, setCurrentPosition] = useState<Coordinates | null>(
     null,
   );
+  const [geolocationError, setGeolocationError] = useState<string | null>(null);
 
   const [mapCenter, setMapCenter] = useState<Coordinates>({
     lat: 37.56675214138411, // 초기 지도 중심 좌표
     lng: 126.97875415079992,
   });
+
+  const [mapLevel, setMapLevel] = useState(4);
+
+  const onClickPlusMapLevel = () => {
+    setMapLevel((prev) => Math.max(prev - 1, 1));
+  };
+
+  const onClickMinusMapLevel = () => {
+    setMapLevel((prev) => Math.min(prev + 1, 14));
+  };
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -27,7 +36,7 @@ const useKakaoMap = () => {
         },
       );
     } else {
-      alert("Geolocation을 사용할 수 없습니다.");
+      setGeolocationError("Geolocation을 사용할 수 없습니다.");
     }
   }, []);
 
@@ -48,6 +57,10 @@ const useKakaoMap = () => {
     mapCenter,
     setMapCenter,
     currentPosition,
+    geolocationError,
+    mapLevel,
+    onClickPlusMapLevel,
+    onClickMinusMapLevel,
   };
 };
 
