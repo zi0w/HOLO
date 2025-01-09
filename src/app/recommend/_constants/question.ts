@@ -1,4 +1,12 @@
-export const question = [
+import type { Answer } from "@/app/recommend/_types/answer"
+
+type Question = {
+    id: keyof Answer;
+    question: string;
+    answers: string[]
+}
+
+export const questions:Question[] = [
     {
         id: "answer1",
         question: "오늘 기분이 어때요?",

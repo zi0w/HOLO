@@ -1,7 +1,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, type ReactElement, type ReactNode } from "react";
 
-type StepProps = {
+export type StepProps = {
   name: string;
   children: ReactNode;
 };
@@ -27,7 +27,7 @@ export const useFunnel = (initialStep: string) => {
     }
   }, [searchParams]);
 
-  const Step = ({ name, children }: StepProps): ReactNode => {
+  const Step = ({ name, children }: StepProps): ReactElement => {
     return <>{children}</>;
   };
 
@@ -36,6 +36,7 @@ export const useFunnel = (initialStep: string) => {
     const activeStep = steps.find((child) => child.props.name === currentStep);
     return activeStep || null;
   };
+
 
   const updateStep = (step: string): void => {
     setCurrentStep(step);
