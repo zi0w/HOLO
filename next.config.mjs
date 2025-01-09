@@ -4,14 +4,14 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'via.placeholder.com',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "via.placeholder.com",
+        pathname: "/**",
       },
       {
-        protocol: 'https',
-        hostname: 'tjxonwrcuvvfxkfkgadc.supabase.co',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "tjxonwrcuvvfxkfkgadc.supabase.co",
+        pathname: "/**",
       },
     ],
   },
