@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useFunnel } from "@/app/recommend/_hooks/useFunnel";
 import type { Answer } from "@/app/recommend/_types/answer";
 import Result from "@/app/recommend/_components/Result"
-import { questions } from "@/app/recommend/_constants/question";
+import { questions } from "@/app/recommend/_constants/questions";
 import Question from "@/app/recommend/_components/Question";
 
 const steps = [...questions.map((q) =>  q.id), "result"];
