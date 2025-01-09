@@ -26,7 +26,7 @@ const SelectForms = () => {
   };
 
   const handlePrev = (data: Partial<Answer>, prevStep: string) => {
-    setAnswerData((prev) => ({ ...prev, ...data }));
+    // setAnswerData((prev) => ({ ...prev, ...data }));
     prev(prevStep);
   };
 
@@ -34,7 +34,7 @@ const SelectForms = () => {
     <Funnel>
       <Step name={steps[0]}>
         <Question1
-          prevAnswer={answerData.answer1}
+          prevSelectedAnswer={answerData.answer1}
           onNext={(data) => {
             handleNext(data, steps[1]);
           }}
@@ -42,7 +42,7 @@ const SelectForms = () => {
       </Step>
       <Step name={steps[1]}>
         <Question2
-          prevAnswer={answerData.answer2}
+          prevSelectedAnswer={answerData.answer2}
           onNext={(data) => {
             handleNext(data, steps[2]);
           }}
@@ -53,7 +53,7 @@ const SelectForms = () => {
       </Step>
       <Step name={steps[2]}>
         <Question3
-          prevAnswer={answerData.answer3}
+          prevSelectedAnswer={answerData.answer3}
           onNext={(data) => {
             handleNext(data, steps[3]);
           }}
@@ -64,7 +64,7 @@ const SelectForms = () => {
       </Step>
       <Step name={steps[3]}>
         <Question4
-          prevAnswer={answerData.answer4}
+          prevSelectedAnswer={answerData.answer4}
           onNext={(data) => {
             handleNext(data, steps[4]);
           }}
@@ -74,7 +74,7 @@ const SelectForms = () => {
         />
       </Step>
       <Step name={steps[4]}>
-        <Result />
+        <Result answerData={answerData} />
       </Step>
     </Funnel>
   );

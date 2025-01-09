@@ -1,25 +1,29 @@
-import { useState } from 'react'
-import type { Answer } from '@/app/recommend/_types/answer';
-import AnswerList from '@/app/recommend/_components/AnswerList';
+import type { Answer } from "@/app/recommend/_types/answer";
+import { useState } from "react";
+import Layout from "@/app/recommend/_layout/Layout";
+import AnswerList1 from "@/app/recommend/_components/AnswerList1";
 
 type QuestionProps = {
-    prevAnswer: string;
-    onNext: (data: Pick<Answer, "answer1">) => void;
-}
+  prevSelectedAnswer: string;
+  onNext: (data: Pick<Answer, "answer1">) => void;
+};
 
-const Question1 = ({prevAnswer, onNext}: QuestionProps) => {
-    const [answer, setAnswer] = useState<Answer["answer1"]>(prevAnswer)
+const Question1 = ({ prevSelectedAnswer, onNext }: QuestionProps) => {
+  const [selectedAnswer, setSelectedAnswer] =
+    useState<Answer["answer1"]>(prevSelectedAnswer);
 
-    const handleNext = () => {
-        onNext({answer1})
-    }
+  const handleNext = () => {
+    onNext({ answer1: selectedAnswer });
+  };
   return (
-    <div>
-      Question1
-      <AnswerList answer={answer} onAnswerSelect={setAnswer}/>
-      <Button
-    </div>
-  )
-}
+    <Layout question="오늘 기분이 어때요?" handleClick={handleNext}>
+      <AnswerList1
+        prevSelectedAnswer={prevSelectedAnswer}
+        selectedAnswer={selectedAnswer}
+        onAnswerSelect={setSelectedAnswer}
+      />
+    </Layout>
+  );
+};
 
-export default Question1
+export default Question1;
