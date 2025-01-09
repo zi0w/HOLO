@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  useDeleteComment,
-  useUpdateComment,
+  useDeleteCommentMutation,
+  useUpdateCommentMutation,
 } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
-import useCommentData from "@/app/honeytips/[id]/_hooks/useCommentQuery";
+import { useCommentDataQuery } from "@/app/honeytips/[id]/_hooks/useCommentQuery";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -26,9 +26,9 @@ const CommentList = ({ data }: CommentListProps) => {
 
   const postId = data.id;
 
-  const { data: comments, isError, isPending } = useCommentData(postId);
-  const updateMutation = useUpdateComment();
-  const deleteMutation = useDeleteComment();
+  const { data: comments, isError, isPending } = useCommentDataQuery(postId);
+  const updateMutation = useUpdateCommentMutation();
+  const deleteMutation = useDeleteCommentMutation();
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -74,7 +74,7 @@ const CommentList = ({ data }: CommentListProps) => {
   return (
     <div className="mx-auto mt-6 flex w-[380px] flex-col items-center justify-center gap-4 rounded bg-gray-100 p-4">
       {comments?.length === 0 ? (
-        <p className="text-gray-400 text-sm">입력된 댓글이 없습니다.</p>
+        <p className="text-sm text-gray-400">입력된 댓글이 없습니다.</p>
       ) : (
         comments?.map((comment) => (
           <div

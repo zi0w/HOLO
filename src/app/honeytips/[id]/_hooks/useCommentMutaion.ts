@@ -35,7 +35,7 @@ type MutationVariable = {
 };
 type ContextVariable = { previousComments: Comment[] | undefined };
 
-export const useUpdateComment = () => {
+export const useUpdateCommentMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<unknown, Error, MutationVariable, ContextVariable>({
     mutationFn: ({ editingComment, editingId, postId }) =>
@@ -80,7 +80,7 @@ export const useUpdateComment = () => {
 };
 
 // 코멘트 삭제
-export const useDeleteComment = () => {
+export const useDeleteCommentMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<unknown, Error, Comment["id"]>({
     mutationFn: deleteComment,
