@@ -31,7 +31,7 @@ const CommentForm = ({ data }: CommentFormProps) => {
       className="mx-auto mt-4 flex w-[380px] items-center justify-center rounded bg-gray-100 p-4"
     >
       <input
-        className="mr-4 flex-grow rounded px-2 py-1"
+        className="mr-4 flex-grow rounded px-2 py-1 text-sm"
         type="text"
         placeholder="댓글을 입력해주세요."
         ref={inputRef}

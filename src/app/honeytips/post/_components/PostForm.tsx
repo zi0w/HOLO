@@ -4,12 +4,12 @@ import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-const PostInput = () => {
-  const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>("");
-  const [category, setCategory] = useState<string>("청소");
+const PostForm = () => {
+  const titleRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const categoryRef = useRef<HTMLSelectElement>(null);
   const [images, setImages] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -19,6 +19,10 @@ const PostInput = () => {
     setIsLoading(true);
 
     try {
+      const title = titleRef.current?.value || "";
+      const content = contentRef.current?.value || "";
+      const category = categoryRef.current?.value || "청소";
+
       // 모든 이미지 업로드 후 URL 배열 생성
       const imageUrls = await Promise.all(
         images.map(async (image) => {
@@ -50,9 +54,9 @@ const PostInput = () => {
 
   // 취소 시 입력값 초기화
   const handleCancel = () => {
-    setTitle("");
-    setContent("");
-    setCategory("청소");
+    if (titleRef.current) titleRef.current.value = "";
+    if (contentRef.current) contentRef.current.value = "";
+    if (categoryRef.current) categoryRef.current.value = "청소";
     setImages([]);
     router.push("/honeytips");
   };
@@ -77,12 +81,12 @@ const PostInput = () => {
   };
 
   return (
-    <div className="mx-auto max-w-4xl p-4">
+    <form className="mx-auto max-w-4xl p-4">
       <div className="mb-4">
         <label className="mb-2 block text-lg font-semibold">카테고리</label>
         <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          ref={categoryRef}
+          defaultValue="청소"
           className="w-full rounded-md border p-2"
         >
           <option value="청소">청소</option>
@@ -95,21 +99,19 @@ const PostInput = () => {
       <div className="mb-4">
         <label className="mb-2 block text-lg font-semibold">제목</label>
         <input
+          ref={titleRef}
           type="text"
-          value={title}
           placeholder="제목을 입력해주세요."
-          onChange={(e) => setTitle(e.target.value)}
           className="w-full rounded-md border p-2"
           disabled={isLoading}
         />
       </div>
 
       <div className="mb-4">
-        <label className="mb-2 block text-lg font-semibold">내용</label>
+        <label className="mb-2 block p-2 text-lg font-semibold">내용</label>
         <textarea
-          value={content}
+          ref={contentRef}
           placeholder="내용을 입력해주세요."
-          onChange={(e) => setContent(e.target.value)}
           className="w-full rounded-md border p-2"
           rows={10}
           disabled={isLoading}
@@ -118,6 +120,7 @@ const PostInput = () => {
 
       <div className="mt-6 flex justify-end space-x-4">
         <button
+          type="button"
           onClick={handleSubmit}
           className={clsx(
             "rounded px-4 py-2 text-white hover:bg-blue-600",
@@ -129,6 +132,7 @@ const PostInput = () => {
           {isLoading ? "저장 중..." : "저장"}
         </button>
         <button
+          type="button"
           onClick={handleCancel}
           className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
           disabled={isLoading}
@@ -175,8 +179,8 @@ const PostInput = () => {
           </div>
         ))}
       </div>
-    </div>
+    </form>
   );
 };
 
-export default PostInput;
+export default PostForm;

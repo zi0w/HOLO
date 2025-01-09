@@ -82,15 +82,14 @@ const PostList = () => {
                 <div className="flex w-full flex-col">
                   <div className="flex items-center gap-3">
                     <Image
-                      className="rounded-full bg-gray-500"
+                      className="h-12 w-12 rounded-full border-2"
                       src={
                         post.users?.profile_image_url ||
                         "https://via.placeholder.com/100x100"
                       }
                       alt="프로필 이미지"
-                      width={50}
-                      height={50}
-                      priority
+                      width={100}
+                      height={100}
                     />
                     <p className="font-medium">{post.users?.nickname}</p>
                     <p className="text-xs text-gray-500">
@@ -113,7 +112,6 @@ const PostList = () => {
                   alt="게시글 이미지"
                   width={120}
                   height={120}
-                  priority
                 />
               </li>
             </Link>
