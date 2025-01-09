@@ -7,14 +7,17 @@ import "dayjs/locale/ko";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+// import { getId } from "@/app/honeytips/_utils/auth";
 
 type DetailCardProps = {
   data: Post;
 };
 
 const DetailCard = ({ data }: DetailCardProps) => {
+  const [currentId, setCurrentId] = useState<string | null>(null);
   const router = useRouter();
   dayjs.locale("ko");
 
@@ -24,6 +27,15 @@ const DetailCard = ({ data }: DetailCardProps) => {
     return dayjs(date).format("YYYY년 MM월 DD일 HH:mm:ss");
   };
 
+  useEffect(() => {
+    const fetchUserId = async () => {
+      // const userId = await getId();
+      const userId = "9826a705-38ce-4a07-b0dc-cbfb251355e3";
+      setCurrentId(userId);
+    };
+    fetchUserId();
+  }, []);
+
   const handleDeletePost = async (postId: Post["id"]) => {
     const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
     if (!isConfirmed) return;
@@ -31,7 +43,7 @@ const DetailCard = ({ data }: DetailCardProps) => {
     try {
       await deletePost(postId);
       alert("게시물이 삭제되었습니다.");
-      router.push("/honeytips"); // 삭제 후 메인 페이지로 리디렉션
+      router.push("/honeytips");
     } catch (error) {
       alert("게시물 삭제 중 문제가 발생했습니다.");
       console.error("삭제 실패:", error);
@@ -64,10 +76,9 @@ const DetailCard = ({ data }: DetailCardProps) => {
               <Image
                 src={data.users.profile_image_url}
                 alt={`${data.users.nickname}의 프로필 이미지`}
-                width={50}
-                height={50}
-                className="rounded-full"
-                priority
+                width={100}
+                height={100}
+                className="h-14 w-14 rounded-full border-2"
               />
             )}
             <p>{data.users?.nickname}</p>
@@ -94,28 +105,31 @@ const DetailCard = ({ data }: DetailCardProps) => {
                 width={400}
                 height={400}
                 className="rounded-lg object-contain"
-                priority
               />
             </SwiperSlide>
           ))}
         </Swiper>
 
         <p className="whitespace-pre-wrap">{data.content}</p>
-        <div className="mt-6 flex justify-center gap-4">
-          <Link
-            href={`/honeytips/update/${data.id}`}
-            className="rounded-md bg-blue-500 px-3 py-1.5 text-white transition-colors hover:bg-blue-600"
-          >
-            수정
-          </Link>
-          <button
-            type="button"
-            onClick={() => handleDeletePost(data.id)}
-            className="rounded-md bg-red-500 px-3 py-1.5 text-white transition-colors hover:bg-red-600"
-          >
-            삭제
-          </button>
-        </div>
+
+        {/* 현재 사용자 id === 포스트 작성자 id 일 때만 수정/삭제 버튼 보여주기 */}
+        {currentId === data.user_id && (
+          <div className="mt-6 flex justify-center gap-4">
+            <Link
+              href={`/honeytips/update/${data.id}`}
+              className="rounded-md bg-blue-500 px-3 py-1.5 text-white transition-colors hover:bg-blue-600"
+            >
+              수정
+            </Link>
+            <button
+              type="button"
+              onClick={() => handleDeletePost(data.id)}
+              className="rounded-md bg-red-500 px-3 py-1.5 text-white transition-colors hover:bg-red-600"
+            >
+              삭제
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

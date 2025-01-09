@@ -3,7 +3,7 @@
 import type { RegionData, WasteDayAnswerData } from "@/app/trash/_types/day";
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchOpenAiDay } from "@/app/trash/actions";
+import { fetchOpenAiDay } from "@/app/trash/_actions/actions";
 import { clsx } from "clsx";
 import { useState } from "react";
 

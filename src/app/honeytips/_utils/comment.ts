@@ -5,16 +5,6 @@ import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();
 
-// user Id 가져오기
-export const getId = async (): Promise<string | null> => {
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user) {
-    console.error("유저 아이디 불러오기 실패!", error);
-    return null;
-  }
-  return data.user.id;
-};
-
 // 코멘트 가져오기
 export const fetchCommentData = async (postId: Comment["post_id"]) => {
   const { data, error } = await supabase
@@ -90,4 +80,18 @@ export const deleteComment = async (id: Comment["id"]) => {
     throw error;
   }
   return data;
+};
+
+// 코멘트 개수 세기
+export const countComments = async (id: Comment['post_id']) => {
+  const { count, error } = await supabase
+    .from("comments")
+    .select("*", { count: "exact", head: true })
+    .eq("post_id", id)
+
+    if (error) {
+      console.error("코멘트 개수 세기 실패!", error);
+      throw error;
+    }
+    return count ?? 0;
 };
