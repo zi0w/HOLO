@@ -3,15 +3,31 @@
 import { useLikeMutation } from "@/app/honeytips/[id]/_hooks/useLikeMutation";
 import { useLikeDataQuery } from "@/app/honeytips/[id]/_hooks/useLikeQuery";
 import type { Like } from "@/app/honeytips/_types/honeytips.type";
+import { getId } from "@/app/honeytips/_utils/auth";
+import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const LikeButton = ({ postId }: { postId: Like["post_id"] }) => {
+  const [userId, setUserId] = useState<string | null>(null);
   const { data, isError, isPending } = useLikeDataQuery(postId);
   const likeMutation = useLikeMutation(postId);
-  // const user_id = getId();
-  const userId = "9826a705-38ce-4a07-b0dc-cbfb251355e3";
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const id = await getId();
+      setUserId(id);
+    };
+    fetchUserId();
+  }, []);
+
+  console.log('userId', userId)
 
   const handleLikeBtn = () => {
+    if (!userId) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
     if (data!.length > 0) {
       const isConfirmed = window.confirm("정말 취소하시겠습니까?");
       if (!isConfirmed) return;

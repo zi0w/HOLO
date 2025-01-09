@@ -6,6 +6,7 @@ import {
 } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import { useCommentDataQuery } from "@/app/honeytips/[id]/_hooks/useCommentQuery";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
+import { getId } from "@/app/honeytips/_utils/auth";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -32,8 +33,8 @@ const CommentList = ({ data }: CommentListProps) => {
 
   useEffect(() => {
     const fetchUserId = async () => {
-      // const userId = await getId();
-      const userId = "9826a705-38ce-4a07-b0dc-cbfb251355e3";
+      const userId = await getId();
+
       setCurrentId(userId);
     };
     fetchUserId();

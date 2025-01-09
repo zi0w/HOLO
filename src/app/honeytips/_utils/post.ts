@@ -1,6 +1,7 @@
 "use client";
 
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
+import { getId } from "@/app/honeytips/_utils/auth";
 import { createClient } from "@/lib/utils/supabase/client";
 import { v4 as uuidv4 } from "uuid";
 
@@ -49,7 +50,13 @@ export const addPost = async ({
   newPostImageUrl,
   newCategory,
 }: addPostProps) => {
-  const user_id = "9826a705-38ce-4a07-b0dc-cbfb251355e3";
+  const user_id = await getId();
+
+  if (!user_id) {
+    console.error("유저 아이디를 찾을 수 없습니다.");
+    throw new Error("유저 아이디를 찾을 수 없습니다.");
+  }
+
   const { data, error } = await supabase
     .from("posts")
     .insert([
