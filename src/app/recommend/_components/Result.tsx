@@ -1,6 +1,6 @@
 import type { Answer } from "@/app/recommend/_types/answer";
 import { useEffect, useState } from "react";
-import fetchRecommendation from "../_actions/\bfetchRecommendation";
+import fetchRecommendation from "@/app/recommend/_actions/fetchRecommendation";
 
 type ResultProps = {
   answerData: Answer;
