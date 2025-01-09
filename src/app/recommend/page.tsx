@@ -1,3 +1,4 @@
+import Link from "next/link";
 import OpenAI from "openai";
 
 const RecommendPage = () => {
@@ -23,7 +24,9 @@ const RecommendPage = () => {
         </div>
       </div>
       <div className="flex flex-col gap-10 mt-10">
+        <Link href="recommend/menu">
         <button className="border p-2">오늘의 메뉴 추천</button>
+        </Link>
         <button className="border p-2">오늘의 운서</button>
         <button className="border p-2">오늘의 할일 추천</button>
       </div>
