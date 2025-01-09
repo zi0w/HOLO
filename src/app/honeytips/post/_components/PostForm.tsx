@@ -16,11 +16,17 @@ const PostForm = () => {
   const router = useRouter();
 
   const handleSubmit = async () => {
+    const title = titleRef.current?.value.trim() || "";
+    const content = contentRef.current?.value.trim() || "";
+
+    if (!title || !content) {
+      alert("제목과 내용을 모두 입력해주세요.");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      const title = titleRef.current?.value || "";
-      const content = contentRef.current?.value || "";
       const category = categoryRef.current?.value || "청소";
 
       // 모든 이미지 업로드 후 URL 배열 생성

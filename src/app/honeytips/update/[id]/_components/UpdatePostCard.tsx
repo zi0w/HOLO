@@ -33,6 +33,13 @@ const UpdatePostCard = ({ data }: UpdatePostCardProps) => {
   const handleSubmit = async () => {
     setIsLoading(true);
 
+    // 제목과 내용이 비어있는지 확인
+    if (!title.trim() || !content.trim()) {
+      alert("제목과 내용을 모두 입력해주세요.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const uploadedImageUrls = await Promise.all(
         images.map(async (image) => {
@@ -57,6 +64,7 @@ const UpdatePostCard = ({ data }: UpdatePostCardProps) => {
         updatedContent: content,
         updatedCategory: category,
         updatedPostImageUrl: imageUrlsToSave,
+        userId: data.user_id,
       });
     } catch (error) {
       console.error("게시물 수정 중 오류 발생:", error);
