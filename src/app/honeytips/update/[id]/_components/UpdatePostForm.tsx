@@ -12,7 +12,7 @@ type UpdatePostCardProps = {
   data: Post;
 };
 
-const UpdatePostCard = ({ data }: UpdatePostCardProps) => {
+const UpdatePostForm = ({ data }: UpdatePostCardProps) => {
   const [title, setTitle] = useState<string>(data.title);
   const [content, setContent] = useState<string>(data.content);
   const [category, setCategory] = useState<string>(data.categories);
@@ -203,4 +203,4 @@ const UpdatePostCard = ({ data }: UpdatePostCardProps) => {
   );
 };
 
-export default UpdatePostCard;
+export default UpdatePostForm;

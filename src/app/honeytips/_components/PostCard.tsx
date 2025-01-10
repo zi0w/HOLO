@@ -37,7 +37,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
       <div className="mb-1 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
           <Image
-            className="h-10 w-10 rounded-full border-2"
+            className="h-10 w-10 rounded-full bg-white border-2"
             src={
               post.users?.profile_image_url ||
               "https://via.placeholder.com/100x100"
@@ -69,7 +69,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
             </div>
           </div>
           <Image
-            className="aspect-square rounded bg-gray-500 object-cover"
+            className="aspect-square rounded bg-white object-cover"
             src={
               post.post_image_url?.[0] || "https://via.placeholder.com/120x120"
             }
