@@ -19,8 +19,6 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ errorMsg: error.message }, { status: 401 }); // 인증 오류 시 401 상태 코드 반환
     }
 
-    console.log("인증 성공 데이터:", data);
-
     // 세션 정보와 사용자 정보를 포함하여 응답
     return NextResponse.json(
       {
@@ -38,4 +36,14 @@ export const POST = async (request: Request) => {
     );
   }
 };
+
+
+
+
+
+
+
+
+
+
 
