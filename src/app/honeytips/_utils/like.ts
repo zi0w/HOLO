@@ -19,7 +19,7 @@ export const fetchLikesData = async (postId: Like["post_id"]) => {
     throw error;
   }
 
-  return data;
+  return data || [];
 };
 
 type deleteLikeProps = {
