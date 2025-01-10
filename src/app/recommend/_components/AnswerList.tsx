@@ -1,29 +1,26 @@
 "use client";
 
-import type { Answer } from "@/app/recommend/_types/answer";
 import clsx from "clsx";
 
-type AnswerListProps = {
-  selectedAnswer: Answer["answer3"];
-  onAnswerSelect: (answer3: Answer["answer3"]) => void;
+type AnswerListProps<T> = {
+  selectedAnswer: T;
+  onAnswerSelect: (answer: T) => void;
+  answerItems: T[];
 };
 
-const answerItems = ["좋아요", "싫어요"];
-const AnswerList3 = ({
+const AnswerList = <T extends string>({
   selectedAnswer,
   onAnswerSelect,
-}: AnswerListProps) => {
+  answerItems
+}: AnswerListProps<T>) => {
 
-  const handleClick = (answer3: Answer["answer3"]) => {
-    onAnswerSelect(answer3);
-  };
   return (
     <div className="flex w-full flex-col justify-center gap-5">
       {answerItems.map((item) => (
         <button
           key={item}
           type="button"
-          onClick={() => handleClick(item)}
+          onClick={() => onAnswerSelect(item)}
           className={clsx("border", {
             "bg-blue-500 text-white": selectedAnswer === item,
           })}
@@ -35,5 +32,4 @@ const AnswerList3 = ({
   );
 };
 
-export default AnswerList3;
-
+export default AnswerList;
