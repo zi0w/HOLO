@@ -74,7 +74,5 @@ export const addPost = async ({
     console.error("게시물 저장 실패!");
     throw error;
   }
-
-  console.log("게시물 저장 성공:", data);
   return data;
 };

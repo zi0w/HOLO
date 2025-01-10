@@ -1,9 +1,14 @@
+"use client"
+
 import Logo from "@/assets/images/common/logo.svg";
 import MypageIcon from "@/assets/images/common/mypage-icon.svg";
+import { createClient } from "@/lib/utils/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
+  const supabase = createClient();
+
   return (
     <header className="h-[60px] lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-[240px] lg:bg-gray-200">
       <div className="lg:flex lg:h-full lg:flex-col lg:p-5">
@@ -31,7 +36,9 @@ const Header = () => {
           <Link href="/sign-in">로그인</Link>
           {/* 로그인시에만 보임 */}
           <Link href="/mypage">마이 페이지</Link>
-          <button type="button">로그아웃</button>
+          <button type="button" onClick={() => supabase.auth.signOut()}>
+            로그아웃
+          </button>
         </div>
       </div>
     </header>

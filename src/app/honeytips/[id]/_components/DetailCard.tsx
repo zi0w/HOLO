@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import { getId } from "@/app/honeytips/_utils/auth";
 
 type DetailCardProps = {
   data: Post;
@@ -70,13 +69,13 @@ const DetailCard = ({ data }: DetailCardProps) => {
           ))}
         </div>
         <div className="flex items-center justify-between px-2">
-          <h1 className="my-6 text-2xl font-bold">{data.title}</h1>
+          <h1 className="my-6 text-xl font-bold">{data.title}</h1>
           {/* 좋아요 버튼 */}
-          <LikeButton postId={data.id} />
+          {currentId && <LikeButton postId={data.id} />}
         </div>
 
         <div className="mb-7 flex items-center justify-between px-2">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             {data.users?.profile_image_url && (
               <Image
                 src={data.users.profile_image_url}
