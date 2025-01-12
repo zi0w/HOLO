@@ -1,6 +1,6 @@
 import type { RegionData } from "@/app/trash-guide/_types/day";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import { type ChangeEvent } from "react";
 
 type RegionSelectProps = {
   selectedRegion: string;
@@ -12,10 +12,7 @@ const fetchRegionData = async (): Promise<RegionData[]> => {
   return response.json();
 };
 
-const RegionSelect: React.FC<RegionSelectProps> = ({
-  selectedRegion,
-  onChange,
-}) => {
+const RegionSelect = ({ selectedRegion, onChange }: RegionSelectProps) => {
   const {
     data: regionData,
     isPending,
@@ -25,7 +22,7 @@ const RegionSelect: React.FC<RegionSelectProps> = ({
     queryFn: fetchRegionData,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selected = e.target.value;
     const districts =
       regionData?.find((region) => Object.keys(region)[0] === selected)?.[
