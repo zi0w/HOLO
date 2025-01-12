@@ -36,7 +36,7 @@ export const fetchOpenAiDay = async (
     return res;
   } catch (error) {
     console.error(error);
-    throw new Error("OpenAI 오류인데 여긴 쓰레기 배출 알려주는 오류임!");
+    throw new Error("쓰레기 배출을 알려주는 OpenAI 오류가 발생했습니다.");
   }
 };
 
@@ -55,8 +55,6 @@ export const fetchOpenAiFoodWaste = async (foodWasteData: string) => {
     return completion;
   } catch (error) {
     console.error(error);
-    throw new Error(
-      "OpenAI 오류인데 여긴 음식물쓰레기 여부를 알려주는 오류임!",
-    );
+    throw new Error("음식물쓰레기 여부를 알려주는 OpenAI 오류가 발생했습니다.");
   }
 };

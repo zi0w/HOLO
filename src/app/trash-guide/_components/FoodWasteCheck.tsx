@@ -1,8 +1,8 @@
 "use client";
 
-import { fetchOpenAiFoodWaste } from "@/app/trash/_actions/actions";
+import { fetchOpenAiFoodWaste } from "@/app/trash-guide/_actions/actions";
 import clsx from "clsx";
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import { CiSearch } from "react-icons/ci";
 
 const FoodWasteCheck = () => {
@@ -14,9 +14,7 @@ const FoodWasteCheck = () => {
   const [wasteFoodAnswer, setWasteFoodAnswer] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleChangeFoodWaste = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
+  const handleChangeFoodWaste = (e: ChangeEvent<HTMLInputElement>): void => {
     setFoodWaste(e.target.value);
   };
 
@@ -32,6 +30,7 @@ const FoodWasteCheck = () => {
       }
     } catch (error) {
       console.error(error);
+      throw Error("음식물쓰레기 여부를 알려주는 OpenAI 오류가 발생했습니다.");
     } finally {
       setLoading(false);
       setSubmittedFoodWaste(foodWaste);
