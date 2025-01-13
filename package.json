@@ -25,12 +25,14 @@
     "relative-time": "^1.0.0",
     "swiper": "^11.2.0",
     "uuid": "^11.0.4",
+    "xml2js": "^0.6.2",
     "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/xml2js": "^0.4.14",
     "eslint": "^8",
     "eslint-config-next": "14.2.20",
     "kakao.maps.d.ts": "^0.1.40",

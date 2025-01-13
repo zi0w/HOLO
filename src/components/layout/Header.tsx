@@ -28,7 +28,7 @@ const Header = () => {
         <nav className="lg:pb-19 fixed bottom-0 left-0 z-10 flex h-[60px] w-full justify-around bg-gray-200 p-5 text-sm font-bold lg:static lg:mb-auto lg:mt-[100px] lg:h-auto lg:flex-col lg:items-center lg:gap-7 lg:border-b lg:border-gray-500 lg:p-0 lg:pb-10 lg:text-center lg:text-xl">
           <Link href="/">홈</Link>
           <Link href="/recommend">오늘 뭐하지</Link>
-          <Link href="/trash">쓰레기 가이드</Link>
+          <Link href="/trash-guide">쓰레기 가이드</Link>
           <Link href="/map">우리동네 지도</Link>
           <Link href="/honeytips">꿀팁 게시판</Link>
         </nav>
