@@ -1,5 +1,11 @@
 import FoodWasteCheck from "@/app/trash-guide/_components/FoodWasteCheck";
 import WasteDaySelector from "@/app/trash-guide/_components/WasteDaySelector";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "쓰레기 가이드",
+  description: "우리 동네 쓰레기 배출 일정과 분리배출 정보",
+};
 
 const page = () => {
   return (
