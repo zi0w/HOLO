@@ -22,7 +22,7 @@ export const useAddCommentMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
     onError: (error) => {
-      console.error("댓글 추가 중 뮤테이션 오류 발생:", error.message);
+      console.error("댓글 추가 중 뮤테이션 오류가 발생했습니다.", error.message);
     },
   });
 };
@@ -88,7 +88,7 @@ export const useDeleteCommentMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
     onError: (error) => {
-      console.error("댓글 삭제 중 뮤테이션 오류 발생:", error.message);
+      console.error("댓글 삭제 중 뮤테이션 오류가 발생했습니다.", error.message);
     },
   });
 };
