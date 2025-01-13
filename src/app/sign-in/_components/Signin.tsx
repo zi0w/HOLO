@@ -1,11 +1,12 @@
 "use client";
 
-import GitHubLoginButton from "@/app/sign-in/_components/GitHubLoginButton";
-import GoogleLoginButton from "@/app/sign-in/_components/GoogleLoginButton";
-import KakaoLoginButton from "@/app/sign-in/_components/KakaoLoginButton";
+// import GitHubLoginButton from "@/app/sign-in/_components/GitHubLoginButton";
+// import GoogleLoginButton from "@/app/sign-in/_components/GoogleLoginButton";
+// import KakaoLoginButton from "@/app/sign-in/_components/KakaoLoginButton";
 import useSignInMutation from "@/app/sign-in/_hooks/useSignInMutation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import SocialLogin from "./SocialLogin";
 
 const SignInForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -73,7 +74,7 @@ const SignInForm: React.FC = () => {
 
   // 회원가입 페이지로 이동하는 함수
   const handleGoToSignUp = () => {
-    router.push("/sign-up"); // 회원가입 페이지 경로로 이동
+    router.push("/"); // 회원가입 페이지 경로로 이동
   };
 
   return (
@@ -133,11 +134,7 @@ const SignInForm: React.FC = () => {
           {/* 간격 조정 */}
           <span className="text-white">또는</span> {/* 또는 텍스트 추가 */}
           <div className="flex justify-center space-x-4">
-            <GoogleLoginButton />
-
-            <KakaoLoginButton />
-
-            <GitHubLoginButton />
+            <SocialLogin/>
           </div>
         </div>
 

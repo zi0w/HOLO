@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Logo from "@/assets/images/common/logo.svg";
 import MypageIcon from "@/assets/images/common/mypage-icon.svg";
