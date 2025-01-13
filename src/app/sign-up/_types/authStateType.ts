@@ -1,7 +1,7 @@
 // '@/types/supabase' 경로에서 User 타입을 가져옵니다.
 // User는 사용자 정보를 나타내는 타입으로, Supabase와 관련된 사용자 데이터 구조를 정의합니다.
 
-import { User } from "./userType";
+import { User } from "@/app/sign-up/_types/userType";
 
 // Session 인터페이스는 사용자 세션 정보를 정의합니다.
 export type Session = {

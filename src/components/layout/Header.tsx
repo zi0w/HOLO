@@ -1,5 +1,6 @@
 "use client";
 
+import useCheckAuth from "@/app/hooks/useCheckAuth";
 import Logo from "@/assets/images/common/logo.svg";
 import MypageIcon from "@/assets/images/common/mypage-icon.svg";
 import { createClient } from "@/lib/utils/supabase/client";
@@ -7,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
+  useCheckAuth();   //소셜로그인 
   const supabase = createClient();
 
   return (
