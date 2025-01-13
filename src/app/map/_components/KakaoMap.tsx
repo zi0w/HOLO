@@ -29,6 +29,7 @@ const KakaoMap = () => {
     placeDetail,
     setSelectedPlace,
     setPlaceDetail,
+    onClickResearch,
   } = useCategoriesSearch(currentPosition, setMapCenter);
 
   return (
@@ -73,6 +74,8 @@ const KakaoMap = () => {
             </CustomOverlayMap>
           </>
         ))}
+
+        {/* 오버레이 */}
         {selectedPlace && placeDetail && (
           <CustomOverlayMap
             position={{
@@ -86,7 +89,7 @@ const KakaoMap = () => {
                   setSelectedPlace(null); // 선택된 장소 초기화
                   setPlaceDetail(null); // 상세정보 초기화
                 }}
-                className="text-right text-gray-500 hover:text-gray-800"
+                className="absolute right-2 top-2 text-right text-gray-500 hover:text-gray-800"
               >
                 X
               </button>
@@ -94,17 +97,23 @@ const KakaoMap = () => {
 
               <p>{placeDetail.address_name}</p>
               <p>{placeDetail.phone || "전화번호 없음"}</p>
-              <Link
-                href={placeDetail.place_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 underline"
-              >
-                상세 정보 보기
-              </Link>
+              {placeDetail.place_url ? (
+                <Link
+                  href={placeDetail.place_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline"
+                >
+                  상세 정보 보기
+                </Link>
+              ) : (
+                ""
+              )}
             </div>
           </CustomOverlayMap>
         )}
+
+        {/* 내 위치 마커 */}
         {currentPosition && (
           <>
             <MapMarker position={currentPosition} />
@@ -120,6 +129,8 @@ const KakaoMap = () => {
           </>
         )}
       </Map>
+
+      {/* 카테고리 검색 버튼 */}
       <div className="absolute left-4 top-4 z-10">
         {[
           "다이소",
@@ -145,13 +156,26 @@ const KakaoMap = () => {
             {item}
           </button>
         ))}
+        <button
+          className="z-index-10"
+          onClick={() => {
+            if (!mapCenter) {
+              alert("지도 중심 좌표가 업데이트되지 않았습니다.");
+              return;
+            }
+            onClickResearch(mapCenter);
+          }}
+        >
+          이동한 위치에서 검색
+        </button>
       </div>
-      {/* 리스트 출력 */}
-      <div className="absolute bottom-80 left-4 max-h-80 space-y-2 overflow-y-auto rounded bg-white shadow-md">
+
+      {/* 데스크톱과 태블릿용 리스트 */}
+      <div className="absolute left-4 top-4 hidden max-h-80 overflow-y-auto rounded bg-white shadow-md md:left-0 md:top-0 md:block md:h-full md:max-h-full md:w-[300px] md:overflow-y-auto lg:left-0 lg:top-0 lg:h-full lg:max-h-full lg:w-[300px]">
         {places.map((place) => (
           <div
             key={place.id}
-            className="cursor-pointer rounded py-2 hover:bg-gray-200"
+            className="w-full cursor-pointer rounded bg-gray-50 p-4 text-left hover:bg-gray-200"
             onClick={() => {
               setMapCenter({
                 lat: parseFloat(place.y),
@@ -161,13 +185,35 @@ const KakaoMap = () => {
               onClickMarker(place);
             }}
           >
-            <p className="font-bold">{place.place_name}</p>
-            <p className="text-sm">{place.address_name}</p>
+            <p className="text-sm font-bold">{place.place_name}</p>
+            <p className="text-xs text-gray-600">{place.address_name}</p>
           </div>
         ))}
       </div>
+
+      {/* 모바일용 리스트 */}
+      <div className="absolute bottom-28 flex max-h-[200px] w-full flex-col space-y-2 overflow-y-auto bg-white px-4 py-2 shadow-md md:hidden">
+        {places.map((place) => (
+          <div
+            key={place.id}
+            className="w-full cursor-pointer rounded bg-gray-50 p-2 text-left hover:bg-gray-200"
+            onClick={() => {
+              setMapCenter({
+                lat: parseFloat(place.y),
+                lng: parseFloat(place.x),
+              });
+              setSelectedPlace(place);
+              onClickMarker(place);
+            }}
+          >
+            <p className="text-sm font-bold">{place.place_name}</p>
+            <p className="text-xs text-gray-600">{place.address_name}</p>
+          </div>
+        ))}
+      </div>
+
       {/* 줌 컨트롤 버튼 */}
-      <div className="absolute bottom-4 right-4 flex flex-col space-y-2">
+      <div className="absolute bottom-52 right-4 flex flex-col space-y-2">
         <button
           className="rounded bg-white p-2 shadow hover:bg-gray-300"
           onClick={onClickPlusMapLevel} // 확대
@@ -181,8 +227,10 @@ const KakaoMap = () => {
           −
         </button>
       </div>
+
+      {/* 내 위치 버튼*/}
       <button
-        className="absolute bottom-16 left-10 z-10 rounded bg-white p-2 shadow hover:bg-blue-400"
+        className="absolute bottom-60 left-10 z-10 rounded bg-white p-2 shadow hover:bg-blue-400"
         onClick={onClickMoveCurrentPosition}
       >
         내 위치

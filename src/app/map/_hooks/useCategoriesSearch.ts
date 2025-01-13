@@ -2,18 +2,47 @@ import type { Coordinates } from "@/app/map/_types/coordinates";
 import type { Place } from "@/app/map/_types/place";
 import React, { useEffect, useState } from "react";
 
+type PlacesSearchResultItem = kakao.maps.services.PlacesSearchResultItem;
+
 const useCategoriesSearch = (
   currentPosition: Coordinates | null,
   setMapCenter: React.Dispatch<React.SetStateAction<Coordinates>>,
 ) => {
   const [category, setCategory] = useState<string>(""); // 카테고리 선택 상태 관리
-  const [places, setPlaces] = useState<
-    kakao.maps.services.PlacesSearchResultItem[]
-  >([]); // 장소 검색 결과 리스트
+  const [places, setPlaces] = useState<PlacesSearchResultItem[]>([]); // 장소 검색 결과 리스트
   const [selectedPlace, setSelectedPlace] =
-    useState<kakao.maps.services.PlacesSearchResultItem | null>(null);
+    useState<PlacesSearchResultItem | null>(null);
 
   const [placeDetail, setPlaceDetail] = useState<Place | null>(null);
+
+  // 현재 위치 기준 재검색
+  const onClickResearch = async (center: Coordinates) => {
+    if (!center || !category) {
+      alert("위치를 확인하고 카테고리를 선택해주세요");
+      return;
+    }
+
+    try {
+      const ps = new kakao.maps.services.Places();
+      ps.keywordSearch(
+        category,
+        (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            setPlaces(result);
+          } else {
+            alert("검색 결과가 없습니다.");
+            setPlaces([]);
+          }
+        },
+        {
+          location: new kakao.maps.LatLng(center.lat, center.lng),
+          radius: 1500,
+        },
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getPlaceDetail = async (placeName: string) => {
     try {
@@ -41,7 +70,7 @@ const useCategoriesSearch = (
     }
   };
 
-  const onClickMarker = (place: kakao.maps.services.PlacesSearchResultItem) => {
+  const onClickMarker = (place: PlacesSearchResultItem) => {
     setSelectedPlace(place);
     getPlaceDetail(place.place_name);
   };
@@ -58,24 +87,28 @@ const useCategoriesSearch = (
     if (!category || !currentPosition) return;
 
     const ps = new kakao.maps.services.Places();
-    const callback = (
-      result: kakao.maps.services.PlacesSearchResultItem[],
-      status: kakao.maps.services.Status,
-    ) => {
-      if (result.length === 0) {
-        setPlaces([]);
-        alert("근처에 해당 시설이 없습니다.");
-      }
-      if (status === kakao.maps.services.Status.OK) {
-        // 검색 결과를 저장
-        setPlaces(result);
-      }
-    };
+
     // 내 위치 기준 카테고리 검색
-    ps.keywordSearch(category, callback, {
-      location: new kakao.maps.LatLng(currentPosition.lat, currentPosition.lng),
-      radius: 1500,
-    });
+    ps.keywordSearch(
+      category,
+      (result, status) => {
+        if (result.length === 0) {
+          setPlaces([]);
+          alert("근처에 해당 시설이 없습니다.");
+        }
+        if (status === kakao.maps.services.Status.OK) {
+          // 검색 결과를 저장
+          setPlaces(result);
+        }
+      },
+      {
+        location: new kakao.maps.LatLng(
+          currentPosition.lat,
+          currentPosition.lng,
+        ),
+        radius: 1500,
+      },
+    );
   }, [category, currentPosition]);
   return {
     setCategory,
@@ -86,6 +119,7 @@ const useCategoriesSearch = (
     placeDetail,
     setSelectedPlace,
     setPlaceDetail,
+    onClickResearch,
   };
 };
 export default useCategoriesSearch;
