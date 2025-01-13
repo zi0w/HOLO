@@ -18,19 +18,18 @@ const KakaoMap = () => {
     mapLevel,
     onClickPlusMapLevel,
     onClickMinusMapLevel,
+    onClickMoveCurrentPosition,
   } = useKakaoMap();
 
   const {
     setCategory,
     places,
-    onClickMoveCurrentPosition,
     onClickMarker,
     selectedPlace,
     placeDetail,
     setSelectedPlace,
     setPlaceDetail,
-    onClickResearch,
-  } = useCategoriesSearch(currentPosition, setMapCenter);
+  } = useCategoriesSearch(mapCenter);
 
   return (
     <div className="relative h-screen">
@@ -58,7 +57,14 @@ const KakaoMap = () => {
                 lat: parseFloat(place.y),
                 lng: parseFloat(place.x),
               }}
-              onClick={() => onClickMarker(place)}
+              onClick={() => {
+                setMapCenter({
+                  lat: parseFloat(place.y),
+                  lng: parseFloat(place.x),
+                });
+                setSelectedPlace(place);
+                onClickMarker(place);
+              }}
             />
             <CustomOverlayMap
               position={{
@@ -82,6 +88,8 @@ const KakaoMap = () => {
               lat: parseFloat(selectedPlace.y),
               lng: parseFloat(selectedPlace.x),
             }}
+            xAnchor={0.5} // x축 기준 중앙
+            yAnchor={1.4}
           >
             <div className="rounded bg-white p-4 shadow">
               <button
@@ -156,18 +164,6 @@ const KakaoMap = () => {
             {item}
           </button>
         ))}
-        <button
-          className="z-index-10"
-          onClick={() => {
-            if (!mapCenter) {
-              alert("지도 중심 좌표가 업데이트되지 않았습니다.");
-              return;
-            }
-            onClickResearch(mapCenter);
-          }}
-        >
-          이동한 위치에서 검색
-        </button>
       </div>
 
       {/* 데스크톱과 태블릿용 리스트 */}

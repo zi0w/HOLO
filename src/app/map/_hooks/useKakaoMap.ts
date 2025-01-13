@@ -1,4 +1,4 @@
-import type { Coordinates } from "@/app/map/_types/coordinates";
+import type { Coordinates } from "@/app/map/_types/map";
 import { useEffect, useState } from "react";
 
 const useKakaoMap = () => {
@@ -22,7 +22,7 @@ const useKakaoMap = () => {
     setMapLevel((prev) => Math.min(prev + 1, 14));
   };
 
-  useEffect(() => {
+  const onClickMoveCurrentPosition = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -38,6 +38,10 @@ const useKakaoMap = () => {
     } else {
       setGeolocationError("Geolocation을 사용할 수 없습니다.");
     }
+  };
+
+  useEffect(() => {
+    onClickMoveCurrentPosition();
   }, []);
 
   useEffect(() => {
@@ -61,6 +65,7 @@ const useKakaoMap = () => {
     mapLevel,
     onClickPlusMapLevel,
     onClickMinusMapLevel,
+    onClickMoveCurrentPosition,
   };
 };
 
