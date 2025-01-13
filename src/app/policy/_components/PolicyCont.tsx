@@ -21,7 +21,7 @@ const PolicyCont = () => {
 
   const {
     data: policyData,
-    isLoading: isPending,
+    isPending,
     error,
     refetch,
   } = useQuery({
