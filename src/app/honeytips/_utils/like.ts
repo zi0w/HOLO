@@ -9,17 +9,17 @@ const supabase = createClient();
 // 좋아요 불러오기
 export const fetchLikesData = async (postId: Like["post_id"]) => {
   const user_id = await getId();
-  const { data, error } = await supabase
+  const { data: likesData, error } = await supabase
     .from("likes")
     .select("*")
     .match({ user_id, post_id: postId });
 
   if (error) {
-    console.error("좋아요 데이터 불러오기 실패!");
+    console.error("좋아요 데이터 불러오기에 실패했습니다.");
     throw error;
   }
 
-  return data || [];
+  return likesData || [];
 };
 
 type deleteLikeProps = {
@@ -29,16 +29,16 @@ type deleteLikeProps = {
 
 // 좋아요 삭제
 export const deleteLike = async ({ userId, postId }: deleteLikeProps) => {
-  const { data, error } = await supabase
+  const { data: likesData, error } = await supabase
     .from("likes")
     .delete()
     .match({ user_id: userId, post_id: postId });
 
   if (error) {
-    console.error("좋아요 삭제 실패!");
+    console.error("좋아요 삭제에 실패했습니다.");
     throw error;
   }
-  return data;
+  return likesData;
 };
 
 type addLikeProps = {
@@ -48,7 +48,7 @@ type addLikeProps = {
 
 // 좋아요 저장
 export const addLike = async ({ userId, postId }: addLikeProps) => {
-  const { data, error } = await supabase.from("likes").insert([
+  const { data: likesData, error } = await supabase.from("likes").insert([
     {
       user_id: userId,
       post_id: postId,
@@ -56,22 +56,22 @@ export const addLike = async ({ userId, postId }: addLikeProps) => {
   ]);
 
   if (error) {
-    console.error("좋아요 저장 실패!");
+    console.error("좋아요 저장에 실패했습니다.");
     throw error;
   }
-  return data;
+  return likesData;
 };
 
 // 좋아요 개수 세기
 export const countLikes = async (id: Like["post_id"]) => {
-  const { count, error } = await supabase
+  const { count: likesCount, error } = await supabase
     .from("likes")
     .select("*", { count: "exact", head: true })
     .eq("post_id", id);
 
   if (error) {
-    console.error("좋아요 개수 세기 실패!", error);
+    console.error("좋아요 개수 세기에 실패했습니다.");
     throw error;
   }
-  return count ?? 0;
+  return likesCount ?? 0;
 };

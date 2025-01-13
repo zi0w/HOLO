@@ -9,26 +9,29 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type UpdatePostCardProps = {
-  data: Post;
+  postDetailData: Post;
 };
 
-const UpdatePostForm = ({ data }: UpdatePostCardProps) => {
-  const [title, setTitle] = useState<string>(data.title);
-  const [content, setContent] = useState<string>(data.content);
-  const [category, setCategory] = useState<string>(data.categories);
+const UpdatePostForm = ({ postDetailData }: UpdatePostCardProps) => {
+  const [title, setTitle] = useState<string>(postDetailData.title);
+  const [content, setContent] = useState<string>(postDetailData.content);
+  const [category, setCategory] = useState<string>(postDetailData.categories);
 
   const [images, setImages] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>(
-    data.post_image_url || [],
+    postDetailData.post_image_url || [],
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (data.post_image_url && data.post_image_url.length > 0) {
-      setImageUrls(data.post_image_url);
+    if (
+      postDetailData.post_image_url &&
+      postDetailData.post_image_url.length > 0
+    ) {
+      setImageUrls(postDetailData.post_image_url);
     }
-  }, [data]);
+  }, [postDetailData]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -59,12 +62,12 @@ const UpdatePostForm = ({ data }: UpdatePostCardProps) => {
       ];
 
       await updatePost({
-        postId: data.id,
+        postId: postDetailData.id,
         updatedTitle: title,
         updatedContent: content,
         updatedCategory: category,
         updatedPostImageUrl: imageUrlsToSave,
-        userId: data.user_id,
+        userId: postDetailData.user_id,
       });
     } catch (error) {
       console.error("게시물 수정 중 오류 발생:", error);
@@ -100,26 +103,29 @@ const UpdatePostForm = ({ data }: UpdatePostCardProps) => {
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    router.push(`/honeytips/${data.id}`);
+    router.push(`/honeytips/${postDetailData.id}`);
   };
+
+  const categories = ["청소", "요리", "문화", "기타"];
 
   return (
     <form className="mx-auto max-w-4xl p-4">
-      <div className="mb-4">
+      <section className="mb-4">
         <label className="mb-2 block text-lg font-semibold">카테고리</label>
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className="w-full rounded-md border p-2"
         >
-          <option value="청소">청소</option>
-          <option value="요리">요리</option>
-          <option value="문화">문화</option>
-          <option value="기타">기타</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
-      </div>
+      </section>
 
-      <div className="mb-4">
+      <section className="mb-4">
         <label className="mb-2 block text-lg font-semibold">제목</label>
         <input
           type="text"
@@ -128,9 +134,9 @@ const UpdatePostForm = ({ data }: UpdatePostCardProps) => {
           className="w-full rounded-md border p-2"
           disabled={isLoading}
         />
-      </div>
+      </section>
 
-      <div className="mb-4">
+      <section className="mb-4">
         <label className="mb-2 block text-lg font-semibold">내용</label>
         <textarea
           value={content}
@@ -139,9 +145,9 @@ const UpdatePostForm = ({ data }: UpdatePostCardProps) => {
           rows={10}
           disabled={isLoading}
         />
-      </div>
+      </section>
 
-      <div className="mt-6 flex justify-end space-x-4">
+      <section className="mt-6 flex justify-end space-x-4">
         <button
           onClick={handleSubmit}
           className={clsx("rounded px-4 py-2 text-white hover:bg-blue-600", {
@@ -159,11 +165,11 @@ const UpdatePostForm = ({ data }: UpdatePostCardProps) => {
         >
           취소
         </button>
-      </div>
+      </section>
 
-      <div className="mt-6 flex justify-start space-x-4">
+      <section className="mt-6 flex justify-start space-x-4">
         {[0, 1, 2].map((index) => (
-          <div key={index} className="relative">
+          <article key={index} className="relative">
             <label
               htmlFor={`image-upload-${index}`}
               className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-md border bg-gray-200"
@@ -196,9 +202,9 @@ const UpdatePostForm = ({ data }: UpdatePostCardProps) => {
                 &times;
               </button>
             )}
-          </div>
+          </article>
         ))}
-      </div>
+      </section>
     </form>
   );
 };

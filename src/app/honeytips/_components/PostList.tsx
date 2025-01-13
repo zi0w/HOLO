@@ -14,6 +14,7 @@ const PostList = () => {
   const isAuthenticated = useAuth();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [posts, setPosts] = useState<Post[]>([]);
+
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [likesCount, setLikesCount] = useState<{
     [postId: Post["id"]]: number;
@@ -21,7 +22,7 @@ const PostList = () => {
   const [commentsCount, setCommentsCount] = useState<{
     [postId: Post["id"]]: number;
   }>({});
-  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const router = useRouter();
 
@@ -29,18 +30,18 @@ const PostList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       setIsLoading(true); // 로딩 시작
-      const data = await fetchPostsData();
-      setPosts(data);
-      setFilteredPosts(data);
+      const postsData = await fetchPostsData();
+      setPosts(postsData);
+      setFilteredPosts(postsData);
 
       // 댓글 및 좋아요 개수를 병렬로 불러오기
       const [commentCounts, likeCounts] = await Promise.all([
-        Promise.all(data.map((post) => countComments(post.id))),
-        Promise.all(data.map((post) => countLikes(post.id))),
+        Promise.all(postsData.map((post) => countComments(post.id))),
+        Promise.all(postsData.map((post) => countLikes(post.id))),
       ]);
 
       // 각 포스트의 댓글과 좋아요 개수를 매핑
-      const commentCountMap: { [postId: string]: number } = data.reduce(
+      const commentCountMap: { [postId: string]: number } = postsData.reduce(
         (acc, post, idx) => {
           acc[post.id] = commentCounts[idx];
           return acc;
@@ -48,7 +49,7 @@ const PostList = () => {
         {} as { [postId: string]: number },
       );
 
-      const likeCountMap: { [postId: string]: number } = data.reduce(
+      const likeCountMap: { [postId: string]: number } = postsData.reduce(
         (acc, post, idx) => {
           acc[post.id] = likeCounts[idx];
           return acc;
@@ -69,25 +70,25 @@ const PostList = () => {
     if (selectedCategory === "") {
       setFilteredPosts(posts);
     } else {
-      const filtered = posts.filter(
+      const filteredPosts = posts.filter(
         (post) => post.categories === selectedCategory,
       );
-      setFilteredPosts(filtered);
+      setFilteredPosts(filteredPosts);
     }
   }, [selectedCategory, posts]);
 
-  // 글 작성하기 버튼 클릭 시 로그인 상태 확인
+  // 글 작성하기 버튼 클릭 시 로그인 상태 확인 및 선택된 카테고리 정보 보냄
   const handleGoToPost = () => {
     if (isAuthenticated) {
-      router.push("/honeytips/post");
+      router.push(`/honeytips/post?category=${selectedCategory}`);
     } else {
       alert("로그인이 필요합니다.");
     }
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="mb-6 flex justify-center space-x-4">
+    <section className="container mx-auto p-4">
+      <nav className="mb-6 flex justify-center space-x-4">
         {["청소", "요리", "문화", "기타"].map((category) => (
           <button
             key={category}
@@ -102,21 +103,24 @@ const PostList = () => {
             {category}
           </button>
         ))}
-      </div>
-      <div className="mb-6 flex justify-end">
+      </nav>
+      <div className="fixed bottom-20 right-6 z-50">
         <button
           onClick={handleGoToPost}
-          className="rounded bg-blue-500 px-4 py-2 text-sm text-white hover:bg-blue-700"
+          className="relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary-500 bg-primary-50 text-primary-500"
         >
-          글 작성하기
+          <span className="absolute inset-0 flex items-center justify-center text-3xl">
+            +
+          </span>
         </button>
       </div>
-      <div className="grid grid-cols-1 gap-4">
+      <section className="grid grid-cols-1 gap-4">
         {isLoading ? (
           <p className="col-span-full text-center text-gray-500">로딩중...</p>
         ) : filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
             <PostCard
+              key={post.id}
               post={post}
               likesCount={likesCount}
               commentsCount={commentsCount}
@@ -127,8 +131,8 @@ const PostList = () => {
             해당 카테고리에 대한 포스트가 없습니다.
           </p>
         )}
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
 

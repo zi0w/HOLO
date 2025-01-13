@@ -20,9 +20,13 @@ const SearchForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-4">
+    <form onSubmit={handleSubmit} className="flex gap-4" role="search">
+      <label htmlFor="searchQuery" className="sr-only">
+        키워드 검색
+      </label>
       <input
         type="text"
+        id="searchQuery"
         value={searchQuery}
         onChange={handleSearch}
         placeholder="키워드를 입력해주세요."

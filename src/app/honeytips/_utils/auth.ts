@@ -5,10 +5,10 @@ const supabase = createClient();
 
 // 유저 아이디 가져오기
 export const getId = async (): Promise<User['id'] | null> => {
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user) {
-    console.error("유저 아이디 불러오기 실패!", error);
+  const { data: userData, error } = await supabase.auth.getUser();
+  if (error || !userData.user) {
+    console.error("유저 아이디 불러오기에 실패했습니다.");
     return null;
   }
-  return data.user.id;
+  return userData.user.id;
 };

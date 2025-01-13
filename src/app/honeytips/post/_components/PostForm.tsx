@@ -3,8 +3,8 @@
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
 import clsx from "clsx";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 const PostForm = () => {
   const titleRef = useRef<HTMLInputElement>(null);
@@ -14,6 +14,14 @@ const PostForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get("category") || "청소";
+
+  useEffect(() => {
+    if (categoryRef.current) {
+      categoryRef.current.value = initialCategory;
+    }
+  }, [initialCategory]);
 
   const handleSubmit = async () => {
     const title = titleRef.current?.value.trim() || "";
@@ -86,45 +94,57 @@ const PostForm = () => {
     setImages(newImages);
   };
 
+  const categories = ["청소", "요리", "문화", "기타"];
+
   return (
     <form className="mx-auto max-w-4xl p-4">
-      <div className="mb-4">
+      <section className="mb-4">
         <label className="mb-2 block text-lg font-semibold">카테고리</label>
         <select
           ref={categoryRef}
           defaultValue="청소"
           className="w-full rounded-md border p-2"
         >
-          <option value="청소">청소</option>
-          <option value="요리">요리</option>
-          <option value="문화">문화</option>
-          <option value="기타">기타</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
-      </div>
+      </section>
 
-      <div className="mb-4">
-        <label className="mb-2 block text-lg font-semibold">제목</label>
+      <section className="mb-4">
+        <label className="mb-2 block text-lg font-semibold" htmlFor="title">
+          제목
+        </label>
         <input
           ref={titleRef}
           type="text"
+          id="title"
           placeholder="제목을 입력해주세요."
           className="w-full rounded-md border p-2"
           disabled={isLoading}
         />
-      </div>
+      </section>
 
-      <div className="mb-4">
-        <label className="mb-2 block p-2 text-lg font-semibold">내용</label>
+      <section className="mb-4">
+        <label
+          className="mb-2 block p-2 text-lg font-semibold"
+          htmlFor="content"
+        >
+          내용
+        </label>
         <textarea
           ref={contentRef}
+          id="content"
           placeholder="내용을 입력해주세요."
           className="w-full rounded-md border p-2"
           rows={10}
           disabled={isLoading}
         />
-      </div>
+      </section>
 
-      <div className="mt-6 flex justify-end space-x-4">
+      <section className="mt-6 flex justify-end space-x-4">
         <button
           type="button"
           onClick={handleSubmit}
@@ -145,11 +165,11 @@ const PostForm = () => {
         >
           취소
         </button>
-      </div>
+      </section>
 
-      <div className="mt-6 flex justify-start space-x-4">
+      <section className="mt-6 flex justify-start space-x-4">
         {[0, 1, 2].map((index) => (
-          <div key={index} className="relative">
+          <article key={index} className="relative">
             <label
               htmlFor={`image-upload-${index}`}
               className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-md border bg-gray-200"
@@ -182,9 +202,9 @@ const PostForm = () => {
                 &times;
               </button>
             )}
-          </div>
+          </article>
         ))}
-      </div>
+      </section>
     </form>
   );
 };

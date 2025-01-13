@@ -8,17 +8,17 @@ const supabase = createClient();
 
 // 코멘트 가져오기
 export const fetchCommentData = async (postId: Comment["post_id"]) => {
-  const { data, error } = await supabase
+  const { data: commentData, error } = await supabase
     .from("comments")
     .select("*, users(nickname, profile_image_url)")
     .eq("post_id", postId)
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("코멘트 불러오기 실패!");
+    console.error("코멘트 불러오기에 실패했습니다.");
     throw error;
   }
-  return data;
+  return commentData;
 };
 
 // 코멘트 저장
@@ -33,7 +33,7 @@ export const addComment = async (newComment: {
     throw new Error("유저 아이디를 찾을 수 없습니다.");
   }
 
-  const { data, error } = await supabase
+  const { data: commentData, error } = await supabase
     .from("comments")
     .insert([
       {
@@ -45,10 +45,10 @@ export const addComment = async (newComment: {
     .select();
 
   if (error) {
-    console.error("코멘트 저장 실패!");
+    console.error("코멘트 저장에 실패했습니다.");
     throw error;
   }
-  return data;
+  return commentData;
 };
 
 // 코멘트 업데이트
@@ -63,7 +63,7 @@ export const updateComment = async ({
   editingId,
   postId,
 }: updateCommentProps) => {
-  const { data, error } = await supabase
+  const { data: commentData, error } = await supabase
     .from("comments")
     .update({ comment: editingComment })
     .eq("id", editingId)
@@ -71,33 +71,36 @@ export const updateComment = async ({
     .select();
 
   if (error) {
-    console.error("코멘트 업데이트 실패!", error);
+    console.error("코멘트 업데이트에 실패했습니다.");
     throw error;
   }
-  return data;
+  return commentData;
 };
 
 // 코멘트 삭제
 export const deleteComment = async (id: Comment["id"]) => {
-  const { data, error } = await supabase.from("comments").delete().eq("id", id);
+  const { data: commentData, error } = await supabase
+    .from("comments")
+    .delete()
+    .eq("id", id);
 
   if (error) {
-    console.error("코멘트 삭제 실패!", error);
+    console.error("코멘트 삭제에 실패했습니다.");
     throw error;
   }
-  return data;
+  return commentData;
 };
 
 // 코멘트 개수 세기
 export const countComments = async (id: Comment["post_id"]) => {
-  const { count, error } = await supabase
+  const { count: commentsCount, error } = await supabase
     .from("comments")
     .select("*", { count: "exact", head: true })
     .eq("post_id", id);
 
   if (error) {
-    console.error("코멘트 개수 세기 실패!", error);
+    console.error("코멘트 개수 세기에 실패했습니다.");
     throw error;
   }
-  return count ?? 0;
+  return commentsCount ?? 0;
 };

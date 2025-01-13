@@ -9,8 +9,8 @@ const useAuth = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setIsAuthenticated(!!data.user);
+      const { data: userData } = await supabase.auth.getUser();
+      setIsAuthenticated(!!userData.user);
     };
     fetchUser();
   }, []);

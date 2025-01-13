@@ -7,7 +7,7 @@ import { getId } from "@/app/honeytips/_utils/auth";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const LikeButton = ({ postId }: { postId: Like["post_id"] }) => {
-  const { data, isError, isPending } = useLikeDataQuery(postId);
+  const { data: likeData, isError, isPending } = useLikeDataQuery(postId);
   const likeMutation = useLikeMutation(postId);
 
   const handleLikeBtn = async () => {
@@ -18,7 +18,7 @@ const LikeButton = ({ postId }: { postId: Like["post_id"] }) => {
       return;
     }
 
-    if (data!.length > 0) {
+    if (likeData!.length > 0) {
       const isConfirmed = window.confirm("정말 취소하시겠습니까?");
       if (!isConfirmed) return;
 
@@ -29,19 +29,23 @@ const LikeButton = ({ postId }: { postId: Like["post_id"] }) => {
   };
 
   if (isPending) {
-    return <div>로딩중...</div>;
+    return <p>로딩중...</p>;
   }
 
   if (isError) {
-    return <div>에러 발생</div>;
+    return <p>에러가 발생했습니다.</p>;
   }
 
   return (
-    <div className="flex text-2xl">
+    <section className="flex text-2xl">
       <button onClick={handleLikeBtn}>
-        {data?.length ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
+        {likeData?.length ? (
+          <FaHeart className="text-red-500" />
+        ) : (
+          <FaRegHeart />
+        )}
       </button>
-    </div>
+    </section>
   );
 };
 

@@ -8,16 +8,16 @@ import { v4 as uuidv4 } from "uuid";
 const supabase = createClient();
 
 export const fetchPostsData = async () => {
-  const { data, error } = await supabase
+  const { data: postsData, error } = await supabase
     .from("posts")
     .select("*, users(nickname, profile_image_url)")
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("코멘트 불러오기 실패!");
+    console.error("코멘트 불러오기에 실패했습니다.");
     throw error;
   }
-  return data;
+  return postsData;
 };
 
 // 포스트 이미지 URL 가져오기
@@ -27,7 +27,7 @@ export const uploadPostImageFile = async (file: File) => {
     .upload(`${uuidv4()}.png`, file);
 
   if (uploadError) {
-    console.error("uploadError", uploadError);
+    console.error("이미지 스토리지 저장에 실패했습니다.");
     return;
   }
 
@@ -57,7 +57,7 @@ export const addPost = async ({
     throw new Error("유저 아이디를 찾을 수 없습니다.");
   }
 
-  const { data, error } = await supabase
+  const { data: postsData, error } = await supabase
     .from("posts")
     .insert([
       {
@@ -71,8 +71,8 @@ export const addPost = async ({
     .select();
 
   if (error) {
-    console.error("게시물 저장 실패!");
+    console.error("게시물 저장에 실패했습니다.");
     throw error;
   }
-  return data;
+  return postsData;
 };

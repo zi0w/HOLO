@@ -8,13 +8,13 @@ import "dayjs/locale/ko";
 import { useEffect, useState } from "react";
 
 type CommentListProps = {
-  data: Post;
+  postDetailData: Post;
 };
 
-const CommentList = ({ data }: CommentListProps) => {
+const CommentList = ({ postDetailData }: CommentListProps) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
 
-  const postId: Comment['post_id'] = data.id;
+  const postId: Comment["post_id"] = postDetailData.id;
 
   const { data: comments, isError, isPending } = useCommentDataQuery(postId);
 
@@ -27,17 +27,24 @@ const CommentList = ({ data }: CommentListProps) => {
     fetchUserId();
   }, []);
 
-  if (isPending) return <>로딩중...</>;
-  if (isError) return <div>에러 발생!</div>;
+  if (isPending) return <p>로딩중...</p>;
+  if (isError) return <p>에러가 발생했습니다.</p>;
 
   return (
-    <div className="mx-auto my-6 flex w-[380px] flex-col items-center justify-center gap-4 rounded bg-gray-100 p-4">
+    <section className="mx-auto my-6 flex w-[380px] flex-col items-center justify-center gap-4 rounded bg-gray-100 p-4">
       {comments?.length === 0 ? (
         <p className="text-sm text-gray-400">입력된 댓글이 없습니다.</p>
       ) : (
-        comments?.map((comment) => <CommentCard comment={comment} currentId={currentId} postId={postId} />)
+        comments?.map((comment) => (
+          <CommentCard
+            key={comment.id}
+            comment={comment}
+            currentId={currentId}
+            postId={postId}
+          />
+        ))
       )}
-    </div>
+    </section>
   );
 };
 
