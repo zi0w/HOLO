@@ -6,7 +6,7 @@ export type User = {
   id: string;
   email: string;
   nickname: string;
-  profile_image_url: string;
+  profile_image_url: string | any;   // 추후에 any 타입 알맞는타입 지정하기
 };
 
 export type AuthState = {
