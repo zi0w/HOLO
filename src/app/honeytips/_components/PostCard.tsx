@@ -34,7 +34,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
 
   return (
     <article>
-      <header className="mb-1 flex items-center justify-between px-1">
+      <div className="mb-1 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
           {post.users?.profile_image_url && (
             <Image
@@ -48,7 +48,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
           <p className="font-medium">{post.users?.nickname}</p>
         </div>
         <time className="text-xs text-gray-500">{formatDate(post.created_at)}</time>
-      </header>
+      </div>
 
       <Link href={`/honeytips/${post.id}`}>
         <section
@@ -60,12 +60,12 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
           <div className="flex w-full flex-col">
             <h3 className="mb-2 font-bold text-gray-800">{post.title}</h3>
             <p className="line-clamp-2 text-sm text-gray-600">{post.content}</p>
-            <footer className="mt-4 flex items-center gap-1">
+            <div className="mt-4 flex items-center gap-1">
               <FaRegHeart />
               <span className="mr-2 text-xs">{likesCount[post.id] || 0}</span>
               <FaRegCommentAlt />
               <span className="text-xs">{commentsCount[post.id] || 0}</span>
-            </footer>
+            </div>
           </div>
           {post.post_image_url?.[0] && (
             <Image

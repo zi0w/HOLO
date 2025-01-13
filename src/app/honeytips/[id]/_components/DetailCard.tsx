@@ -68,11 +68,11 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
             </span>
           ))}
         </div>
-        <header className="flex items-center justify-between px-2">
+        <div className="flex items-center justify-between px-2">
           <h1 className="my-6 text-xl font-bold">{postDetailData.title}</h1>
           {/* 좋아요 버튼 */}
           {currentId && <LikeButton postId={postDetailData.id} />}
-        </header>
+        </div>
 
         <div className="mb-7 flex items-center justify-between px-2">
           <div className="flex items-center gap-2">
@@ -120,7 +120,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
 
         {/* 현재 사용자 id === 포스트 작성자 id 일 때만 수정/삭제 버튼 보여주기 */}
         {currentId === postDetailData.user_id && (
-          <footer className="mt-6 flex justify-center gap-4">
+          <div className="mt-6 flex justify-center gap-4">
             <Link
               href={`/honeytips/update/${postDetailData.id}`}
               className="rounded-md bg-blue-500 px-3 py-1.5 text-white transition-colors hover:bg-blue-600"
@@ -134,7 +134,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
             >
               삭제
             </button>
-          </footer>
+          </div>
         )}
       </section>
     </article>

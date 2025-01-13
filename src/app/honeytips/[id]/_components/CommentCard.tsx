@@ -57,7 +57,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
 
   return (
     <article className="mx-auto w-full max-w-[380px] rounded-lg bg-white p-4 shadow-lg transition duration-300 ease-in-out hover:shadow-xl">
-      <header className="mb-2 flex items-center justify-between">
+      <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-3">
           {comment.users?.profile_image_url && (
             <Image
@@ -121,7 +121,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
             </button>
           )}
         </div>
-      </header>
+      </div>
       {editingCommentId === comment.id ? (
         <textarea
           value={editedComment}

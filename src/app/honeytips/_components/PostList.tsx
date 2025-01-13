@@ -88,7 +88,7 @@ const PostList = () => {
 
   return (
     <section className="container mx-auto p-4">
-      <nav className="mb-6 flex justify-center space-x-4">
+      <div className="mb-6 flex justify-center space-x-4">
         {["청소", "요리", "문화", "기타"].map((category) => (
           <button
             key={category}
@@ -103,7 +103,7 @@ const PostList = () => {
             {category}
           </button>
         ))}
-      </nav>
+      </div>
       <div className="fixed bottom-20 right-6 z-50">
         <button
           onClick={handleGoToPost}
