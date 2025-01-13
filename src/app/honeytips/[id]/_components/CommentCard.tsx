@@ -23,15 +23,15 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editedComment, setEditedComment] = useState<string>("");
 
-  const updateMutation = useUpdateCommentMutation();
-  const deleteMutation = useDeleteCommentMutation();
+  const updateCommentMutation = useUpdateCommentMutation();
+  const deleteCommentMutation = useDeleteCommentMutation();
 
-  const handleSave = (id: string) => {
+  const handleCommentSave = (id: string) => {
     if (!editedComment.trim()) {
       alert("내용을 입력해주세요");
       return;
     }
-    updateMutation.mutate({
+    updateCommentMutation.mutate({
       editingComment: editedComment,
       editingId: id,
       postId,
@@ -39,10 +39,10 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
     setEditingCommentId(null);
   };
 
-  const handleDelete = (id: string) => {
+  const handleCommentDelete = (id: string) => {
     const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
     if (!isConfirmed) return;
-    deleteMutation.mutate(id);
+    deleteCommentMutation.mutate(id);
   };
 
   const formatDate = (date: string) => {
@@ -56,22 +56,19 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   };
 
   return (
-    <div
-      key={comment.id}
-      className="mx-auto w-full max-w-[380px] rounded-lg bg-white p-4 shadow-lg transition duration-300 ease-in-out hover:shadow-xl"
-    >
-      <div className="mb-2 flex items-center justify-between">
+    <article className="mx-auto w-full max-w-[380px] rounded-lg bg-white p-4 shadow-lg transition duration-300 ease-in-out hover:shadow-xl">
+      <header className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Image
-            className="h-10 w-10 rounded-full border-2"
-            src={
-              comment.users.profile_image_url ||
-              "https://via.placeholder.com/50x50"
-            }
-            alt="프로필 이미지"
-            width={100}
-            height={100}
-          />
+          {comment.users?.profile_image_url && (
+            <Image
+              className="h-10 w-10 rounded-full border-2 bg-white"
+              src={comment.users.profile_image_url}
+              alt="프로필 이미지"
+              width={100}
+              height={100}
+            />
+          )}
+
           <div>
             <p className="text-sm">{comment.users.nickname}</p>
             <p className="text-xs text-gray-500">
@@ -87,7 +84,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
               <button
                 className="rounded-lg bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
                 type="button"
-                onClick={() => handleSave(comment.id)}
+                onClick={() => handleCommentSave(comment.id)}
               >
                 저장
               </button>
@@ -118,13 +115,13 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
             <button
               className="rounded-lg bg-red-500 px-3 py-1 text-white hover:bg-red-600"
               type="button"
-              onClick={() => handleDelete(comment.id)}
+              onClick={() => handleCommentDelete(comment.id)}
             >
               &times;
             </button>
           )}
         </div>
-      </div>
+      </header>
       {editingCommentId === comment.id ? (
         <textarea
           value={editedComment}
@@ -135,7 +132,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
       ) : (
         <p className="mt-2 text-sm">{comment.comment}</p>
       )}
-    </div>
+    </article>
   );
 };
 

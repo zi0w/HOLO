@@ -7,21 +7,21 @@ import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 
 type CommentFormProps = {
-  data: Post;
+  postDetailData: Post;
 };
 
-const CommentForm = ({ data }: CommentFormProps) => {
-  const postId = data.id;
+const CommentForm = ({ postDetailData }: CommentFormProps) => {
+  const postId = postDetailData.id;
   const inputRef = useRef<HTMLInputElement>(null);
   const isAuthenticated = useAuth();
-  const addMutation = useAddCommentMutation();
+  const addCommentMutation = useAddCommentMutation();
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     if (inputRef.current && inputRef.current.value !== "") {
       const newComment = inputRef.current.value;
-      addMutation.mutate({ comment: newComment, postId });
+      addCommentMutation.mutate({ comment: newComment, postId });
       inputRef.current!.value = "";
     }
   };

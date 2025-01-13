@@ -14,10 +14,10 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 type DetailCardProps = {
-  data: Post;
+  postDetailData: Post;
 };
 
-const DetailCard = ({ data }: DetailCardProps) => {
+const DetailCard = ({ postDetailData }: DetailCardProps) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const router = useRouter();
 
@@ -47,19 +47,19 @@ const DetailCard = ({ data }: DetailCardProps) => {
       router.push("/honeytips");
     } catch (error) {
       alert("게시물 삭제 중 문제가 발생했습니다.");
-      console.error("삭제 실패:", error);
+      console.error("게시물 삭제에 실패했습니다.");
     }
   };
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="p-4">
+    <article className="flex items-center justify-center">
+      <section className="p-4">
         <div className="my-8 flex justify-center space-x-4">
           {categories.map((category) => (
             <span
               key={category}
               className={`rounded px-4 py-2 text-sm font-semibold transition-colors ${
-                data.categories === category
+                postDetailData.categories === category
                   ? "bg-blue-500 text-white"
                   : "bg-gray-200 text-gray-700"
               }`}
@@ -68,26 +68,28 @@ const DetailCard = ({ data }: DetailCardProps) => {
             </span>
           ))}
         </div>
-        <div className="flex items-center justify-between px-2">
-          <h1 className="my-6 text-xl font-bold">{data.title}</h1>
+        <header className="flex items-center justify-between px-2">
+          <h1 className="my-6 text-xl font-bold">{postDetailData.title}</h1>
           {/* 좋아요 버튼 */}
-          {currentId && <LikeButton postId={data.id} />}
-        </div>
+          {currentId && <LikeButton postId={postDetailData.id} />}
+        </header>
 
         <div className="mb-7 flex items-center justify-between px-2">
           <div className="flex items-center gap-2">
-            {data.users?.profile_image_url && (
+            {postDetailData.users?.profile_image_url && (
               <Image
-                src={data.users.profile_image_url}
-                alt={`${data.users.nickname}의 프로필 이미지`}
+                src={postDetailData.users.profile_image_url}
+                alt={`${postDetailData.users.nickname}의 프로필 이미지`}
                 width={100}
                 height={100}
                 className="h-14 w-14 rounded-full border-2"
               />
             )}
-            <p>{data.users?.nickname}</p>
+            <p>{postDetailData.users?.nickname}</p>
           </div>
-          <p className="text-xs text-gray-500">{formatDate(data.created_at)}</p>
+          <time className="text-xs text-gray-500">
+            {formatDate(postDetailData.created_at)}
+          </time>
         </div>
 
         <Swiper
@@ -101,7 +103,7 @@ const DetailCard = ({ data }: DetailCardProps) => {
           navigation={true}
           className="mb-6 w-[300px]"
         >
-          {data.post_image_url?.map((imageUrl, index) => (
+          {postDetailData.post_image_url?.map((imageUrl, index) => (
             <SwiperSlide key={index}>
               <Image
                 src={imageUrl}
@@ -114,28 +116,28 @@ const DetailCard = ({ data }: DetailCardProps) => {
           ))}
         </Swiper>
 
-        <p className="whitespace-pre-wrap px-2">{data.content}</p>
+        <p className="whitespace-pre-wrap px-2">{postDetailData.content}</p>
 
         {/* 현재 사용자 id === 포스트 작성자 id 일 때만 수정/삭제 버튼 보여주기 */}
-        {currentId === data.user_id && (
-          <div className="mt-6 flex justify-center gap-4">
+        {currentId === postDetailData.user_id && (
+          <footer className="mt-6 flex justify-center gap-4">
             <Link
-              href={`/honeytips/update/${data.id}`}
+              href={`/honeytips/update/${postDetailData.id}`}
               className="rounded-md bg-blue-500 px-3 py-1.5 text-white transition-colors hover:bg-blue-600"
             >
               수정
             </Link>
             <button
               type="button"
-              onClick={() => handleDeletePost(data.id)}
+              onClick={() => handleDeletePost(postDetailData.id)}
               className="rounded-md bg-red-500 px-3 py-1.5 text-white transition-colors hover:bg-red-600"
             >
               삭제
             </button>
-          </div>
+          </footer>
         )}
-      </div>
-    </div>
+      </section>
+    </article>
   );
 };
 
