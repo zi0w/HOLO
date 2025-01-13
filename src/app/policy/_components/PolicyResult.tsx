@@ -3,16 +3,16 @@ import type { PolicyData } from "@/app/policy/_types/policy";
 
 type PolicyResultProps = {
   error: Error | null;
-  isFetching: boolean;
+  isPending: boolean;
   policyData: PolicyData[] | null;
 };
 
-const PolicyResult = ({ error, isFetching, policyData }: PolicyResultProps) => {
+const PolicyResult = ({ error, isPending, policyData }: PolicyResultProps) => {
   if (error instanceof Error) {
     return <div className="text-red-500">에러: {error.message}</div>;
   }
 
-  if (isFetching) {
+  if (isPending) {
     return <div>조회 중...</div>;
   }
 

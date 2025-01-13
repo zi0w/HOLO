@@ -5,6 +5,10 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "쓰레기 가이드",
   description: "우리 동네 쓰레기 배출 일정과 분리배출 정보",
+  openGraph: {
+    title: "쓰레기 가이드",
+    description: "우리 동네 쓰레기 배출 일정과 분리배출 정보",
+  },
 };
 
 const page = () => {

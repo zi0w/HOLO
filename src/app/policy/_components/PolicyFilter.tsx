@@ -1,3 +1,4 @@
+import { POLICY_CATEGORIES } from "@/app/policy/_constants/policy";
 import RegionSelect from "@/components/common/RegionSelect";
 import clsx from "clsx";
 
@@ -22,14 +23,6 @@ const PolicyFilter = ({
     !fieldSelected ||
     fieldSelected === "선택";
 
-  const fieldCont = [
-    { id: 0, name: "일자리 분야", code: "023010" },
-    { id: 1, name: "주거 분야", code: "023020" },
-    { id: 2, name: "교육 분야", code: "023030" },
-    { id: 3, name: "복지.문화 분야", code: "023040" },
-    { id: 4, name: "참여, 권리 분야", code: "023050" },
-  ];
-
   return (
     <div>
       {/* 지역 셀렉박스 */}
@@ -43,7 +36,7 @@ const PolicyFilter = ({
         value={fieldSelected}
       >
         <option value="선택">정책 분야 선택</option>
-        {fieldCont.map((field) => (
+        {POLICY_CATEGORIES.map((field) => (
           <option key={field.id} value={field.code}>
             {field.name}
           </option>

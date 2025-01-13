@@ -1,18 +1,8 @@
 import useFormatPolicyField from "@/app/policy/[id]/_hooks/useFormatPolicyField";
+import { POLICY_DISPLAY_NAMES } from "@/app/policy/_constants/policy";
 import type { PolicyData } from "@/app/policy/_types/policy";
 
 const PolicyDetailContent = ({ policyInfo }: { policyInfo: PolicyData }) => {
-  const POLICY_DISPLAY_NAMES = {
-    polyBizSjnm: "정책명",
-    cnsgNmor: "운영기관명",
-    polyItcnCn: "정책 소개",
-    sporCn: "지원 내용",
-    rqutPrdCn: "사업 신청 기간",
-    rqutProcCn: "신청 절차",
-    rqutUrla: "신청 사이트 주소",
-    rfcSiteUrla1: "참고 사이트",
-  } as const;
-  
   const formatPolicyField = useFormatPolicyField(policyInfo);
 
   return (
