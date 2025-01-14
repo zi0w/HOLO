@@ -1,6 +1,6 @@
+import { fetchUserInfo } from "@/app/mypage/_utils/user";
 import useAuthStore from "@/store/authStore";
 import { useCallback } from "react";
-import { fetchUserInfo } from "../_utils/user";
 
 export function useUpdateUserInfo() {
   const { user, setAuth } = useAuthStore();
