@@ -22,6 +22,25 @@ const Result = ({ answerData }: ResultProps) => {
     }
   };
 
+  const shareResult = () => {
+    const queryParams = new URLSearchParams({
+      recommendation: encodeURIComponent(menuRecommendation)
+    }).toString();
+
+    const shareUrl = `${window.location.origin}/result/shared?${queryParams}`
+
+    if (navigator.share) {
+      navigator.share({
+        title: "추천 메뉴",
+        text: "저의 추천 메뉴를 확인해보세요!",
+        url: shareUrl
+      }).then(() =>  console.log("공유 성공!"))
+      .catch((error) => console.error("공유 실패:", error))
+    } else {
+      alert("이 브라우저는 공유 기능을 지원하지 않습니다.")
+    }
+  }
+
   const saveResult = async () => {
     try {
       const resultElement = document.querySelector(
@@ -60,7 +79,7 @@ const Result = ({ answerData }: ResultProps) => {
       </Link>
       <div className="mt-4 flex gap-4 pb-4">
         <button onClick={saveResult}>결과 저장</button>
-        <button>공유하기</button>
+        <button onClick={shareResult}>공유하기</button>
       </div>
     </div>
   );
