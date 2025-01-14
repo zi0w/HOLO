@@ -3,9 +3,9 @@
 import usePagination from "@/app/hooks/usePagination";
 import { getPolicies } from "@/app/policy/_actions/getPolicies";
 import PolicyFilter from "@/app/policy/_components/PolicyFilter";
-import PolicyPagination from "@/app/policy/_components/PolicyPagination";
 import PolicyResult from "@/app/policy/_components/PolicyResult";
 import { REGION_CODES } from "@/app/policy/_constants/region";
+import Pagination from "@/components/common/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -31,10 +31,11 @@ const PolicyCont = () => {
     queryKey: ["policies"],
     queryFn: async () => {
       const regionCode = REGION_CODES[filters.region];
-      return getPolicies({
+      const response = await getPolicies({
         polyRlmCd: filters.field,
         srchPolyBizSecd: regionCode,
       });
+      return Array.isArray(response) ? response : [response];
     },
     enabled: !!filters.region && !!filters.field,
     initialData: null,
@@ -76,22 +77,23 @@ const PolicyCont = () => {
         onFieldChange={(field) => handleFilterChange("field", field)}
         onSearch={handleSearch}
       />
-      <PolicyResult
-        error={error}
-        isLoading={isLoading || isRefetching}
-        policyData={currentPolicyData}
-      />
-      {policyData && policyData.length > 0 && (
-        <PolicyPagination
-          isLoading={isLoading || isRefetching}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          startButtonIndex={startButtonIndex}
-          maxButtonsToShow={maxButtonsToShow}
-          prevPage={prevPage}
-          nextPage={nextPage}
-          goToPage={goToPage}
-        />
+      {isLoading || isRefetching ? (
+        <p>로딩중...</p> //TODO: 로딩 스피너 추가
+      ) : (
+        <>
+          <PolicyResult error={error} policyData={currentPolicyData} />
+          {policyData && policyData.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              startButtonIndex={startButtonIndex}
+              maxButtonsToShow={maxButtonsToShow}
+              onNextPage={nextPage}
+              onPrevPage={prevPage}
+              onGoToPage={goToPage}
+            />
+          )}
+        </>
       )}
     </div>
   );
