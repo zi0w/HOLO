@@ -33,8 +33,6 @@ const usePagination = <T,>(
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
   const goToPage = (page: number) => setCurrentPage(page);
 
-  console.log('currentPage', currentPage)
-
   return {
     currentItems,
     currentPage,

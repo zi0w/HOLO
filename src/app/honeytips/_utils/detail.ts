@@ -8,7 +8,7 @@ export const fetchPostDetail = async (id: Post["id"]) => {
   if (!id) return null;
   const { data: detailData, error } = await supabase
     .from("posts")
-    .select("*, users(nickname, profile_image_url)")
+    .select("*, users(nickname, profile_image_url), comments(count), likes(count)")
     .eq("id", id)
     .single();
 
