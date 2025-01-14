@@ -3,6 +3,7 @@ import { useState } from "react";
 export type PaginationHook<T> = {
   currentItems: T[];
   currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   totalPages: number;
   startButtonIndex: number;
   maxButtonsToShow: number;
@@ -32,9 +33,12 @@ const usePagination = <T,>(
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
   const goToPage = (page: number) => setCurrentPage(page);
 
+  console.log('currentPage', currentPage)
+
   return {
     currentItems,
     currentPage,
+    setCurrentPage,
     totalPages,
     startButtonIndex,
     maxButtonsToShow,

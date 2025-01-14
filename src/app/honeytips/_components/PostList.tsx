@@ -27,6 +27,19 @@ const PostList = () => {
 
   const router = useRouter();
 
+  // 페이지네이션
+  const {
+    currentItems: currentPosts,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+    startButtonIndex,
+    maxButtonsToShow,
+    nextPage,
+    prevPage,
+    goToPage,
+  } = usePagination(filteredPosts, 20);
+
   // 마운트 시 전체 포스트 불러오기
   useEffect(() => {
     const fetchPosts = async () => {
@@ -87,17 +100,10 @@ const PostList = () => {
     }
   };
 
-  // 페이지네이션
-  const {
-    currentItems: currentPosts,
-    currentPage,
-    totalPages,
-    startButtonIndex,
-    maxButtonsToShow,
-    nextPage,
-    prevPage,
-    goToPage,
-  } = usePagination(filteredPosts, 20);
+  const handleClickCategory = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
 
   return (
     <section className="container mx-auto">
@@ -111,7 +117,7 @@ const PostList = () => {
                 ? "text-base-800"
                 : "hover:text-base-800",
             )}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => handleClickCategory(category)}
           >
             {category}
             {selectedCategory === category && (
