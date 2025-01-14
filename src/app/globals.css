@@ -3,24 +3,27 @@
 @tailwind utilities;
 
 /* font */
-@font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "GmarketSansMedium";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
+@layer base {
+  @font-face {
+    font-family: "Pretendard-Regular";
+    src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+      format("woff");
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "GmarketSansMedium";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
 }
 
 * {
   font-family: "Pretendard-Regular";
 }
+
 h1,
 h2,
 h3,
@@ -44,7 +47,21 @@ h6 {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* common */
+.common-title {
+  @apply text-2xl font-bold text-gray-800;
+}
+.common-btn {
+  font-family: "GmarketSansMedium";
+  @apply block rounded-md py-[14px] text-sm;
+}
+.common-btn.type-a {
+  @apply bg-primary-500 text-white;
+}
+.common-btn.type-b {
+  @apply border border-primary-500 text-primary-500;
 }
 
 @layer utilities {
