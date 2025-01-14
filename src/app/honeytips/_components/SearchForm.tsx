@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { CiSearch } from "react-icons/ci";
 
 const SearchForm = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,18 +22,17 @@ const SearchForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-4" role="search">
-      <label htmlFor="searchQuery" className="sr-only">
-        키워드 검색
-      </label>
-      <input
-        type="text"
-        id="searchQuery"
-        value={searchQuery}
-        onChange={handleSearch}
-        placeholder="키워드를 입력해주세요."
-        className="rounded border p-2"
-      />
-      <button type="submit">검색</button>
+      <div className="relative w-[362px]">
+        <CiSearch className="absolute left-3 top-1/2 -translate-y-1/2 transform text-2xl text-gray-400" />
+        <input
+          type="text"
+          id="searchQuery"
+          value={searchQuery}
+          onChange={handleSearch}
+          placeholder="키워드를 입력해주세요."
+          className="h-[40px] w-full rounded border p-2 pl-10"
+        />
+      </div>
     </form>
   );
 };

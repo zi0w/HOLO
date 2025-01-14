@@ -5,7 +5,14 @@ import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
 
 export const generateMetadata = async ({ params }: Props) => {
-  const postDetailData: Post = await fetchPostDetail(params.id);
+  const postDetailData: Post | null = await fetchPostDetail(params.id);
+
+  if (!postDetailData) {
+    return {
+      title: "자취 꿀팁 게시글 - 오류",
+      description: "게시글을 찾을 수 없습니다.",
+    };
+  }
 
   return {
     title: `${postDetailData.title} - 자취 꿀팁 게시글`,
@@ -20,13 +27,21 @@ type Props = {
 };
 
 const DetailPage = async ({ params }: Props) => {
-  const postDetailData: Post = await fetchPostDetail(params.id);
+  const postDetailData: Post | null = await fetchPostDetail(params.id);
+
+  if (!postDetailData) {
+    return (
+      <div className="text-center">
+        <p>게시글을 찾을 수 없습니다.</p>
+      </div>
+    );
+  }
 
   return (
     <>
       <DetailCard postDetailData={postDetailData} />
-      <CommentForm postDetailData={postDetailData} />
       <CommentList postDetailData={postDetailData} />
+      <CommentForm postDetailData={postDetailData} />
     </>
   );
 };

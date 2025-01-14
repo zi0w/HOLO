@@ -1,9 +1,9 @@
 "use client";
 
+import LikeList from "@/app/mypage/[id]/_components/Mylike/LikeList";
+import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
+import UserProfile from "@/app/mypage/_components/UserProfile";
 import { useState } from "react";
-import LikeList from "../[id]/_components/Mylike/LikeList";
-import ProfileEditModal from "./ProfileEditModal";
-import UserProfile from "./UserProfile";
 
 const Mypageform: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

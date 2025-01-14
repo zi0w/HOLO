@@ -14,7 +14,7 @@ const page = () => {
   return (
     <div>
       <div>
-        <h2>청년 정책</h2>
+        <h1 className="common-title">청년 정책</h1>
         <p>청년들을 위한 정책 제공</p>
       </div>
       <PolicyCont />

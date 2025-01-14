@@ -15,7 +15,7 @@ const page = () => {
   return (
     <div>
       <div>
-        <h2>쓰레기 가이드</h2>
+        <h1 className="common-title">쓰레기 가이드</h1>
         <p>우리 동네 쓰레기 배출 일정과 분리배출 정보</p>
       </div>
       <div className="mx-auto max-w-xl border border-yellow-500">
