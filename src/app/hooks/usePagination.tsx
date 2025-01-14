@@ -3,6 +3,7 @@ import { useState } from "react";
 export type PaginationHook<T> = {
   currentItems: T[];
   currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   totalPages: number;
   startButtonIndex: number;
   maxButtonsToShow: number;
@@ -16,9 +17,10 @@ const usePagination = <T,>(
   itemsPerPage: number,
 ): PaginationHook<T> => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const itemsArray = Array.isArray(items) ? items : [];
+  const totalPages = Math.ceil(itemsArray.length / itemsPerPage);
 
-  const currentItems = items.slice(
+  const currentItems = itemsArray.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
@@ -35,6 +37,7 @@ const usePagination = <T,>(
   return {
     currentItems,
     currentPage,
+    setCurrentPage,
     totalPages,
     startButtonIndex,
     maxButtonsToShow,

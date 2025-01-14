@@ -19,7 +19,6 @@ const RecommendPage = () => {
         <Link href="recommend/fortune">
         <button className="border p-2">오늘의 운세</button>
         </Link>
-        <button className="border p-2">오늘의 할일 추천</button>
       </div>
     </div>
   );

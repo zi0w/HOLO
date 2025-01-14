@@ -3,8 +3,6 @@
 import PostCard from "@/app/honeytips/_components/PostCard";
 import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
-import { countComments } from "@/app/honeytips/_utils/comment";
-import { countLikes } from "@/app/honeytips/_utils/like";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
 import usePagination from "@/app/hooks/usePagination";
 import clsx from "clsx";
@@ -14,83 +12,18 @@ import { BsPlusCircle } from "react-icons/bs";
 
 const PostList = () => {
   const isAuthenticated = useAuth();
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("전체");
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-  const [likesCount, setLikesCount] = useState<{
-    [postId: Post["id"]]: number;
-  }>({});
-  const [commentsCount, setCommentsCount] = useState<{
-    [postId: Post["id"]]: number;
-  }>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const router = useRouter();
-
-  // 마운트 시 전체 포스트 불러오기
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setIsLoading(true); // 로딩 시작
-      const postsData = await fetchPostsData();
-      setPosts(postsData);
-      setFilteredPosts(postsData);
-
-      // 댓글 및 좋아요 개수를 병렬로 불러오기
-      const [commentCounts, likeCounts] = await Promise.all([
-        Promise.all(postsData.map((post) => countComments(post.id))),
-        Promise.all(postsData.map((post) => countLikes(post.id))),
-      ]);
-
-      // 각 포스트의 댓글과 좋아요 개수를 매핑
-      const commentCountMap: { [postId: string]: number } = postsData.reduce(
-        (acc, post, idx) => {
-          acc[post.id] = commentCounts[idx];
-          return acc;
-        },
-        {} as { [postId: string]: number },
-      );
-
-      const likeCountMap: { [postId: string]: number } = postsData.reduce(
-        (acc, post, idx) => {
-          acc[post.id] = likeCounts[idx];
-          return acc;
-        },
-        {} as { [postId: string]: number },
-      );
-
-      setCommentsCount(commentCountMap);
-      setLikesCount(likeCountMap);
-      setIsLoading(false);
-    };
-
-    fetchPosts();
-  }, []);
-
-  // 카테고리 변경 시 해당 카테고리에 맞는 포스트 불러오기
-  useEffect(() => {
-    if (selectedCategory === "") {
-      setFilteredPosts(posts);
-    } else {
-      const filtered = posts.filter(
-        (post) => post.categories === selectedCategory,
-      );
-      setFilteredPosts(filtered);
-    }
-  }, [selectedCategory, posts]);
-
-  // 글 작성하기 버튼 클릭 시 로그인 상태 확인 및 선택된 카테고리 정보 보냄
-  const handleGoToPost = () => {
-    if (isAuthenticated) {
-      router.push(`/honeytips/post?category=${selectedCategory}`);
-    } else {
-      alert("로그인이 필요합니다.");
-    }
-  };
 
   // 페이지네이션
   const {
     currentItems: currentPosts,
     currentPage,
+    setCurrentPage,
     totalPages,
     startButtonIndex,
     maxButtonsToShow,
@@ -99,19 +32,58 @@ const PostList = () => {
     goToPage,
   } = usePagination(filteredPosts, 20);
 
+  // 마운트 시 전체 포스트 불러오기
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setIsLoading(true);
+      const postsData = await fetchPostsData();
+      setPosts(postsData);
+      setFilteredPosts(postsData);
+      setIsLoading(false);
+    };
+
+    fetchPosts();
+  }, []);
+
+  // 카테고리 변경 시, 해당 카테고리에 맞는 포스트 불러오기
+  useEffect(() => {
+    const filtered =
+      selectedCategory === "전체"
+        ? posts
+        : posts.filter((post) => post.categories === selectedCategory);
+    setFilteredPosts(filtered);
+  }, [selectedCategory, posts]);
+
+  // 글 작성하기 버튼 클릭 시, 로그인 상태 확인 및 선택된 카테고리 정보 보냄
+  const handleGoToPost = () => {
+    if (isAuthenticated) {
+      router.push(`/honeytips/post?category=${selectedCategory}`);
+    } else {
+      alert("로그인이 필요합니다.");
+    }
+  };
+
+  const handleClickCategory = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const categories = ["전체", "청소", "요리", "문화", "기타"];
+
   return (
     <section className="container mx-auto">
+      {/* 카테고리 별 렌더링 */}
       <div className="mb-6 flex justify-between border-b border-primary-100">
-        {["청소", "요리", "문화", "기타"].map((category) => (
+        {categories.map((category) => (
           <button
             key={category}
             className={clsx(
-              "relative px-7 py-2 text-lg font-semibold text-base-500 transition-colors",
+              "relative px-5 py-2 text-lg font-semibold text-base-500 transition-colors",
               selectedCategory === category
                 ? "text-base-800"
                 : "hover:text-base-800",
             )}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => handleClickCategory(category)}
           >
             {category}
             {selectedCategory === category && (
@@ -121,6 +93,7 @@ const PostList = () => {
         ))}
       </div>
 
+      {/* 글 작성 버튼 */}
       <div className="fixed bottom-20 right-6 z-50">
         <button
           onClick={handleGoToPost}
@@ -130,6 +103,7 @@ const PostList = () => {
         </button>
       </div>
 
+      {/* 포스트 리스트 */}
       <section className="grid grid-cols-1 gap-5">
         {isLoading ? (
           <p className="col-span-full text-center text-base-500">로딩중...</p>
@@ -138,8 +112,8 @@ const PostList = () => {
             <PostCard
               key={post.id}
               post={post}
-              likesCount={likesCount}
-              commentsCount={commentsCount}
+              likesCount={post.likes[0].count}
+              commentsCount={post.comments[0].count}
             />
           ))
         ) : (
@@ -149,6 +123,7 @@ const PostList = () => {
         )}
       </section>
 
+      {/* 페이지네이션 */}
       <div className="mt-4 flex items-center justify-center">
         <button
           onClick={prevPage}
@@ -164,11 +139,7 @@ const PostList = () => {
           <button
             key={startButtonIndex + index}
             onClick={() => goToPage(startButtonIndex + index + 1)}
-            className={`mx-1 rounded px-3 py-2 ${
-              currentPage === startButtonIndex + index + 1
-                ? "font-bold text-base-800"
-                : "text-base-500"
-            }`}
+            className={`mx-1 rounded px-3 py-2 ${currentPage === startButtonIndex + index + 1 ? "font-bold text-base-800" : "text-base-500"}`}
           >
             {startButtonIndex + index + 1}
           </button>

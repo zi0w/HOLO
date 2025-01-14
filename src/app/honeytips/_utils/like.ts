@@ -61,17 +61,3 @@ export const addLike = async ({ userId, postId }: addLikeProps) => {
   }
   return likesData;
 };
-
-// 좋아요 개수 세기
-export const countLikes = async (id: Like["post_id"]) => {
-  const { count: likesCount, error } = await supabase
-    .from("likes")
-    .select("*", { count: "exact", head: true })
-    .eq("post_id", id);
-
-  if (error) {
-    console.error("좋아요 개수 세기에 실패했습니다.");
-    throw error;
-  }
-  return likesCount ?? 0;
-};

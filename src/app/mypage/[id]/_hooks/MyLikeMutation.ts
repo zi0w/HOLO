@@ -5,8 +5,7 @@ import { addLike, deleteLike } from "@/app/honeytips/_utils/like";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 
-// 좋아요 추가/삭제
-export const useLikeMutation = (postId: Like["post_id"]) => {
+export const myLikeMutation = (postId: Like["post_id"]) => {
   const queryClient = useQueryClient();
 
   return useMutation<
@@ -25,18 +24,16 @@ export const useLikeMutation = (postId: Like["post_id"]) => {
       } else if (action === "delete") {
         return deleteLike({ userId, postId });
       }
-      throw new Error("잘못된 action 값입니다.");
+      throw new Error("Invalid action value.");
     },
     onMutate: async ({ action, userId, postId }) => {
-      // 현재 좋아요 데이터 가져오기
       await queryClient.cancelQueries({ queryKey: ["likes", postId] });
       const previousLikes = queryClient.getQueryData<Like[]>(["likes", postId]);
 
-      // 낙관적 업데이트
       queryClient.setQueryData<Like[]>(["likes", postId], (prev) => {
         if (!prev) return [];
         if (action === "add") {
-          const tempId = uuidv4(); // 임시 ID, created_at 생성
+          const tempId = uuidv4();
           const now = new Date().toISOString();
           return [...prev, {user_id: userId, post_id: postId, created_at: now, id: tempId}];
         } else if (action === "delete") {
@@ -51,8 +48,9 @@ export const useLikeMutation = (postId: Like["post_id"]) => {
         queryClient.setQueryData(["likes", postId], context.previousLikes);
       }
     },
-    onSuccess: () => {
+    onSuccess: (_, { userId }) => {
       queryClient.invalidateQueries({ queryKey: ["likes", postId] });
+      queryClient.invalidateQueries({ queryKey: ["likedPosts", userId] });
     }, 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["likes", postId] });

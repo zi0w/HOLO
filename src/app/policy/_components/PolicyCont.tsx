@@ -1,9 +1,11 @@
 "use client";
 
+import usePagination from "@/app/hooks/usePagination";
 import { getPolicies } from "@/app/policy/_actions/getPolicies";
 import PolicyFilter from "@/app/policy/_components/PolicyFilter";
 import PolicyResult from "@/app/policy/_components/PolicyResult";
 import { REGION_CODES } from "@/app/policy/_constants/region";
+import Pagination from "@/components/common/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -13,29 +15,42 @@ type SearchFilters = {
 };
 
 const PolicyCont = () => {
+  const [isRefetching, setIsRefetching] = useState(false);
+
   const [filters, setFilters] = useState<SearchFilters>({
     region: "",
     field: "",
   });
-  const [page, setPage] = useState<number>(1);
 
   const {
     data: policyData,
-    isLoading: isPending,
+    isLoading,
     error,
     refetch,
   } = useQuery({
-    queryKey: ["policies", filters.region, filters.field],
+    queryKey: ["policies"],
     queryFn: async () => {
       const regionCode = REGION_CODES[filters.region];
-      return getPolicies({
+      const response = await getPolicies({
         polyRlmCd: filters.field,
         srchPolyBizSecd: regionCode,
       });
+      return Array.isArray(response) ? response : [response];
     },
-    enabled: false,
+    enabled: !!filters.region && !!filters.field,
     initialData: null,
   });
+
+  const {
+    currentItems: currentPolicyData,
+    currentPage,
+    totalPages,
+    startButtonIndex,
+    maxButtonsToShow,
+    nextPage,
+    prevPage,
+    goToPage,
+  } = usePagination(policyData || [], 10);
 
   const handleFilterChange = (
     key: keyof Omit<SearchFilters, "pageIndex">,
@@ -47,6 +62,12 @@ const PolicyCont = () => {
     }));
   };
 
+  const handleSearch = async () => {
+    setIsRefetching(true);
+    await refetch();
+    setIsRefetching(false);
+  };
+
   return (
     <div>
       <PolicyFilter
@@ -54,14 +75,26 @@ const PolicyCont = () => {
         fieldSelected={filters.field}
         onRegionChange={(region) => handleFilterChange("region", region)}
         onFieldChange={(field) => handleFilterChange("field", field)}
-        onSearch={() => refetch()}
+        onSearch={handleSearch}
       />
-      <PolicyResult
-        error={error}
-        isPending={isPending}
-        policyData={policyData}
-      />
-      {/* <PolicyPagination page={page} setPage={setPage} totalPages={totalPages} /> */}
+      {isLoading || isRefetching ? (
+        <p>로딩중...</p> //TODO: 로딩 스피너 추가
+      ) : (
+        <>
+          <PolicyResult error={error} policyData={currentPolicyData} />
+          {policyData && policyData.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              startButtonIndex={startButtonIndex}
+              maxButtonsToShow={maxButtonsToShow}
+              onNextPage={nextPage}
+              onPrevPage={prevPage}
+              onGoToPage={goToPage}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };
