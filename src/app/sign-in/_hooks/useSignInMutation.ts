@@ -29,7 +29,7 @@ const useSignInMutation = (): UseMutationResult<
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password }),     //라우터 핸들러는 임포트해서 불러오지않음  페치를 통해 라우트핸들러 경로를 지정해서 불러온다. api랑 비슷한개념으로 이해
       });
 
       if (!response.ok) {
@@ -52,7 +52,7 @@ const useSignInMutation = (): UseMutationResult<
       } else {
         console.error("세션 또는 엑세스 토큰이 없습니다.");
         alert("로그인에 실패했습니다. 다시 시도해 주세요.");
-        return;
+        return;          //추후에 리팩토링 예정
       }
 
       if (user) {

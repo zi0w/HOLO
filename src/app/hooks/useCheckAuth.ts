@@ -1,7 +1,5 @@
 import useAuthStore from '@/store/authStore';
-
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 가져오기
-
 import { useRouter } from "next/navigation"; 
 import { useEffect } from 'react';
 
@@ -14,7 +12,7 @@ const useCheckAuth = () => {
           const { data, error } = await supabase.auth.getSession();
     
           if (error) {
-            console.error("세션 정보 가져오기 실패:", error.message);
+            console.error("세션 정보 가져오기 실패했습니다.:", error.message);
             return;
           }
     
@@ -43,24 +41,24 @@ const useCheckAuth = () => {
             );
     
             // 상태를 로컬 스토리지에 저장
-            localStorage.setItem(
-              "auth-storage",
-              JSON.stringify({
-                user: {
-                  id: user.id,
-                  email: user.email ?? "",
-                  nickname: nickname,
-                  profile_image_url: user.user_metadata?.avatar_url ?? null,
-                },
-                session: {
-                  accessToken: access_token,
-                  refreshToken: refresh_token,
-                },
-              }),
-            );
+            // localStorage.setItem(
+            //   "auth-storage",
+            //   JSON.stringify({
+            //     user: {
+            //       id: user.id,
+            //       email: user.email ?? "",
+            //       nickname: nickname,
+            //       profile_image_url: user.user_metadata?.avatar_url ?? null,
+            //     },
+            //     session: {
+            //       accessToken: access_token,
+            //       refreshToken: refresh_token,          //통일성있게  추후에 주스텐스 퍼시스트로 상태관리
+            //     },
+            //   }),
+            // );
     
-            alert("로그인 성공!");
-            router.push("/"); // 로그인 페이지로 이동
+            // alert("로그인 성공!");
+            // router.push("/"); // 로그인 페이지로 이동
           }
         };
     
