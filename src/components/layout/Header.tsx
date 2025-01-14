@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "@/assets/images/common/logo.svg";
+import Logo from "@/assets/images/common/logo.png";
 import MypageIcon from "@/assets/images/common/mypage-icon.svg";
 import { createClient } from "@/lib/utils/supabase/client";
 import Image from "next/image";
@@ -17,7 +17,12 @@ const Header = () => {
             href="/"
             className="relative h-5 w-full max-w-16 lg:h-[50px] lg:max-w-[100px]"
           >
-            <Image src={Logo} fill={true} alt="로고" />
+            <Image
+              src={Logo}
+              fill={true}
+              className="object-contain"
+              alt="로고"
+            />
           </Link>
           <Link href="/mypage">
             <div className="relative h-4 w-4 lg:hidden">
