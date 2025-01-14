@@ -4,6 +4,7 @@ import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost } from "@/app/honeytips/_utils/detail";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
@@ -52,29 +53,32 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
   };
 
   return (
-    <article className="flex items-center justify-center">
+    <article className="flex items-center justify-center w-[402px] mx-auto">
       <section className="p-4">
-        <div className="my-8 flex justify-center space-x-4">
+        {/* <div className="mb-6 flex justify-between border-b border-primary-100">
           {categories.map((category) => (
             <span
               key={category}
-              className={`rounded px-4 py-2 text-sm font-semibold transition-colors ${
-                postDetailData.categories === category
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700"
-              }`}
+              className={clsx(
+                "relative px-7 py-2 text-lg font-semibold text-base-500 transition-colors",
+                postDetailData.categories === category && "text-base-800",
+              )}
             >
               {category}
+              {postDetailData.categories === category && (
+                <span className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-primary-500"></span>
+              )}
             </span>
           ))}
-        </div>
+        </div> */}
+
         <div className="flex items-center justify-between px-2">
           <h1 className="my-6 text-xl font-bold">{postDetailData.title}</h1>
           {/* 좋아요 버튼 */}
           {currentId && <LikeButton postId={postDetailData.id} />}
         </div>
 
-        <div className="mb-7 flex items-center justify-between px-2">
+        <div className="mb-2 flex items-center px-2">
           <div className="flex items-center gap-2">
             {postDetailData.users?.profile_image_url && (
               <Image
@@ -82,14 +86,16 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
                 alt={`${postDetailData.users.nickname}의 프로필 이미지`}
                 width={100}
                 height={100}
-                className="h-14 w-14 rounded-full border-2"
+                className="h-11 w-11 rounded-full border-2"
               />
             )}
-            <p>{postDetailData.users?.nickname}</p>
           </div>
-          <time className="text-xs text-gray-500">
-            {formatDate(postDetailData.created_at)}
-          </time>
+          <div className="ml-3 flex flex-col">
+            <p className="font-semibold">{postDetailData.users?.nickname}</p>
+            <time className="text-xs text-gray-500">
+              {formatDate(postDetailData.created_at)}
+            </time>
+          </div>
         </div>
 
         <Swiper
@@ -101,7 +107,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
           centeredSlides={true}
           pagination={{ clickable: true }}
           navigation={true}
-          className="mb-6 w-[300px]"
+          className="mb-6 w-[362px]"
         >
           {postDetailData.post_image_url?.map((imageUrl, index) => (
             <SwiperSlide key={index}>
@@ -122,7 +128,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
         {currentId === postDetailData.user_id && (
           <div className="mt-6 flex justify-center gap-4">
             <Link
-              href={`/honeytips/update/${postDetailData.id}`}
+              href={`/honeytips/post?edit=${postDetailData.id}`}
               className="rounded-md bg-blue-500 px-3 py-1.5 text-white transition-colors hover:bg-blue-600"
             >
               수정

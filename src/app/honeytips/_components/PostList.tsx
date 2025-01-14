@@ -6,15 +6,16 @@ import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { countComments } from "@/app/honeytips/_utils/comment";
 import { countLikes } from "@/app/honeytips/_utils/like";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
+import usePagination from "@/app/hooks/usePagination";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BsPlusCircle } from "react-icons/bs";
 
 const PostList = () => {
   const isAuthenticated = useAuth();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [posts, setPosts] = useState<Post[]>([]);
-
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [likesCount, setLikesCount] = useState<{
     [postId: Post["id"]]: number;
@@ -70,10 +71,10 @@ const PostList = () => {
     if (selectedCategory === "") {
       setFilteredPosts(posts);
     } else {
-      const filteredPosts = posts.filter(
+      const filtered = posts.filter(
         (post) => post.categories === selectedCategory,
       );
-      setFilteredPosts(filteredPosts);
+      setFilteredPosts(filtered);
     }
   }, [selectedCategory, posts]);
 
@@ -86,39 +87,54 @@ const PostList = () => {
     }
   };
 
+  // 페이지네이션
+  const {
+    currentItems: currentPosts,
+    currentPage,
+    totalPages,
+    startButtonIndex,
+    maxButtonsToShow,
+    nextPage,
+    prevPage,
+    goToPage,
+  } = usePagination(filteredPosts, 20);
+
   return (
-    <section className="container mx-auto p-4">
-      <div className="mb-6 flex justify-center space-x-4">
+    <section className="container mx-auto">
+      <div className="mb-6 flex justify-between border-b border-primary-100">
         {["청소", "요리", "문화", "기타"].map((category) => (
           <button
             key={category}
             className={clsx(
-              "rounded px-4 py-2 text-sm font-semibold transition-colors",
+              "relative px-7 py-2 text-lg font-semibold text-base-500 transition-colors",
               selectedCategory === category
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-blue-300",
+                ? "text-base-800"
+                : "hover:text-base-800",
             )}
             onClick={() => setSelectedCategory(category)}
           >
             {category}
+            {selectedCategory === category && (
+              <span className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-primary-500"></span>
+            )}
           </button>
         ))}
       </div>
+
       <div className="fixed bottom-20 right-6 z-50">
         <button
           onClick={handleGoToPost}
-          className="relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary-500 bg-primary-50 text-primary-500"
+          className="relative flex items-center justify-center rounded-full border-primary-500 bg-primary-50 text-5xl text-primary-500"
         >
-          <span className="absolute inset-0 flex items-center justify-center text-3xl">
-            +
-          </span>
+          <BsPlusCircle />
         </button>
       </div>
-      <section className="grid grid-cols-1 gap-4">
+
+      <section className="grid grid-cols-1 gap-5">
         {isLoading ? (
-          <p className="col-span-full text-center text-gray-500">로딩중...</p>
-        ) : filteredPosts.length > 0 ? (
-          filteredPosts.map((post) => (
+          <p className="col-span-full text-center text-base-500">로딩중...</p>
+        ) : currentPosts.length > 0 ? (
+          currentPosts.map((post) => (
             <PostCard
               key={post.id}
               post={post}
@@ -132,6 +148,40 @@ const PostList = () => {
           </p>
         )}
       </section>
+
+      <div className="mt-4 flex items-center justify-center">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className="rounded px-4 py-2 text-base-500"
+        >
+          &lt;
+        </button>
+
+        {Array.from({
+          length: Math.min(maxButtonsToShow, totalPages - startButtonIndex),
+        }).map((_, index) => (
+          <button
+            key={startButtonIndex + index}
+            onClick={() => goToPage(startButtonIndex + index + 1)}
+            className={`mx-1 rounded px-3 py-2 ${
+              currentPage === startButtonIndex + index + 1
+                ? "font-bold text-base-800"
+                : "text-base-500"
+            }`}
+          >
+            {startButtonIndex + index + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={nextPage}
+          disabled={currentPage === totalPages}
+          className="rounded px-4 py-2 text-base-500"
+        >
+          &gt;
+        </button>
+      </div>
     </section>
   );
 };
