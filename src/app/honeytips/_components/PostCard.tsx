@@ -14,12 +14,8 @@ dayjs.locale("ko");
 
 type PostCardProps = {
   post: Post;
-  likesCount: {
-    [postId: string]: number;
-  };
-  commentsCount: {
-    [postId: string]: number;
-  };
+  likesCount: number;
+  commentsCount: number;
 };
 
 const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
@@ -78,11 +74,11 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
             <div className="flex items-center gap-2 text-base-600">
               <div className="flex items-center gap-1">
                 <FaRegHeart />
-                <span className="text-xs">{likesCount[post.id] || 0}</span>
+                <span className="text-xs">{likesCount || 0}</span>
               </div>
               <div className="flex items-center gap-1">
                 <FaRegCommentAlt />
-                <span className="text-xs">{commentsCount[post.id] || 0}</span>
+                <span className="text-xs">{commentsCount || 0}</span>
               </div>
             </div>
           </div>
