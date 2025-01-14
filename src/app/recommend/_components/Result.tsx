@@ -1,5 +1,6 @@
 import fetchRecommendation from "@/app/recommend/_actions/fetchRecommendation";
 import type { Answer } from "@/app/recommend/_types/answer";
+import { shortenUrl } from "@/app/recommend/_utils/shortenUrl";
 import { saveAs } from "file-saver";
 import html2canvas from "html2canvas";
 import Link from "next/link";
@@ -22,24 +23,39 @@ const Result = ({ answerData }: ResultProps) => {
     }
   };
 
-  const shareResult = () => {
+  const shareResult = async () => {
     const queryParams = new URLSearchParams({
-      recommendation: encodeURIComponent(menuRecommendation)
+      recommendation: encodeURIComponent(menuRecommendation),
     }).toString();
 
-    const shareUrl = `${window.location.origin}/result/shared?${queryParams}`
+    const longUrl = `${window.location.origin}/recommend/result/shared?${queryParams}`;
 
-    if (navigator.share) {
-      navigator.share({
-        title: "추천 메뉴",
-        text: "저의 추천 메뉴를 확인해보세요!",
-        url: shareUrl
-      }).then(() =>  console.log("공유 성공!"))
-      .catch((error) => console.error("공유 실패:", error))
-    } else {
-      alert("이 브라우저는 공유 기능을 지원하지 않습니다.")
+    try {
+      const shortUrl = await shortenUrl(longUrl);
+
+      if (!shortUrl) {
+        alert("URL 단축에 실패했습니다. 다시 시도해주세요.");
+        return;
+      }
+
+      if (navigator.share) {
+        navigator
+          .share({
+            text: "저의 추천 메뉴를 확인해보세요!",
+            url: shortUrl,
+          })
+          .then(() => console.log("공유 성공!"))
+          .catch((error) => console.error("공유 실패:", error));
+      } else {
+        alert(
+          `이 브라우저는 공유 기능을 지원하지 않습니다. URL을 직접 복사하세요:\n${shortUrl}`,
+        );
+      }
+    } catch (error) {
+      console.error("공유 실패:", error);
+      alert("공유 과정에서 문제가 발생했습니다.");
     }
-  }
+  };
 
   const saveResult = async () => {
     try {
@@ -50,7 +66,7 @@ const Result = ({ answerData }: ResultProps) => {
 
       const canvas = await html2canvas(resultElement); // 화면 캡쳐
       const dataURL = canvas.toDataURL("image/png"); // png 형식으로 데이터 변환
-      saveAs(dataURL, "result.png")
+      saveAs(dataURL, "result.png");
     } catch (error) {
       console.error("결과 저장 중 오류가 발생했습니다.", error);
       alert("결과 저장에 실패했습니다.");

@@ -1,5 +1,5 @@
 export const shortenUrl = async (longUrl: string): Promise<string | null> => {
-  const API_TOKEN = process.env.TINY_URL_API_TOKEN || "";
+  const API_TOKEN = process.env.NEXT_PUBLIC_TINY_URL_API_TOKEN || "";
   const API_ENDPOINT = "https://api.tinyurl.com/create";
 
   try {
