@@ -71,7 +71,7 @@ const SignInForm: React.FC = () => {
 
   // 회원가입 페이지로 이동하는 함수
   const handleGoToSignUp = () => {
-    router.push("/"); // 회원가입 페이지 경로로 이동
+    router.push("/sign-up"); // 회원가입 페이지 경로로 이동
   };
 
   return (

@@ -1,6 +1,7 @@
 import usePagination from "@/app/hooks/usePagination";
 import LikeCard from "@/app/mypage/[id]/_components/Mylike/LikeCard";
 import { fetchLikePostsData } from "@/app/mypage/_utils/Likepost";
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 
 const LikeList = () => {
@@ -70,11 +71,13 @@ const LikeList = () => {
           <button
             key={startButtonIndex + index}
             onClick={() => goToPage(startButtonIndex + index + 1)}
-            className={`mx-1 rounded px-3 py-2 ${
-              currentPage === startButtonIndex + index + 1
-                ? "bg-blue-600 text-white"
-                : "bg-gray-300 text-black"
-            } hover:bg-blue-500`}
+            className={clsx(
+              `mx-1 rounded px-3 py-2 ${
+                currentPage === startButtonIndex + index + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 text-black"
+              } hover:bg-blue-500`,
+            )}
           >
             {startButtonIndex + index + 1}
           </button>
