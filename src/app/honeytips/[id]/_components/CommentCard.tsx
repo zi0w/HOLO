@@ -56,24 +56,26 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   };
 
   return (
-    <article className="mx-auto w-full max-w-[380px] rounded-lg bg-white p-4 shadow-lg transition duration-300 ease-in-out hover:shadow-xl">
+    <article className="mx-auto w-full rounded-lg">
       <div className="mb-2 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {comment.users?.profile_image_url && (
             <Image
-              className="h-10 w-10 rounded-full border-2 bg-white"
+              className="h-[42px] w-[42px] rounded-full border-2 bg-white"
               src={comment.users.profile_image_url}
               alt="프로필 이미지"
               width={100}
               height={100}
             />
           )}
-
           <div>
-            <p className="text-sm">{comment.users.nickname}</p>
-            <p className="text-xs text-gray-500">
-              {formatDate(comment.created_at)}
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="text-sm text-gray-800 font-bold">{comment.users.nickname}</p>
+              <p className="text-xs text-gray-500">
+                {formatDate(comment.created_at)}
+              </p>
+            </div>
+            <p className="text-sm text-gray-800">{comment.comment}</p>
           </div>
         </div>
         <div className="flex space-x-2">
@@ -82,14 +84,14 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
           editingCommentId === comment.id ? (
             <>
               <button
-                className="rounded-lg bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
+                className="rounded-lg text-sm px-2 py-1 border text-base-500"
                 type="button"
                 onClick={() => handleCommentSave(comment.id)}
               >
                 저장
               </button>
               <button
-                className="rounded-lg bg-gray-300 px-3 py-1 text-gray-700 hover:bg-gray-400"
+                className="rounded-lg text-sm px-2 py-1 border text-base-500"
                 type="button"
                 onClick={() => setEditingCommentId(null)}
               >
@@ -100,7 +102,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
             currentId &&
             currentId === comment.user_id && (
               <button
-                className="rounded-lg bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"
+                className="rounded-lg text-sm px-2 py-1 border text-base-500"
                 type="button"
                 onClick={() => {
                   setEditingCommentId(comment.id);
@@ -113,7 +115,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
           )}
           {currentId && currentId === comment.user_id && (
             <button
-              className="rounded-lg bg-red-500 px-3 py-1 text-white hover:bg-red-600"
+              className="rounded-lg text-sm px-2 py-1 border text-base-500"
               type="button"
               onClick={() => handleCommentDelete(comment.id)}
             >
@@ -129,9 +131,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
           className="w-full resize-none rounded-lg border p-2 text-sm"
           placeholder="댓글을 수정하세요."
         />
-      ) : (
-        <p className="mt-2 text-sm">{comment.comment}</p>
-      )}
+      ) : null}
     </article>
   );
 };

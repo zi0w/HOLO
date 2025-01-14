@@ -1,33 +1,54 @@
 "use client";
 
+import { updatePost } from "@/app/honeytips/_actions/update";
+import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-const PostForm = () => {
-  const titleRef = useRef<HTMLInputElement>(null);
-  const contentRef = useRef<HTMLTextAreaElement>(null);
-  const categoryRef = useRef<HTMLSelectElement>(null);
+type PostFormProps = {
+  postDetailData: Post | null;
+};
+
+const PostForm = ({ postDetailData }: PostFormProps) => {
+  const [title, setTitle] = useState<string>(postDetailData?.title || "");
+  const [content, setContent] = useState<string>(postDetailData?.content || "");
+  const [category, setCategory] = useState<string>(
+    postDetailData?.categories || "청소",
+  );
+
   const [images, setImages] = useState<File[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>(
+    postDetailData?.post_image_url || [],
+  );
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const mode = !!postDetailData ? "edit" : "create";
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "청소";
 
   useEffect(() => {
-    if (categoryRef.current) {
-      categoryRef.current.value = initialCategory;
-    }
+    setCategory(initialCategory);
   }, [initialCategory]);
 
-  const handleSubmit = async () => {
-    const title = titleRef.current?.value.trim() || "";
-    const content = contentRef.current?.value.trim() || "";
+  useEffect(() => {
+    if (mode === "edit" && postDetailData) {
+      setTitle(postDetailData.title);
+      setContent(postDetailData.content);
+      setCategory(postDetailData.categories);
+    }
+  }, [mode, postDetailData]);
 
-    if (!title || !content) {
+  const handleSubmit = async () => {
+    const trimmedTitle = title.trim();
+    const trimmedContent = content.trim();
+
+    if (!trimmedTitle || !trimmedContent) {
       alert("제목과 내용을 모두 입력해주세요.");
       return;
     }
@@ -35,10 +56,7 @@ const PostForm = () => {
     setIsLoading(true);
 
     try {
-      const category = categoryRef.current?.value || "청소";
-
-      // 모든 이미지 업로드 후 URL 배열 생성
-      const imageUrls = await Promise.all(
+      const uploadedImageUrls = await Promise.all(
         images.map(async (image) => {
           if (image) {
             const publicUrl = await uploadPostImageFile(image);
@@ -48,62 +66,94 @@ const PostForm = () => {
         }),
       );
 
-      // 게시물 저장
-      await addPost({
-        newTitle: title,
-        newContent: content,
-        newPostImageUrl: imageUrls.filter(Boolean) as string[],
-        newCategory: category,
-      });
+      const finalImageUrls = uploadedImageUrls.filter(Boolean) as string[];
 
-      // 성공 후 입력값 초기화
+      const imageUrlsToSave = [
+        ...imageUrls.filter((url) => !url.includes("blob:")),
+        ...finalImageUrls,
+      ];
+
+      if (mode === "edit" && postDetailData) {
+        await updatePost({
+          postId: postDetailData.id,
+          updatedTitle: trimmedTitle,
+          updatedContent: trimmedContent,
+          updatedCategory: category,
+          updatedPostImageUrl: imageUrlsToSave,
+          userId: postDetailData.user_id,
+        });
+      } else {
+        await addPost({
+          newTitle: trimmedTitle,
+          newContent: trimmedContent,
+          newPostImageUrl: imageUrlsToSave,
+          newCategory: category,
+        });
+        router.push("/honeytips");
+      }
+
       handleCancel();
     } catch (error) {
-      console.error("게시물 저장 중 오류 발생:", error);
+      console.error("게시물 저장 중 오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleCancel = () => {
+    if (mode === "edit" && postDetailData) {
+      router.push(`/honeytips/${postDetailData.id}`);
+    } else {
+      setTitle("");
+      setContent("");
+      setCategory("청소");
+      setImages([]);
       router.push("/honeytips");
     }
   };
 
-  // 취소 시 입력값 초기화
-  const handleCancel = () => {
-    if (titleRef.current) titleRef.current.value = "";
-    if (contentRef.current) contentRef.current.value = "";
-    if (categoryRef.current) categoryRef.current.value = "청소";
-    setImages([]);
-    router.push("/honeytips");
-  };
-
-  // 이미지 파일 업로드
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
   ) => {
-    if (e.target.files) {
+    if (e.target.files && e.target.files[0] instanceof File) {
       const newImages = [...images];
       newImages[index] = e.target.files[0];
       setImages(newImages);
+
+      const newImageUrls = [...imageUrls];
+      newImageUrls[index] = URL.createObjectURL(e.target.files[0]);
+      setImageUrls(newImageUrls);
     }
   };
 
-  // 이미지 삭제
   const handleImageDelete = (index: number) => {
     const newImages = [...images];
     newImages.splice(index, 1);
     setImages(newImages);
+
+    const newImageUrls = [...imageUrls];
+    newImageUrls.splice(index, 1);
+    setImageUrls(newImageUrls);
   };
 
   const categories = ["청소", "요리", "문화", "기타"];
 
   return (
     <form className="mx-auto max-w-4xl p-4">
-      <section className="mb-4">
-        <label className="mb-2 block text-lg font-semibold">카테고리</label>
+      <section className="mb-8 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="rounded px-3 py-1.5 text-black"
+          disabled={isLoading}
+        >
+          취소
+        </button>
         <select
-          ref={categoryRef}
-          defaultValue="청소"
-          className="w-full rounded-md border p-2"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="rounded-md p-2"
         >
           {categories.map((category) => (
             <option key={category} value={category}>
@@ -111,16 +161,23 @@ const PostForm = () => {
             </option>
           ))}
         </select>
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className={clsx("rounded px-3 py-1.5 text-primary-500", {
+            "cursor-not-allowed opacity-50": isLoading,
+          })}
+          disabled={isLoading}
+        >
+          {isLoading ? "등록 중..." : "등록"}
+        </button>
       </section>
 
       <section className="mb-4">
-        <label className="mb-2 block text-lg font-semibold" htmlFor="title">
-          제목
-        </label>
         <input
-          ref={titleRef}
           type="text"
-          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           placeholder="제목을 입력해주세요."
           className="w-full rounded-md border p-2"
           disabled={isLoading}
@@ -128,15 +185,9 @@ const PostForm = () => {
       </section>
 
       <section className="mb-4">
-        <label
-          className="mb-2 block p-2 text-lg font-semibold"
-          htmlFor="content"
-        >
-          내용
-        </label>
         <textarea
-          ref={contentRef}
-          id="content"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           placeholder="내용을 입력해주세요."
           className="w-full rounded-md border p-2"
           rows={10}
@@ -144,39 +195,16 @@ const PostForm = () => {
         />
       </section>
 
-      <section className="mt-6 flex justify-end space-x-4">
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className={clsx(
-            "rounded px-4 py-2 text-white hover:bg-blue-600",
-            "bg-blue-500",
-            { "cursor-not-allowed opacity-50": isLoading },
-          )}
-          disabled={isLoading}
-        >
-          {isLoading ? "저장 중..." : "저장"}
-        </button>
-        <button
-          type="button"
-          onClick={handleCancel}
-          className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
-          disabled={isLoading}
-        >
-          취소
-        </button>
-      </section>
-
-      <section className="mt-6 flex justify-start space-x-4">
+      <section className="mt-6 flex justify-start space-x-3">
         {[0, 1, 2].map((index) => (
           <article key={index} className="relative">
             <label
               htmlFor={`image-upload-${index}`}
-              className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-md border bg-gray-200"
+              className="flex h-[115px] w-[115px] cursor-pointer items-center justify-center rounded-md border bg-gray-200"
             >
-              {images[index] ? (
+              {mode === "edit" && imageUrls[index] ? (
                 <Image
-                  src={URL.createObjectURL(images[index])}
+                  src={imageUrls[index]}
                   alt={`Preview ${index}`}
                   width={200}
                   height={200}
@@ -193,7 +221,7 @@ const PostForm = () => {
                 className="hidden"
               />
             </label>
-            {images[index] && (
+            {mode === "edit" && imageUrls[index] && (
               <button
                 type="button"
                 onClick={() => handleImageDelete(index)}

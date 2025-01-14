@@ -40,7 +40,7 @@ const LikeButton = ({ postId }: { postId: Like["post_id"] }) => {
     <section className="flex text-2xl">
       <button onClick={handleLikeBtn}>
         {likeData?.length ? (
-          <FaHeart className="text-red-500" />
+          <FaHeart className="text-primary-500" />
         ) : (
           <FaRegHeart />
         )}

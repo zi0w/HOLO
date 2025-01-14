@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef } from "react";
-// import useAuth from "../../_hooks/useHoneytipsAuth";
 import { useAddCommentMutation } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
+import { useRef } from "react";
+import { IoArrowUpCircle } from "react-icons/io5";
 
 type CommentFormProps = {
   postDetailData: Post;
@@ -27,27 +27,31 @@ const CommentForm = ({ postDetailData }: CommentFormProps) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-auto mt-4 flex w-[380px] items-center justify-center rounded bg-gray-100 p-4"
-    >
-      <input
-        className="mr-4 flex-grow rounded px-2 py-1 text-sm"
-        type="text"
-        placeholder={
-          isAuthenticated ? "댓글을 입력해주세요." : "로그인이 필요합니다."
-        }
-        ref={inputRef}
-        disabled={!isAuthenticated}
-      />
-      <button
-        className="rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
-        type="submit"
-        disabled={!isAuthenticated}
+    <div className="mx-auto flex w-[362px] flex-col mb-4">
+      <form
+        onSubmit={handleSubmit}
+        className="mt-1 flex items-center justify-center rounded"
       >
-        저장
-      </button>
-    </form>
+        <div className="relative w-full">
+          <input
+            className="mx-auto h-[40px] w-[362px] flex-grow rounded py-1 pl-2 pr-12 text-sm"
+            type="text"
+            placeholder={
+              isAuthenticated ? "댓글을 입력해주세요." : "로그인이 필요합니다."
+            }
+            ref={inputRef}
+            disabled={!isAuthenticated}
+          />
+          <button
+            className="absolute right-1 top-1/2 -translate-y-1/2 transform px-1 text-3xl text-primary-500 disabled:bg-base-400 hover:disabled:cursor-not-allowed"
+            type="submit"
+            disabled={!isAuthenticated}
+          >
+            <IoArrowUpCircle />
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
