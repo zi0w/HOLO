@@ -3,11 +3,10 @@ import { IoMdClose } from "react-icons/io";
 
 type ModalProps = {
   text: string;
-  isConfirm: boolean;
   onAction: () => void;
 };
 
-const Modal = ({ text, onAction }: Omit<ModalProps, "isConfirm">) => {
+const Modal = ({ text, onAction }: ModalProps) => {
   const { isModalOpen, setModalOpen, isConfirm } = useModalStore();
   if (!isModalOpen) return null;
 
