@@ -1,5 +1,6 @@
 "use client";
 
+import SignoutButton from "@/app/sign-in/_components/SignoutButton";
 import SocialLogin from "@/app/sign-in/_components/SocialLogin";
 import useSignInMutation from "@/app/sign-in/_hooks/useSignInMutation";
 import { useRouter } from "next/navigation";
@@ -142,6 +143,7 @@ const SignInForm: React.FC = () => {
         >
           회원가입
         </button>
+        <SignoutButton />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
 import LikeList from "@/app/mypage/[id]/_components/Mylike/LikeList";
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
 import UserProfile from "@/app/mypage/_components/UserProfile";
+import SignoutButton from "@/app/sign-in/_components/SignoutButton";
 import { useState } from "react";
 
 const Mypageform: React.FC = () => {
@@ -66,7 +67,7 @@ const Mypageform: React.FC = () => {
           회원 탈퇴
         </button>
       </div>
-
+<SignoutButton/>
       {/* 프로필 수정 모달 */}
       <ProfileEditModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
