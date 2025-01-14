@@ -1,14 +1,34 @@
+import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import PostForm from "@/app/honeytips/post/_components/PostForm";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "자취 꿀팁 작성하기 - 자취 꿀팁 게시판",
-  description:
-    "자취 생활에 도움이 되는 꿀팁을 작성하여 다른 사람들과 공유하세요.",
+export const generateMetadata = async ({ searchParams }: Props) => {
+  let title = "자취 꿀팁 게시글 작성";
+  let description = "자취 꿀팁을 작성해주세요.";
+
+  if (searchParams.edit) {
+    const postDetailData = await fetchPostDetail(searchParams.edit);
+    if (postDetailData) {
+      title = `${postDetailData.title} - 자취 꿀팁 게시글 수정`;
+      description = `${postDetailData.content.slice(0, 150)}...`;
+    }
+  }
+
+  return {
+    title,
+    description,
+  };
 };
 
-const PostPage = () => {
-  return <PostForm />;
+type Props = {
+  searchParams: {
+    edit: string;
+  };
+};
+
+const PostPage = async ({ searchParams }: Props) => {
+  const postDetailData = await fetchPostDetail(searchParams.edit);
+
+  return <PostForm postDetailData={postDetailData} />;
 };
 
 export default PostPage;

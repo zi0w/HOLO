@@ -12,7 +12,7 @@ export const fetchCommentData = async (postId: Comment["post_id"]) => {
     .from("comments")
     .select("*, users(nickname, profile_image_url)")
     .eq("post_id", postId)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: true });
 
   if (error) {
     console.error("코멘트 불러오기에 실패했습니다.");
