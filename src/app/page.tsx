@@ -2,6 +2,7 @@
 
 import CompleteModal from "@/components/common/CompleteModal";
 import ConfirmModal from "@/components/common/ConfirmModal";
+import Map from "@/components/main/Map";
 import { useState } from "react";
 
 const Home = () => {
@@ -33,6 +34,7 @@ const Home = () => {
         isOpen={isCompleteModalOpen}
         onClose={() => setIsCompleteModalOpen(false)}
       />
+      <Map />
     </div>
   );
 };

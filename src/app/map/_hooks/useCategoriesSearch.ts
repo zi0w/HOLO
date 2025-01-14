@@ -1,7 +1,9 @@
-import type { Coordinates, Place } from "@/app/map/_types/map";
+import type {
+  Coordinates,
+  Place,
+  PlacesSearchResultItem,
+} from "@/app/map/_types/map";
 import { useEffect, useState } from "react";
-
-type PlacesSearchResultItem = kakao.maps.services.PlacesSearchResultItem;
 
 const useCategoriesSearch = (mapCenter: Coordinates) => {
   const [category, setCategory] = useState<string>(""); // 카테고리 선택 상태 관리
@@ -77,6 +79,7 @@ const useCategoriesSearch = (mapCenter: Coordinates) => {
     placeDetail,
     setSelectedPlace,
     setPlaceDetail,
+    category
   };
 };
 export default useCategoriesSearch;
