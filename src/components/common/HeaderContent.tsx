@@ -1,14 +1,20 @@
 import Logo from "@/assets/images/common/logo.png";
 import { NAVIGATION_PATHS } from "@/constants/navigation";
 import useAuthStore from "@/store/authStore";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 
-const HeaderContent = () => {
+const HeaderContent = ({ hidden }: { hidden: boolean }) => {
   const { isLoggedIn } = useAuthStore();
 
   return (
-    <header className="h-[60px] lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-[240px] lg:bg-primary-50">
+    <header
+      className={clsx(
+        "h-[60px] lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-[240px] lg:bg-primary-50",
+        hidden && "h-0 !opacity-0",
+      )}
+    >
       <div className="lg:flex lg:h-full lg:flex-col lg:p-5">
         <div className="fixed left-0 top-0 z-10 flex w-full justify-between bg-primary-50 p-5 lg:static lg:justify-center lg:bg-transparent lg:p-0">
           <Link

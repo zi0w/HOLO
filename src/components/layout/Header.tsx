@@ -9,10 +9,10 @@ const Header = () => {
   useCheckAuth();
 
   if (pathname?.startsWith("/sign-in") || pathname?.startsWith("/sign-up")) {
-    return null;
+    return <HeaderContent hidden={true} />;
   }
 
-  return <HeaderContent />;
+  return <HeaderContent hidden={false} />;
 };
 
 export default Header;
