@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
-  useCheckAuth();   //소셜로그인 
+  useCheckAuth(); //소셜로그인
   const supabase = createClient();
 
   return (
