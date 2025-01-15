@@ -13,6 +13,7 @@ export type PaginationHook<T> = {
 };
 
 const usePagination = <T,>(
+
   items: T[],
   itemsPerPage: number,
 ): PaginationHook<T> => {
@@ -48,3 +49,4 @@ const usePagination = <T,>(
 };
 
 export default usePagination;
+
