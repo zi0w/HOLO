@@ -12,7 +12,8 @@ export type PaginationHook<T> = {
   goToPage: (page: number) => void;
 };
 
-export const usePagination = <T,>(
+const usePagination = <T,>(
+
   items: T[],
   itemsPerPage: number,
 ): PaginationHook<T> => {
@@ -46,4 +47,6 @@ export const usePagination = <T,>(
     goToPage,
   };
 };
+
+export default usePagination;
 
