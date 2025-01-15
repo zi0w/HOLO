@@ -2,8 +2,9 @@
 
 import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기// 페이지네이션 훅
 import LikeCard from "@/app/mypage/[id]/_components/Mylike/LikeCard"; // LikeCard 컴포넌트
-import { fetchLikePostsData } from "@/app/mypage/_utils/MyfetchLikePostsData";
-import usePagination from "@/hooks/usePagination";
+import { MyfetchLikePostsData } from "@/app/mypage/_utils/MyfetchLikePostsData";
+import { usePagination } from "@/hooks/usePagination";
+
 // API 호출 함수
 import clsx from "clsx"; // 클래스 이름 조합 라이브러리
 import { useEffect, useState } from "react";
@@ -19,7 +20,7 @@ const LikeList = () => {
         console.error("User not logged in");
         return;
       }
-      const data = await fetchLikePostsData(); // 좋아요한 게시물 데이터 가져오기
+      const data = await MyfetchLikePostsData(); // 좋아요한 게시물 데이터 가져오기
 
       console.log("Raw data:", data); // 전체 데이터 출력
 
