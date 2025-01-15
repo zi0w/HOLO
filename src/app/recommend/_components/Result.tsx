@@ -1,6 +1,5 @@
 import fetchRecommendation from "@/app/recommend/_actions/fetchRecommendation";
 import type { Answer } from "@/app/recommend/_types/answer";
-import { shortenUrl } from "@/app/recommend/_utils/shortenUrl";
 import { saveAs } from "file-saver";
 import html2canvas from "html2canvas";
 import Link from "next/link";
@@ -24,36 +23,33 @@ const Result = ({ answerData }: ResultProps) => {
   };
 
   const shareResult = async () => {
-    const queryParams = new URLSearchParams({
-      recommendation: encodeURIComponent(menuRecommendation),
-    }).toString();
-
-    const longUrl = `${window.location.origin}/recommend/result/shared?${queryParams}`;
-
     try {
-      const shortUrl = await shortenUrl(longUrl);
+      const response = await fetch("/api/recommend", {
+        method: "POST",
+        
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ data: menuRecommendation }),
+      });
 
-      if (!shortUrl) {
-        alert("URL 단축에 실패했습니다. 다시 시도해주세요.");
-        return;
+      if (!response.ok) {
+        alert("결과 공유에 실패했습니다. 다시 시도해주세요.");
+        throw new Error("데이터 저장 실패");
       }
+
+      const { id } = await response.json();
+      const url = `${window.location.origin}/recommend/result?id=${id}`;
 
       if (navigator.share) {
-        navigator
-          .share({
-            text: "저의 추천 메뉴를 확인해보세요!",
-            url: shortUrl,
-          })
-          .then(() => console.log("공유 성공!"))
-          .catch((error) => console.error("공유 실패:", error));
+        await navigator.share({
+          text: "저의 추천 메뉴를 확인해보세요!",
+          url,
+        });
       } else {
-        alert(
-          `이 브라우저는 공유 기능을 지원하지 않습니다. URL을 직접 복사하세요:\n${shortUrl}`,
-        );
+        alert(`URL을 복사하여 공유해보세요: ${url}`);
       }
     } catch (error) {
-      console.error("공유 실패:", error);
-      alert("공유 과정에서 문제가 발생했습니다.");
+      console.error("결과 공유에 실패했습니다.", error);
+      alert("결과 공유에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -90,8 +86,8 @@ const Result = ({ answerData }: ResultProps) => {
       ) : (
         <p>추천 메뉴를 불러오는 중...</p>
       )}
-      <Link href="/recommend">
-        <button className="mt-4 border p-1">추천 다시 받기</button>
+      <Link href="/recommend" className="mt-4 border p-1">
+        추천 다시 받기
       </Link>
       <div className="mt-4 flex gap-4 pb-4">
         <button onClick={saveResult}>결과 저장</button>
