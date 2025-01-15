@@ -1,6 +1,7 @@
 "use client"; //TODO: 이후에 지우기
 
 import Modal from "@/components/common/Modal";
+import Map from "@/components/main/Map";
 import useModalStore from "@/store/modalStore";
 
 const Home = () => {
@@ -29,6 +30,7 @@ const Home = () => {
         삭제 모달
       </button>
       <Modal text="삭제" onAction={handleDelete} />
+      <Map />
     </div>
   );
 };

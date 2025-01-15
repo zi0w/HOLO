@@ -12,7 +12,7 @@ const useKakaoMap = () => {
     lng: 126.97875415079992,
   });
 
-  const [mapLevel, setMapLevel] = useState(4);
+  const [mapLevel, setMapLevel] = useState<number>(4);
 
   const onClickPlusMapLevel = () => {
     setMapLevel((prev) => Math.max(prev - 1, 1));
