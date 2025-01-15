@@ -10,7 +10,7 @@ import clsx from "clsx"; // clsx 임포트
 import MyCommentCard from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
 import { CommentWithPost } from "@/app/mypage/_types/CommentWithPost";
 
-const CommentList = () => {
+const MyCommentList = () => {
   const [comments, setComments] = useState<CommentWithPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -133,4 +133,4 @@ const CommentList = () => {
   );
 };
 
-export default CommentList;
+export default MyCommentList;

@@ -23,7 +23,7 @@ type PostLikeCardProps = {
   onLikeChange: () => void;
 };
 
-const LikeCard = ({ post, onLikeChange }: PostLikeCardProps) => {
+const MyLikeCard = ({ post, onLikeChange }: PostLikeCardProps) => {
   const [isContentVisible, setIsContentVisible] = useState(false);
 
   const toggleContentVisibility = () => {
@@ -85,4 +85,4 @@ const LikeCard = ({ post, onLikeChange }: PostLikeCardProps) => {
   );
 };
 
-export default LikeCard;
+export default MyLikeCard;

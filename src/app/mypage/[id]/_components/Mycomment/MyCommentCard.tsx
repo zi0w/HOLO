@@ -1,27 +1,28 @@
 "use client";
 
+import type { CommentWithPost } from "@/app/mypage/_types/CommentWithPost";
 import Image from "next/image";
 import Link from "next/link";
 
 
-type User = {
-  nickname: string;
-  profile_image_url: string | null;
-};
+// type User = {
+//   nickname: string;
+//   profile_image_url: string | null;
+// };
 
-type Post = {
-  title: string;
-  users: User;
-};
+// type Post = {
+//   title: string;
+//   users: User;
+// };
 
-type CommentWithPost = {
-  id: string;
-  comment: string;
-  created_at: string;
-  users: User;
-  posts: Post;
-  post_id: string;
-};
+// type CommentWithPost = {
+//   id: string;
+//   comment: string;
+//   created_at: string;
+//   users: User;
+//   posts: Post;
+//   post_id: string;
+// };
 
 type CommentCardProps = {
   comment: CommentWithPost;
