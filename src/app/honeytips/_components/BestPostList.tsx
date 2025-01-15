@@ -7,8 +7,9 @@ import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaRegCommentAlt, FaRegHeart } from "react-icons/fa";
-import { LuDot } from "react-icons/lu";
+import SmallComment from "@/assets/images/honeytips/Frame 40.svg";
+import SmallHeart from "@/assets/images/honeytips/heart.svg";
+import SmallDot from "@/assets/images/honeytips/small dot.svg";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
@@ -78,10 +79,10 @@ const BestPostList = () => {
                           height={100}
                         />
                       )}
-                      <p className="ml-1 text-sm text-base-600">
+                      <p className="mx-1 text-sm text-base-600">
                         {post.users?.nickname}
                       </p>
-                      <LuDot className="mx-0 text-base-600" />
+                      <SmallDot />
                       <time className="ml-1 text-sm text-base-600">
                         {formatDate(post.created_at)}
                       </time>
@@ -90,13 +91,13 @@ const BestPostList = () => {
 
                   <div className="flex items-center gap-2 text-base-600">
                     <div className="flex items-center gap-1">
-                      <FaRegHeart />
+                      <SmallHeart />
                       <span className="text-xs">
                         {post.likes?.[0]?.count || 0}
                       </span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <FaRegCommentAlt />
+                      <SmallComment />
                       <span className="text-xs">
                         {post.comments?.[0]?.count || 0}
                       </span>

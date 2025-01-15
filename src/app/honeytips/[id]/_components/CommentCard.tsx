@@ -5,11 +5,11 @@ import {
   useUpdateCommentMutation,
 } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
+import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import { useState } from "react";
-import { PiDotsThreeCircleLight } from "react-icons/pi";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
@@ -89,20 +89,20 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
                 placeholder="댓글을 수정하세요."
               />
             ) : (
-              <p className=" mt-1 text-sm text-gray-800">{comment.comment}</p>
+              <p className="mt-1 text-sm text-gray-800">{comment.comment}</p>
             )}
           </div>
         </div>
         {currentId && currentId === comment.user_id && (
           <div className="relative">
             <button
-              className="rounded-full text-2xl text-gray-500"
+              className="rounded-full text-gray-500"
               onClick={() => setIsDropdownOpen((prev) => !prev)}
             >
-              <PiDotsThreeCircleLight />
+              <MenuDots />
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 bottom-8 z-10 w-16 rounded-lg border bg-white">
+              <div className="absolute bottom-8 right-0 z-10 w-16 rounded-lg border bg-white">
                 {editingCommentId === comment.id ? (
                   <>
                     <button

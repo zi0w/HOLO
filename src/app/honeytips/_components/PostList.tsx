@@ -9,7 +9,8 @@ import usePagination from "@/hooks/usePagination";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BsPlusCircle } from "react-icons/bs";
+import TempButton from "@/assets/images/honeytips/love_selected_42.svg"
+import Image from "next/image";
 
 const PostList = () => {
   const isAuthenticated = useAuth();
@@ -96,9 +97,9 @@ const PostList = () => {
       <div className="fixed bottom-20 right-6 z-50">
         <button
           onClick={handleGoToPost}
-          className="relative flex items-center justify-center rounded-full border-primary-500 bg-primary-50 text-5xl text-primary-500"
+          className="relative flex items-center justify-center rounded-full bg-white"
         >
-          <BsPlusCircle />
+          <TempButton />
         </button>
       </div>
 

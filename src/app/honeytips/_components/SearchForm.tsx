@@ -1,8 +1,8 @@
 "use client";
 
+import Search from "@/assets/images/honeytips/search.svg";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { CiSearch } from "react-icons/ci";
 
 const SearchForm = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,7 +23,7 @@ const SearchForm = () => {
   return (
     <form onSubmit={handleSubmit} className="flex gap-4" role="search">
       <div className="relative w-[362px]">
-        <CiSearch className="absolute left-3 top-1/2 -translate-y-1/2 transform text-2xl text-gray-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 transform text-2xl text-gray-400" />
         <input
           type="text"
           id="searchQuery"
