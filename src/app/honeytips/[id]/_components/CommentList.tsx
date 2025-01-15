@@ -39,7 +39,9 @@ const CommentList = ({ postDetailData }: CommentListProps) => {
 
   return (
     <div className="mx-auto mt-4 flex w-[362px] flex-col">
-      <p className="border-b border-base-400 pb-2">댓글 {comments?.length || 0}</p>
+      <p className="border-b border-base-400 pb-2">
+        댓글 {comments?.length || 0}
+      </p>
       <section className="mx-auto my-5 flex w-[362px] flex-col items-center justify-center gap-3 rounded">
         {comments?.length === 0 ? (
           <p className="text-sm text-gray-400">입력된 댓글이 없습니다.</p>

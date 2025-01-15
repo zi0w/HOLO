@@ -4,13 +4,13 @@ import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost } from "@/app/honeytips/_utils/detail";
+import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { PiDotsThreeCircleLight } from "react-icons/pi";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -63,7 +63,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
                 className="text-base80 rounded-md py-1"
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
               >
-                <PiDotsThreeCircleLight className="text-2xl text-gray-500" />
+                <MenuDots className="text-2xl text-gray-500" />
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 z-10 w-16 rounded-lg border bg-white shadow-lg">
