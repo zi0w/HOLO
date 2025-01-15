@@ -66,7 +66,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
                 <MenuDots className="text-2xl text-gray-500" />
               </button>
               {isDropdownOpen && (
-                <div className="absolute right-0 z-10 w-16 rounded-lg border bg-white shadow-lg">
+                <div className="absolute top-8 right-0 z-10 w-14 rounded-lg border">
                   <Link
                     href={`/honeytips/post?edit=${postDetailData.id}`}
                     className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"

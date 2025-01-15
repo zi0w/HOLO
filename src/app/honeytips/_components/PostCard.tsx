@@ -1,9 +1,9 @@
 "use client";
 
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
-import SmallComment from "@/assets/images/honeytips/Frame 40.svg";
+import SmallComment from "@/assets/images/honeytips/comment.svg";
 import SmallHeart from "@/assets/images/honeytips/heart.svg";
-import SmallDot from "@/assets/images/honeytips/small dot.svg";
+import SmallDot from "@/assets/images/honeytips/dot.svg";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";

@@ -102,7 +102,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
               <MenuDots />
             </button>
             {isDropdownOpen && (
-              <div className="absolute bottom-8 right-0 z-10 w-16 rounded-lg border bg-white">
+              <div className="absolute bottom-8 right-0 z-10 w-14 rounded-lg border bg-white">
                 {editingCommentId === comment.id ? (
                   <>
                     <button

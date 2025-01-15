@@ -1,5 +1,6 @@
 "use client"; //TODO: 이후에 지우기
 
+import BestPostList from "@/app/honeytips/_components/BestPostList";
 import Modal from "@/components/common/Modal";
 import Map from "@/components/main/Map";
 import useModalStore from "@/store/modalStore";
@@ -31,6 +32,8 @@ const Home = () => {
       </button>
       <Modal text="삭제" onAction={handleDelete} />
       <Map />
+      {/* <Policy /> */}
+      <BestPostList />
     </div>
   );
 };
