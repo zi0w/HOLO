@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useFunnel } from "@/app/recommend/_hooks/useFunnel";
 import type { Answer } from "@/app/recommend/_types/answer";
 import Result from "@/app/recommend/_components/Result"
-import { questions } from "@/app/recommend/_constants/questions";
+import { QUESTIONS } from "@/app/recommend/_constants/questions";
 import Question from "@/app/recommend/_components/Question";
 
-const steps = [...questions.map((q) =>  q.id), "result"];
+const steps = [...QUESTIONS.map((q) =>  q.id), "result"];
 
 const SelectForms = () => {
   const { Funnel, Step, next, prev } = useFunnel(steps[0]);
@@ -30,7 +30,7 @@ const SelectForms = () => {
 
   return (
     <Funnel>
-      {[...questions.map((q, index) => (
+      {[...QUESTIONS.map((q, index) => (
         <Step key={q.id} name={q.id}>
           <Question 
             question={q.question}

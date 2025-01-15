@@ -26,6 +26,7 @@ const Result = ({ answerData }: ResultProps) => {
     try {
       const response = await fetch("/api/recommend", {
         method: "POST",
+        
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ data: menuRecommendation }),
       });

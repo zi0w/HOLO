@@ -6,7 +6,7 @@ type Question = {
     answers: string[]
 }
 
-export const questions:Question[] = [
+export const QUESTIONS:Question[] = [
     {
         id: "answer1",
         question: "오늘 기분이 어때요?",
@@ -14,7 +14,7 @@ export const questions:Question[] = [
     },
     {
         id: "answer2",
-        question: "어떤 종류의 음식이 땡겨요?",
+        question: "어떤 종류의 음식이 땡겨요?", 
         answers: ["한식", "중식", "일식", "양식"]
     },
     {

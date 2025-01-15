@@ -12,7 +12,7 @@ export const POST = async (req:NextRequest) => {
         }
 
         const id = uuidv4()
-        database.set(id, data)
+        database.set(id, data) // database라는 말이 모호?
         return NextResponse.json({id});
     } catch (error) {
         console.error("POST 요청에 실패했습니다.", error);
