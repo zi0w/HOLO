@@ -2,37 +2,37 @@
 
 import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기
 import { useEffect, useState } from "react";
-// API 호출 함수
-import { deleteComment, updateComment } from "@/app/honeytips/_utils/comment";
- // 페이지네이션 훅
-import { MyfetchCommentPostsData } from "@/app/mypage/_utils/MyfetchCommentPostsData";
-import clsx from "clsx"; // 클래스 이름 조합 라이브러리
-import CommentCard from "./MyCommentCard"; // CommentCard 컴포넌트
-import { usePagination } from "@/hooks/usePagination";
+import { deleteComment, updateComment } from "@/app/honeytips/_utils/comment"; // 댓글 관련 API 함수 임포트
+import { MyfetchCommentPostsData } from "@/app/mypage/_utils/MyfetchCommentPostsData"; // 댓글 데이터 가져오는 함수 임포트
+
+import usePagination from "@/hooks/usePagination"; // 페이지네이션 훅
+import clsx from "clsx"; // clsx 임포트
+import MyCommentCard from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
+import { CommentWithPost } from "@/app/mypage/_types/CommentWithPost";
 
 const CommentList = () => {
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<CommentWithPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const loadComments = async () => {
     try {
-      const userId = await getId(); // 사용자 ID 가져오기
+      const userId = await getId();
       if (!userId) {
         console.error("User not logged in");
         return;
       }
-      const data = await MyfetchCommentPostsData(userId); // 사용자 ID에 따라 댓글이 달린 게시물 데이터 가져오기
-      setComments(data); // 상태 업데이트
+      const data = await MyfetchCommentPostsData(userId);
+      setComments(data as CommentWithPost[]);
     } catch (error) {
       console.error("댓글 불러오기에 실패했습니다:", error);
     } finally {
-      setIsLoading(false); // 로딩 완료
+      setIsLoading(false);
     }
   };
 
   const handleDeleteComment = async (commentId: string) => {
     try {
-      await deleteComment(commentId); // 댓글 삭제 API 호출
+      await deleteComment(commentId);
       loadComments(); // 댓글 삭제 후 다시 로드
     } catch (error) {
       console.error("댓글 삭제 중 오류가 발생했습니다:", error);
@@ -44,7 +44,8 @@ const CommentList = () => {
       await updateComment({
         editingComment: newContent,
         editingId: commentId,
-        postId: comments.find((comment) => comment.id === commentId).post_id, // 댓글의 게시물 ID를 가져옴
+        postId:
+          comments.find((comment) => comment.id === commentId)?.post_id || "",
       });
       loadComments(); // 댓글 수정 후 다시 로드
     } catch (error) {
@@ -75,7 +76,7 @@ const CommentList = () => {
     <div className="container mx-auto p-4">
       {currentComments.length > 0 ? (
         currentComments.map((comment) => (
-          <CommentCard
+          <MyCommentCard
             key={comment.id}
             comment={comment}
             onDelete={handleDeleteComment}
@@ -86,11 +87,15 @@ const CommentList = () => {
         <p>댓글이 없습니다.</p> // 댓글이 없을 경우 표시
       )}
 
+      {/* 페이지네이션 UI */}
       <div className="mt-4 flex items-center justify-center">
         <button
           onClick={prevPage}
           disabled={currentPage === 1}
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          className={clsx(
+            "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600",
+            { "cursor-not-allowed opacity-50": currentPage === 1 },
+          )}
         >
           &lt; {/* 이전 페이지 버튼 */}
         </button>
@@ -102,11 +107,11 @@ const CommentList = () => {
             key={startButtonIndex + index}
             onClick={() => goToPage(startButtonIndex + index + 1)}
             className={clsx(
-              `mx-1 rounded px-3 py-2 ${
-                currentPage === startButtonIndex + index + 1
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-300 text-black"
-              } hover:bg-blue-500`,
+              "mx-1 rounded px-3 py-2",
+              currentPage === startButtonIndex + index + 1
+                ? "bg-blue-600 text-white"
+                : "bg-gray-300 text-black",
+              "hover:bg-blue-500",
             )}
           >
             {startButtonIndex + index + 1} {/* 페이지 번호 */}
@@ -116,7 +121,10 @@ const CommentList = () => {
         <button
           onClick={nextPage}
           disabled={currentPage === totalPages}
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          className={clsx(
+            "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600",
+            { "cursor-not-allowed opacity-50": currentPage === totalPages },
+          )}
         >
           &gt; {/* 다음 페이지 버튼 */}
         </button>
