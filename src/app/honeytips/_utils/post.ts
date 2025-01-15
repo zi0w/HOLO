@@ -1,5 +1,3 @@
-"use client";
-
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { createClient } from "@/lib/utils/supabase/client";

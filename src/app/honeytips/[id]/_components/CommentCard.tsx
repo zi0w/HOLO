@@ -39,14 +39,14 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
       postId,
     });
     setEditingCommentId(null);
-    setIsDropdownOpen(false); // 모달 닫기
+    setIsDropdownOpen(false);
   };
 
   const handleCommentDelete = (id: string) => {
     const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
     if (!isConfirmed) return;
     deleteCommentMutation.mutate(id);
-    setIsDropdownOpen(false); // 모달 닫기
+    setIsDropdownOpen(false);
   };
 
   const formatDate = (date: string) => {
