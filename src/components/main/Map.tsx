@@ -1,3 +1,5 @@
+"use client";
+
 import CategoryButtons from "@/app/map/_components/CategoryButtons";
 import MapContainer from "@/app/map/_components/MapContainer";
 import useCategoriesSearch from "@/app/map/_hooks/useCategoriesSearch";
