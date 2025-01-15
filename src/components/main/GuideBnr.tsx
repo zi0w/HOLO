@@ -8,7 +8,7 @@ const GuideBnr = ({ isPolicy }: { isPolicy: boolean }) => {
   return (
     <div
       className={clsx(
-        "m-5 flex items-end justify-between rounded-lg",
+        "m-5 flex items-end justify-between rounded-3xl overflow-hidden",
         isPolicy ? "bg-primary-800" : "flex-row-reverse bg-primary-100",
       )}
     >
