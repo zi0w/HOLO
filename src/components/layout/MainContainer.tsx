@@ -11,6 +11,7 @@ const MainContainer = ({ children }: { children: React.ReactNode }) => {
   const hideHeader =
     pathname?.startsWith("/sign-in") || pathname?.startsWith("/sign-up");
 
+
   return (
     <>
       <Header hidden={hideHeader} />

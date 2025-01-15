@@ -47,9 +47,9 @@ export const useFunnel = (initialStep: string) => {
     updateStep(nextStep);
   };
 
-  const prev = (prevStep: string): void => {
+  const prev = (prevStep: string): void => { // TODO: next랑 합치기
     updateStep(prevStep);
   };
 
-  return { Funnel, Step, next, prev };
+  return { Funnel, Step, next, prev, currentStep };
 };
