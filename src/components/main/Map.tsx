@@ -25,7 +25,7 @@ const Map = () => {
     setPlaceDetail,
   } = useCategoriesSearch(mapCenter);
   return (
-    <div className="relative mx-auto h-80 w-11/12">
+    <div className="relative mx-auto w-11/12">
       {geolocationError && <div>{geolocationError}</div>}
 
       {/* 카테고리 검색 버튼 */}

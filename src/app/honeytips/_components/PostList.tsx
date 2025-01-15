@@ -5,12 +5,11 @@ import { POST_CATEGORIES } from "@/app/honeytips/_constans/post";
 import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
+import PlusButton from "@/assets/images/honeytips/plus-circle.svg"
 import usePagination from "@/hooks/usePagination";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import TempButton from "@/assets/images/honeytips/love_selected_42.svg"
-import Image from "next/image";
 
 const PostList = () => {
   const isAuthenticated = useAuth();
@@ -97,9 +96,9 @@ const PostList = () => {
       <div className="fixed bottom-20 right-6 z-50">
         <button
           onClick={handleGoToPost}
-          className="relative flex items-center justify-center rounded-full bg-white"
+          className="relative flex items-center justify-center rounded-full"
         >
-          <TempButton />
+          <PlusButton />
         </button>
       </div>
 

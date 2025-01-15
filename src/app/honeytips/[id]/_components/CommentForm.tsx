@@ -3,7 +3,7 @@
 import { useAddCommentMutation } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
-import Arrow from "@/assets/images/honeytips/arrow-up-circle.svg";
+import CommentButton from "@/assets/images/honeytips/comment-button.svg";
 import { useRef } from "react";
 
 type CommentFormProps = {
@@ -47,7 +47,7 @@ const CommentForm = ({ postDetailData }: CommentFormProps) => {
             type="submit"
             disabled={!isAuthenticated}
           >
-            <Arrow />
+            <CommentButton />
           </button>
         </div>
       </form>
