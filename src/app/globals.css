@@ -64,6 +64,31 @@ body {
   @apply border border-primary-500 text-primary-500;
 }
 
+.swiper-pagination-bullet {
+  background-color: #ccc !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #FF7600 !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #222222 !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #FF7600 !important;
+}
+
+.swiper-slide {
+  background-color: #f9f9f9 !important;
+}
+
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

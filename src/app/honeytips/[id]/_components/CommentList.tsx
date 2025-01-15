@@ -29,7 +29,7 @@ const CommentList = ({ postDetailData }: CommentListProps) => {
 
   if (isPending || isError) {
     return (
-      <div className="mx-auto flex h-[300px] items-center justify-center">
+      <div className="mx-auto flex h-[200px] items-center justify-center">
         <p className="text-center">
           {isPending ? "로딩중..." : "에러가 발생했습니다."}
         </p>
@@ -38,11 +38,11 @@ const CommentList = ({ postDetailData }: CommentListProps) => {
   }
 
   return (
-    <div className="mx-auto mt-4 flex w-[362px] flex-col">
+    <div className="mx-5 mt-4 flex flex-col">
       <p className="border-b border-base-400 pb-2">
         댓글 {comments?.length || 0}
       </p>
-      <section className="mx-auto my-5 flex w-[362px] flex-col items-center justify-center gap-3 rounded">
+      <section className="my-5 flex flex-col items-center justify-center gap-3 rounded">
         {comments?.length === 0 ? (
           <p className="text-sm text-gray-400">입력된 댓글이 없습니다.</p>
         ) : (

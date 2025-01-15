@@ -60,7 +60,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   };
 
   return (
-    <article className="mx-auto w-full rounded-lg">
+    <article className="mx-5 w-full rounded-lg">
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           {comment.users?.profile_image_url && (

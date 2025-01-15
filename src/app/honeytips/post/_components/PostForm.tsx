@@ -3,6 +3,7 @@
 import { updatePost } from "@/app/honeytips/_actions/update";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
+import XButton from "@/assets/images/honeytips/x.svg";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -140,7 +141,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   const categories = ["청소", "요리", "문화", "기타"];
 
   return (
-    <form className="mx-auto max-w-4xl p-4">
+    <form className="mx-5 py-2">
       <section className="mb-8 flex items-center justify-between">
         <button
           type="button"
@@ -195,14 +196,14 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
         />
       </section>
 
-      <section className="mt-6 flex justify-start space-x-3">
+      <section className="mx-auto mt-6 grid grid-cols-3 gap-4">
         {[0, 1, 2].map((index) => (
-          <article key={index} className="relative">
+          <article key={index} className="relative w-full">
             <label
               htmlFor={`image-upload-${index}`}
-              className="flex h-[115px] w-[115px] cursor-pointer items-center justify-center rounded-md border bg-gray-200"
+              className="flex aspect-square cursor-pointer items-center justify-center rounded-md border bg-gray-200"
             >
-              {mode === "edit" && imageUrls[index] ? (
+              {imageUrls[index] ? (
                 <Image
                   src={imageUrls[index]}
                   alt={`Preview ${index}`}
@@ -221,13 +222,14 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
                 className="hidden"
               />
             </label>
-            {mode === "edit" && imageUrls[index] && (
+
+            {imageUrls[index] && (
               <button
                 type="button"
                 onClick={() => handleImageDelete(index)}
-                className="absolute right-0 top-0 bg-gray-100 px-1.5 text-black"
+                className="absolute right-0 top-0 p-1 text-black"
               >
-                &times;
+                <XButton />
               </button>
             )}
           </article>
