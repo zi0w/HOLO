@@ -3,7 +3,8 @@
 import { useAddCommentMutation } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
-import CommentButton from "@/assets/images/honeytips/comment-button.svg";
+import ArrowOrange from "@/assets/images/honeytips/comment-button.svg";
+import ArrowGray from "@/assets/images/honeytips/arrow-up-circle.svg"
 import { useRef } from "react";
 
 type CommentFormProps = {
@@ -27,14 +28,14 @@ const CommentForm = ({ postDetailData }: CommentFormProps) => {
   };
 
   return (
-    <div className="mx-auto mb-4 flex w-[362px] flex-col">
+    <div className="mx-5 mb-4 flex flex-col">
       <form
         onSubmit={handleSubmit}
         className="mt-1 flex items-center justify-center rounded"
       >
         <div className="relative w-full">
           <input
-            className="mx-auto h-[40px] w-[362px] flex-grow rounded py-1 pl-2 pr-12 text-sm"
+            className="h-[40px] w-full flex-grow rounded py-1 pl-2 pr-12 text-sm"
             type="text"
             placeholder={
               isAuthenticated ? "댓글을 입력해주세요." : "로그인이 필요합니다."
@@ -43,11 +44,11 @@ const CommentForm = ({ postDetailData }: CommentFormProps) => {
             disabled={!isAuthenticated}
           />
           <button
-            className="absolute right-1 top-1/2 -translate-y-1/2 transform px-1 text-3xl disabled:bg-base-400 hover:disabled:cursor-not-allowed"
+            className="absolute right-1 top-1/2 -translate-y-1/2 transform px-1 text-3xl disabled: hover:disabled:cursor-not-allowed"
             type="submit"
             disabled={!isAuthenticated}
           >
-            <CommentButton />
+            {isAuthenticated ? <ArrowOrange /> : <ArrowGray />}
           </button>
         </div>
       </form>
