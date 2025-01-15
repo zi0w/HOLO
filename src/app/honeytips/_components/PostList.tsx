@@ -1,10 +1,11 @@
 "use client";
 
 import PostCard from "@/app/honeytips/_components/PostCard";
+import { POST_CATEGORIES } from "@/app/honeytips/_constans/post";
 import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
-import usePagination from "@/app/hooks/usePagination";
+import usePagination from "@/hooks/usePagination";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -68,13 +69,11 @@ const PostList = () => {
     setCurrentPage(1);
   };
 
-  const categories = ["전체", "청소", "요리", "문화", "기타"];
-
   return (
     <section className="container mx-auto">
       {/* 카테고리 별 렌더링 */}
       <div className="mb-6 flex justify-between border-b border-primary-100">
-        {categories.map((category) => (
+        {POST_CATEGORIES.map((category) => (
           <button
             key={category}
             className={clsx(

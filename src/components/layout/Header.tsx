@@ -1,7 +1,8 @@
 "use client";
 
-import useCheckAuth from "@/app/hooks/useCheckAuth";
+
 import HeaderContent from "@/components/common/HeaderContent";
+import useCheckAuth from "@/hooks/useCheckAuth";
 import { usePathname } from "next/navigation";
 
 const Header = () => {
