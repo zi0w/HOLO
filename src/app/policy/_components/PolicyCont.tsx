@@ -1,11 +1,11 @@
 "use client";
 
-import usePagination from "@/app/hooks/usePagination";
 import { getPolicies } from "@/app/policy/_actions/getPolicies";
 import PolicyFilter from "@/app/policy/_components/PolicyFilter";
 import PolicyResult from "@/app/policy/_components/PolicyResult";
 import { REGION_CODES } from "@/app/policy/_constants/region";
 import Pagination from "@/components/common/Pagination";
+import usePagination from "@/hooks/usePagination";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
