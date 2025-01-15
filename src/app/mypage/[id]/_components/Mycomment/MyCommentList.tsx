@@ -4,10 +4,11 @@ import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오�
 import { useEffect, useState } from "react";
 // API 호출 함수
 import { deleteComment, updateComment } from "@/app/honeytips/_utils/comment";
-import usePagination from "@/app/hooks/usePagination"; // 페이지네이션 훅
+ // 페이지네이션 훅
 import { MyfetchCommentPostsData } from "@/app/mypage/_utils/MyfetchCommentPostsData";
 import clsx from "clsx"; // 클래스 이름 조합 라이브러리
 import CommentCard from "./MyCommentCard"; // CommentCard 컴포넌트
+import { usePagination } from "@/hooks/usePagination";
 
 const CommentList = () => {
   const [comments, setComments] = useState<any[]>([]);
