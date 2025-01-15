@@ -1,4 +1,4 @@
-import BestPostList from "@/app/honeytips/_components/BestPostList";
+import BestPostList from "@/components/main/BestPostList";
 import GuideBnr from "@/components/main/GuideBnr";
 
 import Map from "@/components/main/Map";

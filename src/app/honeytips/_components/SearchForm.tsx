@@ -22,7 +22,7 @@ const SearchForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-4" role="search">
-      <div className="relative w-[362px]">
+      <div className="relative w-full">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 transform text-2xl text-gray-400" />
         <input
           type="text"
