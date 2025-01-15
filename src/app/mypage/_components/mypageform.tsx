@@ -3,7 +3,10 @@
 import LikeList from "@/app/mypage/[id]/_components/Mylike/LikeList";
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
 import UserProfile from "@/app/mypage/_components/UserProfile";
+import SignoutButton from "@/app/sign-in/_components/SignoutButton";
+// CommentList 컴포넌트 가져오기
 import { useState } from "react";
+import CommentList from "../[id]/_components/Mycomment/MyCommentList";
 
 const Mypageform: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,11 +53,12 @@ const Mypageform: React.FC = () => {
           </div>
         )}
 
-        {/* 다른 섹션들 */}
+        {/* 댓글 섹션이 활성화된 경우 */}
         {activeSection === "comments" && (
-          <div>댓글 섹션이 여기에 표시됩니다.</div>
+          <CommentList /> // 댓글 리스트 표시
         )}
 
+        {/* 내가 쓴글 섹션이 활성화된 경우 */}
         {activeSection === "myPosts" && (
           <div>내가 쓴글 섹션이 여기에 표시됩니다.</div>
         )}
@@ -67,6 +71,7 @@ const Mypageform: React.FC = () => {
         </button>
       </div>
 
+      <SignoutButton />
       {/* 프로필 수정 모달 */}
       <ProfileEditModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { createClient } from "@/lib/utils/supabase/client";
@@ -10,11 +8,13 @@ const supabase = createClient();
 export const fetchPostsData = async () => {
   const { data: postsData, error } = await supabase
     .from("posts")
-    .select("*, users(nickname, profile_image_url)")
+    .select(
+      "*, users(nickname, profile_image_url), comments(count), likes(count)",
+    )
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("코멘트 불러오기에 실패했습니다.");
+    console.error("포스트 불러오기에 실패했습니다.");
     throw error;
   }
   return postsData;
@@ -75,4 +75,19 @@ export const addPost = async ({
     throw error;
   }
   return postsData;
+};
+
+export const fetchBestPostsData = async () => {
+  const { data: bestPostsData, error } = await supabase
+    .from("posts")
+    .select(
+      "*, users(nickname, profile_image_url), comments(count), likes(count)",
+    )
+    .order("likes", { ascending: false })
+    .limit(3);
+  if (error) {
+    console.error("베스트 포스트 불러오기에 실패했습니다.");
+    throw error;
+  }
+  return bestPostsData;
 };

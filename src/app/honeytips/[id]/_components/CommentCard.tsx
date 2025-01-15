@@ -5,6 +5,7 @@ import {
   useUpdateCommentMutation,
 } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
+import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
@@ -22,6 +23,7 @@ type CommentCardProps = {
 const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editedComment, setEditedComment] = useState<string>("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const updateCommentMutation = useUpdateCommentMutation();
   const deleteCommentMutation = useDeleteCommentMutation();
@@ -37,12 +39,14 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
       postId,
     });
     setEditingCommentId(null);
+    setIsDropdownOpen(false);
   };
 
   const handleCommentDelete = (id: string) => {
     const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
     if (!isConfirmed) return;
     deleteCommentMutation.mutate(id);
+    setIsDropdownOpen(false);
   };
 
   const formatDate = (date: string) => {
@@ -70,68 +74,77 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
           )}
           <div>
             <div className="flex items-center gap-2">
-              <p className="text-sm text-gray-800 font-bold">{comment.users.nickname}</p>
+              <p className="text-sm font-bold text-gray-800">
+                {comment.users.nickname}
+              </p>
               <p className="text-xs text-gray-500">
                 {formatDate(comment.created_at)}
               </p>
             </div>
-            <p className="text-sm text-gray-800">{comment.comment}</p>
+            {editingCommentId === comment.id ? (
+              <input
+                value={editedComment}
+                onChange={(e) => setEditedComment(e.target.value)}
+                className="w-[250px] rounded-lg border p-1 text-sm"
+                placeholder="댓글을 수정하세요."
+              />
+            ) : (
+              <p className="mt-1 text-sm text-gray-800">{comment.comment}</p>
+            )}
           </div>
         </div>
-        <div className="flex space-x-2">
-          {currentId &&
-          currentId === comment.user_id &&
-          editingCommentId === comment.id ? (
-            <>
-              <button
-                className="rounded-lg text-sm px-2 py-1 border text-base-500"
-                type="button"
-                onClick={() => handleCommentSave(comment.id)}
-              >
-                저장
-              </button>
-              <button
-                className="rounded-lg text-sm px-2 py-1 border text-base-500"
-                type="button"
-                onClick={() => setEditingCommentId(null)}
-              >
-                취소
-              </button>
-            </>
-          ) : (
-            currentId &&
-            currentId === comment.user_id && (
-              <button
-                className="rounded-lg text-sm px-2 py-1 border text-base-500"
-                type="button"
-                onClick={() => {
-                  setEditingCommentId(comment.id);
-                  setEditedComment(comment.comment);
-                }}
-              >
-                수정
-              </button>
-            )
-          )}
-          {currentId && currentId === comment.user_id && (
+        {currentId && currentId === comment.user_id && (
+          <div className="relative">
             <button
-              className="rounded-lg text-sm px-2 py-1 border text-base-500"
-              type="button"
-              onClick={() => handleCommentDelete(comment.id)}
+              className="rounded-full text-gray-500"
+              onClick={() => setIsDropdownOpen((prev) => !prev)}
             >
-              &times;
+              <MenuDots />
             </button>
-          )}
-        </div>
+            {isDropdownOpen && (
+              <div className="absolute bottom-8 right-0 z-10 w-14 rounded-lg border bg-white">
+                {editingCommentId === comment.id ? (
+                  <>
+                    <button
+                      className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                      onClick={() => handleCommentSave(comment.id)}
+                    >
+                      저장
+                    </button>
+                    <button
+                      className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                      onClick={() => {
+                        setEditingCommentId(null);
+                        setIsDropdownOpen(false);
+                      }}
+                    >
+                      취소
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                      onClick={() => {
+                        setEditingCommentId(comment.id);
+                        setEditedComment(comment.comment);
+                      }}
+                    >
+                      수정
+                    </button>
+                    <button
+                      className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                      onClick={() => handleCommentDelete(comment.id)}
+                    >
+                      삭제
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
-      {editingCommentId === comment.id ? (
-        <textarea
-          value={editedComment}
-          onChange={(e) => setEditedComment(e.target.value)}
-          className="w-full resize-none rounded-lg border p-2 text-sm"
-          placeholder="댓글을 수정하세요."
-        />
-      ) : null}
     </article>
   );
 };

@@ -4,7 +4,7 @@ import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost } from "@/app/honeytips/_utils/detail";
-import clsx from "clsx";
+import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
@@ -20,9 +20,8 @@ type DetailCardProps = {
 
 const DetailCard = ({ postDetailData }: DetailCardProps) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태
   const router = useRouter();
-
-  const categories = ["청소", "요리", "문화", "기타"];
 
   const formatDate = (date: string) => {
     return dayjs(date).format("YYYY년 MM월 DD일 HH:mm:ss");
@@ -53,29 +52,37 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
   };
 
   return (
-    <article className="flex items-center justify-center w-[402px] mx-auto">
+    <article className="mx-auto flex w-[362px] items-center justify-center">
       <section className="p-4">
-        {/* <div className="mb-6 flex justify-between border-b border-primary-100">
-          {categories.map((category) => (
-            <span
-              key={category}
-              className={clsx(
-                "relative px-7 py-2 text-lg font-semibold text-base-500 transition-colors",
-                postDetailData.categories === category && "text-base-800",
-              )}
-            >
-              {category}
-              {postDetailData.categories === category && (
-                <span className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-primary-500"></span>
-              )}
-            </span>
-          ))}
-        </div> */}
-
-        <div className="flex items-center justify-between px-2">
+        <div className="flex items-center justify-between">
           <h1 className="my-6 text-xl font-bold">{postDetailData.title}</h1>
-          {/* 좋아요 버튼 */}
-          {currentId && <LikeButton postId={postDetailData.id} />}
+          {/* 현재 사용자 id === 포스트 작성자 id 일 때만 수정/삭제 버튼 보여주기 */}
+          {currentId === postDetailData.user_id && (
+            <div className="relative">
+              <button
+                className="text-base80 rounded-md py-1"
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
+              >
+                <MenuDots className="text-2xl text-gray-500" />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute top-8 right-0 z-10 w-14 rounded-lg border">
+                  <Link
+                    href={`/honeytips/post?edit=${postDetailData.id}`}
+                    className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                  >
+                    수정
+                  </Link>
+                  <button
+                    onClick={() => handleDeletePost(postDetailData.id)}
+                    className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                  >
+                    삭제
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="mb-2 flex items-center px-2">
@@ -122,26 +129,11 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
           ))}
         </Swiper>
 
-        <p className="whitespace-pre-wrap px-2">{postDetailData.content}</p>
-
-        {/* 현재 사용자 id === 포스트 작성자 id 일 때만 수정/삭제 버튼 보여주기 */}
-        {currentId === postDetailData.user_id && (
-          <div className="mt-6 flex justify-center gap-4">
-            <Link
-              href={`/honeytips/post?edit=${postDetailData.id}`}
-              className="rounded-md bg-blue-500 px-3 py-1.5 text-white transition-colors hover:bg-blue-600"
-            >
-              수정
-            </Link>
-            <button
-              type="button"
-              onClick={() => handleDeletePost(postDetailData.id)}
-              className="rounded-md bg-red-500 px-3 py-1.5 text-white transition-colors hover:bg-red-600"
-            >
-              삭제
-            </button>
-          </div>
-        )}
+        <p className="mb-8 whitespace-pre-wrap px-2">
+          {postDetailData.content}
+        </p>
+        {/* 좋아요 버튼 */}
+        {currentId && <LikeButton postDetailData={postDetailData} />}
       </section>
     </article>
   );

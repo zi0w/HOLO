@@ -4,19 +4,14 @@ import { useState } from "react";
 
 type PolicyResultProps = {
   error: Error | null;
-  isLoading: boolean;
   policyData: PolicyData[] | PolicyData | null;
 };
 
-const PolicyResult = ({ error, isLoading, policyData }: PolicyResultProps) => {
+const PolicyResult = ({ error, policyData }: PolicyResultProps) => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
 
   if (error instanceof Error) {
     return <div className="text-red-500">에러: {error.message}</div>; //TODO: 에러 메시지 추가
-  }
-
-  if (isLoading) {
-    return <div>조회 중...</div>; //TODO: 로딩 스피너 추가
   }
 
   if (policyData === null) {

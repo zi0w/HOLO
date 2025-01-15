@@ -12,14 +12,15 @@ export type PaginationHook<T> = {
   goToPage: (page: number) => void;
 };
 
-const usePagination = <T,>(
+export const usePagination = <T>(
   items: T[],
   itemsPerPage: number,
 ): PaginationHook<T> => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const itemsArray = Array.isArray(items) ? items : [];
+  const totalPages = Math.ceil(itemsArray.length / itemsPerPage);
 
-  const currentItems = items.slice(
+  const currentItems = itemsArray.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
@@ -32,8 +33,6 @@ const usePagination = <T,>(
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
   const goToPage = (page: number) => setCurrentPage(page);
-
-  console.log('currentPage', currentPage)
 
   return {
     currentItems,

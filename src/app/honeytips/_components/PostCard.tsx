@@ -1,25 +1,22 @@
 "use client";
 
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
+import SmallComment from "@/assets/images/honeytips/comment.svg";
+import SmallHeart from "@/assets/images/honeytips/heart.svg";
+import SmallDot from "@/assets/images/honeytips/dot.svg";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import Link from "next/link";
-import { FaRegCommentAlt, FaRegHeart } from "react-icons/fa";
-import { LuDot } from "react-icons/lu";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
 type PostCardProps = {
   post: Post;
-  likesCount: {
-    [postId: string]: number;
-  };
-  commentsCount: {
-    [postId: string]: number;
-  };
+  likesCount: number;
+  commentsCount: number;
 };
 
 const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
@@ -65,10 +62,10 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
                     height={100}
                   />
                 )}
-                <p className="ml-1 text-sm text-base-600">
+                <p className="mx-1 text-sm text-base-600">
                   {post.users?.nickname}
                 </p>
-                <LuDot className="mx-0 text-base-600" />
+                <SmallDot />
                 <time className="ml-1 text-sm text-base-600">
                   {formatDate(post.created_at)}
                 </time>
@@ -77,12 +74,12 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
 
             <div className="flex items-center gap-2 text-base-600">
               <div className="flex items-center gap-1">
-                <FaRegHeart />
-                <span className="text-xs">{likesCount[post.id] || 0}</span>
+                <SmallHeart />
+                <span className="text-xs">{likesCount || 0}</span>
               </div>
               <div className="flex items-center gap-1">
-                <FaRegCommentAlt />
-                <span className="text-xs">{commentsCount[post.id] || 0}</span>
+                <SmallComment />
+                <span className="text-xs">{commentsCount || 0}</span>
               </div>
             </div>
           </div>

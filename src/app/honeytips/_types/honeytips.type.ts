@@ -5,6 +5,12 @@ export type Post = Tables<"posts"> & {
     nickname: string;
     profile_image_url: string | null;
   };
+  likes: {
+    count: number;
+  }[];
+  comments: {
+    count: number;
+  }[];
 };
 
 export type User = Tables<"users">;

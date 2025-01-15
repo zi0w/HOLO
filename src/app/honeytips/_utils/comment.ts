@@ -1,5 +1,3 @@
-"use client";
-
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { createClient } from "@/lib/utils/supabase/client";
@@ -92,15 +90,15 @@ export const deleteComment = async (id: Comment["id"]) => {
 };
 
 // 코멘트 개수 세기
-export const countComments = async (id: Comment["post_id"]) => {
-  const { count: commentsCount, error } = await supabase
-    .from("comments")
-    .select("*", { count: "exact", head: true })
-    .eq("post_id", id);
+// export const countComments = async (id: Comment["post_id"]) => {
+//   const { count: commentsCount, error } = await supabase
+//     .from("comments")
+//     .select("*", { count: "exact", head: true })
+//     .eq("post_id", id);
 
-  if (error) {
-    console.error("코멘트 개수 세기에 실패했습니다.");
-    throw error;
-  }
-  return commentsCount ?? 0;
-};
+//   if (error) {
+//     console.error("코멘트 개수 세기에 실패했습니다.");
+//     throw error;
+//   }
+//   return commentsCount ?? 0;
+// };

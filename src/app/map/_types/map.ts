@@ -14,3 +14,5 @@ export type Place = {
   place_url: string;
   road_address_name: string;
 };
+
+export type PlacesSearchResultItem = kakao.maps.services.PlacesSearchResultItem;

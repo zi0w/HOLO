@@ -36,7 +36,7 @@ export const useLikeMutation = (postId: Like["post_id"]) => {
       queryClient.setQueryData<Like[]>(["likes", postId], (prev) => {
         if (!prev) return [];
         if (action === "add") {
-          const tempId = uuidv4(); // 임시 ID 생성
+          const tempId = uuidv4(); // 임시 ID, created_at 생성
           const now = new Date().toISOString();
           return [...prev, {user_id: userId, post_id: postId, created_at: now, id: tempId}];
         } else if (action === "delete") {
