@@ -3,8 +3,8 @@
 import { useAddCommentMutation } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
+import Arrow from "@/assets/images/honeytips/arrow-up-circle.svg";
 import { useRef } from "react";
-import { IoArrowUpCircle } from "react-icons/io5";
 
 type CommentFormProps = {
   postDetailData: Post;
@@ -27,7 +27,7 @@ const CommentForm = ({ postDetailData }: CommentFormProps) => {
   };
 
   return (
-    <div className="mx-auto flex w-[362px] flex-col mb-4">
+    <div className="mx-auto mb-4 flex w-[362px] flex-col">
       <form
         onSubmit={handleSubmit}
         className="mt-1 flex items-center justify-center rounded"
@@ -43,11 +43,11 @@ const CommentForm = ({ postDetailData }: CommentFormProps) => {
             disabled={!isAuthenticated}
           />
           <button
-            className="absolute right-1 top-1/2 -translate-y-1/2 transform px-1 text-3xl text-primary-500 disabled:bg-base-400 hover:disabled:cursor-not-allowed"
+            className="absolute right-1 top-1/2 -translate-y-1/2 transform px-1 text-3xl disabled:bg-base-400 hover:disabled:cursor-not-allowed"
             type="submit"
             disabled={!isAuthenticated}
           >
-            <IoArrowUpCircle />
+            <Arrow />
           </button>
         </div>
       </form>
