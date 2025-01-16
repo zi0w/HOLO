@@ -1,15 +1,15 @@
 "use client";
 
 import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기// 페이지네이션 훅
-import LikeCard from "@/app/mypage/[id]/_components/Mylike/LikeCard"; // LikeCard 컴포넌트
+import LikeCard from "@/app/mypage/[id]/_components/Mylike/MyLikeCard"; // LikeCard 컴포넌트
 import { MyfetchLikePostsData } from "@/app/mypage/_utils/MyfetchLikePostsData";
-import  usePagination from "@/hooks/usePagination";
+import usePagination from "@/hooks/usePagination";
 
 // API 호출 함수
 import clsx from "clsx"; // 클래스 이름 조합 라이브러리
 import { useEffect, useState } from "react";
 
-const LikeList = () => {
+const MyLikeList = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,13 +22,13 @@ const LikeList = () => {
       }
       const data = await MyfetchLikePostsData(); // 좋아요한 게시물 데이터 가져오기
 
-      console.log("Raw data:", data); // 전체 데이터 출력
+     
 
       const likedPosts = data.filter(
         (post) => post.likes.some((like) => like.user_id === userId), // 사용자가 좋아요를 누른 게시물 필터링
       );
 
-      console.log("Filtered liked posts:", likedPosts); // 필터링된 게시물 출력
+      
 
       setPosts(likedPosts); // 상태 업데이트
     } catch (error) {
@@ -58,7 +58,7 @@ const LikeList = () => {
   } = usePagination(posts, 20); // 페이지네이션 훅 사용
 
   if (isLoading) {
-    return <p>로딩중...</p>; // 로딩 중 표시
+    return <p>로딩중입니다...</p>; // 로딩 중 표시
   }
 
   return (
@@ -110,4 +110,4 @@ const LikeList = () => {
   );
 };
 
-export default LikeList;
+export default MyLikeList;
