@@ -8,11 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        "gmarket-light": ["GmarketSansLight"],
+        gmarket: ["GmarketSansMedium"],
+        "gmarket-bold": ["GmarketSansBold"],
+      },
       boxShadow: {
         custom: "0px 4px 10px 0px rgba(0, 0, 0, 0.15)",
-      },
-      fontFamily: {
-        gmarket: ["GmarketSansMedium"],
       },
       colors: {
         background: "var(--background)",

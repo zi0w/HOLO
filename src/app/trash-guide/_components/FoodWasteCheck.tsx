@@ -81,7 +81,7 @@ const FoodWasteCheck = () => {
           {wasteFoodAnswer ? (
             <>
               <p className="mb-4 mt-1 text-sm text-base-700">
-                {submittedFoodWaste}은(는) 음식물 맞습니다!
+                {submittedFoodWaste}은(는) 음식물 쓰레기가 맞습니다!
               </p>
               <Image
                 src={FoodYesIcon}

@@ -1,3 +1,4 @@
+import MainHeader from "@/components/common/MainHeader";
 import BestPostList from "@/components/main/BestPostList";
 import GuideBnr from "@/components/main/GuideBnr";
 
@@ -6,6 +7,7 @@ import Map from "@/components/main/Map";
 const Home = () => {
   return (
     <div>
+      <MainHeader />
       <Map />
       {/* 정책 배너 */}
       <GuideBnr isPolicy={true} />

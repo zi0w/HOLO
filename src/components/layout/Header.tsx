@@ -1,46 +1,59 @@
-"use client";
-
-import Logo from "@/assets/images/common/logo.png";
-import Nav from "@/components/layout/Nav";
+import MyPageIcon from "@/assets/images/common/header/mypage.svg";
+import { NAVIGATION_PATHS } from "@/constants/navigation";
 import useAuthStore from "@/store/authStore";
 import clsx from "clsx";
-import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const Header = ({ allHidden, mobileHidden }: { allHidden: boolean, mobileHidden: boolean }) => {
+const Header = ({ allHidden }: { allHidden: boolean }) => {
   const { isLoggedIn } = useAuthStore();
+  const pathname = usePathname();
 
   return (
     <header
       className={clsx(
-        "h-[60px] lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-[240px] lg:bg-primary-50",
+        "fixed bottom-0 z-10 w-full lg:left-0 lg:top-0 lg:h-screen lg:w-[240px] lg:bg-primary-50",
         allHidden && "hidden",
-        mobileHidden && "hidden lg:block",
       )}
     >
-      <div className="lg:flex lg:h-full lg:flex-col lg:p-5">
-        <div className="fixed left-0 top-0 z-10 flex w-full justify-between bg-primary-50 p-5 lg:static lg:justify-center lg:bg-transparent lg:p-0">
+      <nav className="flex justify-between border-t border-primary-200 bg-white px-5 pb-8 pt-2 text-xs text-base-700 lg:h-full lg:flex-col lg:justify-center lg:gap-10 lg:border-r lg:border-t-0 lg:p-5">
+        {NAVIGATION_PATHS.map(({ path, label, icon: Icon }) => (
           <Link
-            href="/"
-            className="relative h-5 w-full max-w-16 lg:h-[50px] lg:max-w-[100px]"
+            key={path}
+            href={path}
+            className={clsx(
+              "flex flex-col items-center",
+              pathname === path && "text-primary-500",
+            )}
           >
-            <Image
-              src={Logo}
-              fill={true}
-              className="object-contain"
-              alt="로고"
-            />
+            <Icon className={clsx(pathname === path && "text-primary-500")} />
+            {label}
           </Link>
-        </div>
-        <Nav isMobile={false} />
-        <div className="hidden lg:flex lg:flex-col lg:items-center lg:gap-3 lg:text-lg lg:font-bold">
-          {isLoggedIn ? (
-            <Link href="/mypage">마이 페이지</Link>
-          ) : (
-            <Link href="/sign-in">로그인</Link>
-          )}
-        </div>
-      </div>
+        ))}
+        {isLoggedIn ? (
+          <Link
+            href="/mypage"
+            className={clsx(
+              "flex flex-col items-center",
+              pathname === "/mypage" && "text-primary-500",
+            )}
+          >
+            <MyPageIcon />
+            마이 페이지
+          </Link>
+        ) : (
+          <Link
+            href="/sign-in"
+            className={clsx(
+              "flex flex-col items-center",
+              pathname === "/sign-in" && "text-primary-500",
+            )}
+          >
+            <MyPageIcon />
+            로그인
+          </Link>
+        )}
+      </nav>
     </header>
   );
 };
