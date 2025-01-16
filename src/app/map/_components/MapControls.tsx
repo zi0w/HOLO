@@ -15,7 +15,7 @@ const MapControls = ({
 }: MapControlsProps) => {
   return (
     <div className="relative">
-      <div className="shadow-custom absolute bottom-64 right-4 flex flex-col rounded border border-base-700">
+      <div className="absolute bottom-10 right-4 z-10 flex flex-col rounded border border-base-700 shadow-custom">
         <button
           className="h-[44px] w-[48px] rounded-t border-b border-base-700 bg-white hover:bg-gray-300"
           onClick={onClickPlusMapLevel} // 확대
@@ -31,7 +31,7 @@ const MapControls = ({
       </div>
       {/* 내 위치 버튼*/}
       <button
-        className="shadow-custom absolute bottom-64 left-4 z-10 rounded-full border border-base-700 bg-white p-4"
+        className="absolute bottom-10 left-4 z-10 rounded-full border border-base-700 bg-white p-4 shadow-custom"
         onClick={onClickMoveCurrentPosition}
       >
         <Location />
