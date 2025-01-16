@@ -4,6 +4,8 @@ import DetailCard from "@/app/honeytips/[id]/_components/DetailCard";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
 
+export const dynamic = "force-dynamic";
+
 export const generateMetadata = async ({ params }: Props) => {
   const postDetailData: Post | null = await fetchPostDetail(params.id);
 

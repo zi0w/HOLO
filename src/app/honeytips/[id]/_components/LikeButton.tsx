@@ -13,11 +13,15 @@ type LikeButtonProps = {
 };
 
 const LikeButton = ({ postDetailData }: LikeButtonProps) => {
+  // id, likeCount, commentCount만 넘겨주기
   const postId = postDetailData.id;
   const { data: likeData, isError, isPending } = useLikeDataQuery(postId);
   const [likesCounts, setLikesCounts] = useState(
     postDetailData.likes[0].count || 0,
   );
+  console.log('postDetailData', postDetailData)
+  console.log("likesCounts", postDetailData.likes[0].count);
+
   const [mutating, setMutating] = useState(false);
   const likeMutation = useLikeMutation(postId);
 
@@ -66,10 +70,10 @@ const LikeButton = ({ postDetailData }: LikeButtonProps) => {
 
   return (
     <section className="flex flex-col items-center text-2xl">
-      <button onClick={handleLikeBtn} disabled={mutating} >
+      <button onClick={handleLikeBtn} disabled={mutating}>
         {likeData?.length ? <YesHeart /> : <NoHeart />}
       </button>
-      <p className="text-sm mt-1 text-primary-500">{likesCounts}</p>
+      <p className="text-[14px] text-primary-500">{likesCounts}</p>
     </section>
   );
 };

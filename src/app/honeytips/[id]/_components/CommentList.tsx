@@ -12,6 +12,7 @@ type CommentListProps = {
 };
 
 const CommentList = ({ postDetailData }: CommentListProps) => {
+  // useParams로 id 받기
   const [currentId, setCurrentId] = useState<string | null>(null);
 
   const postId: Comment["post_id"] = postDetailData.id;
@@ -38,8 +39,8 @@ const CommentList = ({ postDetailData }: CommentListProps) => {
   }
 
   return (
-    <div className="mx-5 mt-4 flex flex-col">
-      <p className="border-b border-base-400 pb-2">
+    <div className="mx-5 mt-[14px] flex flex-col">
+      <p className="border-b font-bold text-base-800 border-base-400 pb-2">
         댓글 {comments?.length || 0}
       </p>
       <section className="my-5 flex flex-col items-center justify-center gap-3 rounded">

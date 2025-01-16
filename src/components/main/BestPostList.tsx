@@ -1,10 +1,10 @@
 "use client";
 
+import PostCard from "@/app/honeytips/_components/PostCard";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import PostCard from "@/app/honeytips/_components/PostCard";
+import { useEffect, useState } from "react";
 
 const BestPostList = () => {
   const [bestPosts, setBestPosts] = useState<Post[]>([]);
@@ -33,9 +33,11 @@ const BestPostList = () => {
   if (loading) return <div>로딩 중...</div>;
 
   return (
-    <div className="relative mx-5 my-5">
-      <h2 className="font-bold text-xl text-base-800 mb-2">꿀팁 게시판</h2>
-      <ul className="flex flex-col gap-3">
+    <div className="relative mx-5">
+      <h2 className="text-[22px] font-bold text-base-800">
+        꿀팁 게시판
+      </h2>
+      <ul className="mt-4 flex flex-col gap-4">
         {bestPosts.map((post) => (
           <li key={post.id}>
             <PostCard
@@ -48,7 +50,7 @@ const BestPostList = () => {
       </ul>
       <Link
         href="/honeytips"
-        className="flex justify-center mt-2 p-2 text-primary-500 text-lg"
+        className="mb-[34px] mt-[18px] flex justify-center text-lg text-primary-500"
       >
         더 많은 글들 보러가기
       </Link>

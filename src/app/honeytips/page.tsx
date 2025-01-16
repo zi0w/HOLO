@@ -16,14 +16,14 @@ export const metadata: Metadata = {
 
 const HoneyTipsPage = () => {
   return (
-    <div className="min-h-screen py-8 mx-5">
+    <div className="mx-5 mt-[14px] min-h-screen">
       <section>
-        <div className="mb-3">
-          <h1 className="text-left text-2xl font-bold text-gray-800">
+        <div>
+          <h1 className="mb-4 text-left text-[24px] font-bold text-base-800">
             꿀팁 게시판
           </h1>
         </div>
-        <section className="mb-6">
+        <section className="mb-2">
           <SearchForm />
         </section>
         <section>
