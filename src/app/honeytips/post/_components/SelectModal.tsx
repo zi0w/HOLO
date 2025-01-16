@@ -22,7 +22,7 @@ const CategorySelectModal = ({
   };
 
   const handleButtonClick = (e: React.MouseEvent) => {
-    e.preventDefault(); // 새로 고침 방지
+    e.preventDefault();
     setIsModalOpen((prev) => !prev);
   };
 
@@ -40,16 +40,16 @@ const CategorySelectModal = ({
       {/* 모달 */}
       {isModalOpen && buttonRef && (
         <div
-          className="fixed z-10 flex items-center justify-center rounded-lg border shadow-md"
+          className="fixed z-10 py-1 flex items-center justify-center rounded-lg border shadow-md"
           style={{
             top: `${buttonRef.getBoundingClientRect().bottom + window.scrollY}px`,
             left: `${buttonRef.getBoundingClientRect().left}px`,
           }}
-          onClick={() => setIsModalOpen(false)} // 배경 클릭 시 닫기
+          onClick={() => setIsModalOpen(false)}
         >
           <div
-            className="w-[calc(100%+16px)] rounded-md bg-white" // 모달 너비 설정
-            onClick={(e) => e.stopPropagation()} // 모달 내부 클릭은 이벤트 전파 중단
+            className="w-[calc(100%+16px)] rounded-md bg-white"
+            onClick={(e) => e.stopPropagation()}
           >
             <ul>
               {FORM_CATEGORIES.map((category) => (

@@ -9,7 +9,6 @@ import PlusButton from "@/assets/images/honeytips/plus-circle.svg";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import clsx from "clsx";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -68,13 +67,13 @@ const PostList = () => {
   };
 
   return (
-    <section className="mx-auto">
+    <section className="mx-auto mb-4">
       <div className="mb-4 flex justify-between border-b border-primary-100">
         {POST_CATEGORIES.map((category) => (
           <button
             key={category}
             className={clsx(
-              "relative px-4 py-3 font-semibold text-base-500 transition-colors",
+              "relative flex-1 py-3 font-semibold text-base-500 transition-colors",
               selectedCategory === category
                 ? "text-base-800"
                 : "hover:text-base-800",
@@ -103,13 +102,12 @@ const PostList = () => {
           <p className="col-span-full text-center text-base-500">로딩중...</p>
         ) : currentPosts.length > 0 ? (
           currentPosts.map((post) => (
-            <Link href={`/honeytips/${post.id}`} key={post.id}>
-              <PostCard
-                post={post}
-                likesCount={post.likes[0].count}
-                commentsCount={post.comments[0].count}
-              />
-            </Link>
+            <PostCard
+              key={post.id}
+              post={post}
+              likesCount={post.likes[0].count}
+              commentsCount={post.comments[0].count}
+            />
           ))
         ) : (
           <p className="col-span-full text-center text-gray-500">
