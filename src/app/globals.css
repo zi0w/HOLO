@@ -69,3 +69,7 @@ body {
     text-wrap: balance;
   }
 }
+
+::-webkit-scrollbar-thumb {
+  background: #ff7600;
+}

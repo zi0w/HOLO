@@ -35,11 +35,12 @@ const KakaoMap = () => {
   } = useCategoriesSearch(mapCenter);
 
   return (
-    <div className="relative h-screen">
+    <div className="relative h-[calc(100vh-124px)]">
       {geolocationError && <div>{geolocationError}</div>}
 
       {/* 카테고리 검색 버튼 */}
       <CategoryButtons
+        isMain={false}
         setCategory={setCategory}
         setSelectedPlace={setSelectedPlace}
         setPlaceDetail={setPlaceDetail}

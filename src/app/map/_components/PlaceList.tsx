@@ -1,5 +1,4 @@
 import type { Coordinates, PlacesSearchResultItem } from "@/app/map/_types/map";
-import Link from "next/link";
 import type { Dispatch, SetStateAction } from "react";
 
 type PlaceListProps = {
@@ -49,11 +48,11 @@ const PlaceList = ({
       )}
       {/* 모바일용 리스트 */}
       {category ? (
-        <div className="absolute bottom-28 flex max-h-[200px] w-full flex-col space-y-2 overflow-y-auto bg-white px-4 py-2 shadow-md md:hidden">
-          {(selectedPlace ? [selectedPlace] : places).map((place) => (
+        <div className="absolute bottom-0 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white scrollbar-thin scrollbar-track-primary-50 scrollbar-thumb-primary-500 md:hidden">
+          {(selectedPlace ? [] : places).map((place) => (
             <div
               key={place.id}
-              className="w-full cursor-pointer rounded bg-gray-50 p-2 text-left hover:bg-gray-200"
+              className="w-full cursor-pointer border-b border-base-200 p-2 text-left"
               onClick={() => {
                 setMapCenter({
                   lat: parseFloat(place.y),
@@ -63,21 +62,12 @@ const PlaceList = ({
                 onClickMarker(place);
               }}
             >
-              <p className="text-sm font-bold">{place.place_name}</p>
-              <p className="text-xs text-gray-600">{place.address_name}</p>
-              <p>{place.phone || "전화번호 없음"}</p>
-              {place.place_url ? (
-                <Link
-                  href={place.place_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 underline"
-                >
-                  상세 정보 보기
-                </Link>
-              ) : (
-                ""
-              )}
+              <div className="rounded-xl p-2 hover:bg-primary-50">
+                <p className="font-gmarket text-lg font-bold text-base-900">
+                  {place.place_name}
+                </p>
+                <p className="text-base text-base-900">{place.address_name}</p>
+              </div>
             </div>
           ))}
         </div>
