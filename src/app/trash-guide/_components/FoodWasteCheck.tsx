@@ -5,6 +5,7 @@ import FoodNoIcon from "@/assets/images/trash/foodwaste-no.png";
 import FoodYesIcon from "@/assets/images/trash/foodwaste-yes.png";
 import PersonIcon from "@/assets/images/trash/person.png";
 import SearchIcon from "@/assets/images/trash/search-icon.svg";
+import Image from "next/image";
 import { useState, type ChangeEvent } from "react";
 
 const FoodWasteCheck = () => {
@@ -59,7 +60,13 @@ const FoodWasteCheck = () => {
       </form>
       {!isWasteFoodAnswer && !loading && (
         <div className="mt-20">
-          <img src={PersonIcon.src} className="mx-auto" alt="사람아이콘" />
+          <Image
+            src={PersonIcon}
+            className="mx-auto"
+            width={258}
+            height={298}
+            alt="사람아이콘"
+          />
         </div>
       )}
 
@@ -76,14 +83,26 @@ const FoodWasteCheck = () => {
               <p className="mb-4 mt-1 text-sm text-base-700">
                 {submittedFoodWaste}은(는) 음식물 맞습니다!
               </p>
-              <img src={FoodYesIcon.src} className="mx-auto" alt="음쓰아이콘" />
+              <Image
+                src={FoodYesIcon}
+                width={200}
+                height={200}
+                className="mx-auto"
+                alt="음쓰아이콘"
+              />
             </>
           ) : (
             <>
               <p className="mb-4 mt-1 text-sm text-base-700">
                 {submittedFoodWaste}은(는) 음식물 쓰레기가 아닙니다!
               </p>
-              <img src={FoodNoIcon.src} className="mx-auto" alt="음쓰아이콘" />
+              <Image
+                src={FoodNoIcon}
+                width={200}
+                height={200}
+                className="mx-auto"
+                alt="음쓰아이콘"
+              />
             </>
           )}
         </div>
