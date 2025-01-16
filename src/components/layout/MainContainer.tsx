@@ -9,20 +9,25 @@ import { usePathname } from "next/navigation";
 const MainContainer = ({ children }: { children: React.ReactNode }) => {
   useCheckAuth();
   const pathname = usePathname();
-  const hideHeader =
-    pathname?.startsWith("/sign-in") ||
-    pathname?.startsWith("/sign-up") ||
-    pathname?.startsWith("/map");
-
+  const allHideHeaderPages =
+    pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up");
+  const trashPage = pathname.startsWith("/trash-guide");
+  const mapPage = pathname.startsWith("/map");
+  const mobileHideHeaderPages = mapPage || trashPage;
 
   return (
     <>
-      <Header hidden={hideHeader} />
-      {pathname.startsWith("/map") && <Nav />}
+      <Header
+        allHidden={allHideHeaderPages}
+        mobileHidden={mobileHideHeaderPages}
+      />
+      {(mapPage || trashPage) && <Nav isMobile={true} />}
       <main
         className={clsx(
-          "mb-[60px] h-[calc(100vh-120px)] overflow-auto lg:mb-0 lg:ml-[240px] lg:h-auto lg:overflow-visible",
-          hideHeader && "h-full lg:ml-0",
+          "lg:ml-[240px] lg:h-screen",
+          allHideHeaderPages && "lg:!ml-0",
+          trashPage && "h-screen bg-orange-50 pb-12 lg:pb-0",
+          mapPage && "lg:!h-auto",
         )}
       >
         {children}

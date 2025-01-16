@@ -1,9 +1,12 @@
 "use client";
 
 import { fetchOpenAiFoodWaste } from "@/app/trash-guide/_actions/actions";
-import clsx from "clsx";
+import FoodNoIcon from "@/assets/images/trash/foodwaste-no.png";
+import FoodYesIcon from "@/assets/images/trash/foodwaste-yes.png";
+import PersonIcon from "@/assets/images/trash/person.png";
+import SearchIcon from "@/assets/images/trash/search-icon.svg";
+import Image from "next/image";
 import { useState, type ChangeEvent } from "react";
-import { CiSearch } from "react-icons/ci";
 
 const FoodWasteCheck = () => {
   const [foodWaste, setFoodWaste] = useState<string>("");
@@ -39,55 +42,67 @@ const FoodWasteCheck = () => {
 
   return (
     <div>
-      <p>음식물 쓰레기 여부 확인</p>
       <form
         onSubmit={handleSubmitFoodWaste}
-        className="flex items-center gap-3"
+        className="flex items-center gap-1 rounded border border-base-400 px-3 py-2"
       >
+        <button type="submit" disabled={!foodWaste}>
+          <SearchIcon />
+        </button>
         <input
           type="text"
           name="prog"
           id="prog"
-          className="border border-yellow-500"
+          className="w-full border-none text-base-600 focus:bg-transparent focus:outline-none"
           onChange={handleChangeFoodWaste}
-          placeholder="확인할 쓰레기를 입력해주세요."
+          placeholder="달걀 껍질은 음쓰?"
         />
-        <button
-          type="submit"
-          className={clsx("h-5 w-5", {
-            "bg-yellow-400": foodWaste,
-            "bg-gray-400": !foodWaste,
-          })}
-          disabled={!foodWaste}
-        >
-          <CiSearch />
-        </button>
       </form>
       {!isWasteFoodAnswer && !loading && (
-        <div>확인할 쓰레기를 입력해주세요.</div>
+        <div className="mt-20">
+          <Image
+            src={PersonIcon}
+            className="mx-auto"
+            width={258}
+            height={298}
+            alt="사람아이콘"
+          />
+        </div>
       )}
+
       {/* TODO: 로딩바꾸기 */}
-      {loading && <div>음식물 쓰레기 여부를 확인 중입니다...</div>}
-      {isWasteFoodAnswer ? (
-        <div>
-          <strong>#{submittedFoodWaste}</strong>
+      {loading && <p>로딩중</p>}
+
+      {isWasteFoodAnswer && !loading ? (
+        <div className="my-14 text-center">
+          <strong className="font-bold text-primary-500">
+            {submittedFoodWaste}
+          </strong>
           {wasteFoodAnswer ? (
             <>
-              <p>
-                {submittedFoodWaste}은(는) 음식물 쓰레기가
-                <span className="text-blue-600">맞습니다</span>
+              <p className="mb-4 mt-1 text-sm text-base-700">
+                {submittedFoodWaste}은(는) 음식물 맞습니다!
               </p>
-              {/* TODO: Image태그로 바꾸기 */}
-              <img src="https://via.placeholder.com/220x220" alt="음쓰아이콘" />
+              <Image
+                src={FoodYesIcon}
+                width={200}
+                height={200}
+                className="mx-auto"
+                alt="음쓰아이콘"
+              />
             </>
           ) : (
             <>
-              <p>
-                {submittedFoodWaste}은(는) 음식물 쓰레기가{" "}
-                <span className="text-red-600">아닙니다</span>
+              <p className="mb-4 mt-1 text-sm text-base-700">
+                {submittedFoodWaste}은(는) 음식물 쓰레기가 아닙니다!
               </p>
-              {/* TODO: Image태그로 바꾸기 */}
-              <img src="https://via.placeholder.com/220x220" alt="일쓰아이콘" />
+              <Image
+                src={FoodNoIcon}
+                width={200}
+                height={200}
+                className="mx-auto"
+                alt="음쓰아이콘"
+              />
             </>
           )}
         </div>

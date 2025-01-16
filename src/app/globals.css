@@ -70,7 +70,7 @@ body {
 }
 
 .swiper-pagination-bullet-active {
-  background-color: #FF7600 !important;
+  background-color: #ff7600 !important;
 }
 
 .swiper-button-next,
@@ -80,14 +80,29 @@ body {
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  color: #FF7600 !important;
+  color: #ff7600 !important;
 }
 
 .swiper-slide {
   background-color: #f9f9f9 !important;
 }
 
-
+.common-select {
+  @apply cursor-pointer appearance-none rounded border border-base-400 px-3 py-2 pr-9 text-base-800 focus:outline-none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url("/images/arrow-icon.svg") no-repeat calc(100% - 12px) center;
+}
+.common-select::-ms-expand {
+  @apply hidden;
+}
+.common-select option:checked {
+  @apply bg-primary-50 text-primary-500;
+}
+.common-select:disabled {
+  @apply cursor-not-allowed opacity-100;
+}
 
 @layer utilities {
   .text-balance {
@@ -95,6 +110,12 @@ body {
   }
 }
 
+::-webkit-scrollbar {
+  @apply h-12 w-2;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
 ::-webkit-scrollbar-thumb {
-  background: #ff7600;
+  @apply rounded-full bg-primary-500;
 }
