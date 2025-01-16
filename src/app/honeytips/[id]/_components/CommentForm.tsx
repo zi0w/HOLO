@@ -2,17 +2,17 @@
 
 import { useAddCommentMutation } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
-import type { Post } from "@/app/honeytips/_types/honeytips.type";
+import type { Comment } from "@/app/honeytips/_types/honeytips.type";
+import ArrowGray from "@/assets/images/honeytips/arrow-up-circle.svg";
 import ArrowOrange from "@/assets/images/honeytips/comment-button.svg";
-import ArrowGray from "@/assets/images/honeytips/arrow-up-circle.svg"
+import { useParams } from "next/navigation";
 import { useRef } from "react";
 
-type CommentFormProps = {
-  postDetailData: Post;
-};
+const CommentForm = () => {
+  const params = useParams();
 
-const CommentForm = ({ postDetailData }: CommentFormProps) => {
-  const postId = postDetailData.id;
+  const postId: Comment["post_id"] = params.id as string;
+
   const inputRef = useRef<HTMLInputElement>(null);
   const isAuthenticated = useAuth();
   const addCommentMutation = useAddCommentMutation();
@@ -44,7 +44,7 @@ const CommentForm = ({ postDetailData }: CommentFormProps) => {
             disabled={!isAuthenticated}
           />
           <button
-            className="absolute right-1 top-1/2 -translate-y-1/2 transform px-1 text-3xl disabled: hover:disabled:cursor-not-allowed"
+            className="disabled: absolute right-1 top-1/2 -translate-y-1/2 transform px-1 text-3xl hover:disabled:cursor-not-allowed"
             type="submit"
             disabled={!isAuthenticated}
           >

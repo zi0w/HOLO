@@ -4,6 +4,8 @@ import DetailCard from "@/app/honeytips/[id]/_components/DetailCard";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
 
+export const dynamic = "force-dynamic";
+
 export const generateMetadata = async ({ params }: Props) => {
   const postDetailData: Post | null = await fetchPostDetail(params.id);
 
@@ -26,22 +28,14 @@ type Props = {
   };
 };
 
-const DetailPage = async ({ params }: Props) => {
-  const postDetailData: Post | null = await fetchPostDetail(params.id);
-
-  if (!postDetailData) {
-    return (
-      <div className="text-center">
-        <p>게시글을 찾을 수 없습니다.</p>
-      </div>
-    );
-  }
+const DetailPage = ({ params }: Props) => {
+  const postId = params.id;
 
   return (
     <>
-      <DetailCard postDetailData={postDetailData} />
-      <CommentList postDetailData={postDetailData} />
-      <CommentForm postDetailData={postDetailData} />
+      <DetailCard postId={postId} />
+      <CommentList />
+      <CommentForm />
     </>
   );
 };

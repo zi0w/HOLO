@@ -69,12 +69,12 @@ const PostList = () => {
 
   return (
     <section className="mx-auto">
-      <div className="mb-6 flex justify-between border-b border-primary-100">
+      <div className="mb-4 flex justify-between border-b border-primary-100">
         {POST_CATEGORIES.map((category) => (
           <button
             key={category}
             className={clsx(
-              "relative px-4 py-2 text-lg font-semibold text-base-500 transition-colors",
+              "relative px-4 py-3 font-semibold text-base-500 transition-colors",
               selectedCategory === category
                 ? "text-base-800"
                 : "hover:text-base-800",
@@ -89,7 +89,7 @@ const PostList = () => {
         ))}
       </div>
 
-      <div className="fixed bottom-20 right-6 z-50">
+      <div className="fixed bottom-20 right-4 z-50">
         <button
           onClick={handleGoToPost}
           className="relative flex items-center justify-center rounded-full"
@@ -98,7 +98,7 @@ const PostList = () => {
         </button>
       </div>
 
-      <section className="grid grid-cols-1 gap-5">
+      <section className="grid grid-cols-1 gap-4">
         {isLoading ? (
           <p className="col-span-full text-center text-base-500">로딩중...</p>
         ) : currentPosts.length > 0 ? (

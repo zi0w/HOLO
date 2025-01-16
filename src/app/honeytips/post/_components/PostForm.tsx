@@ -3,6 +3,7 @@
 import { updatePost } from "@/app/honeytips/_actions/update";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
+import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
 import XButton from "@/assets/images/honeytips/x.svg";
 import clsx from "clsx";
 import Image from "next/image";
@@ -34,7 +35,9 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   const initialCategory = searchParams.get("category") || "청소";
 
   useEffect(() => {
-    setCategory(initialCategory);
+    const categoryFromParams =
+      initialCategory === "전체" ? "청소" : initialCategory;
+    setCategory(categoryFromParams);
   }, [initialCategory]);
 
   useEffect(() => {
@@ -138,36 +141,30 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
     setImageUrls(newImageUrls);
   };
 
-  const categories = ["청소", "요리", "문화", "기타"];
-
   return (
     <form className="mx-5 py-2">
-      <section className="mb-8 flex items-center justify-between">
+      <section className="mb-6 flex items-center justify-between">
         <button
           type="button"
           onClick={handleCancel}
-          className="rounded px-3 py-1.5 text-black"
+          className="rounded px-3 py-1.5 text-base-800"
           disabled={isLoading}
         >
           취소
         </button>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="rounded-md p-2"
-        >
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        <CategorySelectModal
+          selectedCategory={category}
+          onChange={setCategory}
+        />
         <button
           type="button"
           onClick={handleSubmit}
-          className={clsx("rounded px-3 py-1.5 text-primary-500", {
-            "cursor-not-allowed opacity-50": isLoading,
-          })}
+          className={clsx(
+            "hover: rounded px-3 py-1.5 text-base-800 hover:text-primary-500",
+            {
+              "cursor-not-allowed opacity-50": isLoading,
+            },
+          )}
           disabled={isLoading}
         >
           {isLoading ? "등록 중..." : "등록"}
@@ -180,28 +177,28 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="제목을 입력해주세요."
-          className="w-full rounded-md border p-2"
+          className="w-full rounded-md border border-primary-200 p-2"
           disabled={isLoading}
         />
       </section>
 
-      <section className="mb-4">
+      <section className="mb-2">
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="내용을 입력해주세요."
-          className="w-full rounded-md border p-2"
+          className="h-[297px] w-full rounded-md border border-primary-200 p-2"
           rows={10}
           disabled={isLoading}
         />
       </section>
 
-      <section className="mx-auto mt-6 grid grid-cols-3 gap-4">
+      <section className="mx-auto grid grid-cols-3 gap-4">
         {[0, 1, 2].map((index) => (
           <article key={index} className="relative w-full">
             <label
               htmlFor={`image-upload-${index}`}
-              className="flex aspect-square cursor-pointer items-center justify-center rounded-md border bg-gray-200"
+              className="flex aspect-square cursor-pointer items-center justify-center rounded-md border border-primary-200"
             >
               {imageUrls[index] ? (
                 <Image
@@ -212,7 +209,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
                   className="h-full w-full rounded-md object-cover"
                 />
               ) : (
-                <span>+</span>
+                <span className="text-base-500">+</span>
               )}
               <input
                 id={`image-upload-${index}`}
