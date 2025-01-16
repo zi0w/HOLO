@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        custom: "0px 4px 10px 0px rgba(0, 0, 0, 0.15)",
+      },
       fontFamily: {
         gmarket: ["GmarketSansMedium"],
       },
@@ -41,6 +44,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
 export default config;

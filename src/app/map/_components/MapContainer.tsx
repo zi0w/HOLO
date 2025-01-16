@@ -3,6 +3,7 @@ import type {
   Place,
   PlacesSearchResultItem,
 } from "@/app/map/_types/map";
+import Cancel from "@/assets/images/map/cancel.svg";
 import Link from "next/link";
 import type { Dispatch, SetStateAction } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
@@ -42,7 +43,7 @@ const MapContainer = ({
   return (
     <Map
       center={mapCenter || currentPosition} // 지도를 내 위치 기준으로 표시
-      className="z-0 h-full w-full"
+      className="z-0 h-[calc(100%-58px)] w-full"
       level={mapLevel} // 지도의 확대 레벨
       onCenterChanged={(map) => {
         // 사용자가 지도를 드래그로 이동하면 현재 지도 중심 업데이트
@@ -96,16 +97,18 @@ const MapContainer = ({
           xAnchor={0.5} // x축 기준 중앙
           yAnchor={1.4}
         >
-          <div className="rounded bg-white p-4 shadow">
-            <button
-              onClick={() => {
-                setSelectedPlace(null); // 선택된 장소 초기화
-                setPlaceDetail(null); // 상세정보 초기화
-              }}
-              className="absolute right-2 top-2 text-right text-gray-500 hover:text-gray-800"
-            >
-              X
-            </button>
+          <div className="relative rounded bg-white p-4 pt-8 shadow">
+            <div className="absolute right-2 top-2 text-right">
+              <button
+                onClick={() => {
+                  setSelectedPlace(null); // 선택된 장소 초기화
+                  setPlaceDetail(null); // 상세정보 초기화
+                }}
+                className="text-gray-500 hover:text-gray-800"
+              >
+                <Cancel />
+              </button>
+            </div>
             <h3 className="text-lg font-bold">{placeDetail.place_name}</h3>
 
             <p>{placeDetail.address_name}</p>

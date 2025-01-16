@@ -13,9 +13,12 @@ export const metadata: Metadata = {
 };
 const Map = () => {
   return (
-    <div>
+    <>
+      <div className="font-gmarket mx-5 my-4 text-2xl font-bold">
+        우리동네 핫플
+      </div>
       <KakaoMap />
-    </div>
+    </>
   );
 };
 

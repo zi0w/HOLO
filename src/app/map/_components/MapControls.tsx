@@ -1,3 +1,7 @@
+import Location from "@/assets/images/map/location.svg";
+import Minus from "@/assets/images/map/minus.svg";
+import Plus from "@/assets/images/map/plus.svg";
+
 type MapControlsProps = {
   onClickPlusMapLevel: () => void;
   onClickMinusMapLevel: () => void;
@@ -10,29 +14,29 @@ const MapControls = ({
   onClickMoveCurrentPosition,
 }: MapControlsProps) => {
   return (
-    <>
-      <div className="absolute bottom-72 right-4 flex flex-col space-y-2">
+    <div className="relative">
+      <div className="shadow-custom absolute bottom-64 right-4 flex flex-col rounded border border-base-700">
         <button
-          className="rounded bg-white p-2 shadow hover:bg-gray-300"
+          className="h-[44px] w-[48px] rounded-t border-b border-base-700 bg-white hover:bg-gray-300"
           onClick={onClickPlusMapLevel} // 확대
         >
-          +
+          <Plus className="mx-auto" />
         </button>
         <button
-          className="rounded bg-white p-2 shadow hover:bg-gray-300"
+          className="h-[44px] w-[48px] rounded-b bg-white shadow hover:bg-gray-300"
           onClick={onClickMinusMapLevel} // 축소
         >
-          −
+          <Minus className="mx-auto" />
         </button>
       </div>
       {/* 내 위치 버튼*/}
       <button
-        className="absolute bottom-60 left-10 z-10 rounded bg-white p-2 shadow hover:bg-blue-400"
+        className="shadow-custom absolute bottom-64 left-4 z-10 rounded-full border border-base-700 bg-white p-4"
         onClick={onClickMoveCurrentPosition}
       >
-        내 위치
+        <Location />
       </button>
-    </>
+    </div>
   );
 };
 
