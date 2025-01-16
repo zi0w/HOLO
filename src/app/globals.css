@@ -12,10 +12,23 @@
     font-style: normal;
   }
   @font-face {
+    font-family: "GmarketSansLight";
+    src: url("../assets/fonts/GmarketSansTTFLight.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
     font-family: "GmarketSansMedium";
-    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
-      format("woff");
-    font-weight: normal;
+    src: url("../assets/fonts/GmarketSansTTFMedium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "GmarketSansBold";
+    src: url("../assets/fonts/GmarketSansTTFBold.ttf") format("truetype");
+    font-weight: 700;
     font-style: normal;
   }
 }
@@ -30,10 +43,14 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "GmarketSansMedium";
+  font-family: "GmarketSansBold";
 }
 
 /* common */
+body {
+  @apply bg-white;
+}
+
 .common-title {
   @apply text-2xl font-bold text-gray-800;
 }
