@@ -15,9 +15,7 @@ const BestPostList = () => {
       try {
         const posts = await fetchPostsData();
         const sortedPosts = posts
-          .sort(
-            (a, b) => (b.likes?.[0]?.count || 0) - (a.likes?.[0]?.count || 0),
-          )
+          .sort((a, b) => (b.likes[0].count || 0) - (a.likes[0].count || 0))
           .slice(0, 3);
         setBestPosts(sortedPosts);
       } catch (err) {
@@ -30,22 +28,24 @@ const BestPostList = () => {
     fetchBestPosts();
   }, []);
 
-  if (loading) return <div>로딩 중...</div>;
+  if (loading)
+    return (
+      <p className="mx-auto flex h-[200px] items-center justify-center text-base-400">
+        로딩중...
+      </p>
+    );
 
   return (
     <div className="relative mx-5">
-      <h2 className="text-[22px] font-bold text-base-800">
-        꿀팁 게시판
-      </h2>
+      <h2 className="text-[22px] font-bold text-base-800">꿀팁 게시판</h2>
       <ul className="mt-4 flex flex-col gap-4">
         {bestPosts.map((post) => (
-          <li key={post.id}>
-            <PostCard
-              post={post}
-              likesCount={post.likes?.[0]?.count || 0}
-              commentsCount={post.comments?.[0]?.count || 0}
-            />
-          </li>
+          <PostCard
+            key={post.id}
+            post={post}
+            likesCount={post.likes[0].count || 0}
+            commentsCount={post.comments[0].count || 0}
+          />
         ))}
       </ul>
       <Link

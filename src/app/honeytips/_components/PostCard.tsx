@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
+import Link from "next/link";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
@@ -29,7 +30,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
   };
 
   return (
-    <article>
+    <Link href={`/honeytips/${post.id}`}>
       <section className="relative flex flex-col gap-5 rounded-lg border border-base-300 p-5">
         <div className="flex w-full items-start gap-[11px]">
           <div className="flex w-full flex-col">
@@ -38,7 +39,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
           </div>
           {post.post_image_url?.[0] && (
             <Image
-              className="w-[103px] h-[103px] aspect-square rounded bg-white object-cover"
+              className="aspect-square h-[103px] w-[103px] rounded object-cover"
               src={post.post_image_url[0]}
               alt="게시글 이미지"
               width={100}
@@ -61,7 +62,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
                 />
               )}
               <p className="mx-1 text-[14px] text-base-600">
-                {post.users?.nickname}
+                {post.users.nickname}
               </p>
               <SmallDot />
               <time className="ml-1 text-[14px] text-base-600">
@@ -82,7 +83,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
           </div>
         </div>
       </section>
-    </article>
+    </Link>
   );
 };
 

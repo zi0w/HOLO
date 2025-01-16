@@ -20,11 +20,14 @@ const CommentForm = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    if (inputRef.current && inputRef.current.value !== "") {
-      const newComment = inputRef.current.value;
-      addCommentMutation.mutate({ comment: newComment, postId });
-      inputRef.current!.value = "";
+    if (inputRef.current && inputRef.current.value.trim() === "") {
+      alert("댓글을 입력해주세요.");
+      return;
     }
+
+    const newComment = inputRef.current!.value;
+    addCommentMutation.mutate({ comment: newComment, postId });
+    inputRef.current!.value = "";
   };
 
   return (

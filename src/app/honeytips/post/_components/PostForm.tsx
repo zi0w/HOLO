@@ -4,6 +4,7 @@ import { updatePost } from "@/app/honeytips/_actions/update";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
 import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
+import Plus from "@/assets/images/honeytips/plus.svg";
 import XButton from "@/assets/images/honeytips/x.svg";
 import clsx from "clsx";
 import Image from "next/image";
@@ -209,7 +210,9 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
                   className="h-full w-full rounded-md object-cover"
                 />
               ) : (
-                <span className="text-base-500">+</span>
+                <span className="text-base-500">
+                  <Plus />
+                </span>
               )}
               <input
                 id={`image-upload-${index}`}

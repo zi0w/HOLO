@@ -62,7 +62,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
     }
   };
 
-  if (!postDetailData) return <p>해당 게시물을 찾을 수 없습니다.</p>;
+  if (!postDetailData) return <p className="mx-auto flex h-[200px] items-center justify-center text-base-400">로딩중...</p>;
 
   return (
     <section className="mx-5 py-[10px]">
