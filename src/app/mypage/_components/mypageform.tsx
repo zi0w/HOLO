@@ -1,12 +1,14 @@
 "use client";
 
-import LikeList from "@/app/mypage/[id]/_components/Mylike/LikeList";
+
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
 import UserProfile from "@/app/mypage/_components/UserProfile";
 import SignoutButton from "@/app/sign-in/_components/SignoutButton";
-// CommentList 컴포넌트 가져오기
 import { useState } from "react";
-import CommentList from "../[id]/_components/Mycomment/MyCommentList";
+import MyLikeList from "@/app/mypage/[id]/_components/Mylike/MyLikeList";
+import MyCommentList from "@/app/mypage//[id]/_components/Mycomment/MyCommentList";
+import MyWritingtList from "@/app/mypage/[id]/_components/Mypost/MyWritingtList";
+// 내가 쓴 글 리스트 컴포넌트 임포트
 
 const Mypageform: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,7 +38,7 @@ const Mypageform: React.FC = () => {
           onClick={() => setActiveSection("myPosts")}
           className={`rounded px-4 py-2 text-black ${activeSection === "myPosts" ? "bg-gray-400" : "bg-gray-300 hover:bg-gray-400"}`}
         >
-          내가 쓴글
+          내가 쓴 글
         </button>
       </div>
 
@@ -48,19 +50,19 @@ const Mypageform: React.FC = () => {
         {/* 좋아요 섹션이 활성화된 경우 */}
         {activeSection === "likes" && (
           <div className="flex flex-col items-center">
-            <LikeList />
+            <MyLikeList />
             {/* 페이지네이션 버튼 제거 */}
           </div>
         )}
 
         {/* 댓글 섹션이 활성화된 경우 */}
         {activeSection === "comments" && (
-          <CommentList /> // 댓글 리스트 표시
+          <MyCommentList /> // 댓글 리스트 표시
         )}
 
-        {/* 내가 쓴글 섹션이 활성화된 경우 */}
+        {/* 내가 쓴 글 섹션이 활성화된 경우 */}
         {activeSection === "myPosts" && (
-          <div>내가 쓴글 섹션이 여기에 표시됩니다.</div>
+          <MyWritingtList /> // 내가 쓴 글 리스트 표시
         )}
       </div>
 
