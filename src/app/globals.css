@@ -70,7 +70,7 @@ body {
 }
 
 .swiper-pagination-bullet-active {
-  background-color: #FF7600 !important;
+  background-color: #ff7600 !important;
 }
 
 .swiper-button-next,
@@ -80,14 +80,23 @@ body {
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  color: #FF7600 !important;
+  color: #ff7600 !important;
 }
 
 .swiper-slide {
   background-color: #f9f9f9 !important;
 }
 
-
+.common-select {
+  @apply appearance-none rounded border border-base-400 px-3 py-2 pr-9 text-base-800 focus:outline-none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url("/images/arrow-icon.svg") no-repeat calc(100% - 12px) center;
+}
+.common-select::-ms-expand {
+  @apply hidden;
+}
 
 @layer utilities {
   .text-balance {

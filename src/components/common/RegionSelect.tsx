@@ -38,7 +38,7 @@ const RegionSelect = ({ selectedRegion, onChange }: RegionSelectProps) => {
     <select
       name="region"
       id="region"
-      className="border border-yellow-500"
+      className="common-select"
       onChange={handleChange}
       value={selectedRegion}
     >

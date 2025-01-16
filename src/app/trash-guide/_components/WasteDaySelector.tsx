@@ -9,8 +9,10 @@ const WasteDaySelector = () => {
   const [regionSelected, setRegionSelected] = useState<string>("");
   const [districtSelected, setDistrictSelected] = useState<string>("");
   const [districts, setDistricts] = useState<string[]>([]);
+
   const [wasteDayAnswer, setWasteDayAnswer] =
     useState<WasteDayAnswerData>(null);
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleFetchWasteDay = async (): Promise<void> => {
@@ -34,13 +36,13 @@ const WasteDaySelector = () => {
     setDistricts(districts);
   };
 
-  const btnDisabled = clsx("border border-yellow-500", {
-    "bg-yellow-500":
+  const btnDisabled = clsx("border  block w-full mt-4 py-2 rounded", {
+    "bg-primary-500 border-primary-500 text-white":
       regionSelected &&
       regionSelected !== "지역선택" &&
       districtSelected &&
       districtSelected !== "시군구",
-    "bg-gray-400":
+    "bg-base-500 border-base-500":
       !regionSelected ||
       regionSelected === "지역선택" ||
       !districtSelected ||
@@ -49,9 +51,8 @@ const WasteDaySelector = () => {
 
   return (
     <div>
-      <p>지역별 쓰레기 배출 요일 확인</p>
-      <div>
-        <p>지역선택</p>
+      <p className="mb-4 font-bold text-base-800">지역 선택</p>
+      <div className="grid grid-cols-2 gap-2">
         <RegionSelect
           selectedRegion={regionSelected}
           onChange={handleRegionChange}
@@ -59,7 +60,7 @@ const WasteDaySelector = () => {
         <select
           name="district"
           id="district"
-          className="border border-yellow-500"
+          className="common-select"
           onChange={(e) => setDistrictSelected(e.target.value)}
           value={districtSelected}
           disabled={!regionSelected}
@@ -71,20 +72,20 @@ const WasteDaySelector = () => {
             </option>
           ))}
         </select>
-        <button
-          type="button"
-          onClick={handleFetchWasteDay}
-          className={btnDisabled}
-          disabled={
-            !regionSelected ||
-            regionSelected === "지역선택" ||
-            !districtSelected ||
-            districtSelected === "시군구"
-          }
-        >
-          조회
-        </button>
       </div>
+      <button
+        type="button"
+        onClick={handleFetchWasteDay}
+        className={btnDisabled}
+        disabled={
+          !regionSelected ||
+          regionSelected === "지역선택" ||
+          !districtSelected ||
+          districtSelected === "시군구"
+        }
+      >
+        조회
+      </button>
       {!wasteDayAnswer && !loading && <div>지역을 선택해주세요.</div>}
       {loading && <div>쓰레기 배출 요일을 확인중입니다...</div>}
       <ul>
