@@ -6,24 +6,22 @@ import type { Like, Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import YesHeart from "@/assets/images/honeytips/love_selected_42.svg";
 import NoHeart from "@/assets/images/honeytips/love_unselected_42.svg";
-import { useState } from "react";
+import { useIsMutating } from "@tanstack/react-query";
 
 type LikeButtonProps = {
-  postDetailData: Post;
+  postId: Post["id"];
+  likesCounts: number;
+  setLikesCounts: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const LikeButton = ({ postDetailData }: LikeButtonProps) => {
-  // id, likeCount, commentCount만 넘겨주기
-  const postId = postDetailData.id;
+const LikeButton = ({
+  postId,
+  likesCounts,
+  setLikesCounts,
+}: LikeButtonProps) => {
   const { data: likeData, isError, isPending } = useLikeDataQuery(postId);
-  const [likesCounts, setLikesCounts] = useState(
-    postDetailData.likes[0].count || 0,
-  );
-  console.log('postDetailData', postDetailData)
-  console.log("likesCounts", postDetailData.likes[0].count);
-
-  const [mutating, setMutating] = useState(false);
   const likeMutation = useLikeMutation(postId);
+  const isMutating = useIsMutating();
 
   const handleLikeBtn = async () => {
     const userId: Like["user_id"] | null = await getId();
@@ -33,18 +31,12 @@ const LikeButton = ({ postDetailData }: LikeButtonProps) => {
       return;
     }
 
-    setMutating(true);
-
     if (likeData!.length > 0) {
       likeMutation.mutate(
         { action: "delete", userId, postId },
         {
           onSuccess: () => {
             setLikesCounts((prev) => prev - 1);
-            setMutating(false);
-          },
-          onError: () => {
-            setMutating(false);
           },
         },
       );
@@ -54,10 +46,6 @@ const LikeButton = ({ postDetailData }: LikeButtonProps) => {
         {
           onSuccess: () => {
             setLikesCounts((prev) => prev + 1);
-            setMutating(false);
-          },
-          onError: () => {
-            setMutating(false);
           },
         },
       );
@@ -70,7 +58,7 @@ const LikeButton = ({ postDetailData }: LikeButtonProps) => {
 
   return (
     <section className="flex flex-col items-center text-2xl">
-      <button onClick={handleLikeBtn} disabled={mutating}>
+      <button onClick={handleLikeBtn} disabled={!!isMutating}>
         {likeData?.length ? <YesHeart /> : <NoHeart />}
       </button>
       <p className="text-[14px] text-primary-500">{likesCounts}</p>

@@ -3,7 +3,7 @@
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
-import { deletePost } from "@/app/honeytips/_utils/detail";
+import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -15,19 +15,28 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 type DetailCardProps = {
-  postDetailData: Post;
+  postId: Post["id"];
 };
 
-const DetailCard = ({ postDetailData }: DetailCardProps) => {
+const DetailCard = ({ postId }: DetailCardProps) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [postDetailData, setPostDetailData] = useState<Post | null>(null);
+  const [likesCounts, setLikesCounts] = useState<number>(0);
   const router = useRouter();
 
   const formatDate = (date: string) => {
     return dayjs(date).format("YYYY년 MM월 DD일 HH:mm:ss");
   };
 
-  // useEffect로 디테일 함수 호출
+  useEffect(() => {
+    const fetchPostDetailData = async () => {
+      const postDetailData = await fetchPostDetail(postId);
+      setPostDetailData(postDetailData);
+      setLikesCounts(postDetailData!.likes[0].count);
+    };
+    fetchPostDetailData();
+  }, []);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -53,12 +62,14 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
     }
   };
 
+  if (!postDetailData) return <p>해당 게시물을 찾을 수 없습니다.</p>;
+
   return (
     <section className="mx-5 py-[10px]">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center gap-2">
-            {postDetailData.users?.profile_image_url && (
+            {postDetailData.users.profile_image_url && (
               <Image
                 src={postDetailData.users.profile_image_url}
                 alt={`${postDetailData.users.nickname}의 프로필 이미지`}
@@ -70,7 +81,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
           </div>
           <div className="ml-3 flex flex-col">
             <p className="text-[14px] text-base-800">
-              {postDetailData.users?.nickname}
+              {postDetailData.users.nickname}
             </p>
             <time className="text-[14px] text-base-800">
               {formatDate(postDetailData.created_at)}
@@ -84,7 +95,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
               <MenuDots />
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 top-6 z-10 w-[68px] py-2 rounded-lg border bg-white">
+              <div className="absolute right-0 top-6 z-10 w-[68px] rounded-lg border bg-white py-2">
                 <Link
                   href={`/honeytips/post?edit=${postDetailData.id}`}
                   className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
@@ -112,7 +123,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
         centeredSlides={true}
         pagination={{ clickable: true }}
         navigation={true}
-        className="max-w-[362px] h-auto mb-4 mt-2"
+        className="mb-4 mt-2 h-auto max-w-[362px]"
       >
         {postDetailData.post_image_url?.map((imageUrl, index) => (
           <SwiperSlide
@@ -140,7 +151,13 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
         {postDetailData.content}
       </p>
 
-      {currentId && <LikeButton postDetailData={postDetailData} />}
+      {currentId && (
+        <LikeButton
+          postId={postDetailData.id}
+          likesCounts={likesCounts}
+          setLikesCounts={setLikesCounts}
+        />
+      )}
     </section>
   );
 };
