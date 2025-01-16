@@ -25,6 +25,8 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
               "flex flex-col items-center",
               path === "/"
                 ? pathname === "/"
+                  ? "text-primary-500"
+                  : "text-base-700"
                 : pathname.startsWith(path) && "text-primary-500",
             )}
           >
@@ -32,6 +34,8 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
               className={clsx(
                 path === "/"
                   ? pathname === "/"
+                    ? "text-primary-500"
+                    : "text-base-700"
                   : pathname.startsWith(path) && "text-primary-500",
               )}
             />

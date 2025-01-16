@@ -1,5 +1,6 @@
 "use client";
 
+import NavigateBack from "@/components/common/NavigateBack";
 import Header from "@/components/layout/Header";
 import useCheckAuth from "@/hooks/useCheckAuth";
 import clsx from "clsx";
@@ -19,6 +20,7 @@ const MainContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Header allHidden={allHideHeaderPages} />
+      <NavigateBack />
       <main
         className={clsx(
           "pb-[90px] lg:ml-[240px] lg:h-screen lg:pb-0",
