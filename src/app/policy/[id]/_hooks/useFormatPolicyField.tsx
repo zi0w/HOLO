@@ -22,9 +22,9 @@ const useFormatPolicyField = (policyInfo: PolicyData) => {
             href={policyData as string}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
+            className="text-link underline break-words"
           >
-            신청하러 가기
+            {policyData}
           </Link>
         );
       }

@@ -29,6 +29,7 @@ const config: Config = {
           800: "#B24800",
           900: "#8F3600",
         },
+        link: "#2889FF",
         base: {
           50: "#FAFAFA",
           100: "#F5F5F5",

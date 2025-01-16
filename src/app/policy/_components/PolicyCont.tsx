@@ -50,7 +50,7 @@ const PolicyCont = () => {
     nextPage,
     prevPage,
     goToPage,
-  } = usePagination(policyData || [], 10);
+  } = usePagination(policyData || [], 6);
 
   const handleFilterChange = (
     key: keyof Omit<SearchFilters, "pageIndex">,

@@ -12,13 +12,10 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <div>
-      <div>
-        <h1 className="common-title">청년 정책</h1>
-        <p>청년들을 위한 정책 제공</p>
-      </div>
+    <>
+      <p className="mb-4 font-bold text-base-800">지역 및 정책 분야 선택</p>
       <PolicyCont />
-    </div>
+    </>
   );
 };
 
