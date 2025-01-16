@@ -26,8 +26,8 @@ const GuideBnr = ({ isPolicy }: { isPolicy: boolean }) => {
             </>
           ) : (
             <>
-              계란껍질이 <br className="block md:hidden" />
-              음식물 쓰레기던가..
+              종이박스를 <br className="block md:hidden" />
+              무슨 요일에 버리더라..
             </>
           )}
         </p>

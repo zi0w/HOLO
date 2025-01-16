@@ -26,7 +26,7 @@ const MainContainer = ({ children }: { children: React.ReactNode }) => {
         className={clsx(
           "pb-[60px] lg:ml-[240px] lg:h-screen",
           allHideHeaderPages && "lg:!ml-0",
-          trashPage && "h-screen bg-orange-50 pb-12 lg:pb-0",
+          trashPage && "h-screen pb-12 lg:pb-0",
           mapPage && "!pb-0 lg:!h-auto",
         )}
       >

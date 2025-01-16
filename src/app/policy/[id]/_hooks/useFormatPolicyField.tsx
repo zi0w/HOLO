@@ -16,6 +16,19 @@ const useFormatPolicyField = (policyInfo: PolicyData) => {
         return dateRanges[dateRanges.length - 1];
       }
 
+      if (fieldName === "rqutUrla" || fieldName === "rfcSiteUrla1") {
+        return (
+          <Link
+            href={policyData as string}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-link underline break-words"
+          >
+            {policyData}
+          </Link>
+        );
+      }
+
       return policyData;
     };
   }, [policyInfo]);

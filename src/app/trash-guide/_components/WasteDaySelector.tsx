@@ -57,7 +57,7 @@ const WasteDaySelector = () => {
           value={districtSelected}
           disabled={!regionSelected}
         >
-          <option value="시군구">시군구(전체) 선택</option>
+          <option value="시군구">시군구(전체)</option>
           {districts.map((district, i) => (
             <option value={district} key={i}>
               {district}
