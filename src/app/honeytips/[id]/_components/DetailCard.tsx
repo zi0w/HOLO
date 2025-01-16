@@ -52,21 +52,17 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
   };
 
   return (
-    <article className="mx-auto flex w-[362px] items-center justify-center">
-      <section className="p-4">
+      <section className="py-4 mx-5">
         <div className="flex items-center justify-between">
           <h1 className="my-6 text-xl font-bold">{postDetailData.title}</h1>
-          {/* 현재 사용자 id === 포스트 작성자 id 일 때만 수정/삭제 버튼 보여주기 */}
+
           {currentId === postDetailData.user_id && (
             <div className="relative">
-              <button
-                className="text-base80 rounded-md py-1"
-                onClick={() => setIsDropdownOpen((prev) => !prev)}
-              >
-                <MenuDots className="text-2xl text-gray-500" />
+              <button onClick={() => setIsDropdownOpen((prev) => !prev)}>
+                <MenuDots />
               </button>
               {isDropdownOpen && (
-                <div className="absolute top-8 right-0 z-10 w-14 rounded-lg border">
+                <div className="absolute right-0 top-8 z-10 w-14 rounded-lg border">
                   <Link
                     href={`/honeytips/post?edit=${postDetailData.id}`}
                     className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
@@ -85,7 +81,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
           )}
         </div>
 
-        <div className="mb-2 flex items-center px-2">
+        <div className="flex items-center">
           <div className="flex items-center gap-2">
             {postDetailData.users?.profile_image_url && (
               <Image
@@ -114,7 +110,7 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
           centeredSlides={true}
           pagination={{ clickable: true }}
           navigation={true}
-          className="mb-6 w-[362px]"
+          className="my-6 w-[300px]"
         >
           {postDetailData.post_image_url?.map((imageUrl, index) => (
             <SwiperSlide key={index}>
@@ -129,13 +125,12 @@ const DetailCard = ({ postDetailData }: DetailCardProps) => {
           ))}
         </Swiper>
 
-        <p className="mb-8 whitespace-pre-wrap px-2">
+        <p className="mb-8 whitespace-pre-wrap">
           {postDetailData.content}
         </p>
-        {/* 좋아요 버튼 */}
+
         {currentId && <LikeButton postDetailData={postDetailData} />}
       </section>
-    </article>
   );
 };
 

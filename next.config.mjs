@@ -6,7 +6,6 @@ const nextConfig = {
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
-
     return config;
   },
   images: {
@@ -27,9 +26,9 @@ const nextConfig = {
         pathname: "/**", // 모든 경로 허용
       },
       {
-        protocol: "http",
-        hostname: "googleusercontent.com",
-        pathname: "/**",
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com", // Google 프로필 이미지 호스트
+        pathname: "/**", // 모든 경로 허용
       },
       {
         protocol: "http",
