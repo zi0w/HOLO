@@ -62,10 +62,10 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   return (
     <article className="mx-5 w-full rounded-lg">
       <div className="mb-2 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-[14px]">
           {comment.users?.profile_image_url && (
             <Image
-              className="h-[42px] w-[42px] rounded-full border-2 bg-white"
+              className="h-[50px] w-[50px] rounded-full"
               src={comment.users.profile_image_url}
               alt="프로필 이미지"
               width={100}
@@ -74,10 +74,10 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
           )}
           <div>
             <div className="flex items-center gap-2">
-              <p className="text-sm font-bold text-gray-800">
+              <p className="text-[14px] font-bold text-base-800">
                 {comment.users.nickname}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-[14px] text-base-500">
                 {formatDate(comment.created_at)}
               </p>
             </div>
@@ -89,7 +89,9 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
                 placeholder="댓글을 수정하세요."
               />
             ) : (
-              <p className="mt-1 text-sm text-gray-800">{comment.comment}</p>
+              <p className="mt-1 text-[14px] text-base-800">
+                {comment.comment}
+              </p>
             )}
           </div>
         </div>
@@ -102,17 +104,17 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
               <MenuDots />
             </button>
             {isDropdownOpen && (
-              <div className="absolute bottom-8 right-0 z-10 w-14 rounded-lg border bg-white">
+              <div className="absolute bottom-[31px] right-0 z-10 w-[68px] rounded-lg border bg-white py-2">
                 {editingCommentId === comment.id ? (
                   <>
                     <button
-                      className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                      className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
                       onClick={() => handleCommentSave(comment.id)}
                     >
                       저장
                     </button>
                     <button
-                      className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                      className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
                       onClick={() => {
                         setEditingCommentId(null);
                         setIsDropdownOpen(false);
@@ -124,7 +126,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
                 ) : (
                   <>
                     <button
-                      className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                      className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
                       onClick={() => {
                         setEditingCommentId(comment.id);
                         setEditedComment(comment.comment);
@@ -133,7 +135,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
                       수정
                     </button>
                     <button
-                      className="block w-full px-2 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                      className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
                       onClick={() => handleCommentDelete(comment.id)}
                     >
                       삭제

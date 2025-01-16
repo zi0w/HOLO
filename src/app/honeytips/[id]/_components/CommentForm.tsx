@@ -12,6 +12,7 @@ type CommentFormProps = {
 };
 
 const CommentForm = ({ postDetailData }: CommentFormProps) => {
+  // useParams 로 id 받아오기
   const postId = postDetailData.id;
   const inputRef = useRef<HTMLInputElement>(null);
   const isAuthenticated = useAuth();
