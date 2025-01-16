@@ -2,7 +2,6 @@
 import { fetchOpenAiDay } from "@/app/trash-guide/_actions/actions";
 import type { WasteDayAnswerData } from "@/app/trash-guide/_types/day";
 import RegionSelect from "@/components/common/RegionSelect";
-import { clsx } from "clsx";
 import { useState } from "react";
 
 const WasteDaySelector = () => {
@@ -36,21 +35,11 @@ const WasteDaySelector = () => {
     setDistricts(districts);
   };
 
-  const btnDisabled = clsx(
-    "border  block w-full mt-4 py-2 rounded text-white font-gmarket",
-    {
-      "bg-primary-500 border-primary-500":
-        regionSelected &&
-        regionSelected !== "지역선택" &&
-        districtSelected &&
-        districtSelected !== "시군구",
-      "bg-base-400 border-base-400":
-        !regionSelected ||
-        regionSelected === "지역선택" ||
-        !districtSelected ||
-        districtSelected === "시군구",
-    },
-  );
+  const isDisabled =
+    !regionSelected ||
+    regionSelected === "지역선택" ||
+    !districtSelected ||
+    districtSelected === "시군구";
 
   return (
     <div>
@@ -79,13 +68,8 @@ const WasteDaySelector = () => {
       <button
         type="button"
         onClick={handleFetchWasteDay}
-        className={btnDisabled}
-        disabled={
-          !regionSelected ||
-          regionSelected === "지역선택" ||
-          !districtSelected ||
-          districtSelected === "시군구"
-        }
+        className="lookup-btn"
+        disabled={isDisabled}
       >
         조회
       </button>

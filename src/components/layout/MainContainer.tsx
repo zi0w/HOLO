@@ -24,10 +24,10 @@ const MainContainer = ({ children }: { children: React.ReactNode }) => {
       {(mapPage || trashPage) && <Nav isMobile={true} />}
       <main
         className={clsx(
-          "lg:ml-[240px] lg:h-screen",
+          "pb-[60px] lg:ml-[240px] lg:h-screen",
           allHideHeaderPages && "lg:!ml-0",
           trashPage && "h-screen bg-orange-50 pb-12 lg:pb-0",
-          mapPage && "lg:!h-auto",
+          mapPage && "!pb-0 lg:!h-auto",
         )}
       >
         {children}

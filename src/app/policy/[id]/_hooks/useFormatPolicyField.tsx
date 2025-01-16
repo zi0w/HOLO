@@ -16,19 +16,6 @@ const useFormatPolicyField = (policyInfo: PolicyData) => {
         return dateRanges[dateRanges.length - 1];
       }
 
-      if (fieldName === "rqutUrla" || fieldName === "rfcSiteUrla1") {
-        return (
-          <Link
-            href={policyData as string}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
-          >
-            신청하러 가기
-          </Link>
-        );
-      }
-
       return policyData;
     };
   }, [policyInfo]);
