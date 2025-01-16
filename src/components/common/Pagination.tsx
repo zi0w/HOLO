@@ -1,3 +1,4 @@
+import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import type { PaginationProps } from "@/types/pagination.types";
 
 const Pagination = ({
@@ -16,7 +17,7 @@ const Pagination = ({
         disabled={currentPage === 1}
         className="rounded px-4 py-2 text-base-500"
       >
-        &lt;
+        <ArrowLeftIcon />
       </button>
 
       {Array.from({
@@ -27,8 +28,8 @@ const Pagination = ({
           onClick={() => onGoToPage(startButtonIndex + index + 1)}
           className={`mx-1 rounded px-3 py-2 ${
             currentPage === startButtonIndex + index + 1
-              ? "font-bold text-base-800"
-              : "text-base-500"
+              ? "text-primary-500"
+              : "text-base-800"
           }`}
         >
           {startButtonIndex + index + 1}
@@ -40,7 +41,7 @@ const Pagination = ({
         disabled={currentPage === totalPages}
         className="rounded px-4 py-2 text-base-500"
       >
-        &gt;
+        <ArrowLeftIcon className="rotate-180" />
       </button>
     </div>
   );
