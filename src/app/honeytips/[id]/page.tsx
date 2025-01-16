@@ -28,22 +28,14 @@ type Props = {
   };
 };
 
-const DetailPage = async ({ params }: Props) => {
-  const postDetailData: Post | null = await fetchPostDetail(params.id);
-
-  if (!postDetailData) {
-    return (
-      <div className="text-center">
-        <p>게시글을 찾을 수 없습니다.</p>
-      </div>
-    );
-  }
+const DetailPage = ({ params }: Props) => {
+  const postId = params.id;
 
   return (
     <>
-      <DetailCard postDetailData={postDetailData} />
-      <CommentList postDetailData={postDetailData} />
-      <CommentForm postDetailData={postDetailData} />
+      <DetailCard postId={postId} />
+      <CommentList />
+      <CommentForm />
     </>
   );
 };

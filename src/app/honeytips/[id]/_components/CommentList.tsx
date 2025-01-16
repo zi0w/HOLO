@@ -2,20 +2,18 @@
 
 import CommentCard from "@/app/honeytips/[id]/_components/CommentCard";
 import { useCommentDataQuery } from "@/app/honeytips/[id]/_hooks/useCommentQuery";
-import type { Comment, Post } from "@/app/honeytips/_types/honeytips.type";
+import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import "dayjs/locale/ko";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type CommentListProps = {
-  postDetailData: Post;
-};
-
-const CommentList = ({ postDetailData }: CommentListProps) => {
-  // useParams로 id 받기
+const CommentList = () => {
   const [currentId, setCurrentId] = useState<string | null>(null);
 
-  const postId: Comment["post_id"] = postDetailData.id;
+  const params = useParams();
+
+  const postId: Comment["post_id"] = params.id as string;
 
   const { data: comments, isError, isPending } = useCommentDataQuery(postId);
 
@@ -40,7 +38,7 @@ const CommentList = ({ postDetailData }: CommentListProps) => {
 
   return (
     <div className="mx-5 mt-[14px] flex flex-col">
-      <p className="border-b font-bold text-base-800 border-base-400 pb-2">
+      <p className="border-b border-base-400 pb-2 font-bold text-base-800">
         댓글 {comments?.length || 0}
       </p>
       <section className="my-5 flex flex-col items-center justify-center gap-3 rounded">
