@@ -23,10 +23,18 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
             href={path}
             className={clsx(
               "flex flex-col items-center",
-              pathname === path && "text-primary-500",
+              path === "/"
+                ? pathname === "/"
+                : pathname.startsWith(path) && "text-primary-500",
             )}
           >
-            <Icon className={clsx(pathname === path && "text-primary-500")} />
+            <Icon
+              className={clsx(
+                path === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(path) && "text-primary-500",
+              )}
+            />
             {label}
           </Link>
         ))}
@@ -35,7 +43,7 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
             href="/mypage"
             className={clsx(
               "flex flex-col items-center",
-              pathname === "/mypage" && "text-primary-500",
+              pathname.startsWith("/mypage") && "text-primary-500",
             )}
           >
             <MyPageIcon />
@@ -46,7 +54,7 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
             href="/sign-in"
             className={clsx(
               "flex flex-col items-center",
-              pathname === "/sign-in" && "text-primary-500",
+              pathname.startsWith("/sign-in") && "text-primary-500",
             )}
           >
             <MyPageIcon />
