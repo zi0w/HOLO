@@ -1,8 +1,5 @@
-import FoodWasteCheck from "@/app/trash-guide/_components/FoodWasteCheck";
 import TrashLayoutBox from "@/app/trash-guide/_components/TrashLayoutBox";
-import WasteDaySelector from "@/app/trash-guide/_components/WasteDaySelector";
-import DayIcon from "@/assets/images/trash/day-icon.svg";
-import FoodIcon from "@/assets/images/trash/food-icon.svg";
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,27 +13,17 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <div className="h-full bg-orange-50 px-5 pt-11">
-      <TrashLayoutBox
-        icon={<DayIcon />}
-        title={
-          <>
-            지역별 쓰레기 <br className="md:hidden" /> 배출 요일 확인
-          </>
-        }
-      >
-        <WasteDaySelector />
-      </TrashLayoutBox>
-      <TrashLayoutBox
-        icon={<FoodIcon />}
-        title={
-          <>
-            음식물 쓰레기 <br className="md:hidden" /> 여부 확인
-          </>
-        }
-      >
-        <FoodWasteCheck />
-      </TrashLayoutBox>
+    <div className="h-full overflow-auto px-5 pt-11">
+      <div className="grid gap-16">
+        {/* 쓰레기 배출 요일 확인 */}
+        <TrashLayoutBox isWasteDay={true} />
+        {/* 음식물 쓰레기 여부 확인 */}
+        <TrashLayoutBox isWasteDay={false} />
+      </div>
+      <div className="mt-10 pb-8 text-center text-xs text-base-600">
+        <p>AI를 기반으로 한 답변이므로 확실치 않을 수 있습니다.</p>
+        <p>답변이 이상할 경우 다시 시도해 주시기 바랍니다.</p>
+      </div>
     </div>
   );
 };

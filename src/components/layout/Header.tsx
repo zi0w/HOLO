@@ -7,14 +7,15 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 
-const Header = ({ hidden }: { hidden: boolean }) => {
+const Header = ({ allHidden, mobileHidden }: { allHidden: boolean, mobileHidden: boolean }) => {
   const { isLoggedIn } = useAuthStore();
 
   return (
     <header
       className={clsx(
         "h-[60px] lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-[240px] lg:bg-primary-50",
-        hidden && "hidden",
+        allHidden && "hidden",
+        mobileHidden && "hidden lg:block",
       )}
     >
       <div className="lg:flex lg:h-full lg:flex-col lg:p-5">
@@ -31,7 +32,7 @@ const Header = ({ hidden }: { hidden: boolean }) => {
             />
           </Link>
         </div>
-        <Nav />
+        <Nav isMobile={false} />
         <div className="hidden lg:flex lg:flex-col lg:items-center lg:gap-3 lg:text-lg lg:font-bold">
           {isLoggedIn ? (
             <Link href="/mypage">마이 페이지</Link>

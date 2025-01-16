@@ -36,18 +36,21 @@ const WasteDaySelector = () => {
     setDistricts(districts);
   };
 
-  const btnDisabled = clsx("border  block w-full mt-4 py-2 rounded", {
-    "bg-primary-500 border-primary-500 text-white":
-      regionSelected &&
-      regionSelected !== "지역선택" &&
-      districtSelected &&
-      districtSelected !== "시군구",
-    "bg-base-500 border-base-500":
-      !regionSelected ||
-      regionSelected === "지역선택" ||
-      !districtSelected ||
-      districtSelected === "시군구",
-  });
+  const btnDisabled = clsx(
+    "border  block w-full mt-4 py-2 rounded text-white font-gmarket",
+    {
+      "bg-primary-500 border-primary-500":
+        regionSelected &&
+        regionSelected !== "지역선택" &&
+        districtSelected &&
+        districtSelected !== "시군구",
+      "bg-base-400 border-base-400":
+        !regionSelected ||
+        regionSelected === "지역선택" ||
+        !districtSelected ||
+        districtSelected === "시군구",
+    },
+  );
 
   return (
     <div>
@@ -86,20 +89,26 @@ const WasteDaySelector = () => {
       >
         조회
       </button>
-      {!wasteDayAnswer && !loading && <div>지역을 선택해주세요.</div>}
-      {loading && <div>쓰레기 배출 요일을 확인중입니다...</div>}
-      <ul>
-        {wasteDayAnswer?.map((answer, i) => (
-          <li key={i} className="my-3">
-            {Object.entries(answer).map(([waste, day]) => (
-              <div key={waste}>
-                <strong>{waste}</strong>
-                <p>{day}</p>
-              </div>
-            ))}
-          </li>
-        ))}
-      </ul>
+      {!wasteDayAnswer && !loading && (
+        <p className="mt-5 text-base-500">지역을 선택해주세요.</p>
+      )}
+      {loading && (
+        <p className="mt-5 text-base-500">쓰레기 배출 요일을 확인중입니다...</p>
+      )}
+      {wasteDayAnswer && wasteDayAnswer.length > 0 && (
+        <ul className="mt-5 grid gap-5">
+          {wasteDayAnswer.map((answer, i) => (
+            <li key={i}>
+              {Object.entries(answer).map(([waste, day]) => (
+                <div key={waste} className="text-base-800">
+                  <strong>{waste}</strong>
+                  <p className="mt-1">{day}</p>
+                </div>
+              ))}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
