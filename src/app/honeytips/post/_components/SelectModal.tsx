@@ -14,7 +14,6 @@ const CategorySelectModal = ({
   onChange,
 }: CategorySelectModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [buttonRef, setButtonRef] = useState<HTMLElement | null>(null);
 
   const handleSelectCategory = (category: string) => {
     onChange(category);
@@ -27,42 +26,33 @@ const CategorySelectModal = ({
   };
 
   return (
-    <div>
+    <div className="relative">
+      {/* 버튼 */}
       <button
-        ref={setButtonRef}
         onClick={handleButtonClick}
-        className="flex items-center gap-1 rounded-md px-2 py-1 font-bold text-base-800"
+        className="flex w-[68px] items-center justify-between rounded-md px-2 py-1 font-bold text-base-800"
       >
         {selectedCategory}
         <ChevronDown />
       </button>
 
       {/* 모달 */}
-      {isModalOpen && buttonRef && (
+      {isModalOpen && (
         <div
-          className="fixed z-10 py-1 flex items-center justify-center rounded-lg border shadow-md"
-          style={{
-            top: `${buttonRef.getBoundingClientRect().bottom + window.scrollY}px`,
-            left: `${buttonRef.getBoundingClientRect().left}px`,
-          }}
+          className="absolute z-10 mt-1 w-[68px] rounded-lg border bg-white py-1 shadow-md"
           onClick={() => setIsModalOpen(false)}
         >
-          <div
-            className="w-[calc(100%+16px)] rounded-md bg-white"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <ul>
-              {FORM_CATEGORIES.map((category) => (
-                <li
-                  key={category}
-                  onClick={() => handleSelectCategory(category)}
-                  className="cursor-pointer px-5 py-2 text-base-700 hover:bg-primary-100 hover:text-primary-500"
-                >
-                  {category}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul className="flex flex-col items-center">
+            {FORM_CATEGORIES.map((category) => (
+              <li
+                key={category}
+                onClick={() => handleSelectCategory(category)}
+                className="cursor-pointer px-4 py-2 text-base-700 hover:bg-primary-100 hover:text-primary-500"
+              >
+                {category}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
