@@ -5,9 +5,9 @@ import useAuthStore from "@/store/authStore"; // Zustand 스토어
 import { useRouter } from "next/navigation"; // Next.js 라우터
 
 export const useSignout = () => {
-  const router = useRouter();
-  const clearAuth = useAuthStore((state) => state.clearAuth);
-  const supabase = createClient();
+  const router = useRouter(); // Next.js 라우터 사용
+  const clearAuth = useAuthStore((state) => state.clearAuth); // Zustand 스토어에서 clearAuth 메서드 가져오기
+  const supabase = createClient(); // Supabase 클라이언트 생성
 
   const handleLogout = async () => {
     try {
@@ -15,13 +15,12 @@ export const useSignout = () => {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
 
-      // 상태 초기화
+      // 상태 초기화 및 로컬스토리지 정리
       clearAuth();
 
-      // 쿠키/로컬 스토리지 정리
+      // 쿠키 삭제
       document.cookie =
-        "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      localStorage.removeItem("auth-storage");
+        "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"; // 쿠키 삭제
 
       // 로그아웃 완료 후 이동
       alert("로그아웃 성공!");

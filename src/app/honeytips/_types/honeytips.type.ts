@@ -13,6 +13,7 @@ export type Post = Tables<"posts"> & {
   }[];
 };
 
+
 export type User = Tables<"users">;
 
 export type Comment = Tables<"comments"> & {
