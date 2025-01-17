@@ -4,9 +4,11 @@ import {
   useDeleteCommentMutation,
   useUpdateCommentMutation,
 } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
+import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import dayjs from "dayjs";
+import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import { useState } from "react";
@@ -107,39 +109,31 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
               <div className="absolute bottom-[31px] right-0 z-10 w-[68px] rounded-lg border bg-white py-2">
                 {editingCommentId === comment.id ? (
                   <>
-                    <button
-                      className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                    <DropdownButton
+                      label="저장"
                       onClick={() => handleCommentSave(comment.id)}
-                    >
-                      저장
-                    </button>
-                    <button
-                      className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                    />
+                    <DropdownButton
+                      label="취소"
                       onClick={() => {
                         setEditingCommentId(null);
                         setIsDropdownOpen(false);
                       }}
-                    >
-                      취소
-                    </button>
+                    />
                   </>
                 ) : (
                   <>
-                    <button
-                      className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                    <DropdownButton
+                      label="수정"
                       onClick={() => {
                         setEditingCommentId(comment.id);
                         setEditedComment(comment.comment);
                       }}
-                    >
-                      수정
-                    </button>
-                    <button
-                      className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
+                    />
+                    <DropdownButton
+                      label="삭제"
                       onClick={() => handleCommentDelete(comment.id)}
-                    >
-                      삭제
-                    </button>
+                    />
                   </>
                 )}
               </div>

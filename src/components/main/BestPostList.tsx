@@ -50,7 +50,7 @@ const BestPostList = () => {
       </ul>
       <Link
         href="/honeytips"
-        className="mb-[34px] mt-[18px] flex justify-center text-[14px] text-primary-500"
+        className="mb-[34px] mt-[18px] flex justify-center text-sm text-primary-500"
       >
         더 많은 글들 보러가기
       </Link>

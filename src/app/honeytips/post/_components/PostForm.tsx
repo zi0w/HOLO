@@ -53,11 +53,6 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
     const trimmedTitle = title.trim();
     const trimmedContent = content.trim();
 
-    if (!trimmedTitle || !trimmedContent) {
-      alert("제목과 내용을 모두 입력해주세요.");
-      return;
-    }
-
     setIsLoading(true);
 
     try {
@@ -142,6 +137,8 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
     setImageUrls(newImageUrls);
   };
 
+  const isSubmitDisabled = !title.trim() || !content.trim() || isLoading;
+
   return (
     <form className="mx-5 py-2">
       <section className="mb-6 flex items-center justify-between">
@@ -163,10 +160,10 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
           className={clsx(
             "hover: rounded px-3 py-1.5 text-base-800 hover:text-primary-500",
             {
-              "cursor-not-allowed opacity-50": isLoading,
+              "cursor-not-allowed opacity-50": isSubmitDisabled,
             },
           )}
-          disabled={isLoading}
+          disabled={isSubmitDisabled}
         >
           {isLoading ? "등록 중..." : "등록"}
         </button>
