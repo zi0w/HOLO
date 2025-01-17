@@ -9,13 +9,13 @@ import { useQuery } from "@tanstack/react-query"; // React Query 임포트
 import { useEffect, useState } from "react";
 
 // 타입 정의 (위에서 수정한 내용 반영)
-type User = {
-  id: string;
-  email: string;
-  nickname: string;
-  profile_image_url: string | null;
-  created_at: string;
-};
+// type User = {
+//   id: string;
+//   email: string;
+//   nickname: string;
+//   profile_image_url: string | null;
+//   created_at: string;
+// };
 
 type Like = {
   user_id: string; // 'id' 대신 'user_id'

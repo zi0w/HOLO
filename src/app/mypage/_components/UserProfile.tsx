@@ -1,6 +1,7 @@
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
 import { useUpdateUserInfo } from "@/app/mypage/_hooks/useUpdateUserInfo";
 import useAuthStore from "@/store/authStore";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const UserProfile = () => {
@@ -25,7 +26,7 @@ const UserProfile = () => {
   return (
     <>
       <button className="mb-2 flex h-16 w-16 items-center justify-center rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100">
-        <img
+        <Image
           src={profileImageUrl} // 기본 이미지 또는 사용자 이미지를 사용
           alt="프로필 이미지"
           className="h-full w-full rounded-full object-cover"
