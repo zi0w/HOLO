@@ -3,6 +3,7 @@ export type CommentWithPost = {
     id: string;
     comment: string;
     created_at: string;
+    
     post_id: string;
     users: {
       nickname: string;

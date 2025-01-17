@@ -1,3 +1,5 @@
+//이컴포넌트는 생존
+
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트를 생성하는 함수를 임포트합니다.
 
 // Supabase 클라이언트를 생성합니다.
