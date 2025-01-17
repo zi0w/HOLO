@@ -1,3 +1,4 @@
+//완성본
 "use client";
 
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
@@ -14,7 +15,7 @@ type PostLikeCardProps = {
     id: string;
     title: string;
     content: string;
-    created_at: string;
+    created_at: string; // 게시물 생성 시간
     post_image_url?: string[] | null; // 게시글 이미지 URL 배열 추가
   };
   onLikeChange: () => void;
@@ -51,8 +52,9 @@ const MyLikeCard = ({ post, onLikeChange }: PostLikeCardProps) => {
               </div>
             </div>
 
+            {/* 게시물 생성 시간 표시 */}
             <p className="text-xs text-gray-500">
-              {dayjs(post.created_at).fromNow()}
+              {dayjs(post.created_at).format("YYYY.MM.DD")} {/* 날짜 형식으로 변환 */}
             </p>
 
             {/* 게시글 내용 */}
@@ -63,7 +65,7 @@ const MyLikeCard = ({ post, onLikeChange }: PostLikeCardProps) => {
         </div>
       </Link>
 
-      {/* Move the button outside of the Link */}
+      {/* 더보기/숨기기 버튼 */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -78,3 +80,7 @@ const MyLikeCard = ({ post, onLikeChange }: PostLikeCardProps) => {
 };
 
 export default MyLikeCard;
+
+
+
+
