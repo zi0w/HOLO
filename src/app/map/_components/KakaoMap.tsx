@@ -44,7 +44,6 @@ const KakaoMap = () => {
         setCategory={setCategory}
         setSelectedPlace={setSelectedPlace}
         setPlaceDetail={setPlaceDetail}
-        category="맛집"
       />
 
       <MapContainer

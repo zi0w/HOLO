@@ -16,7 +16,7 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
         allHidden && "hidden",
       )}
     >
-      <nav className="flex justify-between border-t border-primary-200 bg-white px-5 py-2 text-xs text-base-700 lg:h-full lg:flex-col lg:justify-center lg:gap-10 lg:border-r lg:border-t-0 lg:p-5">
+      <nav className="flex justify-between border-t border-base-200 bg-white px-5 py-2 text-xs text-base-700 lg:h-full lg:flex-col lg:justify-center lg:gap-10 lg:border-r lg:border-t-0 lg:p-5">
         {NAVIGATION_PATHS.map(({ path, label, icon: Icon }) => (
           <Link
             key={path}
