@@ -19,21 +19,24 @@ const UserProfile = () => {
     return <div>로그인이 필요합니다.</div>;
   }
 
+  // 프로필 이미지 URL이 없을 경우 기본 이미지 URL을 설정
+  const profileImageUrl = user.profile_image_url || "/path/to/default/image.png"; // 기본 이미지 경로
+
   return (
-    <div className="flex flex-col items-center">
-      <button className="mb-2 flex h-[120px] w-[120px] items-center justify-center rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100">
+    <>
+      <button className="mb-2 flex h-16 w-16 items-center justify-center rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100">
         <img
-          src={user.profile_image_url}
+          src={profileImageUrl} // 기본 이미지 또는 사용자 이미지를 사용
           alt="프로필 이미지"
           className="h-full w-full rounded-full object-cover"
         />
       </button>
-      <div className="mb-4 flex items-center">
-        <h2 className="mr-2 text-lg font-semibold">{user.nickname}</h2>
-        <button onClick={handleOpenModal} className="text-gray-600 hover:text-gray-800">✏️</button>
+      <div className="mb-4 ml-2 flex items-center">
+        <h1 className="mr-2">{user.nickname}</h1>
+        <button onClick={handleOpenModal}>✏️</button>
       </div>
       <ProfileEditModal isOpen={isModalOpen} onClose={handleCloseModal} />
-    </div>
+    </>
   );
 };
 
