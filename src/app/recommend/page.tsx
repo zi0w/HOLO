@@ -1,5 +1,7 @@
 import Person from "@/assets/images/recommend/person-recommend.svg";
+import Image from "next/image";
 import Link from "next/link";
+import person from "@/assets/images/recommend/person-recommend.png"
 
 const RecommendPage = () => {
   return (
@@ -9,7 +11,7 @@ const RecommendPage = () => {
         무엇을 먹을지 고민이라면? <br />
         간단한 4문제로 메뉴를 골라볼까요?
       </span>
-        <Person className="fixed bottom-0 -translate-x-1/2 left-1/2"/>
+        <Image src={person} alt="person-image" width={396} height={630} className="fixed bottom-0 -translate-x-1/2 left-1/2"/>
         <Link href="recommend/menu" className="font-gmarket w-[362px] h-12 flex items-center justify-center rounded bg-primary-500 text-white font-normal mt-[609px] z-10">추천 받기 시작!</Link>
     </div>
   );
