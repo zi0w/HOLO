@@ -1,20 +1,23 @@
 "use client";
 
 import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기
+import MyCommentCard, { type CommentWithPost } from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
 
+
+
+import Pagination from "@/components/common/Pagination"; // Pagination 컴포넌트 임포트
 import usePagination from "@/hooks/usePagination"; // 페이지네이션 훅
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 임포트
 import { useQuery } from "@tanstack/react-query"; // React Query 임포트
 import { useEffect, useState } from "react";
-import Pagination from "@/components/common/Pagination"; // Pagination 컴포넌트 임포트
-import type { CommentWithPost } from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
-import MyCommentCard from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
 
 // Supabase 클라이언트 생성
 const supabase = createClient();
 
 // 댓글 데이터 가져오는 쿼리 훅
-const fetchCommentPostsData = async (userId: string): Promise<CommentWithPost[]> => {
+const fetchCommentPostsData = async (
+  userId: string,
+): Promise<CommentWithPost[]> => {
   const { data, error } = await supabase
     .from("comments")
     .select(
@@ -31,7 +34,7 @@ const fetchCommentPostsData = async (userId: string): Promise<CommentWithPost[]>
         user_id,
         users(nickname, profile_image_url)
       )
-    `
+    `,
     )
     .eq("user_id", userId)
     .order("created_at", { ascending: false });
@@ -107,14 +110,18 @@ const MyCommentList = () => {
     <div className="container mx-auto p-4">
       {currentComments.length > 0 ? (
         currentComments.map((comment) => (
-          <MyCommentCard key={comment.id} comment={comment} onDelete={handleDeleteComment} />
+          <MyCommentCard
+            key={comment.id}
+            comment={comment}
+            onDelete={handleDeleteComment}
+          />
         ))
       ) : (
         <p>댓글이 없습니다.</p> // 댓글이 없을 경우 표시
       )}
 
       {/* 페이지네이션 UI */}
-      <Pagination 
+      <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         startButtonIndex={startButtonIndex}
@@ -129,9 +136,6 @@ const MyCommentList = () => {
 
 export default MyCommentList;
 
-
-
-
 // "use client";
 
 // import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기
@@ -145,8 +149,6 @@ export default MyCommentList;
 // import Pagination from "@/components/common/Pagination"; // Pagination 컴포넌트 임포트
 // import type { CommentWithPost } from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
 // import MyCommentCard from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
-
-
 
 // // Supabase 클라이언트 생성
 // const supabase = createClient();
@@ -271,7 +273,7 @@ export default MyCommentList;
 //       )}
 
 //       {/* 페이지네이션 UI */}
-//       <Pagination 
+//       <Pagination
 //         currentPage={currentPage}
 //         totalPages={totalPages}
 //         startButtonIndex={startButtonIndex}
@@ -285,19 +287,6 @@ export default MyCommentList;
 // };
 
 // export default MyCommentList;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // // //완성본
 // // "use client";
@@ -479,4 +468,3 @@ export default MyCommentList;
 // // };
 
 // // export default MyCommentList;
-

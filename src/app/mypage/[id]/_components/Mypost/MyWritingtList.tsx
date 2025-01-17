@@ -2,7 +2,8 @@
 "use client";
 
 import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기
-import MyWritingCard from "@/app/mypage/[id]/_components/Mypost/MyWritingCard"; // MyWritingCard 컴포넌트
+import MyWritingCard from "@/app/mypage/[id]/_components/Mypost/MyWritingCard";
+// MyWritingCard 컴포넌트
 import Pagination from "@/components/common/Pagination"; // Pagination 컴포넌트 임포트
 import usePagination from "@/hooks/usePagination"; // 페이지네이션 훅
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 임포트
@@ -113,14 +114,18 @@ const MyWritingList = () => {
     <div className="container mx-auto p-4">
       {currentPosts.length > 0 ? (
         currentPosts.map((post) => (
-          <MyWritingCard key={post.id} post={post} onDelete={handleDeletePost} />
+          <MyWritingCard
+            key={post.id}
+            post={post}
+            onDelete={handleDeletePost}
+          />
         ))
       ) : (
         <p>작성한 게시물이 없습니다.</p> // 작성한 게시물이 없을 경우 표시
       )}
 
       {/* 페이지네이션 UI */}
-      <Pagination 
+      <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         startButtonIndex={startButtonIndex}
