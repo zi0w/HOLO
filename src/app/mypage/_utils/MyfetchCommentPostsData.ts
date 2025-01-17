@@ -27,6 +27,7 @@ export const MyfetchCommentPostsData = async (userId: string): Promise<CommentWi
       *,
       users(nickname, profile_image_url),
       posts(
+      post_image_url,
         title,
         users(nickname, profile_image_url)
       )
