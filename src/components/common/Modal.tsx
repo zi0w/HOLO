@@ -4,14 +4,18 @@ import useModalStore from "@/store/modalStore";
 type ModalProps = {
   text: string;
   onAction: () => void;
+  onClose?: () => void;
 };
 
-const Modal = ({ text, onAction }: ModalProps) => {
-  const { isModalOpen, setModalOpen, isConfirm } = useModalStore();
+const Modal = ({ text, onAction, onClose }: ModalProps) => {
+  const { isModalOpen, setIsModalOpen, isConfirm } = useModalStore();
   if (!isModalOpen) return null;
 
   const handleClose = () => {
-    setModalOpen(false);
+    setIsModalOpen(false);
+    if (onClose) {
+      onClose();
+    }
   };
 
   return (

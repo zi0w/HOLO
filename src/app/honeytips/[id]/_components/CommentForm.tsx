@@ -30,7 +30,7 @@ const CommentForm = () => {
   };
 
   return (
-    <div className="mx-5 mb-4 flex flex-col">
+    <div className="mb-4 flex flex-col">
       <form
         onSubmit={handleSubmit}
         className="mt-1 flex items-center justify-center rounded"

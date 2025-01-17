@@ -2,14 +2,16 @@
 
 import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
+import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
+import Modal from "@/components/common/Modal";
+import useModalStore from "@/store/modalStore";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -27,6 +29,8 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const router = useRouter();
+
+  const { setIsModalOpen, setIsConfirm, isConfirm } = useModalStore();
 
   const formatDate = (date: string) => {
     return dayjs(date).format("YYYY년 MM월 DD일 HH:mm:ss");
@@ -65,13 +69,14 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   }, []);
 
   const handleDeletePost = async (postId: Post["id"]) => {
-    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
-    if (!isConfirmed) return;
+    setIsConfirm(true);
+    setIsModalOpen(true);
+
+    if (!isConfirm) return;
 
     try {
       await deletePost(postId);
-      alert("게시물이 삭제되었습니다.");
-      router.push("/honeytips");
+      setIsConfirm(false);
     } catch (error) {
       setIsError(true);
       console.error("게시물 삭제에 실패했습니다.");
@@ -85,6 +90,11 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
   return (
     <section className="mx-5 py-[10px]">
+      <Modal
+        text={"삭제"}
+        onAction={() => handleDeletePost(postId)}
+        onClose={() => router.push("/honeytips")}
+      />
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center gap-2">
@@ -115,18 +125,17 @@ const DetailCard = ({ postId }: DetailCardProps) => {
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 top-6 z-10 w-[68px] rounded-lg border bg-white py-2">
-                <Link
+                <DropdownButton
+                  label="수정"
                   href={`/honeytips/post?edit=${postDetailData.id}`}
-                  className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
-                >
-                  수정
-                </Link>
-                <button
-                  onClick={() => handleDeletePost(postDetailData.id)}
-                  className="block w-full px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500"
-                >
-                  삭제
-                </button>
+                />
+                <DropdownButton
+                  label="삭제"
+                  onClick={() => {
+                    setIsConfirm(true);
+                    setIsModalOpen(true);
+                  }}
+                />
               </div>
             )}
           </div>

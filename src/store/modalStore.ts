@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 type ModalState = {
   isModalOpen: boolean;
   isConfirm: boolean;
-  setModalOpen: (isModalOpen: boolean) => void;
+  setIsModalOpen: (isModalOpen: boolean) => void;
   setIsConfirm: (isConfirm: boolean) => void;
 };
 
@@ -13,7 +13,7 @@ const useModalStore = create<ModalState>()(
     (set) => ({
       isModalOpen: false,
       isConfirm: false,
-      setModalOpen: (isModalOpen) => set({ isModalOpen }),
+      setIsModalOpen: (isModalOpen) => set({ isModalOpen }),
       setIsConfirm: (isConfirm) => set({ isConfirm }),
     }),
     {

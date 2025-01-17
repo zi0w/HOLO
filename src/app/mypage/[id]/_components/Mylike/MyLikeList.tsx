@@ -1,3 +1,4 @@
+//완성본
 "use client";
 
 import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기

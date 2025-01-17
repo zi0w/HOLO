@@ -20,20 +20,20 @@ const UserProfile = () => {
   }
 
   return (
-    <>
-      <button className="mb-2 flex h-16 w-16 items-center justify-center rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100">
+    <div className="flex flex-col items-center">
+      <button className="mb-2 flex h-[120px] w-[120px] items-center justify-center rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100">
         <img
           src={user.profile_image_url}
           alt="프로필 이미지"
           className="h-full w-full rounded-full object-cover"
         />
       </button>
-      <div className="mb-4 ml-2 flex items-center">
-        <h1 className="mr-2">{user.nickname}</h1>
-        <button onClick={handleOpenModal}>✏️</button>
+      <div className="mb-4 flex items-center">
+        <h2 className="mr-2 text-lg font-semibold">{user.nickname}</h2>
+        <button onClick={handleOpenModal} className="text-gray-600 hover:text-gray-800">✏️</button>
       </div>
       <ProfileEditModal isOpen={isModalOpen} onClose={handleCloseModal} />
-    </>
+    </div>
   );
 };
 
