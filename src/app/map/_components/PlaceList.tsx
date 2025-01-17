@@ -1,7 +1,9 @@
+import usePlaceListScrollInView from "@/app/map/_hooks/usePlaceListScrollInView";
+import usePlaceListScrollTo from "@/app/map/_hooks/usePlaceListScrollTo";
 import type { Coordinates, PlacesSearchResultItem } from "@/app/map/_types/map";
 import { clsx } from "clsx";
 import Link from "next/link";
-import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
+import { useRef, type Dispatch, type SetStateAction } from "react";
 
 type PlaceListProps = {
   places: PlacesSearchResultItem[];
@@ -23,24 +25,22 @@ const PlaceList = ({
   category,
 }: PlaceListProps) => {
   const placeRef = useRef<(HTMLDivElement | null)[]>([]);
+  const desktopListRef = useRef<HTMLDivElement | null>(null);
+  const mobileListRef = useRef<HTMLDivElement | null>(null);
 
-  // 마커를 클릭하면 해당 시설 정보로 스크롤 이동
-  useEffect(() => {
-    if (selectedPlace) {
-      const index = places.findIndex((place) => place.id === selectedPlace.id);
-      if (placeRef.current[index]) {
-        placeRef.current[index]?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
-    }
-  }, [selectedPlace]);
+  usePlaceListScrollInView(selectedPlace, places, placeRef);
+
+  usePlaceListScrollTo(category, desktopListRef);
+  usePlaceListScrollTo(category, mobileListRef);
+
   return (
     <>
       {/* 데스크탑 테블릿 리스트 */}
       {category ? (
-        <div className="absolute left-4 top-4 hidden max-h-80 overflow-y-auto rounded bg-white shadow-md md:left-0 md:top-0 md:block md:h-full md:max-h-full md:w-[300px] md:overflow-y-auto lg:left-0 lg:top-0 lg:h-full lg:max-h-full lg:w-[300px]">
+        <div
+          ref={desktopListRef}
+          className="absolute left-4 top-4 hidden max-h-80 overflow-y-auto rounded bg-white shadow-md md:left-0 md:top-0 md:block md:h-full md:max-h-full md:w-[300px] md:overflow-y-auto lg:left-0 lg:top-0 lg:h-full lg:max-h-full lg:w-[300px]"
+        >
           {places.map((place, index) => (
             <div
               key={place.id}
@@ -67,7 +67,10 @@ const PlaceList = ({
       )}
       {/* 모바일용 리스트 */}
 
-      <div className="absolute bottom-[51px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white md:hidden">
+      <div
+        ref={mobileListRef}
+        className="absolute bottom-[51px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white md:hidden"
+      >
         {places.map((place, index) => (
           <div
             key={place.id}

@@ -6,7 +6,7 @@ import type {
 import { useEffect, useState } from "react";
 
 const useCategoriesSearch = (mapCenter: Coordinates) => {
-  const [category, setCategory] = useState<string>(""); // 카테고리 선택 상태 관리
+  const [category, setCategory] = useState<string>("맛집"); // 카테고리 선택 상태 관리
   const [places, setPlaces] = useState<PlacesSearchResultItem[]>([]); // 장소 검색 결과 리스트
   const [selectedPlace, setSelectedPlace] =
     useState<PlacesSearchResultItem | null>(null);
@@ -16,6 +16,7 @@ const useCategoriesSearch = (mapCenter: Coordinates) => {
     "place_id" | "x" | "y" | "road_address_name"
   > | null>(null);
 
+  // 선택한 마커 장소 상세정보 가져오기
   const getPlaceDetail = async (placeName: string) => {
     try {
       const response = await fetch(
@@ -42,11 +43,13 @@ const useCategoriesSearch = (mapCenter: Coordinates) => {
     }
   };
 
+  // 마커를 클릭했을 때, 장소 정보를 가져옮
   const onClickMarker = (place: PlacesSearchResultItem) => {
     setSelectedPlace(place);
     getPlaceDetail(place.place_name);
   };
 
+  // 카테고리 변경 또는 초기 설정 시 근처 장소 검색
   useEffect(() => {
     if (!category) return;
 
@@ -79,7 +82,7 @@ const useCategoriesSearch = (mapCenter: Coordinates) => {
     placeDetail,
     setSelectedPlace,
     setPlaceDetail,
-    category
+    category,
   };
 };
 export default useCategoriesSearch;

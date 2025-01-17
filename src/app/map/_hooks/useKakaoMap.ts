@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 const useKakaoMap = () => {
   const [currentPosition, setCurrentPosition] = useState<Coordinates | null>(
     null,
-  );
-  const [geolocationError, setGeolocationError] = useState<string | null>(null);
+  ); // 현재 사용자 위치 상태
+
+  const [geolocationError, setGeolocationError] = useState<string | null>(null); // 에러 상태
 
   const [mapCenter, setMapCenter] = useState<Coordinates>({
-    lat: 37.56675214138411, // 초기 지도 중심 좌표
+    lat: 37.56675214138411,
     lng: 126.97875415079992,
-  });
+  }); // 초기 지도 중심 좌표
 
-  const [mapLevel, setMapLevel] = useState<number>(5);
+  const [mapLevel, setMapLevel] = useState<number>(5); // 초기 맵 크기
 
   const onClickPlusMapLevel = () => {
     setMapLevel((prev) => Math.max(prev - 1, 1));
@@ -22,6 +23,7 @@ const useKakaoMap = () => {
     setMapLevel((prev) => Math.min(prev + 1, 14));
   };
 
+  // 현재 위치 가져오기 함수
   const onClickMoveCurrentPosition = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(

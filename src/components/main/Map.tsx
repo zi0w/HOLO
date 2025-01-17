@@ -26,6 +26,7 @@ const Map = () => {
     placeDetail,
     setSelectedPlace,
     setPlaceDetail,
+    category
   } = useCategoriesSearch(mapCenter);
 
   return (
@@ -38,6 +39,7 @@ const Map = () => {
         setCategory={setCategory}
         setSelectedPlace={setSelectedPlace}
         setPlaceDetail={setPlaceDetail}
+        category={category}
       />
 
       <div className="mx-5 h-[220px]">
