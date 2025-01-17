@@ -7,6 +7,7 @@ import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
+import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import Modal from "@/components/common/Modal";
 import useModalStore from "@/store/modalStore";
 import dayjs from "dayjs";
@@ -89,7 +90,10 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   if (!postDetailData) return null;
 
   return (
-    <section className="mx-5 py-[10px]">
+    <section className="mx-5">
+      <button type="button" onClick={() => router.push("/honeytips")} className="py-5">
+      <ArrowLeftIcon />
+      </button>
       <Modal
         text={"삭제"}
         onAction={() => handleDeletePost(postId)}
@@ -151,7 +155,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         centeredSlides={true}
         pagination={{ clickable: true }}
         navigation={true}
-        className="my-4 h-auto max-w-[362px]"
+        className="my-4 h-auto max-w-[362px] ml-0"
       >
         {postDetailData.post_image_url?.map((imageUrl, index) => (
           <SwiperSlide
@@ -173,7 +177,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         ))}
       </Swiper>
 
-      <p className="font-bold text-base-900">{postDetailData.title}</p>
+      <h2 className="text-base-900 text-[22px]">{postDetailData.title}</h2>
 
       <p className="mb-10 mt-2 whitespace-pre-wrap text-base-800">
         {postDetailData.content}

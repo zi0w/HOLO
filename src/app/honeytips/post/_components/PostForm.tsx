@@ -50,9 +50,6 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   }, [mode, postDetailData]);
 
   const handleSubmit = async () => {
-    const trimmedTitle = title.trim();
-    const trimmedContent = content.trim();
-
     setIsLoading(true);
 
     try {
@@ -76,16 +73,16 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
       if (mode === "edit" && postDetailData) {
         await updatePost({
           postId: postDetailData.id,
-          updatedTitle: trimmedTitle,
-          updatedContent: trimmedContent,
+          updatedTitle: title,
+          updatedContent: content,
           updatedCategory: category,
           updatedPostImageUrl: imageUrlsToSave,
           userId: postDetailData.user_id,
         });
       } else {
         await addPost({
-          newTitle: trimmedTitle,
-          newContent: trimmedContent,
+          newTitle: title,
+          newContent: content,
           newPostImageUrl: imageUrlsToSave,
           newCategory: category,
         });
@@ -140,7 +137,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   const isSubmitDisabled = !title.trim() || !content.trim() || isLoading;
 
   return (
-    <form className="mx-5 py-2">
+    <form className="mx-5 mt-4">
       <section className="mb-6 flex items-center justify-between">
         <button
           type="button"
