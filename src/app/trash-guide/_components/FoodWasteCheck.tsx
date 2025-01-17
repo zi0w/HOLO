@@ -75,6 +75,9 @@ const FoodWasteCheck = () => {
       {/* TODO: 로딩바꾸기 */}
       {loading && <p>로딩중</p>}
 
+      {/* TODO: 에러 메시지 추가 */}
+      {error && <p className="mt-4 text-center text-red-500">{error}</p>}
+
       {isWasteFoodAnswer && !loading ? (
         <div className="my-14 text-center">
           <strong className="font-bold text-primary-500">
