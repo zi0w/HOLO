@@ -69,7 +69,7 @@ const PlaceList = ({
 
       <div
         ref={mobileListRef}
-        className="absolute bottom-[51px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white md:hidden"
+        className="absolute bottom-[-52px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white md:hidden"
       >
         {places.map((place, index) => (
           <div

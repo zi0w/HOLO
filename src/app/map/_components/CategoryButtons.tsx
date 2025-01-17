@@ -2,7 +2,7 @@ import useScrollIntoViewCategoryBtn from "@/app/map/_hooks/useScrollIntoViewCate
 import type { Place } from "@/app/map/_types/map";
 import { MAP_CATEGORIES } from "@/app/map/constants/categories";
 import clsx from "clsx";
-import type { Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 
 type CategoryButtonsProps = {
   setCategory: Dispatch<SetStateAction<string>>;
@@ -15,7 +15,6 @@ type CategoryButtonsProps = {
       "place_id" | "x" | "y" | "road_address_name"
     > | null>
   >;
-  category: string;
   isMain: boolean;
 };
 
@@ -23,13 +22,14 @@ const CategoryButtons = ({
   setCategory, // 선택된 카테고리 상태 업데이트 함수
   setSelectedPlace, // 선택된 카테고리 장소 상태 업데이트 함수
   setPlaceDetail, // 특정 장소 선택 시 디테일 정보 상태 업데이트 함수
-  category, // 선택된 카테고리 상태
   isMain, // 메인 화면일 때 지도 높이를 다르게 하기 위한 boolean
 }: CategoryButtonsProps) => {
+  const [selectedCategory, setSelectedCategory] = useState<string>(""); // // 선택된 카테고리 상태 업데이트 함수
   const { buttonRef, onClickMoveCategoryBtn } = useScrollIntoViewCategoryBtn(
     setCategory,
     setSelectedPlace,
     setPlaceDetail,
+    setSelectedCategory,
   );
 
   return (
@@ -48,7 +48,7 @@ const CategoryButtons = ({
             }}
             className={clsx(
               "relative flex h-14 flex-shrink-0 items-center justify-center px-3.5 text-sm",
-              category === cate.name // 선택한 카테고리 버튼에 적용할 style
+              selectedCategory === cate.name // 선택한 카테고리 버튼에 적용할 style
                 ? "text-primary-800 after:absolute after:bottom-0 after:h-[4px] after:w-full after:rounded-3xl after:bg-primary-500"
                 : "",
             )}
