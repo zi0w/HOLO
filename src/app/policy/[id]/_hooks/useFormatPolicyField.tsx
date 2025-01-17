@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import type { PolicyData } from "@/app/policy/_types/policy";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -22,7 +23,7 @@ const useFormatPolicyField = (policyInfo: PolicyData) => {
             href={policyData as string}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-link underline break-words"
+            className="break-words text-link underline"
           >
             {policyData}
           </Link>
