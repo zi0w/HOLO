@@ -1,6 +1,6 @@
 "use client";
 
-import { getPolicies } from "@/app/policy/_actions/getPolicies";
+import { fetchPolicyList } from "@/app/policy/_actions/fetchPolicyList";
 import PolicyFilter from "@/app/policy/_components/PolicyFilter";
 import PolicyResult from "@/app/policy/_components/PolicyResult";
 import { REGION_CODES } from "@/app/policy/_constants/region";
@@ -29,17 +29,15 @@ const PolicyCont = () => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["policies"],
+    queryKey: ["policies", filters.region, filters.field],
     queryFn: async () => {
       const regionCode = REGION_CODES[filters.region];
-      const response = await getPolicies({
+      return fetchPolicyList({
         polyRlmCd: filters.field,
         srchPolyBizSecd: regionCode,
       });
-      return Array.isArray(response) ? response : [response];
     },
     enabled: !!filters.region && !!filters.field,
-    initialData: null,
   });
 
   const {
