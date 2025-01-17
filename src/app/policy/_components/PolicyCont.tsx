@@ -4,6 +4,7 @@ import { getPolicies } from "@/app/policy/_actions/getPolicies";
 import PolicyFilter from "@/app/policy/_components/PolicyFilter";
 import PolicyResult from "@/app/policy/_components/PolicyResult";
 import { REGION_CODES } from "@/app/policy/_constants/region";
+import Loading from "@/components/common/Loading";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import { useQuery } from "@tanstack/react-query";
@@ -78,7 +79,7 @@ const PolicyCont = () => {
         onSearch={handleSearch}
       />
       {isLoading || isRefetching ? (
-        <p>로딩중...</p> //TODO: 로딩 스피너 추가
+        <Loading /> //TODO: 로딩 스피너 추가
       ) : (
         <>
           <PolicyResult error={error} policyData={currentPolicyData} />
