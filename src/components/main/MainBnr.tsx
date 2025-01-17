@@ -4,8 +4,8 @@ import Image from "next/image";
 
 const MainBnr = () => {
   return (
-    <div className="mx-5 mb-10 flex justify-between rounded bg-primary-100 pl-5 pr-3 pt-2">
-      <div className="my-auto">
+    <div className="relative mx-5 mb-10 flex justify-between rounded bg-primary-100 pl-5 pr-3">
+      <div className="mt-6 mb-8 whitespace-nowrap">
         <p className="mb-1 text-primary-900">1인가구를 위한 정보 제공 서비스</p>
         <p className="flex items-center gap-1 font-gmarket text-2xl text-primary-600">
           나{" "}
@@ -20,7 +20,7 @@ const MainBnr = () => {
       <Image
         src={Banner}
         alt="배너 이미지"
-        className="mt-auto object-contain"
+        className="absolute bottom-0 right-2 max-w-[145px] object-contain"
       />
     </div>
   );
