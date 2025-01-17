@@ -16,11 +16,11 @@ const KakaoMap = () => {
     mapCenter, // 현재 지도 중심 좌표
     setMapCenter, // 중심 좌표 업데이트 함수
     currentPosition, // 현재 위치
-    geolocationError,
-    mapLevel,
-    onClickPlusMapLevel,
-    onClickMinusMapLevel,
-    onClickMoveCurrentPosition,
+    geolocationError, // 사용자 위치를 불러오지 못할 때 에러
+    mapLevel, // 지도 확대, 축소 크기 단계 상태
+    onClickPlusMapLevel, // 지도 확대 함수
+    onClickMinusMapLevel, // 지도 축소 함수
+    onClickMoveCurrentPosition, // 지도의 위치를 옮겼을 때, 다시 내 위치로 이동 함수
   } = useKakaoMap();
 
   const {
@@ -44,6 +44,7 @@ const KakaoMap = () => {
         setCategory={setCategory}
         setSelectedPlace={setSelectedPlace}
         setPlaceDetail={setPlaceDetail}
+        category="맛집"
       />
 
       <MapContainer

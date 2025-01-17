@@ -1,9 +1,8 @@
-"use client";
-
+import useScrollIntoViewCategoryBtn from "@/app/map/_hooks/useScrollIntoViewCategoryBtn";
 import type { Place } from "@/app/map/_types/map";
 import { MAP_CATEGORIES } from "@/app/map/constants/categories";
 import clsx from "clsx";
-import { useRef, useState, type Dispatch, type SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 type CategoryButtonsProps = {
   setCategory: Dispatch<SetStateAction<string>>;
@@ -16,54 +15,52 @@ type CategoryButtonsProps = {
       "place_id" | "x" | "y" | "road_address_name"
     > | null>
   >;
+  category: string;
   isMain: boolean;
 };
 
 const CategoryButtons = ({
-  setCategory,
-  setSelectedPlace,
-  setPlaceDetail,
-  isMain,
+  setCategory, // 선택된 카테고리 상태 업데이트 함수
+  setSelectedPlace, // 선택된 카테고리 장소 상태 업데이트 함수
+  setPlaceDetail, // 특정 장소 선택 시 디테일 정보 상태 업데이트 함수
+  category, // 선택된 카테고리 상태
+  isMain, // 메인 화면일 때 지도 높이를 다르게 하기 위한 boolean
 }: CategoryButtonsProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const buttonRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const { buttonRef, onClickMoveCategoryBtn } = useScrollIntoViewCategoryBtn(
+    setCategory,
+    setSelectedPlace,
+    setPlaceDetail,
+  );
 
   return (
     <>
-      <div className="font-gmarket-bold mx-5 my-4 text-2xl">우리동네 핫플</div>
+      {/* 페이지 제목 */}
+      <div className="mx-5 my-4 font-gmarket-bold text-2xl">우리동네 핫플</div>
+
+      {/* 버튼 카테고리 컨테이너 */}
       <div className="mx-5 flex overflow-x-auto [&::-webkit-scrollbar]:hidden">
-        {MAP_CATEGORIES.map((category, index) => (
+        {MAP_CATEGORIES.map((cate, index) => (
           <button
-            key={category.id}
-            ref={(el) => {
-              buttonRef.current[index] = el;
+            key={cate.id}
+            // 버튼 엘리먼트를 참조 배열에 저장
+            ref={(categoryBtn) => {
+              buttonRef.current[index] = categoryBtn;
             }}
             className={clsx(
               "relative flex h-14 flex-shrink-0 items-center justify-center px-3.5 text-sm",
-              selectedCategory === category.name
+              category === cate.name // 선택한 카테고리 버튼에 적용할 style
                 ? "text-primary-800 after:absolute after:bottom-0 after:h-[4px] after:w-full after:rounded-3xl after:bg-primary-500"
                 : "",
             )}
-            onClick={() => {
-              setCategory(category.name);
-              setSelectedCategory(category.name);
-              setSelectedPlace(null);
-              setPlaceDetail(null);
-
-              buttonRef.current[index]?.scrollIntoView({
-                behavior: "smooth", // 스크롤 애니메이션
-                block: "nearest", // 스크롤 위치 설정
-                inline: "center", // 버튼을 중앙에 배치
-              });
-            }}
+            onClick={() => onClickMoveCategoryBtn(cate, index)} // scrollIntoView를 적용하기 위한 함수
           >
-            {category.img ? (
+            {cate.img ? (
               <div className="mb-2 flex flex-col items-center">
-                <category.img />
-                {category.name}
+                <cate.img />
+                {cate.name}
               </div>
             ) : (
-              category.name
+              cate.name
             )}
           </button>
         ))}
