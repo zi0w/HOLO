@@ -5,8 +5,8 @@ export const GET = async (request: Request) => {
   const polyRlmCd = searchParams.get("polyRlmCd"); // 정책 분야
   const srchPolyBizSecd = searchParams.get("srchPolyBizSecd"); // 지역
 
-  const API_URL = process.env.POLICY_API_URL;
-  const SERVICE_KEY = process.env.POLICY_API_KEY;
+  const API_URL = process.env.NEXT_PUBLIC_POLICY_API_URL;
+  const SERVICE_KEY = process.env.NEXT_PUBLIC_POLICY_API_KEY;
 
   const url = `${API_URL}?openApiVlak=${SERVICE_KEY}&display=100&pageIndex=1&bizTycdSel=${polyRlmCd}&srchPolyBizSecd=${srchPolyBizSecd}`;
 
