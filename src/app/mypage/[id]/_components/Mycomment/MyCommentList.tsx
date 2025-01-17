@@ -1,7 +1,7 @@
 "use client";
 
 import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기
-import type { Post } from "@/app/mypage/_types/MyComment"; // 게시물 타입
+
 import usePagination from "@/hooks/usePagination"; // 페이지네이션 훅
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 임포트
 import { useQuery } from "@tanstack/react-query"; // React Query 임포트

@@ -2,7 +2,7 @@ import updateSession from "@/lib/utils/supabase/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 
 const middleware = async (request: NextRequest) => {
-  const url = request.nextUrl.clone();
+  // const url = request.nextUrl.clone();
 
   // if (url.pathname === "/") {
   //   url.pathname = "/splash";

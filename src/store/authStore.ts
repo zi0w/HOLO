@@ -1,4 +1,5 @@
 // store/useAuthStore.ts
+import { Session } from "@supabase/supabase-js"; // Supabase 세션 타입 가져오기
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -6,14 +7,14 @@ export type User = {
   id: string;
   email: string;
   nickname: string;
-  profile_image_url: string | any; // 추후에 any 타입 알맞는 타입 지정하기
+  profile_image_url: string | null; // null 또는 string으로 변경
 };
 
 export type AuthState = {
   isLoggedIn: boolean;
   user: User | null;
-  session: any | null;
-  setAuth: (user: User | null, session: any | null) => void;
+  session: Session | null; // Supabase 세션 타입으로 변경
+  setAuth: (user: User | null, session: Session | null) => void; // 세션 타입 변경
   clearAuth: () => void;
 };
 
@@ -45,13 +46,6 @@ const useAuthStore = create<AuthState>()(
 );
 
 export default useAuthStore;
-
-
-
-
-
-
-
 
 // // store/useAuthStore.ts
 // import { create } from "zustand";
