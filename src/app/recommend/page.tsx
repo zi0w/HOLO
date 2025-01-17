@@ -1,4 +1,3 @@
-import Person from "@/assets/images/recommend/person-recommend.svg";
 import Image from "next/image";
 import Link from "next/link";
 import person from "@/assets/images/recommend/person-recommend.png"

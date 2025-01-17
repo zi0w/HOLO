@@ -27,7 +27,7 @@ export const useFunnel = (initialStep: string) => {
     }
   }, [searchParams]);
 
-  const Step = ({ name, children }: StepProps): ReactElement => {
+  const Step = ({ children }: StepProps): ReactElement => {
     return <>{children}</>;
   };
 
