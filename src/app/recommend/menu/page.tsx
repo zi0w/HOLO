@@ -1,6 +1,8 @@
-import SelectForms from "@/app/recommend/_components/SelectForms";
+import dynamic from "next/dynamic";
 
-const menuPage = () => {
+const SelectForms = dynamic(() => import("@/app/recommend/_components/SelectForms"))
+
+const MenuPage = () => {
   return <SelectForms />;
 };
-export default menuPage;
+export default MenuPage;

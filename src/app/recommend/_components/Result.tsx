@@ -72,6 +72,7 @@ const Result = ({ answerData }: ResultProps) => {
   useEffect(() => {
     getRecommendation();
   }, [answerData]);
+  
   return (
     <div id="result-container" className="bg-white text-black">
       <h1>결과 페이지</h1>

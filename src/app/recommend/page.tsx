@@ -1,25 +1,16 @@
+import Person from "@/assets/images/recommend/person-recommend.svg";
 import Link from "next/link";
 
 const RecommendPage = () => {
-
-
   return (
-    <div className="m-8 flex flex-col items-center">
-      <div className="flex flex-col text-center gap-4">
-        <h1 className="text-3xl">오늘 뭐하지?</h1>
-        <div className="flex flex-col text-sm">
-          <span>오늘의 다양한 컨텐츠를 추천해드립니다.</span>
-          <span>모든 답변은 OpenAI API 기반으로 생성됩니다.</span>
-        </div>
-      </div>
-      <div className="flex flex-col gap-10 mt-10">
-        <Link href="recommend/menu">
-        <button className="border p-2">오늘의 메뉴 추천</button>
-        </Link>
-        <Link href="recommend/fortune">
-        <button className="border p-2">오늘의 운세</button>
-        </Link>
-      </div>
+    <div className="mt-4 flex h-full flex-col items-center bg-white">
+      <h1 className="text-2xl text-base-800">메뉴 추천</h1>
+      <span className="mt-1.5 text-center text-base text-primary-800">
+        무엇을 먹을지 고민이라면? <br />
+        간단한 4문제로 메뉴를 골라볼까요?
+      </span>
+        <Person className="fixed bottom-0 -translate-x-1/2 left-1/2"/>
+        <Link href="recommend/menu" className="font-gmarket w-[362px] h-12 flex items-center justify-center rounded bg-primary-500 text-white font-normal mt-[609px] z-10">추천 받기 시작!</Link>
     </div>
   );
 };

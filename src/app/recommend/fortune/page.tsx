@@ -4,7 +4,7 @@ import fetchDailyFortune from "@/app/recommend/_actions/fetchDailyFortune";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const fortunePage = () => {
+const FortunePage = () => {
   const [fortune, setFortune] = useState<string>("");
 
   const getDailyFortune = async () => {
@@ -31,4 +31,4 @@ const fortunePage = () => {
   );
 };
 
-export default fortunePage;
+export default FortunePage;
