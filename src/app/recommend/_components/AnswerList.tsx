@@ -15,14 +15,14 @@ const AnswerList = <T extends string>({
 }: AnswerListProps<T>) => {
 
   return (
-    <div className="flex w-full flex-col justify-center gap-5">
+    <div className="flex w-full flex-col justify-center gap-4 mt-8">
       {answerItems.map((item) => (
         <button
           key={item}
           type="button"
           onClick={() => onAnswerSelect(item)}
-          className={clsx("border", {
-            "bg-blue-500 text-white": selectedAnswer === item,
+          className={clsx("border border-primary-300 h-[84px] rounded bg-primary-50 font-gmarket text-lg text-primary-500", {
+            "bg-primary-300": selectedAnswer === item,
           })}
         >
           {item}

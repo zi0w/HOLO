@@ -109,7 +109,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  @apply h-12 w-2;
+  @apply h-2 w-2;
 }
 ::-webkit-scrollbar-track {
   @apply bg-transparent;

@@ -19,8 +19,11 @@ const SelectForms = () => {
     answer4: "",
   });
 
-  const currentIndex = steps.indexOf(currentStep);
-  const progressPercentage = Math.round((currentIndex / (steps.length - 1)) * 100);
+  const currentLevel = (steps.indexOf(currentStep)) + 1;
+
+  const isResultPage = currentStep === steps[steps.length - 1];
+  const stepFraction = `${currentLevel}/${steps.length - 1}`
+  const progressPercentage = Math.round((currentLevel / (steps.length - 1)) * 100)
 
   const handleNext = (data: Partial<Answer>, nextStep: string) => {
     setAnswerData((prev) => ({ ...prev, ...data }));
@@ -29,12 +32,12 @@ const SelectForms = () => {
 
   const handlePrev = (data: Partial<Answer>, prevStep: string) => {
     setAnswerData((prev) => ({ ...prev, ...data }));
-    prev(prevStep);
+    if (steps.indexOf(prevStep) >= 0) prev(prevStep);
   };
 
   return (
-    <>
-      <ProgressBar start={0} end={progressPercentage} />
+    <div className="px-5">
+      {!isResultPage && (<ProgressBar start={0} end={progressPercentage} label={stepFraction}/>)}
       <Funnel>
         {[
           ...QUESTIONS.map((q, index) => (
@@ -49,12 +52,13 @@ const SelectForms = () => {
               />
             </Step>
           )),
-          <Step name={steps[4]}>
+          // 배열로 묶였기에 key 필요
+          <Step key="result" name={steps[4]}> 
             <Result answerData={answerData} />
           </Step>,
         ]}
       </Funnel>
-    </>
+    </div>
   );
 };
 

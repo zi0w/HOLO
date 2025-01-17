@@ -5,7 +5,7 @@ import { useState } from "react";
 
 type PolicyResultProps = {
   error: Error | null;
-  policyData: PolicyData[] | PolicyData | null;
+  policyData: PolicyData[] | null;
 };
 
 const PolicyResult = ({ error, policyData }: PolicyResultProps) => {
@@ -28,21 +28,18 @@ const PolicyResult = ({ error, policyData }: PolicyResultProps) => {
     setIsLoadingPage(true);
     router.push(`/policy/${bizId}`);
   };
-
   return (
     <div className="mt-8 grid gap-4">
       {isLoadingPage ? (
-        <p>로딩중...</p>
-      ) : Array.isArray(policyData) ? (
-        policyData.map((policy) => (
+        <p>로딩중... </p>
+      ) : (
+        policyData?.map((policy) => (
           <PolicyLink
             key={policy.bizId}
             policy={policy}
             onClick={handleClick}
           />
         ))
-      ) : (
-        <PolicyLink policy={policyData} onClick={handleClick} />
       )}
     </div>
   );
