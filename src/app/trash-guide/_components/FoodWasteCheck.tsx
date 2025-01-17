@@ -16,6 +16,7 @@ const FoodWasteCheck = () => {
   );
   const [wasteFoodAnswer, setWasteFoodAnswer] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChangeFoodWaste = (e: ChangeEvent<HTMLInputElement>): void => {
     setFoodWaste(e.target.value);
@@ -25,15 +26,16 @@ const FoodWasteCheck = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const answer = await fetchOpenAiFoodWaste(foodWaste);
-      const content = answer?.choices[0]?.message?.content;
+      const response = await fetchOpenAiFoodWaste(foodWaste);
+      const content = response.content;
       if (content) {
         setIsWasteFoodAnswer(content);
-        setWasteFoodAnswer(JSON.parse(content));
+        const lowerContent = content.toLowerCase().trim();
+        setWasteFoodAnswer(lowerContent === "true");
       }
     } catch (error) {
       console.error(error);
-      throw Error("음식물쓰레기 여부를 알려주는 OpenAI 오류가 발생했습니다.");
+      setError("음식물쓰레기 여부를 확인하는 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
       setSubmittedFoodWaste(foodWaste);

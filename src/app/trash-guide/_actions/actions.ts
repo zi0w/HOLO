@@ -52,7 +52,9 @@ export const fetchOpenAiFoodWaste = async (foodWasteData: string) => {
         },
       ],
     });
-    return completion;
+    return {
+      content: completion.choices[0]?.message?.content || "",
+    };
   } catch (error) {
     console.error(error);
     throw new Error("음식물쓰레기 여부를 알려주는 OpenAI 오류가 발생했습니다.");
