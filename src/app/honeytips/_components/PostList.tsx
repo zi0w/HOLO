@@ -1,6 +1,7 @@
 "use client";
 
 import PostCard from "@/app/honeytips/_components/PostCard";
+import PostCardLoading from "@/app/honeytips/_components/PostCardLoading";
 import { POST_CATEGORIES } from "@/app/honeytips/_constans/post";
 import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
@@ -99,7 +100,7 @@ const PostList = () => {
 
       <section className="grid grid-cols-1 gap-4">
         {isLoading ? (
-          <p className="col-span-full text-center text-base-500">로딩중...</p>
+          <PostCardLoading />
         ) : currentPosts.length > 0 ? (
           currentPosts.map((post) => (
             <PostCard

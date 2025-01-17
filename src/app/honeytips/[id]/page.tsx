@@ -1,4 +1,3 @@
-import CommentForm from "@/app/honeytips/[id]/_components/CommentForm";
 import CommentList from "@/app/honeytips/[id]/_components/CommentList";
 import DetailCard from "@/app/honeytips/[id]/_components/DetailCard";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
@@ -35,7 +34,6 @@ const DetailPage = ({ params }: Props) => {
     <>
       <DetailCard postId={postId} />
       <CommentList />
-      <CommentForm />
     </>
   );
 };
