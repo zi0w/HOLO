@@ -67,7 +67,7 @@ const PlaceList = ({
       )}
       {/* 모바일용 리스트 */}
 
-      <div className="absolute bottom-[-55px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white md:hidden">
+      <div className="absolute bottom-[51px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white md:hidden">
         {places.map((place, index) => (
           <div
             key={place.id}

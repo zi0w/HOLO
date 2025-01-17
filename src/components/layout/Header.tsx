@@ -12,7 +12,7 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
   return (
     <header
       className={clsx(
-        "fixed bottom-0 z-10 w-full lg:left-0 lg:top-0 lg:h-screen lg:w-[240px] lg:bg-primary-50",
+        "fixed bottom-0 z-20 w-full lg:left-0 lg:top-0 lg:h-screen lg:w-[240px] lg:bg-primary-50",
         allHidden && "hidden",
       )}
     >

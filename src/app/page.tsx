@@ -8,7 +8,6 @@ import Image from "next/image";
 const Home = () => {
   return (
     <div>
-<<<<<<< HEAD
       <div className="mx-5 bg-primary-100">
         <Image
           src={Banner}
@@ -18,9 +17,7 @@ const Home = () => {
           className="mx-auto my-3"
         />
       </div>
-=======
       <MainHeader />
->>>>>>> 12e1b0c7fa067c07b54d98a2b92c51112bc44557
       <Map />
       {/* 정책 배너 */}
       <GuideBnr isPolicy={true} />

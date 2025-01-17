@@ -30,9 +30,7 @@ const CategoryButtons = ({
 
   return (
     <>
-      <div className="mx-5 my-4 font-gmarket text-2xl font-bold">
-        우리동네 핫플
-      </div>
+      <div className="font-gmarket-bold mx-5 my-4 text-2xl">우리동네 핫플</div>
       <div className="mx-5 flex overflow-x-auto [&::-webkit-scrollbar]:hidden">
         {MAP_CATEGORIES.map((category, index) => (
           <button

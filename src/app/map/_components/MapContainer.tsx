@@ -36,9 +36,6 @@ const MapContainer = ({
   places,
   setSelectedPlace,
   onClickMarker,
-  selectedPlace,
-  placeDetail,
-  setPlaceDetail,
   isMain,
 }: MapContainerProps) => {
   return (
