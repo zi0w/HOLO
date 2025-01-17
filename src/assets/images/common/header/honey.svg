@@ -1,7 +1,7 @@
-<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="6" y="3.5" width="21" height="25" rx="2.5" stroke="currentColor"/>
-<rect x="9.44336" y="8" width="5" height="5" rx="0.5" stroke="currentColor"/>
-<path d="M9.44434 17.1666H23.4443" stroke="currentColor" stroke-linecap="round"/>
-<path d="M18.4443 24.5H23.4443" stroke="currentColor" stroke-linecap="round"/>
-<path d="M9.44434 20.8334H23.4443" stroke="currentColor" stroke-linecap="round"/>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="3.725" y="2.475" width="12.55" height="15.05" rx="2.4" stroke="currentColor" stroke-width="1.2"/>
+<rect x="5.7771" y="5.1875" width="2.75" height="2.75" rx="0.5" stroke="currentColor"/>
+<path d="M5.59033 10.7291H14.3403" stroke="currentColor" stroke-linecap="round"/>
+<path d="M11.2153 15.3125H14.3403" stroke="currentColor" stroke-linecap="round"/>
+<path d="M5.59033 13.0209H14.3403" stroke="currentColor" stroke-linecap="round"/>
 </svg>

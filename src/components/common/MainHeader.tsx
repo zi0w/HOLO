@@ -4,10 +4,10 @@ import Link from "next/link";
 
 const MainHeader = () => {
   return (
-    <div className="fixed left-0 top-0 z-10 flex w-full justify-between bg-primary-50 p-5 lg:static lg:justify-center lg:bg-transparent lg:p-0">
+    <div className="fixed left-0 top-0 z-20 w-full bg-white py-[18px] text-center lg:left-[60px] lg:top-10 lg:w-[100px] lg:p-0 lg:bg-transparent">
       <Link
         href="/"
-        className="relative h-5 w-full max-w-16 lg:h-[50px] lg:max-w-[100px]"
+        className="relative inline-block h-[25px] w-[70px] lg:h-[50px] lg:w-[100px]"
       >
         <Image src={Logo} fill={true} className="object-contain" alt="로고" />
       </Link>
