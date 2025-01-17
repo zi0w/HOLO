@@ -89,7 +89,7 @@ const PostList = () => {
         ))}
       </div>
 
-      <div className="fixed bottom-20 right-4 z-50">
+      <div className="fixed bottom-14 right-4 z-50">
         <button
           onClick={handleGoToPost}
           className="relative flex items-center justify-center rounded-full"

@@ -6,7 +6,7 @@ const NavigateBack = () => {
   const router = useRouter();
   const pathname = usePathname();
   const hiddenPage =
-    pathname === "/" || pathname === "/honeytips/post" || pathname === "/map";
+    pathname === "/" ||  pathname.startsWith("/honeytips/") || pathname === "/honeytips" || pathname === "/map";
 
   const handleBack = () => {
     if (pathname === "/recommend") {
@@ -22,7 +22,7 @@ const NavigateBack = () => {
   };
 
   return (
-    <div className={clsx("p-5", hiddenPage && "hidden")}>
+    <div className={clsx("p-5 h-[64px]", hiddenPage && "hidden")}>
       <button onClick={handleBack}>
         <ArrowLeftIcon />
       </button>

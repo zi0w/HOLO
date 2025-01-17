@@ -19,17 +19,14 @@ const LikeButton = ({
   likesCounts,
   setLikesCounts,
 }: LikeButtonProps) => {
-  const { data: likeData,  } = useLikeDataQuery(postId);
+  const { data: likeData } = useLikeDataQuery(postId);
   const likeMutation = useLikeMutation(postId);
   const isMutating = useIsMutating();
 
   const handleLikeBtn = async () => {
     const userId: Like["user_id"] | null = await getId();
 
-    if (!userId) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
+    if (!userId) return;
 
     if (likeData!.length > 0) {
       likeMutation.mutate(
@@ -51,7 +48,6 @@ const LikeButton = ({
       );
     }
   };
-
 
   return (
     <section className="flex flex-col items-center text-2xl">
