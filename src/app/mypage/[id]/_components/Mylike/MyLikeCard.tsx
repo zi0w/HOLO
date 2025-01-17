@@ -15,10 +15,7 @@ type PostLikeCardProps = {
     title: string;
     content: string;
     created_at: string;
-    users?: {
-      nickname: string;
-      profile_image_url: string | null;
-    };
+    post_image_url?: string[] | null; // 게시글 이미지 URL 배열 추가
   };
   onLikeChange: () => void;
 };
@@ -33,42 +30,37 @@ const MyLikeCard = ({ post, onLikeChange }: PostLikeCardProps) => {
   return (
     <div className="mb-4 rounded-lg border p-4 shadow-md">
       <Link href={`/honeytips/${post.id}`} className="flex h-full flex-col">
-        <div className="flex items-center justify-between">
-          <h3 className="font-bold text-blue-600 hover:underline">
-            {post.title}
-          </h3>
-          <div className="flex items-center">
-            <MyLikeButton postId={post.id} onLikeChange={onLikeChange} />
+        <div className="flex items-start">
+          {/* 게시글 첫 번째 이미지 */}
+          {post.post_image_url && post.post_image_url.length > 0 && (
+            <Image
+              src={post.post_image_url[0]} // 첫 번째 이미지 URL 사용
+              alt={`게시글 이미지`}
+              width={120} // 원하는 너비 설정
+              height={120} // 세로 길이 증가 (길게 설정)
+              className="rounded-lg object-cover mr-4" // 스타일 조정
+            />
+          )}
+          <div className="flex-grow"> {/* 제목과 내용이 들어갈 부분 */}
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-blue-600 hover:underline">
+                {post.title}
+              </h3>
+              <div className="flex items-center">
+                <MyLikeButton postId={post.id} onLikeChange={onLikeChange} />
+              </div>
+            </div>
+
+            <p className="text-xs text-gray-500">
+              {dayjs(post.created_at).fromNow()}
+            </p>
+
+            {/* 게시글 내용 */}
+            <p className={`mt-2 ${isContentVisible ? "" : "line-clamp-2"}`}>
+              {post.content}
+            </p>
           </div>
         </div>
-
-        <div className="mt-2 flex items-center">
-          {post.users?.profile_image_url ? (
-            <Image
-              src={post.users.profile_image_url}
-              alt={`${post.users.nickname}의 프로필 이미지`}
-              width={40}
-              height={40}
-              className="rounded-full"
-              priority
-            />
-          ) : (
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-300">
-              <span className="text-gray-500">N/A</span>
-            </div>
-          )}
-          {post.users?.nickname && (
-            <span className="ml-2 text-sm">{post.users.nickname}</span>
-          )}
-        </div>
-
-        <p className="text-xs text-gray-500">
-          {dayjs(post.created_at).fromNow()}
-        </p>
-
-        <p className={`mt-2 ${isContentVisible ? "" : "line-clamp-2"}`}>
-          {post.content}
-        </p>
       </Link>
 
       {/* Move the button outside of the Link */}

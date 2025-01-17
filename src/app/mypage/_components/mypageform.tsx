@@ -1,14 +1,14 @@
 "use client";
 
-
+import MyCommentList from "@/app/mypage/[id]/_components/Mycomment/MyCommentList";
+import MyLikeList from "@/app/mypage/[id]/_components/Mylike/MyLikeList";
+import MyWritingtList from "@/app/mypage/[id]/_components/Mypost/MyWritingtList"; // 내가 쓴 글 리스트 컴포넌트 임포트
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
 import UserProfile from "@/app/mypage/_components/UserProfile";
-import SignoutButton from "@/app/sign-in/_components/SignoutButton";
+import SignoutButton from "@/app/sign-in/_components/SignoutButton"; // 로그아웃 버튼 컴포넌트
 import { useState } from "react";
-import MyLikeList from "@/app/mypage/[id]/_components/Mylike/MyLikeList";
-import MyCommentList from "@/app/mypage//[id]/_components/Mycomment/MyCommentList";
-import MyWritingtList from "@/app/mypage/[id]/_components/Mypost/MyWritingtList";
-// 내가 쓴 글 리스트 컴포넌트 임포트
+// import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
+// 회원 탈퇴 컴포넌트 임포트
 
 const Mypageform: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,14 +66,21 @@ const Mypageform: React.FC = () => {
         )}
       </div>
 
-      {/* 회원 탈퇴 버튼을 박스 아래로 이동하고 오른쪽으로 정렬 */}
-      <div className="mt-6 flex w-full max-w-xl justify-end pr-2">
-        <button className="rounded border border-gray-300 bg-gray-300 px-4 py-2 text-black hover:bg-gray-400">
-          회원 탈퇴
-        </button>
+      {/* 버튼 영역 */}
+      <div className="mt-4 flex w-full max-w-3xl flex-col space-y-4">
+        {/* 세로 간격을 주기 위해 space-y-4 사용 */}
+
+        {/* 로그아웃 버튼 */}
+        <div className="flex justify-end">
+          <SignoutButton />
+        </div>
+
+        {/* 회원 탈퇴 버튼 */}
+        <div className="flex justify-end">
+          {/* <DeleteAccount /> 회원 탈퇴 컴포넌트 사용 */}
+        </div>
       </div>
 
-      <SignoutButton />
       {/* 프로필 수정 모달 */}
       <ProfileEditModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>

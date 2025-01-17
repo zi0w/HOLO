@@ -1,50 +1,79 @@
 "use client";
 
-import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기// 페이지네이션 훅
+import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기
 import LikeCard from "@/app/mypage/[id]/_components/Mylike/MyLikeCard"; // LikeCard 컴포넌트
-import { MyfetchLikePostsData } from "@/app/mypage/_utils/MyfetchLikePostsData";
-import usePagination from "@/hooks/usePagination";
-
-// API 호출 함수
-import clsx from "clsx"; // 클래스 이름 조합 라이브러리
+import usePagination from "@/hooks/usePagination"; // 페이지네이션 훅
 import { useEffect, useState } from "react";
+import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 임포트
+import { useQuery } from "@tanstack/react-query"; // React Query 임포트
+
+// 타입 정의 (위에서 수정한 내용 반영)
+type User = {
+  id: string;
+  email: string;
+  nickname: string;
+  profile_image_url: string | null;
+  created_at: string;
+};
+
+type Like = {
+  user_id: string; // 'id' 대신 'user_id'
+};
+
+type Post = {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+  categories: string;
+  post_image_url: string[] | null; // 이미지 URL 배열
+  user_id: string;
+  likes: Like[]; // 좋아요 정보
+  users: {
+    nickname: string; // 작성자 닉네임
+    profile_image_url: string | null; // 작성자 프로필 이미지 URL
+  };
+};
+
+// Supabase 클라이언트 생성
+const supabase = createClient();
+
+// Fetch all posts with their likes and user information
+const fetchLikePostsData = async (): Promise<Post[]> => {
+  const { data, error } = await supabase
+    .from("posts")
+    .select("*, likes(user_id), users(nickname, profile_image_url), post_image_url")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return data || [];
+};
 
 const MyLikeList = () => {
-  const [posts, setPosts] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const loadPosts = async () => {
-    try {
-      const userId = await getId(); // 사용자 ID 가져오기
-      if (!userId) {
-        console.error("User not logged in");
-        return;
-      }
-      const data = await MyfetchLikePostsData(); // 좋아요한 게시물 데이터 가져오기
-
-     
-
-      const likedPosts = data.filter(
-        (post) => post.likes.some((like) => like.user_id === userId), // 사용자가 좋아요를 누른 게시물 필터링
-      );
-
-      
-
-      setPosts(likedPosts); // 상태 업데이트
-    } catch (error) {
-      console.error("게시물을 불러오는 중 오류가 발생했습니다:", error);
-    } finally {
-      setIsLoading(false); // 로딩 완료
-    }
-  };
-
+  // 사용자 ID 가져오기
   useEffect(() => {
-    loadPosts(); // 컴포넌트 마운트 시 게시물 로드
+    const fetchUserId = async () => {
+      const id = await getId();
+      setUserId(id);
+    };
+    fetchUserId();
   }, []);
 
-  const handleLikeChange = () => {
-    loadPosts(); // 좋아요 상태 변경 시 게시물 다시 로드
-  };
+  // 좋아요한 게시물 데이터 가져오기
+  const { data: posts, isLoading, error } = useQuery<Post[], Error>({
+    queryKey: ["likedPosts"],
+    queryFn: fetchLikePostsData,
+  });
+
+  // 사용자 ID에 따라 좋아요한 게시물 필터링
+  const likedPosts = posts?.filter(post =>
+    post.likes.some(like => like.user_id === userId)
+  ) || [];
 
   const {
     currentItems: currentPosts,
@@ -55,22 +84,27 @@ const MyLikeList = () => {
     nextPage,
     prevPage,
     goToPage,
-  } = usePagination(posts, 20); // 페이지네이션 훅 사용
+  } = usePagination(likedPosts, 20); // 페이지네이션 훅 사용
 
   if (isLoading) {
     return <p>로딩중입니다...</p>; // 로딩 중 표시
+  }
+  
+  if (error) {
+    return <p>에러가 발생했습니다: {error.message}</p>; // 에러 처리
   }
 
   return (
     <div className="container mx-auto p-4">
       {currentPosts.length > 0 ? (
         currentPosts.map((post) => (
-          <LikeCard key={post.id} post={post} onLikeChange={handleLikeChange} />
+          <LikeCard key={post.id} post={post} onLikeChange={() => {}} />
         ))
       ) : (
         <p>좋아요한 게시물이 없습니다.</p> // 좋아요한 게시물이 없을 경우 표시
       )}
 
+      {/* 페이지네이션 UI */}
       <div className="mt-4 flex items-center justify-center">
         <button
           onClick={prevPage}
@@ -86,13 +120,11 @@ const MyLikeList = () => {
           <button
             key={startButtonIndex + index}
             onClick={() => goToPage(startButtonIndex + index + 1)}
-            className={clsx(
-              `mx-1 rounded px-3 py-2 ${
-                currentPage === startButtonIndex + index + 1
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-300 text-black"
-              } hover:bg-blue-500`,
-            )}
+            className={`mx-1 rounded px-3 py-2 ${
+              currentPage === startButtonIndex + index + 1
+                ? "bg-blue-600 text-white"
+                : "bg-gray-300 text-black"
+            } hover:bg-blue-500`}
           >
             {startButtonIndex + index + 1} {/* 페이지 번호 */}
           </button>
