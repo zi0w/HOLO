@@ -91,7 +91,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
 
       handleCancel();
     } catch (error) {
-      console.error("게시물 저장 중 오류가 발생했습니다.");
+      console.error("게시물 저장 중 오류가 발생했습니다.", error);
     } finally {
       setIsLoading(false);
     }
