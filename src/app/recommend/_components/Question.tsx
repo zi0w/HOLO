@@ -21,7 +21,7 @@ const Question = <T extends keyof Answer>({
   onPrev,
   fieldKey,
 }: QuestionProps<T>) => {
-  const [currentAnswer, setCurrentAnswer] = useState(selectedAnswer); // 초기값 설정
+  const [currentAnswer, setCurrentAnswer] = useState(selectedAnswer || ""); // 초기값 설정
 
   const handleNext = () => {
     onNext({ [fieldKey]: currentAnswer } as Pick<Answer, T>); // 부모 상태 업데이트
