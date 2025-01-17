@@ -6,8 +6,8 @@ import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
-import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
+import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import Modal from "@/components/common/Modal";
 import useModalStore from "@/store/modalStore";
 import dayjs from "dayjs";
@@ -47,7 +47,10 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         setLikesCounts(postDetailData!.likes[0].count);
       } catch (error) {
         setIsError(true);
-        console.error("디테일 데이터를 불러오는 중 문제가 발생했습니다.");
+        console.error(
+          "디테일 데이터를 불러오는 중 문제가 발생했습니다.",
+          error,
+        );
       } finally {
         setIsLoading(false);
       }
@@ -62,7 +65,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         setCurrentId(userId);
       } catch (error) {
         setIsError(true);
-        console.error("유저 ID를 가져오는 중 문제가 발생했습니다.");
+        console.error("유저 ID를 가져오는 중 문제가 발생했습니다.", error);
       }
     };
     dayjs.locale("ko");
@@ -80,7 +83,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       setIsConfirm(false);
     } catch (error) {
       setIsError(true);
-      console.error("게시물 삭제에 실패했습니다.");
+      console.error("게시물 삭제에 실패했습니다.", error);
     }
   };
 
@@ -91,14 +94,14 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
   return (
     <section className="mx-5">
-      <button type="button" onClick={() => router.push("/honeytips")} className="py-5">
-      <ArrowLeftIcon />
+      <button
+        type="button"
+        onClick={() => router.push("/honeytips")}
+        className="py-5"
+      >
+        <ArrowLeftIcon />
       </button>
-      <Modal
-        text={"삭제"}
-        onAction={() => handleDeletePost(postId)}
-        onClose={() => router.push("/honeytips")}
-      />
+      <Modal text={"삭제"} onAction={() => handleDeletePost(postId)} />
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center gap-2">
@@ -155,7 +158,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         centeredSlides={true}
         pagination={{ clickable: true }}
         navigation={true}
-        className="my-4 h-auto max-w-[362px] ml-0"
+        className="my-4 ml-0 h-auto max-w-[362px]"
       >
         {postDetailData.post_image_url?.map((imageUrl, index) => (
           <SwiperSlide
@@ -177,7 +180,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         ))}
       </Swiper>
 
-      <h2 className="text-base-900 text-[22px]">{postDetailData.title}</h2>
+      <h2 className="text-[22px] text-base-900">{postDetailData.title}</h2>
 
       <p className="mb-10 mt-2 whitespace-pre-wrap text-base-800">
         {postDetailData.content}
