@@ -4,18 +4,18 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 
-const GuideBnr = ({ isPolicy }: { isPolicy: boolean }) => {
+const PolicyAndTrashBnr = ({ isPolicy }: { isPolicy: boolean }) => {
   return (
     <div
       className={clsx(
-        "m-5 flex items-end justify-between rounded-3xl overflow-hidden",
+        "m-5 flex items-end justify-between overflow-hidden rounded-3xl",
         isPolicy ? "bg-primary-800" : "flex-row-reverse bg-primary-100",
       )}
     >
       <div className={clsx("mt-8", isPolicy ? "ml-5" : "mr-5")}>
         <p
           className={clsx(
-            "font-gmarket mb-5 text-lg",
+            "mb-5 font-gmarket text-lg",
             isPolicy ? "text-primary-100" : "text-primary-900",
           )}
         >
@@ -33,7 +33,7 @@ const GuideBnr = ({ isPolicy }: { isPolicy: boolean }) => {
         </p>
         <Link
           href={isPolicy ? "/policy" : "/trash-guide"}
-          className="mb-4 inline-block rounded-md bg-primary-500 px-5 py-2 text-sm text-white whitespace-nowrap"
+          className="mb-4 inline-block w-full whitespace-nowrap rounded-md bg-primary-500 px-5 py-2 text-center text-sm text-white"
         >
           {isPolicy ? "청년정책 알아보기" : "우리동네 쓰레기 정보"} &gt;
         </Link>
@@ -47,4 +47,4 @@ const GuideBnr = ({ isPolicy }: { isPolicy: boolean }) => {
   );
 };
 
-export default GuideBnr;
+export default PolicyAndTrashBnr;

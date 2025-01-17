@@ -52,6 +52,7 @@ body {
 }
 
 .common-title {
+  font-family: "GmarketSansBold";
   @apply text-2xl font-bold text-gray-800;
 }
 .common-btn {
