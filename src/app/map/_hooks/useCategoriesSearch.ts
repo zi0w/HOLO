@@ -6,7 +6,7 @@ import type {
 import { useEffect, useState } from "react";
 
 const useCategoriesSearch = (mapCenter: Coordinates) => {
-  const [category, setCategory] = useState<string>("맛집"); // 카테고리 선택 상태 관리
+  const [category, setCategory] = useState<string>(""); // 카테고리 선택 상태 관리
   const [places, setPlaces] = useState<PlacesSearchResultItem[]>([]); // 장소 검색 결과 리스트
   const [selectedPlace, setSelectedPlace] =
     useState<PlacesSearchResultItem | null>(null);
