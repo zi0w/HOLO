@@ -1,16 +1,17 @@
 //회원삭제 기능에 필요한 클라이언트
 
-
 import type { Database } from "@/lib/types/supabase";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const createClient = async () => {
+export const createClient = async (useAdmin: boolean = false) => {
   const cookieStore = await cookies();
-
+  
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    useAdmin
+      ? process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!
+      : process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {
@@ -21,9 +22,7 @@ export const createClient = async () => {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options),
             );
-          } catch {
-            
-          }
+          } catch {}
         },
       },
     },
