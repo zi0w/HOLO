@@ -57,6 +57,7 @@ const KakaoMap = () => {
         selectedPlace={selectedPlace}
         placeDetail={placeDetail}
         setPlaceDetail={setPlaceDetail}
+        isMain={false}
       />
 
       {/* 데스크톱과 태블릿용 리스트 */}

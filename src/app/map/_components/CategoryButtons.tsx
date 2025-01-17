@@ -1,7 +1,9 @@
+"use client";
+
 import type { Place } from "@/app/map/_types/map";
 import { MAP_CATEGORIES } from "@/app/map/constants/categories";
 import clsx from "clsx";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useRef, useState, type Dispatch, type SetStateAction } from "react";
 
 type CategoryButtonsProps = {
   setCategory: Dispatch<SetStateAction<string>>;
@@ -24,14 +26,20 @@ const CategoryButtons = ({
   isMain,
 }: CategoryButtonsProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const buttonRef = useRef<(HTMLButtonElement | null)[]>([]);
+
   return (
     <>
+      <div className="font-gmarket-bold mx-5 my-4 text-2xl">우리동네 핫플</div>
       <div className="mx-5 flex overflow-x-auto [&::-webkit-scrollbar]:hidden">
-        {MAP_CATEGORIES.map((category) => (
+        {MAP_CATEGORIES.map((category, index) => (
           <button
             key={category.id}
+            ref={(el) => {
+              buttonRef.current[index] = el;
+            }}
             className={clsx(
-              "relative mx-2.5 flex h-14 flex-shrink-0 items-center justify-center px-2.5 text-sm",
+              "relative flex h-14 flex-shrink-0 items-center justify-center px-3.5 text-sm",
               selectedCategory === category.name
                 ? "text-primary-800 after:absolute after:bottom-0 after:h-[4px] after:w-full after:rounded-3xl after:bg-primary-500"
                 : "",
@@ -41,6 +49,12 @@ const CategoryButtons = ({
               setSelectedCategory(category.name);
               setSelectedPlace(null);
               setPlaceDetail(null);
+
+              buttonRef.current[index]?.scrollIntoView({
+                behavior: "smooth", // 스크롤 애니메이션
+                block: "nearest", // 스크롤 위치 설정
+                inline: "center", // 버튼을 중앙에 배치
+              });
             }}
           >
             {category.img ? (

@@ -1,13 +1,11 @@
 import Bank from "@/assets/images/map/bank.svg";
-import {
-  default as Cafe,
-  default as Restaurant,
-} from "@/assets/images/map/cafe.svg";
+import Cafe from "@/assets/images/map/cafe.svg";
 import Daiso from "@/assets/images/map/daiso.svg";
 import Fitness from "@/assets/images/map/fitness.svg";
 import Hospital from "@/assets/images/map/hospital.svg";
 import Laundry from "@/assets/images/map/Laundry.svg";
 import Pharmacy from "@/assets/images/map/pharmacy.svg";
+import Restaurant from "@/assets/images/map/restaurant.svg";
 import Salon from "@/assets/images/map/salon.svg";
 import Welfare from "@/assets/images/map/welfare.svg";
 

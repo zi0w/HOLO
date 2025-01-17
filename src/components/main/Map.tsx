@@ -5,6 +5,7 @@ import MapContainer from "@/app/map/_components/MapContainer";
 import useCategoriesSearch from "@/app/map/_hooks/useCategoriesSearch";
 import useKakaoLoader from "@/app/map/_hooks/useKakaoLoader";
 import useKakaoMap from "@/app/map/_hooks/useKakaoMap";
+import Link from "next/link";
 
 const Map = () => {
   useKakaoLoader();
@@ -26,7 +27,7 @@ const Map = () => {
     setSelectedPlace,
     setPlaceDetail,
   } = useCategoriesSearch(mapCenter);
-  
+
   return (
     <div className="relative">
       {geolocationError && <div>{geolocationError}</div>}
@@ -39,7 +40,7 @@ const Map = () => {
         setPlaceDetail={setPlaceDetail}
       />
 
-      <div className="mx-5 h-[300px] md:h-[500px] md:w-7/12 lg:h-[500px] lg:w-7/12">
+      <div className="mx-5 h-[220px]">
         <MapContainer
           mapCenter={mapCenter}
           currentPosition={currentPosition}
@@ -51,8 +52,12 @@ const Map = () => {
           selectedPlace={selectedPlace}
           placeDetail={placeDetail}
           setPlaceDetail={setPlaceDetail}
+          isMain={true}
         />
       </div>
+      <Link href={"/map"} className="mt-4 block text-center text-primary-500">
+        다른 장소도 궁금하다면?
+      </Link>
     </div>
   );
 };
