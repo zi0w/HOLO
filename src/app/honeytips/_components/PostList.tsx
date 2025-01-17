@@ -55,11 +55,8 @@ const PostList = () => {
   }, [selectedCategory, posts]);
 
   const handleGoToPost = () => {
-    if (isAuthenticated) {
-      router.push(`/honeytips/post?category=${selectedCategory}`);
-    } else {
-      alert("로그인이 필요합니다.");
-    }
+    if (!isAuthenticated) return;
+    router.push(`/honeytips/post?category=${selectedCategory}`);
   };
 
   const handleClickCategory = (category: string) => {
@@ -92,7 +89,13 @@ const PostList = () => {
       <div className="fixed bottom-14 right-4 z-50">
         <button
           onClick={handleGoToPost}
-          className="relative flex items-center justify-center rounded-full"
+          className={clsx(
+            "relative flex items-center justify-center rounded-full",
+            {
+              "cursor-not-allowed opacity-50": !isAuthenticated,
+            },
+          )}
+          disabled={!isAuthenticated}
         >
           <PlusButton />
         </button>

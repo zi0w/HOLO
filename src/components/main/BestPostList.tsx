@@ -18,8 +18,8 @@ const BestPostList = () => {
           .sort((a, b) => (b.likes[0].count || 0) - (a.likes[0].count || 0))
           .slice(0, 3);
         setBestPosts(sortedPosts);
-      } catch (err) {
-        console.error("베스트 게시글을 불러오는 중 오류가 발생했습니다.");
+      } catch (error) {
+        console.error("베스트 게시글을 불러오는 중 오류가 발생했습니다.", error);
       } finally {
         setLoading(false);
       }

@@ -7,6 +7,8 @@ import {
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
+import Modal from "@/components/common/Modal";
+import useModalStore from "@/store/modalStore";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -26,6 +28,8 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editedComment, setEditedComment] = useState<string>("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { setIsModalOpen, setIsConfirm, isConfirm } = useModalStore();
 
   const updateCommentMutation = useUpdateCommentMutation();
   const deleteCommentMutation = useDeleteCommentMutation();
@@ -55,14 +59,19 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   };
 
   const handleCommentDelete = (id: string) => {
-    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
-    if (!isConfirmed) return;
+    setIsConfirm(true);
+    setIsModalOpen(true);
+
+    if (!isConfirm) return;
+
     deleteCommentMutation.mutate(id);
+    setIsConfirm(false);
     setIsDropdownOpen(false);
   };
 
   return (
     <article className="mx-5 w-full rounded-lg">
+      <Modal text={"삭제"} onAction={() => handleCommentDelete(comment.id)} />
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-[14px]">
           {comment.users.profile_image_url && (
