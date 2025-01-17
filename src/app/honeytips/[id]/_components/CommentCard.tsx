@@ -28,6 +28,16 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   const updateCommentMutation = useUpdateCommentMutation();
   const deleteCommentMutation = useDeleteCommentMutation();
 
+  const formatDate = (date: string) => {
+    const now = dayjs();
+    const createdAt = dayjs(date);
+
+    if (now.diff(createdAt, "hour") < 24) {
+      return createdAt.fromNow();
+    }
+    return createdAt.format("YY.MM.DD");
+  };
+
   const handleCommentSave = (id: string) => {
     if (!editedComment.trim()) {
       alert("내용을 입력해주세요");
@@ -47,16 +57,6 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
     if (!isConfirmed) return;
     deleteCommentMutation.mutate(id);
     setIsDropdownOpen(false);
-  };
-
-  const formatDate = (date: string) => {
-    const now = dayjs();
-    const createdAt = dayjs(date);
-
-    if (now.diff(createdAt, "hour") < 24) {
-      return createdAt.fromNow();
-    }
-    return createdAt.format("YY.MM.DD");
   };
 
   return (

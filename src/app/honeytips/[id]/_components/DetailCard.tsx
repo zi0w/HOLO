@@ -1,5 +1,6 @@
 "use client";
 
+import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
@@ -23,6 +24,8 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [postDetailData, setPostDetailData] = useState<Post | null>(null);
   const [likesCounts, setLikesCounts] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const router = useRouter();
 
   const formatDate = (date: string) => {
@@ -31,18 +34,31 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
   useEffect(() => {
     const fetchPostDetailData = async () => {
-      const postDetailData = await fetchPostDetail(postId);
-      setPostDetailData(postDetailData);
-      setLikesCounts(postDetailData!.likes[0].count);
+      setIsLoading(true);
+      setIsError(false);
+      try {
+        const postDetailData = await fetchPostDetail(postId);
+        setPostDetailData(postDetailData);
+        setLikesCounts(postDetailData!.likes[0].count);
+      } catch (error) {
+        setIsError(true);
+        console.error("디테일 데이터를 불러오는 중 문제가 발생했습니다.");
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchPostDetailData();
-  }, []);
+  }, [postId]);
 
   useEffect(() => {
     const fetchUserId = async () => {
-      const userId = await getId();
-
-      setCurrentId(userId);
+      try {
+        const userId = await getId();
+        setCurrentId(userId);
+      } catch (error) {
+        setIsError(true);
+        console.error("유저 ID를 가져오는 중 문제가 발생했습니다.");
+      }
     };
     dayjs.locale("ko");
     fetchUserId();
@@ -57,12 +73,15 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       alert("게시물이 삭제되었습니다.");
       router.push("/honeytips");
     } catch (error) {
-      alert("게시물 삭제 중 문제가 발생했습니다.");
+      setIsError(true);
       console.error("게시물 삭제에 실패했습니다.");
     }
   };
 
-  if (!postDetailData) return <p className="mx-auto flex h-[200px] items-center justify-center text-base-400">로딩중...</p>;
+  if (isLoading) return <DetailLoading />;
+  if (isError) return <div>에러가 발생했습니다.</div>;
+
+  if (!postDetailData) return null;
 
   return (
     <section className="mx-5 py-[10px]">
@@ -123,7 +142,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         centeredSlides={true}
         pagination={{ clickable: true }}
         navigation={true}
-        className="mb-4 mt-2 h-auto max-w-[362px]"
+        className="my-4 h-auto max-w-[362px]"
       >
         {postDetailData.post_image_url?.map((imageUrl, index) => (
           <SwiperSlide

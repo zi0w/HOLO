@@ -19,7 +19,7 @@ const LikeButton = ({
   likesCounts,
   setLikesCounts,
 }: LikeButtonProps) => {
-  const { data: likeData, isError, isPending } = useLikeDataQuery(postId);
+  const { data: likeData,  } = useLikeDataQuery(postId);
   const likeMutation = useLikeMutation(postId);
   const isMutating = useIsMutating();
 
@@ -52,9 +52,6 @@ const LikeButton = ({
     }
   };
 
-  if (isPending) return <p>로딩중...</p>;
-
-  if (isError) return <p>에러가 발생했습니다.</p>;
 
   return (
     <section className="flex flex-col items-center text-2xl">

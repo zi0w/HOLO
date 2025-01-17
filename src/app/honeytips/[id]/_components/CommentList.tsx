@@ -1,6 +1,7 @@
 "use client";
 
 import CommentCard from "@/app/honeytips/[id]/_components/CommentCard";
+import CommentForm from "@/app/honeytips/[id]/_components/CommentForm";
 import { useCommentDataQuery } from "@/app/honeytips/[id]/_hooks/useCommentQuery";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
@@ -26,15 +27,8 @@ const CommentList = () => {
     fetchUserId();
   }, []);
 
-  if (isPending || isError) {
-    return (
-      <div className="mx-auto flex h-[200px] items-center justify-center">
-        <p className="text-center text-base-400">
-          {isPending ? "로딩중..." : "에러가 발생했습니다."}
-        </p>
-      </div>
-    );
-  }
+  if (isPending) return null;
+  if (isError) return <div>에러가 발생했습니다!</div>;
 
   return (
     <div className="mx-5 mt-[14px] flex flex-col">
@@ -55,6 +49,7 @@ const CommentList = () => {
           ))
         )}
       </section>
+      <CommentForm />
     </div>
   );
 };

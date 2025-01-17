@@ -10,7 +10,6 @@ import { useRef } from "react";
 
 const CommentForm = () => {
   const params = useParams();
-
   const postId: Comment["post_id"] = params.id as string;
 
   const inputRef = useRef<HTMLInputElement>(null);
