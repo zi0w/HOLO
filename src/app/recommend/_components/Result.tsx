@@ -39,14 +39,8 @@ const Result = ({ answerData }: ResultProps) => {
       const { id } = await response.json();
       const url = `${window.location.origin}/recommend/result?id=${id}`;
 
-      if (navigator.share) {
-        await navigator.share({
-          text: "저의 추천 메뉴를 확인해보세요!",
-          url,
-        });
-      } else {
-        alert(`URL을 복사하여 공유해보세요: ${url}`);
-      }
+      await navigator.clipboard.writeText(url);
+      alert("추천 메뉴 링크가 복사되었습니다!")
     } catch (error) {
       console.error("결과 공유에 실패했습니다.", error);
       alert("결과 공유에 실패했습니다. 다시 시도해주세요.");
