@@ -16,8 +16,8 @@ type SearchFilters = {
 };
 
 const PolicyCont = () => {
+  const [shouldFetch, setShouldFetch] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
-
   const [filters, setFilters] = useState<SearchFilters>({
     region: "",
     field: "",
@@ -29,15 +29,15 @@ const PolicyCont = () => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["policies", filters.region, filters.field],
+    queryKey: ["policies"],
     queryFn: async () => {
       const regionCode = REGION_CODES[filters.region];
       return fetchPolicyList({
-        polyRlmCd: filters.field,
+        bizTycdSel: filters.field,
         srchPolyBizSecd: regionCode,
       });
     },
-    enabled: !!filters.region && !!filters.field,
+    enabled: shouldFetch && !!filters.region && !!filters.field,
   });
 
   const {
@@ -63,6 +63,7 @@ const PolicyCont = () => {
 
   const handleSearch = async () => {
     setIsRefetching(true);
+    setShouldFetch(true);
     await refetch();
     setIsRefetching(false);
   };
@@ -77,7 +78,7 @@ const PolicyCont = () => {
         onSearch={handleSearch}
       />
       {isLoading || isRefetching ? (
-        <Loading /> //TODO: 로딩 스피너 추가
+        <Loading />
       ) : (
         <>
           <PolicyResult error={error} policyData={currentPolicyData} />
