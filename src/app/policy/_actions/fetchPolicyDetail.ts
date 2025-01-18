@@ -1,7 +1,7 @@
 "use server";
 
 import type { PolicyData } from "@/app/policy/_types/policy";
-import { fetchPolicyApi } from "../_utils/policyApi";
+import { fetchPolicyApi } from "@/app/policy/_utils/policyApi";
 
 export const fetchPolicyDetail = async (id: string): Promise<PolicyData> => {
   try {
