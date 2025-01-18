@@ -1,10 +1,11 @@
 "use client";
 
-import { fetchOpenAiFoodWaste } from "@/app/trash-guide/_actions/actions";
+import { fetchOpenAiFoodWaste } from "@/app/trash-guide/_actions/fetchTrashOpenAi";
 import FoodNoIcon from "@/assets/images/trash/foodwaste-no.png";
 import FoodYesIcon from "@/assets/images/trash/foodwaste-yes.png";
-import PersonIcon from "@/assets/images/trash/person.png";
+import PersonIcon from "@/assets/images/main/bnr/person-trash.png";
 import SearchIcon from "@/assets/images/trash/search-icon.svg";
+import Loading from "@/components/common/Loading";
 import Image from "next/image";
 import { useState, type ChangeEvent } from "react";
 
@@ -72,8 +73,7 @@ const FoodWasteCheck = () => {
         </div>
       )}
 
-      {/* TODO: 로딩바꾸기 */}
-      {loading && <p>로딩중</p>}
+      {loading && <Loading />}
 
       {/* TODO: 에러 메시지 추가 */}
       {error && <p className="mt-4 text-center text-red-500">{error}</p>}
