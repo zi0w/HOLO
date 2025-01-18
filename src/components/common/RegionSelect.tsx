@@ -1,4 +1,4 @@
-import type { RegionData } from "@/app/trash-guide/_types/day";
+import type { RegionData } from "@/app/trash-guide/_types/trashTypes";
 import LoadingSmall from "@/components/common/LoadingSmall";
 import { useQuery } from "@tanstack/react-query";
 import { type ChangeEvent } from "react";
