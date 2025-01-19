@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "genTypes": "supabase gen types typescript --project-id tjxonwrcuvvfxkfkgadc --schema public > src/lib/types/supabase.ts",
+    "genTypes": "supabase gen types typescript --project-id eqanvaummffjgxyujqru --schema public > src/lib/types/supabase.ts",
     "start": "next build && next start",
     "dev": "next dev",
     "build": "next build",
@@ -16,7 +16,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "file-saver": "^2.0.5",
-    "html2canvas": "^1.4.1",
+    "html-to-image": "^1.11.11",
     "next": "14.2.20",
     "openai": "^4.77.3",
     "react": "^18",
