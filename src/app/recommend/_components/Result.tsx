@@ -10,10 +10,11 @@ import ShareLinkButton from "@/components/daily/ShareLinkButton";
 import { generateShareLink } from "@/lib/utils/daily/shareLink";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type ResultProps = {
-  answerData: Answer;
+  answerData?: Answer;
 };
 
 const foodImages: Record<string, StaticImageData> = {
@@ -24,6 +25,9 @@ const foodImages: Record<string, StaticImageData> = {
 };
 
 const Result = ({ answerData }: ResultProps) => {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const menuType = searchParams.get("type");
   const [menu, setMenu] = useState<string>("");
   const [reason, setReason] = useState<string>("");
   const [shareLink, setShareLink] = useState<string>("");
@@ -31,14 +35,23 @@ const Result = ({ answerData }: ResultProps) => {
   const fetchAndGenerateLink = async () => {
     try {
       // 추천 결과 받아오기
-      const recommendation = await fetchRecommendation(answerData);
+      const recommendation = answerData
+        ? await fetchRecommendation(answerData)
+        : id
+          ? await fetch(`/api/recommend?id=${id}`).then((res) => res.json()).then((data) => data.data)
+          : null;
+
+      if (!recommendation) throw new Error("추천 데이터를 볼러올 수 없습니다.");
+
       const [menuPart, reasonPart] = recommendation.split(" / ");
       setMenu(menuPart);
       setReason(reasonPart);
 
       // 공유 링크 생성
-      const link = await generateShareLink(recommendation);
-      setShareLink(link);
+      if (answerData) {
+        const link = await generateShareLink(recommendation, answerData.answer2); // 추천 결과, 음식 종류 같이 내려주기
+        setShareLink(link);
+      }
     } catch (error) {
       console.error(error);
       alert("추천 메뉴를 불러오지 못했습니다.");
@@ -47,33 +60,59 @@ const Result = ({ answerData }: ResultProps) => {
 
   useEffect(() => {
     fetchAndGenerateLink();
-  }, [answerData]);
+  }, [answerData, id]);
 
-  const selectedImage = foodImages[answerData.answer2] || KoreanFood;
+  const selectedImage =
+  menuType && foodImages[menuType] // URL 파라미터에서 menuType을 사용(공유 페이지)
+    ? foodImages[menuType] 
+    : answerData?.answer2 && foodImages[answerData.answer2] // answerData에 따른 이미지(기본 페이지)
+    || KoreanFood; // 디폴트 이미지
 
+
+  
   return menu ? (
     <div
       id="result-container"
       className="flex flex-col items-center bg-white text-black"
     >
-      <Image src={selectedImage} alt="recommended-food" className="mt-4" width={355} height={355}/>
+      <Image
+        src={selectedImage}
+        alt="recommended-food"
+        className="mt-4"
+        width={355}
+        height={355}
+      />
       <div className="flex flex-col items-center gap-3">
         <h2 className="mt-8 text-2xl">{menu}</h2>
         <p className="break-normal px-10">{reason}</p>
       </div>
-      <Link
-        href="/recommend"
-        className="mt-6 flex h-12 w-[362px] items-center justify-center rounded bg-primary-500 font-gmarket font-normal text-white"
-      >
-        추천 다시 받기
-      </Link>
-      <Link href="/" className="mt-5 font-gmarket text-base text-primary-500">
-        메인으로 돌아가기
-      </Link>
-      <div className="mt-6 flex gap-4 pb-4">
-        <SaveResultButton elementId="result-container" />
-        <ShareLinkButton link={shareLink} />
-      </div>
+
+      {id ? (
+        // 공유 링크로 접근한 경우
+        <Link
+          href="/recommend"
+          className="mt-6 flex h-12 w-[362px] items-center justify-center rounded bg-primary-500 font-gmarket font-normal text-white"
+        >
+          나도 하러 가기
+        </Link>
+      ) : (
+        // 결과 페이지에서 접근한 경우
+        <>
+          <Link
+            href="/recommend"
+            className="mt-6 flex h-12 w-[362px] items-center justify-center rounded bg-primary-500 font-gmarket font-normal text-white"
+          >
+            추천 다시 받기
+          </Link>
+          <Link href="/" className="mt-5 font-gmarket text-base text-primary-500">
+            메인으로 돌아가기
+          </Link>
+          <div className="mt-6 flex gap-4 pb-4">
+            <SaveResultButton elementId="result-container" />
+            <ShareLinkButton link={shareLink} />
+          </div>
+        </>
+      )}
     </div>
   ) : (
     <div className="flex h-screen items-center justify-center">
