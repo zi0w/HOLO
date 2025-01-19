@@ -1,74 +1,37 @@
-// src/app/mypage/_components/MyLikeButton.tsx
+// components/LikeButton.tsx
 "use client";
 
-import { useLikeMutation } from "@/app/honeytips/[id]/_hooks/useLikeMutation";
-import { useLikeDataQuery } from "@/app/honeytips/[id]/_hooks/useLikeQuery";
-import type { Like } from "@/app/honeytips/_types/honeytips.type";
-import { getId } from "@/app/honeytips/_utils/auth";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useLikeButton } from "@/app/mypage/_hooks/useLikeButton";
+import type { LikeButtonProps } from "@/app/mypage/_types/like";
+import YesHeart from "@/assets/images/honeytips/love_selected_42.svg";
+import NoHeart from "@/assets/images/honeytips/love_unselected_42.svg";
 
-// LikeButton component
-const MyLikeButton = ({
+const LikeButton: React.FC<LikeButtonProps> = ({
   postId,
+  isLiked,
+  likeCount = 0,
   onLikeChange,
-}: {
-  postId: Like["post_id"];
-  onLikeChange: (postId: string, action: "add" | "delete") => void; // 수정된 부분
 }) => {
-  const { data: likeData, isError, isPending } = useLikeDataQuery(postId);
-  const likeMutation = useLikeMutation(postId);
-
-  const handleLikeBtn = async () => {
-    const userId: Like["user_id"] | null = await getId();
-
-    if (!userId) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
-
-    if (likeData && likeData.length > 0) {
-      likeMutation.mutate(
-        { action: "delete", userId, postId },
-        {
-          onSuccess: () => {
-            onLikeChange(postId, "delete"); // 수정된 부분
-          },
-        }
-      );
-    } else {
-      likeMutation.mutate(
-        { action: "add", userId, postId },
-        {
-          onSuccess: () => {
-            onLikeChange(postId, "add"); // 수정된 부분
-          },
-        }
-      );
-    }
-  };
-
-  if (isPending) {
-    return <p>로딩중...</p>;
-  }
-
-  if (isError) {
-    return <p>에러가 발생했습니다.</p>;
-  }
+  const { handleLike } = useLikeButton(postId, isLiked, onLikeChange);
 
   return (
-    <section className="flex text-2xl">
-      <button onClick={handleLikeBtn}>
-        {likeData?.length ? (
-          <FaHeart className="text-primary-500" />
+    <div className="flex items-center gap-2">
+      <button
+        onClick={handleLike}
+        className="flex items-center focus:outline-none"
+        aria-label={isLiked ? "좋아요 취소" : "좋아요"}
+      >
+        {isLiked ? (
+          <YesHeart className="w-[42px] h-[42px]" />
         ) : (
-          <FaRegHeart />
+          <NoHeart className="w-[42px] h-[42px]" />
         )}
       </button>
-    </section>
+      {likeCount > 0 && (
+        <span className="text-sm text-gray-600">({likeCount})</span>
+      )}
+    </div>
   );
 };
 
-export default MyLikeButton;
-
-
-
+export default LikeButton;

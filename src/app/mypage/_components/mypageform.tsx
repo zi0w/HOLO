@@ -1,86 +1,89 @@
+// components/Mypageform.tsx
 "use client";
 
-
+import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import useAuthStore from "@/store/authStore";
+import SignoutButton from "@/app/sign-in/_components/SignoutButton";
+import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
+import UserProfile from "@/app/mypage/_components/UserProfile";
+import MyWritingList from "@/app/mypage/[id]/_components/Mypost/MyWritingList";
 import MyCommentList from "@/app/mypage/[id]/_components/Mycomment/MyCommentList";
 import MyLikeList from "@/app/mypage/[id]/_components/Mylike/MyLikeList";
-import MyWritingList from "@/app/mypage/[id]/_components/Mypost/MyWritingtList";
-import DeleteAccount from "@/app/mypage/_components/DeleteAccount"; // 회원 탈퇴 컴포넌트 임포트
-import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
-import UserProfile from "@/app/mypage/_components/UserProfile";
-import SignoutButton from "@/app/sign-in/_components/SignoutButton";
-import { useState } from "react";
+import type { ActiveSection } from "@/app/mypage/_types/mypage";
 
 const Mypageform: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("likes");
+  const [activeSection, setActiveSection] = useState<ActiveSection>("likes");
+  const queryClient = useQueryClient();
+  const userId = useAuthStore((state) => state.user?.id);
 
-  const handleCloseModal = () => setIsModalOpen(false);
+  const handleSectionChange = (section: ActiveSection) => {
+    setActiveSection(section);
+
+    switch (section) {
+      case "likes":
+        queryClient.invalidateQueries({ queryKey: ["likedPosts", userId] });
+        break;
+      case "comments":
+        queryClient.invalidateQueries({ queryKey: ["comments", userId] });
+        break;
+      case "myPosts":
+        queryClient.invalidateQueries({ queryKey: ["myPosts", userId] });
+        break;
+    }
+  };
+
+  const renderSection = () => {
+    switch (activeSection) {
+      case "likes":
+        return <MyLikeList />;
+      case "comments":
+        return <MyCommentList />;
+      case "myPosts":
+        return <MyWritingList />;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div className="mt-8 flex flex-col items-center">
+    <div className="relative">
       <UserProfile />
-      <div className="mb-2 mt-6 flex w-full justify-center space-x-8">
-        <button
-          onClick={() => setActiveSection("likes")}
-          className={`rounded border px-4 py-2 text-black ${
-            activeSection === "likes"
-              ? "border-white bg-white"
-              : "border-white bg-white hover:bg-gray-100"
+      <div className="flex space-x-24 mb-4 absolute left-[59px] top-[366px]">
+        <button 
+          onClick={() => handleSectionChange("likes")}
+          className={`h-6 font-pretendard text-base font-medium leading-6 text-center underline decoration-[#999E98] underline-offset-[from-font] ${
+            activeSection === "likes" ? "text-[#999E98]" : ""
           }`}
         >
           좋아요
         </button>
-        <button
-          onClick={() => setActiveSection("comments")}
-          className={`rounded border px-4 py-2 text-black ${
-            activeSection === "comments"
-              ? "border-white bg-white"
-              : "border-white bg-white hover:bg-gray-100"
+        <button 
+          onClick={() => handleSectionChange("comments")}
+          className={`h-6 font-pretendard text-base font-medium leading-6 text-center underline decoration-[#999E98] underline-offset-[from-font] ${
+            activeSection === "comments" ? "text-[#999E98]" : ""
           }`}
         >
           댓글
         </button>
-        <button
-          onClick={() => setActiveSection("myPosts")}
-          className={`rounded border px-4 py-2 text-black ${
-            activeSection === "myPosts"
-              ? "border-white bg-white"
-              : "border-white bg-white hover:bg-gray-100"
+        <button 
+          onClick={() => handleSectionChange("myPosts")}
+          className={`h-6 font-pretendard text-base font-medium leading-6 text-center underline decoration-[#999E98] underline-offset-[from-font] ${
+            activeSection === "myPosts" ? "text-[#999E98]" : ""
           }`}
         >
           내가 쓴 글
         </button>
       </div>
 
-      <hr className="my-6 w-full border-t border-gray-300" />
-
-      <div
-        className="w-full max-w-3xl border border-gray-300 bg-white p-6"
-        style={{ minHeight: "300px" }}
-      >
-        {activeSection === "likes" && (
-          <div className="flex flex-col items-center">
-            <MyLikeList />
-          </div>
-        )}
-
-        {activeSection === "comments" && <MyCommentList />}
-
-        {activeSection === "myPosts" && <MyWritingList />}
+      <div className="absolute left-[21px] top-[432px] h-[442px] w-[362px] rounded-tl-[4px] border border-[#E0E0E0] bg-white">
+        {renderSection()}
       </div>
 
-      <div className="mt-6 flex w-full max-w-3xl flex-col space-y-4">
-        <div className="flex justify-end">
-          <SignoutButton />
-        </div>
-
-        {/* 회원 탈퇴 버튼 추가 */}
-        <div className="flex justify-end">
-          <DeleteAccount />
-        </div>
+      <div className="absolute bottom-4 left-0 right-0 flex flex-col items-center space-y-4">
+        <SignoutButton />
+        <DeleteAccount />
       </div>
-
-      <ProfileEditModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };

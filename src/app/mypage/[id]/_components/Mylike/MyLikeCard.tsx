@@ -1,86 +1,59 @@
-//완성본
+// components/MyLikeCard.tsx
 "use client";
 
-import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import Image from "next/image"; // Next.js의 Image 컴포넌트 가져오기
-import Link from "next/link"; // Link 컴포넌트 가져오기
-import { useState } from "react";
+import type { Post } from "@/app/mypage/[id]/_components/_type/types";
+import LikeButton from "@/app/mypage/_components/MyLikeButton";
+import Image from "next/image";
+import Link from "next/link";
 
-dayjs.extend(relativeTime);
-
-type PostLikeCardProps = {
-  post: {
-    id: string;
-    title: string;
-    content: string;
-    created_at: string; // 게시물 생성 시간
-    post_image_url?: string[] | null; // 게시글 이미지 URL 배열 추가
-  };
-  onLikeChange: () => void;
+type MyLikeCardProps = {
+  post: Post;
+  onLikeChange: (postId: string, action: "delete" | "add") => Promise<void>;
 };
 
-const MyLikeCard = ({ post, onLikeChange }: PostLikeCardProps) => {
-  const [isContentVisible, setIsContentVisible] = useState(false);
-
-  const toggleContentVisibility = () => {
-    setIsContentVisible(!isContentVisible);
+const MyLikeCard: React.FC<MyLikeCardProps> = ({ post, onLikeChange }) => {
+  const handleLikeChange = async (postId: string, action: "delete" | "add") => {
+    await onLikeChange(postId, action);
   };
 
   return (
-    <div className="mb-4 rounded-lg border p-4 shadow-md">
-      <Link href={`/honeytips/${post.id}`} className="flex h-full flex-col">
-        <div className="flex items-start">
-          {/* 게시글 첫 번째 이미지 */}
-          {post.post_image_url && post.post_image_url.length > 0 && (
-            <Image
-              src={post.post_image_url[0]} // 첫 번째 이미지 URL 사용
-              alt={`게시글 이미지`}
-              width={120} // 원하는 너비 설정
-              height={120} // 세로 길이 증가 (길게 설정)
-              className="rounded-lg object-cover mr-4" // 스타일 조정
-            />
-          )}
-          <div className="flex-grow"> {/* 제목과 내용이 들어갈 부분 */}
-            <div className="flex items-center justify-between">
-              <h3 className="font-bold text-blue-600 hover:underline">
-                {post.title}
-              </h3>
+    <div className="mb-4 rounded-lg bg-white p-4 shadow-md">
+      <div className="flex justify-between">
+        <div className="flex-1">
+          <Link
+            href={`/honeytips/${post.id}`}
+            className="flex items-start gap-4"
+          >
+            {post.post_image_url && post.post_image_url.length > 0 && (
+              <div className="relative h-[120px] w-[120px] overflow-hidden rounded-lg">
+                <Image
+                  src={post.post_image_url[0]}
+                  alt={`게시글 이미지`}
+                  width={120}
+                  height={120}
+                  className="mr-4 rounded-lg object-cover"
+                />
+              </div>
+            )}
+            <div className="flex-1">
+              <h3 className="mb-2 text-lg font-semibold">{post.title}</h3>
+              <p className="mb-2 text-gray-600">{post.content}</p>
               <div className="flex items-center">
-                <MyLikeButton postId={post.id} onLikeChange={onLikeChange} />
+                <LikeButton
+                  postId={post.id}
+                  isLiked={true}
+                  onLikeChange={handleLikeChange}
+                />
               </div>
             </div>
-
-            {/* 게시물 생성 시간 표시 */}
-            <p className="text-xs text-gray-500">
-              {dayjs(post.created_at).format("YYYY.MM.DD")} {/* 날짜 형식으로 변환 */}
-            </p>
-
-            {/* 게시글 내용 */}
-            <p className={`mt-2 ${isContentVisible ? "" : "line-clamp-2"}`}>
-              {post.content}
-            </p>
-          </div>
+          </Link>
         </div>
-      </Link>
-
-      {/* 더보기/숨기기 버튼 */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          toggleContentVisibility();
-        }}
-        className="mt-2 text-blue-500"
-      >
-        {isContentVisible ? "숨기기" : "더보기"}
-      </button>
+        <p className="text-xs text-gray-500">
+          {new Date(post.created_at).toLocaleDateString()}
+        </p>
+      </div>
     </div>
   );
 };
 
 export default MyLikeCard;
-
-
-
-

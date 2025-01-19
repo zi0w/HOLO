@@ -26,3 +26,29 @@ export async function fetchUserInfo(userId: string) {
 
   return data; // 성공적으로 가져온 사용자 정보를 반환합니다.
 }
+
+
+
+
+export const deleteUserAccount = async (userId: string) => {
+  const response = await fetch("/api/delete-user", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || "회원 탈퇴 처리 중 오류가 발생했습니다.");
+  }
+
+  return data;
+};
+
+export const signOutUser = async () => {
+  const supabase = createClient();
+  return await supabase.auth.signOut();
+};
