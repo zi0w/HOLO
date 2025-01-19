@@ -13,13 +13,12 @@ const PostCardLoading = () => {
           <div className="flex w-full items-start gap-3">
             <div className="flex w-full flex-col space-y-3">
               <div className="h-4 w-1/3 rounded bg-gray-300" />
-              <div className="h-4 w-2/3 rounded bg-gray-300" />
-              <div className="h-4 w-2/3 rounded bg-gray-300" />
-              <div className="h-4 w-2/3 rounded bg-gray-300" />
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="h-4 w-2/3 rounded bg-gray-300" />
+              ))}
             </div>
             <div className="h-[103px] w-[103px] flex-shrink-0 rounded bg-gray-300" />
           </div>
-
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -29,7 +28,6 @@ const PostCardLoading = () => {
                 <div className="h-4 w-8 rounded bg-gray-300" />
               </div>
             </div>
-
             <div className="flex items-center gap-1 text-base-600">
               <div className="flex items-center gap-1">
                 <SmallHeart />
