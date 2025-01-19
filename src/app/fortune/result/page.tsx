@@ -6,10 +6,22 @@ import Loading from "@/components/common/Loading";
 import SaveResultButton from "@/components/daily/SaveResultButton";
 import ShareLinkButton from "@/components/daily/ShareLinkButton";
 import { generateShareLink } from "@/lib/utils/daily/shareLink";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
+export const metadata: Metadata = {
+  title: "오늘의 운세 뽑기",
+  description: "오늘의 운세를 알려줄 포춘쿠키는? 직감적으로 하나만 골라보세요!",
+  openGraph: {
+    title: "오늘의 운세 뽑기",
+    description:
+      "오늘의 운세를 알려줄 포춘쿠키는? 직감적으로 하나만 골라보세요!",
+    url: "https://localhost:3000/fortune/result",
+  },
+};
 
 const FortunePage = () => {
   const searchParams = useSearchParams();

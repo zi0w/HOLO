@@ -1,6 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import person from "@/assets/images/recommend/person-recommend.png"
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "오늘의 메뉴 추천",
+  description:
+    "무엇을 먹을지 고민이라면? 간단한 4문제로 메뉴를 골라볼까요?",
+  openGraph: {
+    title: "오늘의 메뉴 추천",
+    description:
+      "무엇을 먹을지 고민이라면? 간단한 4문제로 메뉴를 골라볼까요?",
+    url: "https://localhost:3000/recommend",
+  },
+};
 
 const RecommendPage = () => {
   return (

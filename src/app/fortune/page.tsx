@@ -4,8 +4,20 @@ import Fortune3 from "@/assets/images/fortune/fortune3.png";
 import Fortune4 from "@/assets/images/fortune/fortune4.png";
 import Fortune5 from "@/assets/images/fortune/fortune5.png";
 import Fortune6 from "@/assets/images/fortune/fortune6.png";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "오늘의 운세 뽑기",
+  description: "오늘의 운세를 알려줄 포춘쿠키는? 직감적으로 하나만 골라보세요!",
+  openGraph: {
+    title: "오늘의 운세 뽑기",
+    description:
+      "오늘의 운세를 알려줄 포춘쿠키는? 직감적으로 하나만 골라보세요!",
+    url: "https://localhost:3000/fortune",
+  },
+};
 
 const fortuneImages = [
   Fortune1,
@@ -34,7 +46,7 @@ const fortunePage = () => {
               alt={`fortune-${index + 1}`}
               width={160}
               height={160}
-              className="hover:bg-[#ffd1a3] rounded-full"
+              className="rounded-full hover:bg-[#ffd1a3]"
             />
           </Link>
         ))}
