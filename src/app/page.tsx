@@ -5,6 +5,7 @@ import PolicyAndTrashBanner from "@/components/main/PolicyAndTrashBanner";
 import MainBanner from "@/components/main/MainBanner";
 import Map from "@/components/main/Map";
 import DailyMenu from "@/components/main/DailyMenu";
+import DailyFortune from "@/components/main/DailyFortune";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <PolicyAndTrashBanner isPolicy={false} />
       <BestPostList />
       <DailyMenu />
+      <DailyFortune />
     </div>
   );
 };
