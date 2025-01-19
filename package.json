@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "genTypes": "supabase gen types typescript --project-id tjxonwrcuvvfxkfkgadc --schema public > src/lib/types/supabase.ts",
+    "genTypes": "supabase gen types typescript --project-id eqanvaummffjgxyujqru --schema public > src/lib/types/supabase.ts",
     "start": "next build && next start",
     "dev": "next dev",
     "build": "next build",

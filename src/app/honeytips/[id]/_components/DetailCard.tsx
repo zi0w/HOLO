@@ -101,7 +101,11 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       >
         <ArrowLeftIcon />
       </button>
-      <Modal text={"삭제"} onAction={() => handleDeletePost(postId)} />
+      <Modal
+        text={"삭제"}
+        onAction={() => handleDeletePost(postId)}
+        onClose={() => router.push("/honeytips")}
+      />
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center gap-2">

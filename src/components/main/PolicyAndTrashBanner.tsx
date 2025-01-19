@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 
-const PolicyAndTrashBnr = ({ isPolicy }: { isPolicy: boolean }) => {
+const PolicyAndTrashBanner = ({ isPolicy }: { isPolicy: boolean }) => {
   return (
     <div
       className={clsx(
@@ -41,10 +41,13 @@ const PolicyAndTrashBnr = ({ isPolicy }: { isPolicy: boolean }) => {
       <Image
         src={isPolicy ? PolicyIcon : TrashIcon}
         alt="사람 아이콘"
-        className="object-contain"
+        className={clsx(
+          "object-contain",
+          isPolicy ? "max-h-[140px]" : "max-w-[100px] ml-7",
+        )}
       />
     </div>
   );
 };
 
-export default PolicyAndTrashBnr;
+export default PolicyAndTrashBanner;

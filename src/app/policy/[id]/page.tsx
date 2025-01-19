@@ -1,5 +1,5 @@
 import PolicyDetailItem from "@/app/policy/[id]/_components/PolicyDetailItem";
-import { getPolicyDetail } from "@/app/policy/_actions/getPolicyDetail";
+import { fetchPolicyDetail } from "@/app/policy/_actions/fetchPolicyDetail";
 import { POLICY_DISPLAY_NAMES } from "@/app/policy/_constants/policy";
 import type { Metadata } from "next";
 
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const policyDetailData = async (id: string) => {
-  return getPolicyDetail(id);
+  return fetchPolicyDetail(id);
 };
 
 const PolicyDetailPage = async ({ params }: { params: { id: string } }) => {
@@ -21,7 +21,9 @@ const PolicyDetailPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <h2 className="mb-8 font-bold break-keep">{policyInfo.polyBizSjnm}</h2>
+      <p className="mb-8 break-keep font-bold text-base-800">
+        {policyInfo.polyBizSjnm}
+      </p>
       <ul className="space-y-4">
         {Object.entries(POLICY_DISPLAY_NAMES).map(
           ([fieldName, displayName]) => (

@@ -3,34 +3,33 @@
 @tailwind utilities;
 
 /* font */
-@layer base {
-  @font-face {
-    font-family: "Pretendard-Regular";
-    src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-      format("woff");
-    font-weight: 400;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "GmarketSansLight";
-    src: url("../assets/fonts/GmarketSansTTFLight.ttf") format("truetype");
-    font-weight: 300;
-    font-style: normal;
-  }
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GmarketSansLight";
+  src: url("../assets/fonts/GmarketSansTTFLight.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
 
-  @font-face {
-    font-family: "GmarketSansMedium";
-    src: url("../assets/fonts/GmarketSansTTFMedium.ttf") format("truetype");
-    font-weight: 500;
-    font-style: normal;
-  }
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
-  @font-face {
-    font-family: "GmarketSansBold";
-    src: url("../assets/fonts/GmarketSansTTFBold.ttf") format("truetype");
-    font-weight: 700;
-    font-style: normal;
-  }
+@font-face {
+  font-family: "GmarketSansBold";
+  src: url("../assets/fonts/GmarketSansTTFBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
 }
 
 * {
@@ -53,7 +52,7 @@ body {
 
 .common-title {
   font-family: "GmarketSansBold";
-  @apply text-2xl font-bold text-gray-800;
+  @apply text-2xl font-bold text-base-800;
 }
 .common-btn {
   font-family: "GmarketSansMedium";
