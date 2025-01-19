@@ -1,5 +1,6 @@
 import { captureElementAsImage } from "@/lib/utils/daily/html2canvas";
 import { saveAs } from "file-saver";
+import Download from "@/assets/images/daily/download.svg"
 
 type SaveResultButtonProps = {
   elementId: string;
@@ -20,7 +21,9 @@ const SaveResultButton = ({ elementId }: SaveResultButtonProps) => {
   };
 
   return (
-    <button onClick={handleSave}>결과 저장</button>
+    <Download>
+        <button onClick={handleSave} />
+    </Download>
   )
 };
 
