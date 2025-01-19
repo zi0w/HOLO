@@ -18,6 +18,7 @@ export const POST = async (req: NextRequest) => {
     database.set(id, data); // TODO: database라는 말이 모호?
     return NextResponse.json({ id });
   } catch (error) {
+    console.error("POST 요청에 실패했습니다.", error)
     return NextResponse.json(
       { error: "서버 에러가 발생했습니다." },
       { status: 500 },
