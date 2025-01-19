@@ -24,7 +24,7 @@ const FortunePage = () => {
     <div>
       <h1>오늘 당신의 운세는!</h1>
       {fortune ? <p>{fortune}</p> : <p>오늘 운세를 불러오는 중...</p>}
-      <Link href="/recommend">
+      <Link href="/fortune">
         <button className="mt-4 border p-1">추천 다시 받기</button>
       </Link>
     </div>

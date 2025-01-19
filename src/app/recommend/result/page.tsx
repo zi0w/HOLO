@@ -1,14 +1,14 @@
 "use client";
 
-import SharedResult from "@/app/recommend/_components/SharedResult";
+import Result from "@/app/recommend/_components/Result";
+import Loading from "@/components/common/Loading";
 import { Suspense } from "react";
 
 const SharedResultPage = () => {
   return (
     <div className="bg-white text-black">
-      <h1>결과 페이지</h1>
-      <Suspense fallback={<p>loading...</p>}>
-        <SharedResult />
+      <Suspense fallback={<Loading />}>
+        <Result />
       </Suspense>
     </div>
   );

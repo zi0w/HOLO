@@ -1,4 +1,4 @@
-export const generateShareLink = async (resultData: string) => {
+export const generateShareLink = async (resultData: string, typeOfFood: string) => {
     const response = await fetch("/api/recommend", {
         method: "POST",
         headers: {"Content-type": "application/json"},
@@ -11,5 +11,5 @@ export const generateShareLink = async (resultData: string) => {
     }
 
     const {id} = await response.json();
-    return `${window.location.origin}/recommend/result?id=${id}`
+    return `${window.location.origin}/recommend/result?id=${id}&type=${encodeURIComponent(typeOfFood)}`
 }

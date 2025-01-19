@@ -1,17 +1,20 @@
-import { copyToClipboard } from "@/lib/utils/daily/clipboard"
+import Share from "@/assets/images/daily/share.svg";
+import { copyToClipboard } from "@/lib/utils/daily/clipboard";
 
 type ShareLinkButtonProps = {
-    link: string
-}
+  link: string;
+};
 
-const ShareLinkButton = ({link}: ShareLinkButtonProps) => {
-    const handleShare = () => {
-        copyToClipboard(link);
-    }
+const ShareLinkButton = ({ link }: ShareLinkButtonProps) => {
+  const handleShare = () => {
+    copyToClipboard(link);
+  };
 
-    return (
-        <button onClick={handleShare}>공유하기</button>
-    )
-}
+  return (
+    <button onClick={handleShare}>
+      <Share />
+    </button>
+  );
+};
 
-export default ShareLinkButton
+export default ShareLinkButton;
