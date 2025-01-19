@@ -11,9 +11,9 @@ const ShareLinkButton = ({ link }: ShareLinkButtonProps) => {
   };
 
   return (
-    <Share>
-      <button onClick={handleShare} />
-    </Share>
+    <button onClick={handleShare}>
+      <Share />
+    </button>
   );
 };
 

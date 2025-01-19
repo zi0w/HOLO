@@ -56,7 +56,7 @@ const Result = ({ answerData }: ResultProps) => {
       id="result-container"
       className="flex flex-col items-center bg-white text-black"
     >
-      <Image src={selectedImage} alt="recommended-food" className="mt-4" />
+      <Image src={selectedImage} alt="recommended-food" className="mt-4" width={355} height={355}/>
       <div className="flex flex-col items-center gap-3">
         <h2 className="mt-8 text-2xl">{menu}</h2>
         <p className="break-normal px-10">{reason}</p>
