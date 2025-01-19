@@ -4,6 +4,7 @@ import PolicyAndTrashBanner from "@/components/main/PolicyAndTrashBanner";
 
 import MainBanner from "@/components/main/MainBanner";
 import Map from "@/components/main/Map";
+import DailyMenu from "@/components/main/DailyMenu";
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
       {/* 쓰레기 배너 */}
       <PolicyAndTrashBanner isPolicy={false} />
       <BestPostList />
+      <DailyMenu />
     </div>
   );
 };
