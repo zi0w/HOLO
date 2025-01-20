@@ -2,26 +2,124 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* font */
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GmarketSansLight";
+  src: url("../assets/fonts/GmarketSansTTFLight.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
+@font-face {
+  font-family: "GmarketSansBold";
+  src: url("../assets/fonts/GmarketSansTTFBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+* {
+  font-family: "Pretendard-Regular";
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "GmarketSansBold";
+}
+
+/* common */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-white;
+}
+
+.common-title {
+  font-family: "GmarketSansBold";
+  @apply text-2xl font-bold text-base-800;
+}
+.common-btn {
+  font-family: "GmarketSansMedium";
+  @apply block rounded-md py-[14px] text-sm;
+}
+.common-btn.type-a {
+  @apply bg-primary-500 text-white;
+}
+.common-btn.type-b {
+  @apply border border-primary-500 text-primary-500;
+}
+
+.swiper-pagination-bullet {
+  background-color: #ccc !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ff7600 !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #222222 !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #ff7600 !important;
+}
+
+.common-select {
+  @apply cursor-pointer appearance-none rounded border border-base-400 px-3 py-2 pr-9 text-sm text-base-800 focus:outline-none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url("/images/arrow-icon.svg") no-repeat calc(100% - 12px) center;
+}
+.common-select::-ms-expand {
+  @apply hidden;
+}
+.common-select option:checked {
+  @apply bg-primary-50 text-primary-500;
+}
+.common-select:disabled {
+  @apply cursor-not-allowed opacity-100;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+::-webkit-scrollbar {
+  @apply h-2 w-2;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-primary-500;
+}
+
+.lookup-btn {
+  @apply mt-4 block w-full rounded bg-primary-500 py-2 font-gmarket text-white;
+}
+.lookup-btn:disabled {
+  @apply bg-base-400;
 }
