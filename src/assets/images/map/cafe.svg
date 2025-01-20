@@ -1,7 +1,7 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M26.3335 12.3333H27.2668C28.257 12.3333 29.2065 12.9127 29.9067 13.9442C30.6068 14.9756 31.0001 16.3746 31.0001 17.8333C31.0001 19.2919 30.6068 20.6909 29.9067 21.7223C29.2065 22.7538 28.257 23.3333 27.2668 23.3333H26.3335" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M5 12.3333H26.3333V24.3333C26.3333 25.7477 25.7714 27.1043 24.7712 28.1045C23.771 29.1047 22.4145 29.6666 21 29.6666H10.3333C8.91885 29.6666 7.56229 29.1047 6.5621 28.1045C5.5619 27.1043 5 25.7477 5 24.3333V12.3333Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M10.3335 3V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M15.6667 3V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M21 3V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 6H14.6C15.2365 6 15.847 6.36875 16.2971 7.02513C16.7471 7.6815 17 8.57174 17 9.5C17 10.4283 16.7471 11.3185 16.2971 11.9749C15.847 12.6313 15.2365 13 14.6 13H14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1 6H14V13.6154C14 14.513 13.6576 15.3739 13.0481 16.0087C12.4386 16.6434 11.612 17 10.75 17H4.25C3.38805 17 2.5614 16.6434 1.9519 16.0087C1.34241 15.3739 1 14.513 1 13.6154V6Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4 1V4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.5 1V4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11 1V4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
