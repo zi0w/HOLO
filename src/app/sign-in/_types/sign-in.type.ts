@@ -1,16 +1,18 @@
-import type { Database } from "@/lib/types/supabase";
+export type FormData = {
+  email: string;
+  nickname: string;
+  password: string;
+  checkPassword: string;
+};
+
+export type SignUpPayload = {
+  email: string;
+  password: string;
+  nickname: string;
+};
 
 
-export type DatabaseUser = Database['public']['Tables']['users']['Row'];
-
-export type AuthUser = {
-  id: string;
-  email?: string;
-}
-
-export type User = DatabaseUser & AuthUser;
-
-export type SignInPayload = {
+export type SignInPayload ={
   email: string;
   password: string;
 }

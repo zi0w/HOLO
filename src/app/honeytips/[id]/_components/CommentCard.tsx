@@ -61,10 +61,14 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   const handleCommentDelete = (id: string) => {
     setIsConfirm(true);
     setIsModalOpen(true);
-
+  
     if (!isConfirm) return;
-
-    deleteCommentMutation.mutate(id);
+  
+    deleteCommentMutation.mutate(id, {
+      onSuccess: () => {
+        setIsModalOpen(false);
+      },
+    });
     setIsConfirm(false);
     setIsDropdownOpen(false);
   };

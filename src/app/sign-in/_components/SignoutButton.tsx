@@ -1,7 +1,6 @@
-// SignoutButton.tsx
 "use client";
 
-import { useSignout } from "@/app/sign-in/_hooks/useSignout";
+import { useSignout } from "@/app/sign-in/_hooks/useSignOut";
 
 const SignoutButton = () => {
   const { handleLogout } = useSignout();
@@ -9,7 +8,7 @@ const SignoutButton = () => {
   return (
     <button
       onClick={handleLogout}
-      className="absolute left-[20px] top-[906px] h-[48px] w-[362px] rounded-tl-[4px] border-t border-[#E0E0E0] px-4 py-[14px] text-orange-600 hover:bg-gray-100"
+      className="w-full h-[48px] mt-[27px] rounded-[4px] border border-[#FF7600] text-[#FF7600] font-pretendard text-base hover:bg-gray-50 flex items-center justify-center"
     >
       로그아웃
     </button>
@@ -17,5 +16,3 @@ const SignoutButton = () => {
 };
 
 export default SignoutButton;
-
-

@@ -62,7 +62,7 @@ const MyWritingCard: React.FC<MyWritingCardProps> = ({ post, onDelete, isDeletin
               disabled={isDeleting}
             >
               삭제
-            </button>
+            </button>``
           </div>
           <p className="text-xs text-gray-500">
             {dayjs(post.created_at).format("YYYY.MM.DD")}

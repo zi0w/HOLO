@@ -1,11 +1,13 @@
 "use client";
 
-import type { SignInPayload, User } from "@/app/sign-in/_types/sign-in.type";
+
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 가져오기
 import AuthStore from "@/store/authStore"; // Zustand 스토어 가져오기
 import { useMutation, UseMutationResult } from "@tanstack/react-query"; // React Query 가져오기
 import { useRouter } from "next/navigation"; // Next.js 라우터 가져오기
 import { Session } from "@supabase/supabase-js"; // Supabase의 Session 타입 가져오기
+import type { SignInPayload } from "@/app/sign-in/_types/sign-in.type";
+import type { User } from "@/app/sign-in/_types/User";
 
 // SignInResult 타입 정의
 export type SignInResult = {

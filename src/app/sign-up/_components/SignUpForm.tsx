@@ -9,7 +9,7 @@ export type FormData = {
   nickname: string;
   password: string;
   checkPassword: string;
-  profile_img_url: string;
+  profile_image_url: string;
 };
 
 const SignUpForm: React.FC = () => {
@@ -18,7 +18,7 @@ const SignUpForm: React.FC = () => {
     nickname: "",
     password: "",
     checkPassword: "",
-    profile_img_url: "",
+    profile_image_url: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -76,7 +76,7 @@ const SignUpForm: React.FC = () => {
       email: formData.email,
       nickname: formData.nickname,
       password: formData.password,
-      profile_image_url: formData.profile_img_url,
+      profile_image_url: formData.profile_image_url,
     };
 
     try {

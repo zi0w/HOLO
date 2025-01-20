@@ -1,15 +1,14 @@
-// components/Mypageform.tsx
 "use client";
 
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import useAuthStore from "@/store/authStore";
-import SignoutButton from "@/app/sign-in/_components/SignoutButton";
-import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
 import UserProfile from "@/app/mypage/_components/UserProfile";
 import MyWritingList from "@/app/mypage/[id]/_components/Mypost/MyWritingList";
 import MyCommentList from "@/app/mypage/[id]/_components/Mycomment/MyCommentList";
 import MyLikeList from "@/app/mypage/[id]/_components/Mylike/MyLikeList";
+import SignoutButton from "@/app/sign-in/_components/SignoutButton";
+import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
 import type { ActiveSection } from "@/app/mypage/_types/mypage";
 
 const Mypageform: React.FC = () => {
@@ -45,42 +44,69 @@ const Mypageform: React.FC = () => {
         return null;
     }
   };
-
+  
   return (
-    <div className="relative">
+    <div className="relative w-[402px] h-[1069px] bg-white">
       <UserProfile />
-      <div className="flex space-x-24 mb-4 absolute left-[59px] top-[366px]">
-        <button 
-          onClick={() => handleSectionChange("likes")}
-          className={`h-6 font-pretendard text-base font-medium leading-6 text-center underline decoration-[#999E98] underline-offset-[from-font] ${
-            activeSection === "likes" ? "text-[#999E98]" : ""
-          }`}
-        >
-          좋아요
-        </button>
-        <button 
-          onClick={() => handleSectionChange("comments")}
-          className={`h-6 font-pretendard text-base font-medium leading-6 text-center underline decoration-[#999E98] underline-offset-[from-font] ${
-            activeSection === "comments" ? "text-[#999E98]" : ""
-          }`}
-        >
-          댓글
-        </button>
-        <button 
-          onClick={() => handleSectionChange("myPosts")}
-          className={`h-6 font-pretendard text-base font-medium leading-6 text-center underline decoration-[#999E98] underline-offset-[from-font] ${
-            activeSection === "myPosts" ? "text-[#999E98]" : ""
-          }`}
-        >
-          내가 쓴 글
-        </button>
+      
+      {/* 탭 버튼들 */}
+      <div className="mt-0">
+        <div className="flex justify-center gap-16">
+          <div className="relative">
+            <button 
+              onClick={() => handleSectionChange("likes")}
+              className={`px-2 font-pretendard text-base font-medium ${
+                activeSection === "likes" ? "text-[#FF7600]" : "text-[#8F8F8F]"
+              }`}
+            >
+              좋아요
+            </button>
+            {activeSection === "likes" && (
+              <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#FF7600]" />
+            )}
+          </div>
+  
+          <div className="relative">
+            <button 
+              onClick={() => handleSectionChange("comments")}
+              className={`px-2 font-pretendard text-base font-medium ${
+                activeSection === "comments" ? "text-[#FF7600]" : "text-[#8F8F8F]"
+              }`}
+            >
+              댓글
+            </button>
+            {activeSection === "comments" && (
+              <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#FF7600]" />
+            )}
+          </div>
+  
+          <div className="relative">
+            <button 
+              onClick={() => handleSectionChange("myPosts")}
+              className={`px-2 font-pretendard text-base font-medium ${
+                activeSection === "myPosts" ? "text-[#FF7600]" : "text-[#8F8F8F]"
+              }`}
+            >
+              내가 쓴 글
+            </button>
+            {activeSection === "myPosts" && (
+              <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#FF7600]" />
+            )}
+          </div>
+        </div>
       </div>
-
-      <div className="absolute left-[21px] top-[432px] h-[442px] w-[362px] rounded-tl-[4px] border border-[#E0E0E0] bg-white">
-        {renderSection()}
-      </div>
-
-      <div className="absolute bottom-4 left-0 right-0 flex flex-col items-center space-y-4">
+  
+      {/* 구분선 */}
+      <div className="border-t border-[#FFE4CC] mt-1" />
+  
+      {/* 컨텐츠 영역 */}
+         {/* 컨텐츠 영역 */}
+    <div className="mt-[10px] mx-[21px] mr-[19px] h-[460px] border border-[#E0E0E0] rounded-lg bg-white overflow-y-auto mb-[27px]">
+      {renderSection()}
+    </div>
+  
+      {/* 버튼 영역 */}
+      <div className="fixed bottom-16 left-[21px] right-[19px] flex flex-col gap-3">
         <SignoutButton />
         <DeleteAccount />
       </div>
@@ -89,3 +115,4 @@ const Mypageform: React.FC = () => {
 };
 
 export default Mypageform;
+

@@ -23,7 +23,7 @@ const ProfileImageUploader: React.FC<ProfileImageUploaderProps> = ({
         className="relative w-24 h-24 rounded-full overflow-hidden"
       >
         <Image
-          src={previewUrl || "https://tjxonwrcuvvfxkfkgadc.supabase.co/storage/v1/object/public/profile_image/profile_default_img.jpg"}
+          src={""}
           alt="프로필 이미지"
           fill
           className="object-cover"

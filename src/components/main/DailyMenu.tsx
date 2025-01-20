@@ -5,8 +5,8 @@ import Link from "next/link";
 
 const DailyMenu = () => {
   return (
-    <div className="relative mx-5">
-      <h2 className="text-[22px] font-bold text-base-800">오늘 점심은?</h2>
+    <div className="relative bg-base-50">
+      <h2 className="!text-[22px] common-title mx-5 pt-8">오늘 점심은?</h2>
       <div className="mt-5 grid grid-cols-2 gap-4">
         <div className="flex flex-col items-center">
           <Image src={Kalguksu} alt="kalguksu" width={172} height={168} />
@@ -26,7 +26,7 @@ const DailyMenu = () => {
         </div>
       </div>
       <div>
-        <Link href="/recommend" className="flex justify-center mt-4 text-sm text-primary-500">
+        <Link href="/recommend" className="flex justify-center mt-4 text-sm text-primary-500 pb-8">
           메뉴 추천 받으러 가기
         </Link>
       </div>
