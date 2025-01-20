@@ -3,18 +3,18 @@
 import PostCard from "@/app/honeytips/_components/PostCard";
 import PostCardLoading from "@/app/honeytips/_components/PostCardLoading";
 import { POST_CATEGORIES } from "@/app/honeytips/_constans/post";
-import useAuth from "@/app/honeytips/_hooks/useHoneytipsAuth";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
 import PlusButton from "@/assets/images/honeytips/plus-circle.svg";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
+import useAuthStore from "@/store/authStore";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const PostList = () => {
-  const isAuthenticated = useAuth();
+  const { isLoggedIn: isAuthenticated } = useAuthStore();
   const [selectedCategory, setSelectedCategory] = useState<string>("전체");
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);

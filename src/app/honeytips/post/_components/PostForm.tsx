@@ -5,7 +5,7 @@ import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
 import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
 import Plus from "@/assets/images/honeytips/plus.svg";
-import XButton from "@/assets/images/honeytips/x.svg";
+import XButton from "@/assets/images/honeytips/BigX.svg";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
