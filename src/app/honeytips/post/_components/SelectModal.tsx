@@ -27,7 +27,6 @@ const CategorySelectModal = ({
 
   return (
     <div className="relative">
-      {/* 버튼 */}
       <button
         onClick={handleButtonClick}
         className="flex w-[68px] items-center justify-between rounded-md px-2 py-1 font-bold text-base-800"
@@ -36,7 +35,6 @@ const CategorySelectModal = ({
         <ChevronDown />
       </button>
 
-      {/* 모달 */}
       {isModalOpen && (
         <div
           className="absolute z-10 mt-1 w-[68px] rounded-lg border bg-white py-1 shadow-md"
@@ -47,7 +45,7 @@ const CategorySelectModal = ({
               <li
                 key={category}
                 onClick={() => handleSelectCategory(category)}
-                className="cursor-pointer px-4 py-2 text-base-700 hover:bg-primary-100 hover:text-primary-500"
+                className="cursor-pointer px-4 py-2 text-base-700 hover:bg-primary-50 hover:text-primary-900"
               >
                 {category}
               </li>
