@@ -11,7 +11,7 @@ const DailyMenu = () => {
         <div className="flex flex-col items-center">
           <Image src={Kalguksu} alt="kalguksu" width={172} height={168} />
           <div className="flex h-11 w-[172px] items-center justify-center rounded-b-lg bg-white">
-            <span className="mt-2 text-base font-medium text-base-800">
+            <span className="text-base font-medium text-base-800">
               시원한 칼국수
             </span>
           </div>
@@ -19,7 +19,7 @@ const DailyMenu = () => {
         <div className="flex flex-col items-center">
           <Image src={KimchiSoup} alt="kimchi-soup" width={172} height={168} />
           <div className="flex h-11 w-[172px] items-center justify-center rounded-b-lg bg-white">
-            <span className="mt-2 text-base font-medium text-base-800">
+            <span className="text-base font-medium text-base-800">
               얼큰한 김치찌개
             </span>
           </div>
