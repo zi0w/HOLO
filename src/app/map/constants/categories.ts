@@ -3,7 +3,7 @@ import Cafe from "@/assets/images/map/cafe.svg";
 import Daiso from "@/assets/images/map/daiso.svg";
 import Fitness from "@/assets/images/map/fitness.svg";
 import Hospital from "@/assets/images/map/hospital.svg";
-import Laundry from "@/assets/images/map/laundry.svg";
+import Laundry from "@/assets/images/map/laundryy.svg";
 import Pharmacy from "@/assets/images/map/pharmacy.svg";
 import Restaurant from "@/assets/images/map/restaurant.svg";
 import Salon from "@/assets/images/map/salon.svg";
