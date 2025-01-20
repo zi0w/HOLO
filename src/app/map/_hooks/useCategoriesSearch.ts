@@ -108,7 +108,7 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
     if (isLoading && reSearch) {
       searchPlaces();
     }
-  }, [category, isLoading, reSearch]);
+  }, [category, isLoading, reSearch, mapCenter]);
 
   // 카테고리 변경 시 검색 트리거
   const handleCategoryChange: Dispatch<SetStateAction<string>> = useCallback(
