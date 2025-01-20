@@ -13,7 +13,7 @@ const MapControls = ({
   onClickPlusMapLevel,
   onClickMinusMapLevel,
   onClickMoveCurrentPosition,
-  onClickReSearch,
+  // onClickReSearch, 디자이너님과 협의 필요 버튼
 }: MapControlsProps) => {
   return (
     <div className="relative">
@@ -38,12 +38,14 @@ const MapControls = ({
       >
         <Location className="mx-auto" />
       </button>
-      <button
+
+      {/* 디자이너님과 상의 필요 */}
+      {/* <button
         onClick={onClickReSearch}
         className="shadow-custom-button absolute bottom-8 left-44 z-10 rounded-full border border-base-700 bg-white p-4"
       >
         현 위치에서 검색
-      </button>
+      </button> */}
     </div>
   );
 };
