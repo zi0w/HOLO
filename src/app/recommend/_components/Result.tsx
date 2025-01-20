@@ -49,7 +49,7 @@ const Result = ({ answerData }: ResultProps) => {
 
       // 공유 링크 생성
       if (answerData) {
-        const link = await generateShareLink(recommendation, answerData.answer2); // 추천 결과, 음식 종류 같이 내려주기
+        const link = await generateShareLink(recommendation, "recommend/result", answerData.answer2); // 추천 결과, 음식 종류 같이 내려주기
         setShareLink(link);
       }
     } catch (error) {

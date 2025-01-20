@@ -1,34 +1,27 @@
-"use client";
+import Result from "@/app/fortune/_components/Result";
+import Loading from "@/components/common/Loading";
+import type { Metadata } from "next";
+import { Suspense } from "react";
 
-import fetchDailyFortune from "@/app/recommend/_actions/fetchDailyFortune";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+export const metadata: Metadata = {
+  title: "오늘의 운세 뽑기",
+  description: "오늘의 운세를 알려줄 포춘쿠키는? 직감적으로 하나만 골라보세요!",
+  openGraph: {
+    title: "오늘의 운세 뽑기",
+    description:
+      "오늘의 운세를 알려줄 포춘쿠키는? 직감적으로 하나만 골라보세요!",
+    url: "https://localhost:3000/fortune/result",
+  },
+};
 
 const FortunePage = () => {
-  const [fortune, setFortune] = useState<string>("");
-
-  const getDailyFortune = async () => {
-    try {
-      const result = await fetchDailyFortune();
-      setFortune(result);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getDailyFortune();
-  }, []);
-
   return (
     <div>
-      <h1>오늘 당신의 운세는!</h1>
-      {fortune ? <p>{fortune}</p> : <p>오늘 운세를 불러오는 중...</p>}
-      <Link href="/fortune">
-        <button className="mt-4 border p-1">추천 다시 받기</button>
-      </Link>
+      <Suspense fallback={<Loading />}>
+        <Result />
+      </Suspense>
     </div>
-  );
+  )
 };
 
 export default FortunePage;
