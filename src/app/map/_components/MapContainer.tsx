@@ -78,8 +78,8 @@ const MapContainer = ({
             image={{
               src:
                 selectedMarkerId === place.id
-                  ? "/images/selected-marker.svg"
-                  : "/images/marker.svg",
+                  ? "/images/marker.svg"
+                  : "/images/selected-marker.svg",
               size: {
                 width: 24,
                 height: 24,
