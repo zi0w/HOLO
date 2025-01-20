@@ -26,7 +26,7 @@ const RecommendPage = () => {
         alt="person-image"
         width={396}
         height={630}
-        className="fixed bottom-0 left-1/2 max-h-[630px] w-auto -translate-x-1/2"
+        className="fixed bottom-0 left-1/2 max-h-[500px] w-auto -translate-x-1/2"
       />
       <Link
         href="recommend/menu"
