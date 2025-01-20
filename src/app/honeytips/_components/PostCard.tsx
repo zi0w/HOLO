@@ -35,7 +35,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
         <div className="flex w-full items-start gap-[11px]">
           <div className="flex w-full flex-col">
             <p className="mb-[7px] font-bold text-black">{post.title}</p>
-            <p className="line-clamp-3 text-gray-900">{post.content}</p>
+            <p className="line-clamp-3 text-base-900">{post.content}</p>
           </div>
           {post.post_image_url?.[0] && (
             <Image
