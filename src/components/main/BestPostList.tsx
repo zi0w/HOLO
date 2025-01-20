@@ -37,7 +37,7 @@ const BestPostList = () => {
 
   return (
     <div className="relative mx-5">
-      <h2 className="text-[22px] font-bold text-base-800">꿀팁 게시판</h2>
+      <h2 className="!text-[22px] common-title">꿀팁 게시판</h2>
       <ul className="mt-4 flex flex-col gap-4">
         {bestPosts.map((post) => (
           <PostCard

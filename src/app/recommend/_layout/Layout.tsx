@@ -15,7 +15,7 @@ const Layout = ({ question, onPrev, children, handleClick }: LayoutProps) => {
         <h1 className="text-2xl mt-10 text-base-800">{question}</h1>
       </header>
       {children}
-      <div className="mt-10 flex gap-4">
+      <div className="mt-10 flex gap-4 mb-32">
         {onPrev ? (
           <button type="button" onClick={onPrev} className="w-[177px] h-12 rounded border border-base-400 font-gmarket text-base-800">
             이전
