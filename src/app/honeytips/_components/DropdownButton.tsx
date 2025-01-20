@@ -8,7 +8,7 @@ type DropdownButtonProps = {
 
 const DropdownButton = ({ label, onClick, href }: DropdownButtonProps) => {
   const baseStyles =
-    "block w-[68px] px-5 py-2 text-center text-sm text-base-800 hover:bg-primary-100 hover:text-primary-500";
+    "block w-[68px] px-5 py-2 text-center text-sm text-base-700 hover:bg-primary-50 hover:text-primary-900";
 
   if (href) {
     return (
@@ -16,7 +16,7 @@ const DropdownButton = ({ label, onClick, href }: DropdownButtonProps) => {
         {label}
       </Link>
     );
-  }
+  } 
 
   return (
     <button className={baseStyles} onClick={onClick}>

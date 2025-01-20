@@ -4,20 +4,22 @@ import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();
 
-// 좋아요 불러오기
+// 좋아요 데이터 불러오기
 export const fetchLikesData = async (postId: Like["post_id"]) => {
-  const user_id = await getId();
-  const { data: likesData, error } = await supabase
-    .from("likes")
-    .select("*")
-    .match({ user_id, post_id: postId });
+  try {
+    const user_id = await getId();
+    const { data: likesData, error } = await supabase
+      .from("likes")
+      .select("*")
+      .match({ user_id, post_id: postId });
 
-  if (error) {
-    console.error("좋아요 데이터 불러오기에 실패했습니다.");
+    if (error) throw error;
+
+    return likesData || [];
+  } catch (error) {
+    console.error("좋아요 데이터 불러오기에 실패했습니다.", error);
     throw error;
   }
-
-  return likesData || [];
 };
 
 type deleteLikeProps = {
@@ -27,16 +29,19 @@ type deleteLikeProps = {
 
 // 좋아요 삭제
 export const deleteLike = async ({ userId, postId }: deleteLikeProps) => {
-  const { data: likesData, error } = await supabase
-    .from("likes")
-    .delete()
-    .match({ user_id: userId, post_id: postId });
+  try {
+    const { data: likesData, error } = await supabase
+      .from("likes")
+      .delete()
+      .match({ user_id: userId, post_id: postId });
 
-  if (error) {
-    console.error("좋아요 삭제에 실패했습니다.");
+    if (error) throw error;
+
+    return likesData;
+  } catch (error) {
+    console.error("좋아요 삭제에 실패했습니다.", error);
     throw error;
   }
-  return likesData;
 };
 
 type addLikeProps = {
@@ -46,16 +51,19 @@ type addLikeProps = {
 
 // 좋아요 저장
 export const addLike = async ({ userId, postId }: addLikeProps) => {
-  const { data: likesData, error } = await supabase.from("likes").insert([
-    {
-      user_id: userId,
-      post_id: postId,
-    },
-  ]);
+  try {
+    const { data: likesData, error } = await supabase.from("likes").insert([
+      {
+        user_id: userId,
+        post_id: postId,
+      },
+    ]);
 
-  if (error) {
-    console.error("좋아요 저장에 실패했습니다.");
+    if (error) throw error;
+
+    return likesData;
+  } catch (error) {
+    console.error("좋아요 저장에 실패했습니다.", error);
     throw error;
   }
-  return likesData;
 };

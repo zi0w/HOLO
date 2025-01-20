@@ -14,6 +14,7 @@ type updatePostProps = {
   userId: Post["user_id"];
 };
 
+// 포스트 수정
 export const updatePost = async ({
   postId,
   updatedTitle,
@@ -22,20 +23,30 @@ export const updatePost = async ({
   updatedCategory,
   userId,
 }: updatePostProps) => {
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  await supabase
-    .from("posts")
-    .update({
-      title: updatedTitle,
-      content: updatedContent,
-      post_image_url: updatedPostImageUrl,
-      categories: updatedCategory,
-      user_id: userId,
-    })
-    .eq("id", postId)
-    .select();
+    const { error } = await supabase
+      .from("posts")
+      .update({
+        title: updatedTitle,
+        content: updatedContent,
+        post_image_url: updatedPostImageUrl,
+        categories: updatedCategory,
+        user_id: userId,
+      })
+      .eq("id", postId)
+      .select();
 
-  revalidatePath(`/honeytips/${postId}`);
-  redirect(`/honeytips/${postId}`);
+    if (error) {
+      console.error("포스트 업데이트에 실패했습니다.", error);
+      throw error;
+    }
+
+    revalidatePath(`/honeytips/${postId}`);
+    redirect(`/honeytips/${postId}`);
+  } catch (error) {
+    console.error("포스트 업데이트 중 에러가 발생했습니다.", error);
+    throw error;
+  }
 };

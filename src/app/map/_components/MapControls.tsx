@@ -6,24 +6,26 @@ type MapControlsProps = {
   onClickPlusMapLevel: () => void;
   onClickMinusMapLevel: () => void;
   onClickMoveCurrentPosition: () => void;
+  onClickReSearch: () => void;
 };
 
 const MapControls = ({
   onClickPlusMapLevel,
   onClickMinusMapLevel,
   onClickMoveCurrentPosition,
+  onClickReSearch,
 }: MapControlsProps) => {
   return (
     <div className="relative">
-      <div className="absolute bottom-8 right-4 z-10 flex flex-col rounded border border-base-700 shadow-custom">
+      <div className="absolute bottom-6 right-4 z-10 flex h-16 w-9 flex-col rounded border border-base-700">
         <button
-          className="h-[44px] w-[48px] rounded-t border-b border-base-700 bg-white hover:bg-gray-300"
+          className="h-8 w-full rounded-t border-b border-base-700 bg-white hover:bg-gray-300"
           onClick={onClickPlusMapLevel} // 확대
         >
           <Plus className="mx-auto" />
         </button>
         <button
-          className="h-[44px] w-[48px] rounded-b bg-white shadow hover:bg-gray-300"
+          className="h-8 w-full rounded-b bg-white shadow hover:bg-gray-300"
           onClick={onClickMinusMapLevel} // 축소
         >
           <Minus className="mx-auto" />
@@ -31,10 +33,16 @@ const MapControls = ({
       </div>
       {/* 내 위치 버튼*/}
       <button
-        className="absolute bottom-8 left-4 z-10 rounded-full border border-base-700 bg-white p-4 shadow-custom"
+        className="absolute bottom-24 right-4 z-10 h-9 w-9 rounded border border-base-700 bg-white hover:bg-gray-300"
         onClick={onClickMoveCurrentPosition}
       >
-        <Location />
+        <Location className="mx-auto" />
+      </button>
+      <button
+        onClick={onClickReSearch}
+        className="shadow-custom-button absolute bottom-8 left-44 z-10 rounded-full border border-base-700 bg-white p-4"
+      >
+        현 위치에서 검색
       </button>
     </div>
   );
