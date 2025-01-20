@@ -23,6 +23,24 @@ const useKakaoMap = () => {
     setMapLevel((prev) => Math.min(prev + 1, 14));
   };
 
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentPosition({ lat: latitude, lng: longitude });
+          // 지도 중심 업데이트
+          setMapCenter({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error("위치를 가져올 수 없습니다.", error.message);
+        },
+      );
+    } else {
+      setGeolocationError("Geolocation을 사용할 수 없습니다.");
+    }
+  }, [setMapCenter]);
+
   // 현재 위치 가져오기 함수
   const onClickMoveCurrentPosition = () => {
     if (navigator.geolocation) {

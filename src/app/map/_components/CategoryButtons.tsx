@@ -24,7 +24,7 @@ const CategoryButtons = ({
   setPlaceDetail, // 특정 장소 선택 시 디테일 정보 상태 업데이트 함수
   isMain, // 메인 화면일 때 지도 높이를 다르게 하기 위한 boolean
 }: CategoryButtonsProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>(""); // // 선택된 카테고리 상태 업데이트 함수
+  const [selectedCategory, setSelectedCategory] = useState<string>("맛집"); // // 선택된 카테고리 상태 업데이트 함수
   const { buttonRef, onClickMoveCategoryBtn } = useScrollIntoViewCategoryBtn(
     setCategory,
     setSelectedPlace,
@@ -54,14 +54,17 @@ const CategoryButtons = ({
             )}
             onClick={() => onClickMoveCategoryBtn(cate, index)} // scrollIntoView를 적용하기 위한 함수
           >
-            {cate.img ? (
-              <div className="mb-2 flex flex-col items-center">
-                <cate.img />
-                {cate.name}
+            <div className="mb-2 flex h-14 w-14 flex-col items-center justify-center">
+              <div
+                className={clsx(
+                  "h-8 w-8",
+                  selectedCategory === cate.name ? "bg-primary-50" : "",
+                )}
+              >
+                <cate.img className="m-auto" />
               </div>
-            ) : (
-              cate.name
-            )}
+              {cate.name}
+            </div>
           </button>
         ))}
       </div>
