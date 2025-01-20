@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <div className="h-full overflow-auto px-5 pt-11">
+    <div className="px-5 pt-11">
       <div className="grid gap-16">
         {/* 쓰레기 배출 요일 확인 */}
         <TrashLayoutBox isWasteDay={true} />

@@ -12,7 +12,7 @@ const PolicyLink = ({
     <Link
       key={policy.bizId}
       href={`/policy/${policy.bizId}`}
-      className="cursor-pointer rounded border border-primary-200 px-3 py-2 hover:bg-primary-50 transition-colors duration-150"
+      className="block cursor-pointer rounded border-b border-base-300 px-3 py-2 transition-colors duration-200 text-base-800 hover:bg-primary-50"
       onClick={(e) => onClick(e, policy.bizId)}
     >
       {policy.polyBizSjnm}

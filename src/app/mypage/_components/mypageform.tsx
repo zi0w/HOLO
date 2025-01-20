@@ -1,8 +1,9 @@
 "use client";
 
+
 import MyCommentList from "@/app/mypage/[id]/_components/Mycomment/MyCommentList";
 import MyLikeList from "@/app/mypage/[id]/_components/Mylike/MyLikeList";
-import MyWritingtList from "@/app/mypage/[id]/_components/Mypost/MyWritingtList";
+import MyWritingList from "@/app/mypage/[id]/_components/Mypost/MyWritingtList";
 import DeleteAccount from "@/app/mypage/_components/DeleteAccount"; // 회원 탈퇴 컴포넌트 임포트
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
 import UserProfile from "@/app/mypage/_components/UserProfile";
@@ -13,7 +14,6 @@ const Mypageform: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("likes");
 
-  const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
   return (
@@ -66,7 +66,7 @@ const Mypageform: React.FC = () => {
 
         {activeSection === "comments" && <MyCommentList />}
 
-        {activeSection === "myPosts" && <MyWritingtList />}
+        {activeSection === "myPosts" && <MyWritingList />}
       </div>
 
       <div className="mt-6 flex w-full max-w-3xl flex-col space-y-4">

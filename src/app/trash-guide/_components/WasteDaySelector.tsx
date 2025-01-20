@@ -1,6 +1,7 @@
 "use client";
-import { fetchOpenAiDay } from "@/app/trash-guide/_actions/actions";
-import type { WasteDayAnswerData } from "@/app/trash-guide/_types/day";
+import { fetchOpenAiDay } from "@/app/trash-guide/_actions/fetchTrashOpenAi";
+import type { WasteDayAnswerData } from "@/app/trash-guide/_types/trashTypes";
+import Loading from "@/components/common/Loading";
 import RegionSelect from "@/components/common/RegionSelect";
 import { useState } from "react";
 
@@ -76,9 +77,7 @@ const WasteDaySelector = () => {
       {!wasteDayAnswer && !loading && (
         <p className="mt-5 text-base-500">지역을 선택해주세요.</p>
       )}
-      {loading && (
-        <p className="mt-5 text-base-500">쓰레기 배출 요일을 확인중입니다...</p>
-      )}
+      {loading && <Loading />}
       {wasteDayAnswer && wasteDayAnswer.length > 0 && (
         <ul className="mt-5 grid gap-5">
           {wasteDayAnswer.map((answer, i) => (

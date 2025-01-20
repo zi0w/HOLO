@@ -13,9 +13,13 @@ const TrashLayoutBox = ({ isWasteDay }: { isWasteDay: boolean }) => {
       })}
     >
       <div className="absolute left-1/2 top-[-30px] -translate-x-1/2">
-        <Image src={isWasteDay ? DayIcon : FoodIcon} alt="trash-icon" />
+        <Image
+          src={isWasteDay ? DayIcon : FoodIcon}
+          className="h-14 w-14"
+          alt="trash-icon"
+        />
       </div>
-      <h1 className="mb-6 pt-8 text-center font-gmarket text-2xl font-bold text-base-800">
+      <h2 className="common-title mb-6 pt-8 text-center">
         {isWasteDay ? (
           <>
             지역별 쓰레기 <br className="lg:hidden" /> 배출 요일 확인
@@ -25,7 +29,7 @@ const TrashLayoutBox = ({ isWasteDay }: { isWasteDay: boolean }) => {
             음식물 쓰레기 <br className="lg:hidden" /> 여부 확인
           </>
         )}
-      </h1>
+      </h2>
       {isWasteDay ? <WasteDaySelector /> : <FoodWasteCheck />}
     </div>
   );

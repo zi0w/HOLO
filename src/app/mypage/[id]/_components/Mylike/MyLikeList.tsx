@@ -1,7 +1,8 @@
 "use client";
 
 import { getId } from "@/app/honeytips/_utils/auth"; // 사용자 ID 가져오기
-import LikeCard from "@/app/mypage/[id]/_components/Mylike/MyLikeCard"; // LikeCard 컴포넌트
+import MyLikeCard from "@/app/mypage/[id]/_components/Mylike/MyLikeCard";
+
 import Pagination from "@/components/common/Pagination"; // Pagination 컴포넌트 임포트
 import usePagination from "@/hooks/usePagination";
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 임포트
@@ -9,13 +10,13 @@ import { useQuery } from "@tanstack/react-query"; // React Query 임포트
 import { useEffect, useState } from "react";
 
 // 타입 정의 (위에서 수정한 내용 반영)
-type User = {
-  id: string;
-  email: string;
-  nickname: string;
-  profile_image_url: string | null;
-  created_at: string;
-};
+// type User = {
+//   id: string;
+//   email: string;
+//   nickname: string;
+//   profile_image_url: string | null;
+//   created_at: string;
+// };
 
 type Like = {
   user_id: string; // 'id' 대신 'user_id'
@@ -106,7 +107,7 @@ const MyLikeList = () => {
     <div className="container mx-auto p-4">
       {currentPosts.length > 0 ? (
         currentPosts.map((post) => (
-          <LikeCard key={post.id} post={post} onLikeChange={() => {}} />
+          <MyLikeCard key={post.id} post={post} onLikeChange={() => {}} />
         ))
       ) : (
         <p>좋아요한 게시물이 없습니다.</p> // 좋아요한 게시물이 없을 경우 표시

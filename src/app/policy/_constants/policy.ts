@@ -6,7 +6,6 @@ export const POLICY_CATEGORIES = [
   { id: 4, name: "참여, 권리 분야", code: "023050" },
 ];
 export const POLICY_DISPLAY_NAMES = {
-  polyBizSjnm: "정책명",
   cnsgNmor: "운영기관명",
   polyItcnCn: "정책 소개",
   sporCn: "지원 내용",

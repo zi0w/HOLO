@@ -1,4 +1,5 @@
-import type { RegionData } from "@/app/trash-guide/_types/day";
+import type { RegionData } from "@/app/trash-guide/_types/trashTypes";
+import LoadingSmall from "@/components/common/LoadingSmall";
 import { useQuery } from "@tanstack/react-query";
 import { type ChangeEvent } from "react";
 
@@ -31,8 +32,8 @@ const RegionSelect = ({ selectedRegion, onChange }: RegionSelectProps) => {
     onChange(selected, districts);
   };
 
-  if (isPending) return <div>지역 데이터 로딩중</div>; // TODO: 로딩 바꾸기
-  if (error instanceof Error) return <div>에러: {error.message}</div>; // TODO: 에러처리 바꾸기
+  if (isPending) return <LoadingSmall />;
+  if (error instanceof Error) return <div>에러: {error.message}</div>;
 
   return (
     <select

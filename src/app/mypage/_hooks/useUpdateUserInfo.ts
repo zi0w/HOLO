@@ -1,6 +1,6 @@
 import { fetchUserInfo } from "@/app/mypage/_utils/user"; // 사용자 정보를 가져오는 함수 임포트
 import useAuthStore from "@/store/authStore"; // Zustand 스토어에서 사용자 정보 관리 훅 임포트
-import { useCallback, useEffect } from "react"; // React의 useCallback과 useEffect 훅 임포트
+import { useCallback,  } from "react"; // React의 useCallback과 useEffect 훅 임포트
 
 // 사용자 정보를 업데이트하는 커스텀 훅
 export function useUpdateUserInfo() {
