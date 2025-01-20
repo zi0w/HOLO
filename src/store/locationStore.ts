@@ -28,10 +28,13 @@ const locationStore = create<MapStore>((set) => ({
   setMapCenter: (center) => set({ mapCenter: center }),
   setMapLevel: (level) => set({ mapLevel: level }),
   setGeolocationError: (error) => set({ geolocationError: error }),
+
   onClickPlusMapLevel: () =>
     set((state) => ({ mapLevel: Math.max(state.mapLevel - 1, 1) })),
+
   onClickMinusMapLevel: () =>
     set((state) => ({ mapLevel: Math.min(state.mapLevel + 1, 14) })),
+
   onClickMoveCurrentPosition: () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
