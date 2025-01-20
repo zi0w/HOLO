@@ -42,7 +42,7 @@ const Map = () => {
 
       <div className="mx-5 h-[220px]">
         <MapContainer
-          mapCenter={mapCenter}
+          mapCenter={mapCenter!}
           currentPosition={currentPosition}
           mapLevel={mapLevel}
           setMapCenter={setMapCenter}

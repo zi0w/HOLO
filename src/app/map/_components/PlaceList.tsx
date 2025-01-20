@@ -1,9 +1,11 @@
-import usePlaceListScrollInView from "@/app/map/_hooks/usePlaceListScrollInView";
-import usePlaceListScrollTo from "@/app/map/_hooks/usePlaceListScrollTo";
+"use client";
+
 import type { Coordinates, PlacesSearchResultItem } from "@/app/map/_types/map";
+import scrollIntoViewPlaceList from "@/app/map/_utils/scrollIntoViewPlaceList";
+import scrollToPlaceList from "@/app/map/_utils/scrollToPlaceList";
 import { clsx } from "clsx";
 import Link from "next/link";
-import { useRef, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 
 type PlaceListProps = {
   places: PlacesSearchResultItem[];
@@ -28,10 +30,19 @@ const PlaceList = ({
   const desktopListRef = useRef<HTMLDivElement | null>(null);
   const mobileListRef = useRef<HTMLDivElement | null>(null);
 
-  usePlaceListScrollInView(selectedPlace, places, placeRef);
+  // 마커를 클릭하면 해당 시설 정보로 리스트 스크롤 이동
+  useEffect(() => {
+    scrollIntoViewPlaceList(
+      selectedPlace?.id || null,
+      places,
+      placeRef.current,
+    );
+  }, [selectedPlace, places]);
 
-  usePlaceListScrollTo(category, desktopListRef);
-  usePlaceListScrollTo(category, mobileListRef);
+  // 카테고리가 변경되었을 때, 스크롤을 최상단으로 초기화
+  useEffect(() => {
+    scrollToPlaceList([desktopListRef.current, mobileListRef.current]);
+  }, [category]);
 
   return (
     <>
@@ -99,7 +110,10 @@ const PlaceList = ({
               <p className="text-base text-base-900">{place.address_name}</p>
               {place.phone ? (
                 <div>
-                  <a href={`tel: ${place.phone}`} className="text-blue-500">
+                  <a
+                    href={`tel: ${place.phone}`}
+                    className="text-base text-base-900"
+                  >
                     {place.phone}
                   </a>
                 </div>

@@ -32,6 +32,7 @@ const KakaoMap = () => {
     setSelectedPlace,
     setPlaceDetail,
     category,
+    onClickReSearch
   } = useCategoriesSearch(mapCenter);
 
   return (
@@ -74,6 +75,7 @@ const KakaoMap = () => {
         onClickPlusMapLevel={onClickPlusMapLevel}
         onClickMinusMapLevel={onClickMinusMapLevel}
         onClickMoveCurrentPosition={onClickMoveCurrentPosition}
+        onClickReSearch={onClickReSearch}
       />
     </div>
   );
