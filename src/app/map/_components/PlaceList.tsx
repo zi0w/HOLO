@@ -9,13 +9,14 @@ import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 
 type PlaceListProps = {
   places: PlacesSearchResultItem[];
-  setMapCenter: Dispatch<SetStateAction<Coordinates>>;
+  setMapCenter: (center: Coordinates) => void;
   setSelectedPlace: Dispatch<
     SetStateAction<kakao.maps.services.PlacesSearchResultItem | null>
   >;
   onClickMarker: (place: PlacesSearchResultItem) => void;
   selectedPlace: PlacesSearchResultItem | null;
   category: string;
+  setSelectedMarkerId: Dispatch<SetStateAction<string | null>>;
 };
 
 const PlaceList = ({
@@ -25,10 +26,23 @@ const PlaceList = ({
   onClickMarker,
   selectedPlace,
   category,
+  setSelectedMarkerId,
 }: PlaceListProps) => {
   const placeRef = useRef<(HTMLDivElement | null)[]>([]);
   const desktopListRef = useRef<HTMLDivElement | null>(null);
   const mobileListRef = useRef<HTMLDivElement | null>(null);
+
+  const onClickSelectedPlace = (
+    place: kakao.maps.services.PlacesSearchResultItem,
+  ) => {
+    setMapCenter({
+      lat: parseFloat(place.y),
+      lng: parseFloat(place.x),
+    });
+    setSelectedPlace(place);
+    onClickMarker(place);
+    setSelectedMarkerId(place.id);
+  };
 
   // 마커를 클릭하면 해당 시설 정보로 리스트 스크롤 이동
   useEffect(() => {
@@ -50,7 +64,7 @@ const PlaceList = ({
       {category ? (
         <div
           ref={desktopListRef}
-          className="absolute left-4 top-4 hidden max-h-80 overflow-y-auto rounded bg-white shadow-md md:left-0 md:top-0 md:block md:h-full md:max-h-full md:w-[300px] md:overflow-y-auto lg:left-0 lg:top-0 lg:h-full lg:max-h-full lg:w-[300px]"
+          className="absolute left-0 top-[114px] z-20 hidden max-h-[calc(100vh-188px)] w-[300px] overflow-y-auto rounded bg-white shadow-md md:block"
         >
           {places.map((place, index) => (
             <div
@@ -60,12 +74,7 @@ const PlaceList = ({
               }}
               className="w-full cursor-pointer rounded bg-gray-50 p-4 text-left hover:bg-gray-200"
               onClick={() => {
-                setMapCenter({
-                  lat: parseFloat(place.y),
-                  lng: parseFloat(place.x),
-                });
-                setSelectedPlace(place);
-                onClickMarker(place);
+                onClickSelectedPlace(place);
               }}
             >
               <p className="text-sm font-bold">{place.place_name}</p>
@@ -80,7 +89,7 @@ const PlaceList = ({
 
       <div
         ref={mobileListRef}
-        className="absolute bottom-[-52px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white md:hidden"
+        className="absolute bottom-[-52px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white md:hidden lg:hidden"
       >
         {places.map((place, index) => (
           <div
@@ -90,12 +99,7 @@ const PlaceList = ({
             }}
             className="w-full cursor-pointer border-b border-base-200 p-2 text-left"
             onClick={() => {
-              setMapCenter({
-                lat: parseFloat(place.y),
-                lng: parseFloat(place.x),
-              });
-              setSelectedPlace(place);
-              onClickMarker(place);
+              onClickSelectedPlace(place);
             }}
           >
             <div

@@ -4,14 +4,14 @@ import type {
   PlacesSearchResultItem,
 } from "@/app/map/_types/map";
 import { clsx } from "clsx";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 
 type MapContainerProps = {
   mapCenter: Coordinates | null;
   currentPosition: Coordinates | null;
   mapLevel: number;
-  setMapCenter: Dispatch<SetStateAction<Coordinates>>;
+  setMapCenter: (center: Coordinates) => void;
   places: PlacesSearchResultItem[];
   setSelectedPlace: Dispatch<
     SetStateAction<kakao.maps.services.PlacesSearchResultItem | null>
@@ -26,6 +26,8 @@ type MapContainerProps = {
     > | null>
   >;
   isMain: boolean;
+  setSelectedMarkerId: Dispatch<SetStateAction<string | null>>;
+  selectedMarkerId: string | null;
 };
 
 const MapContainer = ({
@@ -37,9 +39,9 @@ const MapContainer = ({
   setSelectedPlace,
   onClickMarker,
   isMain,
+  setSelectedMarkerId,
+  selectedMarkerId,
 }: MapContainerProps) => {
-  const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
-
   const onClickChangeLocation = (
     place: kakao.maps.services.PlacesSearchResultItem,
   ) => {

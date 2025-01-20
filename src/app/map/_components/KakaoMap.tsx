@@ -1,13 +1,13 @@
 "use client";
 
 import useKakaoLoader from "@/app/map/_hooks/useKakaoLoader";
-import useKakaoMap from "@/app/map/_hooks/useKakaoMap";
 
 import CategoryButtons from "@/app/map/_components/CategoryButtons";
 import MapContainer from "@/app/map/_components/MapContainer";
 import MapControls from "@/app/map/_components/MapControls";
 import PlaceList from "@/app/map/_components/PlaceList";
 import useCategoriesSearch from "@/app/map/_hooks/useCategoriesSearch";
+import locationStore from "@/store/locationStore";
 
 const KakaoMap = () => {
   useKakaoLoader();
@@ -21,7 +21,7 @@ const KakaoMap = () => {
     onClickPlusMapLevel, // 지도 확대 함수
     onClickMinusMapLevel, // 지도 축소 함수
     onClickMoveCurrentPosition, // 지도의 위치를 옮겼을 때, 다시 내 위치로 이동 함수
-  } = useKakaoMap();
+  } = locationStore();
 
   const {
     setCategory,
@@ -32,7 +32,9 @@ const KakaoMap = () => {
     setSelectedPlace,
     setPlaceDetail,
     category,
-    onClickReSearch
+    onClickReSearch,
+    setSelectedMarkerId,
+    selectedMarkerId,
   } = useCategoriesSearch(mapCenter);
 
   return (
@@ -59,6 +61,8 @@ const KakaoMap = () => {
         placeDetail={placeDetail}
         setPlaceDetail={setPlaceDetail}
         isMain={false}
+        setSelectedMarkerId={setSelectedMarkerId}
+        selectedMarkerId={selectedMarkerId}
       />
 
       {/* 데스크톱과 태블릿용 리스트 */}
@@ -69,6 +73,7 @@ const KakaoMap = () => {
         onClickMarker={onClickMarker}
         selectedPlace={selectedPlace}
         category={category}
+        setSelectedMarkerId={setSelectedMarkerId}
       />
       {/* 줌 컨트롤 버튼 */}
       <MapControls
