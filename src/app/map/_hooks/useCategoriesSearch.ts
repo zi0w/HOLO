@@ -12,6 +12,7 @@ import {
 } from "react";
 
 const useCategoriesSearch = (mapCenter: Coordinates | null) => {
+  const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [category, setCategory] = useState<string>("맛집"); // 카테고리 선택 상태 관리
   const [places, setPlaces] = useState<PlacesSearchResultItem[]>([]); // 장소 검색 결과 리스트
@@ -136,6 +137,8 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
     setPlaceDetail,
     category,
     onClickReSearch,
+    setSelectedMarkerId,
+    selectedMarkerId,
   };
 };
 export default useCategoriesSearch;
