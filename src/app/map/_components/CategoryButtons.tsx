@@ -35,7 +35,9 @@ const CategoryButtons = ({
   return (
     <>
       {/* 페이지 제목 */}
-      <div className="mx-5 my-4 font-gmarket-bold text-2xl">우리동네 핫플</div>
+      <div className={clsx("common-title mx-5 my-4", isMain && "!text-[22px]")}>
+        우리동네 핫플
+      </div>
 
       {/* 버튼 카테고리 컨테이너 */}
       <div className="mx-5 flex overflow-x-auto [&::-webkit-scrollbar]:hidden">
@@ -47,21 +49,21 @@ const CategoryButtons = ({
               buttonRef.current[index] = categoryBtn;
             }}
             className={clsx(
-              "relative flex h-14 flex-shrink-0 items-center justify-center px-3.5 text-sm",
+              "relative flex items-center justify-center text-sm",
               selectedCategory === cate.name // 선택한 카테고리 버튼에 적용할 style
                 ? "text-primary-800 after:absolute after:bottom-0 after:h-[4px] after:w-full after:rounded-3xl after:bg-primary-500"
                 : "",
             )}
             onClick={() => onClickMoveCategoryBtn(cate, index)} // scrollIntoView를 적용하기 위한 함수
           >
-            <div className="mb-2 flex h-14 w-14 flex-col items-center justify-center">
+            <div className="mx-2 mb-2 flex h-14 w-14 flex-col items-center justify-center whitespace-nowrap">
               <div
                 className={clsx(
-                  "h-8 w-8",
-                  selectedCategory === cate.name ? "bg-primary-50" : "",
+                  "flex items-center p-2",
+                  selectedCategory === cate.name ? "rounded bg-primary-50" : "",
                 )}
               >
-                <cate.img className="m-auto" />
+                <cate.img />
               </div>
               {cate.name}
             </div>
