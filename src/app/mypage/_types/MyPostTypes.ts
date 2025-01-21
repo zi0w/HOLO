@@ -1,17 +1,3 @@
-// // MyPostTypes.ts
-// export type Post = {
-//   id: string;
-//   title: string;
-//   content: string;
-//   created_at: string;
-//   user_id: string;
-//   post_image_url: string[] | null;
-//   likes: { user_id: string }[];
-//   users?: {
-//     nickname: string;
-//     profile_image_url: string | null;
-//   };
-// };
 
 
 export type Post = {

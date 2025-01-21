@@ -1,86 +1,116 @@
-//완성본
-"use client";
+import Image from "next/image";
+import Link from "next/link";
 
+import { formatDate } from "@/app/mypage/[id]/_components/Mylike/_utils/formatDate";
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import Image from "next/image"; // Next.js의 Image 컴포넌트 가져오기
-import Link from "next/link"; // Link 컴포넌트 가져오기
-import { useState } from "react";
+import type { Post } from "@/app/mypage/_types/Mypage";
 
-dayjs.extend(relativeTime);
-
-type PostLikeCardProps = {
-  post: {
-    id: string;
-    title: string;
-    content: string;
-    created_at: string; // 게시물 생성 시간
-    post_image_url?: string[] | null; // 게시글 이미지 URL 배열 추가
-  };
-  onLikeChange: () => void;
+export type LikeCardProps = {
+  post: Post;
+  onLikeChange: (postId: string, action: "add" | "delete") => Promise<void>;
 };
 
-const MyLikeCard = ({ post, onLikeChange }: PostLikeCardProps) => {
-  const [isContentVisible, setIsContentVisible] = useState(false);
-
-  const toggleContentVisibility = () => {
-    setIsContentVisible(!isContentVisible);
-  };
-
+const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
   return (
-    <div className="mb-4 rounded-lg border p-4 shadow-md">
-      <Link href={`/honeytips/${post.id}`} className="flex h-full flex-col">
-        <div className="flex items-start">
-          {/* 게시글 첫 번째 이미지 */}
-          {post.post_image_url && post.post_image_url.length > 0 && (
+    <div className="flex h-[64px] w-full items-center justify-between px-5">
+      {" "}
+      {/* border-b 제거 */}
+      <Link
+        href={`/honeytips/${post.id}`}
+        className="flex flex-1 items-center gap-3"
+      >
+        {post.post_image_url && post.post_image_url.length > 0 ? (
+          <div className="relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]">
             <Image
-              src={post.post_image_url[0]} // 첫 번째 이미지 URL 사용
-              alt={`게시글 이미지`}
-              width={120} // 원하는 너비 설정
-              height={120} // 세로 길이 증가 (길게 설정)
-              className="rounded-lg object-cover mr-4" // 스타일 조정
+              src={post.post_image_url[0]}
+              alt={post.title}
+              fill
+              className="object-cover"
+              priority
             />
-          )}
-          <div className="flex-grow"> {/* 제목과 내용이 들어갈 부분 */}
-            <div className="flex items-center justify-between">
-              <h3 className="font-bold text-blue-600 hover:underline">
-                {post.title}
-              </h3>
-              <div className="flex items-center">
-                <MyLikeButton postId={post.id} onLikeChange={onLikeChange} />
-              </div>
-            </div>
-
-            {/* 게시물 생성 시간 표시 */}
-            <p className="text-xs text-gray-500">
-              {dayjs(post.created_at).format("YYYY.MM.DD")} {/* 날짜 형식으로 변환 */}
-            </p>
-
-            {/* 게시글 내용 */}
-            <p className={`mt-2 ${isContentVisible ? "" : "line-clamp-2"}`}>
-              {post.content}
-            </p>
           </div>
+        ) : (
+          <div className="h-[48px] w-[48px] shrink-0" />
+        )}
+        <div className="flex min-w-0 flex-1 flex-col gap-[2px]">
+          <div className="flex w-full items-center justify-between">
+            <h3 className="line-clamp-1 text-[16px] font-medium text-[#424242]">
+              {post.title}
+            </h3>
+            <span className="-mt-[5px] ml-2 text-[14px] text-[#8F8F8F]">
+              {formatDate(post.created_at)}
+            </span>
+          </div>
+          <p className="line-clamp-1 text-[14px] text-[#8F8F8F]">
+            {post.content}
+          </p>
         </div>
       </Link>
-
-      {/* 더보기/숨기기 버튼 */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          toggleContentVisibility();
-        }}
-        className="mt-2 text-blue-500"
-      >
-        {isContentVisible ? "숨기기" : "더보기"}
-      </button>
+      <div className="ml-4 flex items-center">
+        <div className="flex h-[32px] w-[32px] items-center justify-center">
+          <MyLikeButton
+            postId={post.id}
+            isLiked={true}
+            onLikeChange={onLikeChange}
+          />
+        </div>
+      </div>
     </div>
   );
 };
 
 export default MyLikeCard;
 
+// src/app/mypage/[id]/_components/Mylike/MyLikeCard.tsx
 
+// //원본 건드리지마라
+// // // components/LikeCard.tsx
+// // import Link from "next/link";
+// // import Image from "next/image";
 
+// // import type { Post } from "@/app/mypage/_types/mypage";
+// // import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
+// // import { formatDate } from "@/app/mypage/[id]/_components/Mylike/_utils/formatDate";
 
+// // export type LikeCardProps = {
+// //   post: Post;
+// //   onLikeChange: (postId: string, action: "add" | "delete") => Promise<void>;
+// // }
+
+// // const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
+// //   return (
+// //     <div className="flex h-[64px] w-full items-center justify-between border-b border-[#E6E6E6] px-5">
+// //       <Link
+// //         href={`/honeytips/${post.id}`}
+// //         className="flex items-center gap-3 flex-1"
+// //       >
+// //         {post.post_image_url && post.post_image_url.length > 0 && (
+// //           <div className="relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-[4px]">
+// //             <Image
+// //               src={post.post_image_url[0]}
+// //               alt={post.title}
+// //               fill
+// //               className="object-cover"
+// //             />
+// //           </div>
+// //         )}
+// //         <div className="flex flex-col gap-2 flex-1 min-w-0">
+// //           <h3 className="text-[14px] font-bold line-clamp-1">{post.title}</h3>
+// //           <p className="text-[12px] text-[#8F8F8F] line-clamp-1">{post.content}</p>
+// //         </div>
+// //       </Link>
+// //       <div className="flex items-center gap-3">
+// //         <span className="text-[12px] text-[#8F8F8F]">
+// //           {formatDate(post.created_at)}
+// //         </span>
+// //         <MyLikeButton
+// //           postId={post.id}
+// //           isLiked={true}
+// //           onLikeChange={onLikeChange}
+// //         />
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
+// // export default MyLikeCard;

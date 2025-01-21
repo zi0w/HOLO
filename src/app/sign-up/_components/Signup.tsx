@@ -1,160 +1,131 @@
+// src/app/sign-up/_components/SignUp.tsx
 "use client";
-import { signUp, type SignUpData } from "@/app/sign-up/_utils/auth";
+
+import { useSignUpForm } from "@/app/sign-up/_hooks/UseSignUpForm";
+import { useSignUpMutation } from "@/app/sign-up/_hooks/UseSignUpMutation";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-export type FormData = {
-  email: string;
-  nickname: string;
-  password: string;
-  checkPassword: string;
-  profile_img_url: string;
-};
-const SignUpForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    nickname: "",
-    password: "",
-    checkPassword: "",
-    profile_img_url: "",
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+import type { SignUpPayload } from "../_types/SignupType";
+
+const SignUp = () => {
+  const { formData, errors, handleChange, validateAll } = useSignUpForm();
+  const { mutate } = useSignUpMutation();
   const router = useRouter();
-  const validate = (name: string, value: string): string => {
-    switch (name) {
-      case "email":
-        const isValidEmail = /^[^\s@]+@[^\s@]+\.(com|net)$/.test(value);
-        if (!isValidEmail) return "유효한 이메일을 입력해주세요.";
-        break;
-      case "nickname":
-        if (!value.trim()) return "닉네임을 입력해주세요.";
-        if (value.length > 10) return "닉네임은 최대 10자 이하여야 합니다.";
-        break;
-      case "password":
-        if (value.length < 8) return "비밀번호는 최소 8자 이상이어야 합니다.";
-        break;
-      case "checkPassword":
-        if (value !== formData.password) return "비밀번호가 일치하지 않습니다.";
-        break;
-      default:
-        break;
-    }
-    return "";
-  };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    const error = validate(name, value);
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
-  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors: Record<string, string> = {};
-    Object.keys(formData).forEach((key) => {
-      const error = validate(key, formData[key as keyof FormData]);
-      if (error) {
-        newErrors[key] = error;
-      }
-    });
-    setErrors(newErrors);
+    const newErrors = await validateAll();
+
     if (Object.keys(newErrors).length > 0) {
+      if (newErrors.nickname === "이미 사용 중인 닉네임입니다.") {
+        alert("중복된 닉네임으로는 회원가입이 불가능합니다. 다른 닉네임을 사용해주세요.");
+        return;
+      }
       alert("입력한 정보에 오류가 있습니다. 다시 확인해주세요.");
       return;
     }
-    const signUpData: SignUpData = {
+
+    const signUpData: SignUpPayload = {
       email: formData.email,
-      nickname: formData.nickname,
       password: formData.password,
-      profile_image_url: formData.profile_img_url,
+      nickname: formData.nickname,
+      ...(formData.profile_image_url && formData.profile_image_url.trim() !== "" && {
+        profile_image_url: formData.profile_image_url,
+      }),
     };
-    try {
-      await signUp(signUpData);
-      alert("회원가입 성공");
-      router.push("sign-in");
-    } catch (error) {
-      alert(error);
-    }
+
+    mutate(signUpData);
   };
-  // 로그인 페이지로 이동하는 함수
+
   const handleGoToLogin = () => {
-    router.push("/sign-in"); // 로그인 페이지 경로로 이동
+    router.push("/sign-in");
   };
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-80 w-[400px] rounded-lg border border-[#aaa] p-6 shadow-md"
-    >
-      <label className="my-[20px] block text-[16px] text-sm font-medium text-white">
-        이메일
-      </label>
-      <input
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        className="w-full rounded-md bg-gray-700 px-3 py-2 text-white focus:outline-none"
-        required
-      />
-      {errors.email && (
-        <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-      )}
-      <label className="mb-2 mt-4 block text-sm font-medium text-white">
-        닉네임
-      </label>
-      <input
-        type="text"
-        name="nickname"
-        value={formData.nickname}
-        onChange={handleChange}
-        className="w-full rounded-md bg-gray-700 px-3 py-2 text-white focus:outline-none"
-        required
-      />
-      {errors.nickname && (
-        <p className="mt-1 text-sm text-red-500">{errors.nickname}</p>
-      )}
-      <label className="mb-2 mt-4 block text-sm font-medium text-white">
-        비밀번호
-      </label>
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        className="w-full rounded-md bg-gray-700 px-3 py-2 text-white focus:outline-none"
-        required
-      />
-      {errors.password && (
-        <p className="mt-1 text-sm text-red-500">{errors.password}</p>
-      )}
-      <label className="mb-2 mt-4 block text-sm font-medium text-white">
-        비밀번호 확인
-      </label>
-      <input
-        type="password"
-        name="checkPassword"
-        value={formData.checkPassword}
-        onChange={handleChange}
-        className="w-full rounded-md bg-gray-700 px-3 py-2 text-white focus:outline-none"
-        required
-      />
-      {errors.checkPassword && (
-        <p className="mt-1 text-sm text-red-500">{errors.checkPassword}</p>
-      )}
-      <button
-        type="submit"
-        className="mt-6 w-full rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-        disabled={Object.values(errors).some((error) => error)}
-      >
-        회원가입
-      </button>
-      {/* 로그인 버튼 */}
-      <button
-        type="button" // 기본 버튼으로 설정하여 폼 제출 방지
-        onClick={handleGoToLogin}
-        className="mt-4 w-full rounded-md bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
-      >
-        로그인
-      </button>
-    </form>
+    <div className="flex w-[362px] flex-col items-center">
+      <form onSubmit={handleSubmit} className="w-full">
+        <div className="w-full">
+          <div className="space-y-[8px]">
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="이메일을 입력해주세요."
+              className="h-[56px] w-full rounded-[4px] border border-[#999E98] bg-[#F8F9FA] px-4 text-[14px] placeholder:text-[#999] focus:outline-none"
+              required
+            />
+            {errors.email && (
+              <p className="text-[12px] text-red-500">{errors.email}</p>
+            )}
+
+            <input
+              type="text"
+              name="nickname"
+              value={formData.nickname}
+              onChange={handleChange}
+              placeholder="닉네임을 입력해주세요."
+              className="h-[56px] w-full rounded-[4px] border border-[#999E98] bg-[#F8F9FA] px-4 text-[14px] placeholder:text-[#999] focus:outline-none"
+              required
+            />
+            {errors.nickname && (
+              <p className="text-[12px] text-red-500">{errors.nickname}</p>
+            )}
+
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="비밀번호(영문+숫자 6-16자)"
+              className="h-[56px] w-full rounded-[4px] border border-[#999E98] bg-[#F8F9FA] px-4 text-[14px] placeholder:text-[#999] focus:outline-none"
+              required
+            />
+            {errors.password && (
+              <p className="text-[12px] text-red-500">{errors.password}</p>
+            )}
+
+            <input
+              type="password"
+              name="checkPassword"
+              value={formData.checkPassword}
+              onChange={handleChange}
+              placeholder="비밀번호 확인"
+              className="h-[56px] w-full rounded-[4px] border border-[#999E98] bg-[#F8F9FA] px-4 text-[14px] placeholder:text-[#999] focus:outline-none"
+              required
+            />
+            {errors.checkPassword && (
+              <p className="text-[12px] text-red-500">{errors.checkPassword}</p>
+            )}
+          </div>
+          
+          <button
+            type="submit"
+            className={`mt-[16px] h-[56px] w-full rounded-[4px] text-[16px] font-medium text-white ${
+              Object.values(errors).some((error) => error)
+                ? "cursor-not-allowed bg-gray-400"
+                : "bg-[#FF7600] hover:bg-[#E66A00]"
+            }`}
+            disabled={Object.values(errors).some((error) => error)}
+          >
+            회원가입
+          </button>
+        </div>
+      </form>
+      
+      <div className="w-full mt-[16px]">
+        <button
+          type="button"
+          onClick={handleGoToLogin}
+          className="h-[56px] w-full rounded-[4px] border border-[#FF7600] text-[16px] font-medium text-[#FF7600] hover:bg-[#FF7600]/5"
+        >
+          로그인
+        </button>
+      </div>
+    </div>
   );
 };
-export default SignUpForm;
+
+export default SignUp;
+
+
+

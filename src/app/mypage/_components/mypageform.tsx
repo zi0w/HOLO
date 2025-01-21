@@ -1,88 +1,262 @@
+// src/app/mypage/_components/mypageform.tsx
 "use client";
-
 
 import MyCommentList from "@/app/mypage/[id]/_components/Mycomment/MyCommentList";
 import MyLikeList from "@/app/mypage/[id]/_components/Mylike/MyLikeList";
-import MyWritingList from "@/app/mypage/[id]/_components/Mypost/MyWritingtList";
-import DeleteAccount from "@/app/mypage/_components/DeleteAccount"; // 회원 탈퇴 컴포넌트 임포트
-import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
+import MyWritingList from "@/app/mypage/[id]/_components/Mypost/MyWritingList";
+import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
 import UserProfile from "@/app/mypage/_components/UserProfile";
+import type { ActiveSection } from "@/app/mypage/_types/Mypage";
 import SignoutButton from "@/app/sign-in/_components/SignoutButton";
-import { useState } from "react";
+import useAuthStore from "@/store/authStore";
+import { useQueryClient } from "@tanstack/react-query";
+import clsx from "clsx";
+import { useState, useEffect, useCallback } from "react";
 
-const Mypageform: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("likes");
+const Mypageform = () => {
+  const [activeSection, setActiveSection] = useState<ActiveSection>("likes");
+  const queryClient = useQueryClient();
+  const userId = useAuthStore((state) => state.user?.id);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  const handleCloseModal = () => setIsModalOpen(false);
+  const fetchInitialData = useCallback(async () => {
+    if (userId && isInitialLoad) {
+      await queryClient.prefetchQuery({
+        queryKey: ["likedPosts", userId],
+        staleTime: 1000 * 60 * 5, // 5분 동안 데이터를 fresh하게 유지
+      });
+      setIsInitialLoad(false);
+    }
+  }, [userId, queryClient, isInitialLoad]);
+
+  useEffect(() => {
+    fetchInitialData();
+  }, [fetchInitialData]);
+
+  const handleSectionChange = (section: ActiveSection) => {
+    setActiveSection(section);
+
+    switch (section) {
+      case "likes":
+        queryClient.invalidateQueries({ queryKey: ["likedPosts", userId] });
+        break;
+      case "comments":
+        queryClient.invalidateQueries({ queryKey: ["comments", userId] });
+        break;
+      case "myPosts":
+        queryClient.invalidateQueries({ queryKey: ["myPosts", userId] });
+        break;
+    }
+  };
+
+  const renderSection = () => {
+    switch (activeSection) {
+      case "likes":
+        return <MyLikeList />;
+      case "comments":
+        return <MyCommentList />;
+      case "myPosts":
+        return <MyWritingList />;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div className="mt-8 flex flex-col items-center">
-      <UserProfile />
-      <div className="mb-2 mt-6 flex w-full justify-center space-x-8">
-        <button
-          onClick={() => setActiveSection("likes")}
-          className={`rounded border px-4 py-2 text-black ${
-            activeSection === "likes"
-              ? "border-white bg-white"
-              : "border-white bg-white hover:bg-gray-100"
-          }`}
-        >
-          좋아요
-        </button>
-        <button
-          onClick={() => setActiveSection("comments")}
-          className={`rounded border px-4 py-2 text-black ${
-            activeSection === "comments"
-              ? "border-white bg-white"
-              : "border-white bg-white hover:bg-gray-100"
-          }`}
-        >
-          댓글
-        </button>
-        <button
-          onClick={() => setActiveSection("myPosts")}
-          className={`rounded border px-4 py-2 text-black ${
-            activeSection === "myPosts"
-              ? "border-white bg-white"
-              : "border-white bg-white hover:bg-gray-100"
-          }`}
-        >
-          내가 쓴 글
-        </button>
+    <div className={clsx("relative h-[1069px] w-[402px] bg-white")}>
+      <div className={clsx("mt-[-5px]")}>
+        <UserProfile />
       </div>
-
-      <hr className="my-6 w-full border-t border-gray-300" />
-
-      <div
-        className="w-full max-w-3xl border border-gray-300 bg-white p-6"
-        style={{ minHeight: "300px" }}
-      >
-        {activeSection === "likes" && (
-          <div className="flex flex-col items-center">
-            <MyLikeList />
+      
+      <div className={clsx("mt-[60px]")}>
+        <div className={clsx("flex justify-center gap-16")}>
+          <div className={clsx("relative")}>
+            <button
+              onClick={() => handleSectionChange("likes")}
+              className={clsx(
+                "font-pretendard px-2 text-base font-medium",
+                activeSection === "likes" ? "text-[#FF7600]" : "text-[#8F8F8F]"
+              )}
+            >
+              좋아요
+            </button>
+            {activeSection === "likes" && (
+              <div className={clsx("absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]")} />
+            )}
           </div>
-        )}
-
-        {activeSection === "comments" && <MyCommentList />}
-
-        {activeSection === "myPosts" && <MyWritingList />}
-      </div>
-
-      <div className="mt-6 flex w-full max-w-3xl flex-col space-y-4">
-        <div className="flex justify-end">
-          <SignoutButton />
+  
+          <div className={clsx("relative")}>
+            <button
+              onClick={() => handleSectionChange("comments")}
+              className={clsx(
+                "font-pretendard px-2 text-base font-medium",
+                activeSection === "comments" ? "text-[#FF7600]" : "text-[#8F8F8F]"
+              )}
+            >
+              댓글
+            </button>
+            {activeSection === "comments" && (
+              <div className={clsx("absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]")} />
+            )}
+          </div>
+  
+          <div className={clsx("relative")}>
+            <button
+              onClick={() => handleSectionChange("myPosts")}
+              className={clsx(
+                "font-pretendard px-2 text-base font-medium",
+                activeSection === "myPosts" ? "text-[#FF7600]" : "text-[#8F8F8F]"
+              )}
+            >
+              내가 쓴 글
+            </button>
+            {activeSection === "myPosts" && (
+              <div className={clsx("absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]")} />
+            )}
+          </div>
         </div>
-
-        {/* 회원 탈퇴 버튼 추가 */}
-        <div className="flex justify-end">
+      </div>
+  
+      <div className={clsx("mt-1 border-t border-[#FFE4CC]")} />
+  
+      <div className={clsx("mx-[20px] mt-[10px] h-[400px] w-[362px] rounded-lg border border-[#E0E0E0] bg-white")}>
+        {renderSection()}
+      </div>
+  
+      <div className={clsx("mx-[20px] mt-[27px] flex flex-col")}>
+        <SignoutButton />
+        <div className={clsx("mt-[16px]")}>
           <DeleteAccount />
         </div>
       </div>
-
-      <ProfileEditModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };
 
 export default Mypageform;
+
+
+
+// "use client";
+
+// import MyCommentList from "@/app/mypage/[id]/_components/Mycomment/MyCommentList";
+// import MyLikeList from "@/app/mypage/[id]/_components/Mylike/MyLikeList";
+// import MyWritingList from "@/app/mypage/[id]/_components/Mypost/MyWritingList";
+// import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
+// import UserProfile from "@/app/mypage/_components/UserProfile";
+// import type { ActiveSection } from "@/app/mypage/_types/Mypage";
+// import SignoutButton from "@/app/sign-in/_components/SignoutButton";
+// import useAuthStore from "@/store/authStore";
+// import { useQueryClient } from "@tanstack/react-query";
+// import clsx from "clsx";
+// import { useState } from "react";
+
+// const Mypageform = () => {
+//   const [activeSection, setActiveSection] = useState<ActiveSection>("likes");
+//   const queryClient = useQueryClient();
+//   const userId = useAuthStore((state) => state.user?.id);
+
+//   const handleSectionChange = (section: ActiveSection) => {
+//     setActiveSection(section);
+
+//     switch (section) {
+//       case "likes":
+//         queryClient.invalidateQueries({ queryKey: ["likedPosts", userId] });
+//         break;
+//       case "comments":
+//         queryClient.invalidateQueries({ queryKey: ["comments", userId] });
+//         break;
+//       case "myPosts":
+//         queryClient.invalidateQueries({ queryKey: ["myPosts", userId] });
+//         break;
+//     }
+//   };
+
+//   const renderSection = () => {
+//     switch (activeSection) {
+//       case "likes":
+//         return <MyLikeList />;
+//       case "comments":
+//         return <MyCommentList />;
+//       case "myPosts":
+//         return <MyWritingList />;
+//       default:
+//         return null;
+//     }
+//   };
+//   return (
+//     <div className={clsx("relative h-[1069px] w-[402px] bg-white")}>
+//       <div className={clsx("mt-[-5px]")}>
+//         <UserProfile />
+//       </div>
+  
+      
+//       <div className={clsx("mt-[60px]")}>
+//         <div className={clsx("flex justify-center gap-16")}>
+//           <div className={clsx("relative")}>
+//             <button
+//               onClick={() => handleSectionChange("likes")}
+//               className={clsx(
+//                 "font-pretendard px-2 text-base font-medium",
+//                 activeSection === "likes" ? "text-[#FF7600]" : "text-[#8F8F8F]"
+//               )}
+//             >
+//               좋아요
+//             </button>
+//             {activeSection === "likes" && (
+//               <div className={clsx("absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]")} />
+//             )}
+//           </div>
+  
+//           <div className={clsx("relative")}>
+//             <button
+//               onClick={() => handleSectionChange("comments")}
+//               className={clsx(
+//                 "font-pretendard px-2 text-base font-medium",
+//                 activeSection === "comments" ? "text-[#FF7600]" : "text-[#8F8F8F]"
+//               )}
+//             >
+//               댓글
+//             </button>
+//             {activeSection === "comments" && (
+//               <div className={clsx("absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]")} />
+//             )}
+//           </div>
+  
+//           <div className={clsx("relative")}>
+//             <button
+//               onClick={() => handleSectionChange("myPosts")}
+//               className={clsx(
+//                 "font-pretendard px-2 text-base font-medium",
+//                 activeSection === "myPosts" ? "text-[#FF7600]" : "text-[#8F8F8F]"
+//               )}
+//             >
+//               내가 쓴 글
+//             </button>
+//             {activeSection === "myPosts" && (
+//               <div className={clsx("absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]")} />
+//             )}
+//           </div>
+//         </div>
+//       </div>
+  
+      
+//       <div className={clsx("mt-1 border-t border-[#FFE4CC]")} />
+  
+      
+//       <div className={clsx("mx-[20px] mt-[10px] h-[400px] w-[362px] rounded-lg border border-[#E0E0E0] bg-white")}>
+//         {renderSection()}
+//       </div>
+  
+      
+//       <div className={clsx("mx-[20px] mt-[27px] flex flex-col")}>
+//         <SignoutButton />
+//         <div className={clsx("mt-[16px]")}>
+//            <DeleteAccount /> 
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Mypageform;

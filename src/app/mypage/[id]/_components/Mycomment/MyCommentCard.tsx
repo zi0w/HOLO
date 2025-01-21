@@ -1,275 +1,107 @@
-//완성본
+// src/app/mypage/[id]/_components/Mycomment/MyCommentCard.tsx
 "use client";
 
-import Image from "next/image"; // Next.js의 Image 컴포넌트 가져오기
-import Link from "next/link"; // Link 컴포넌트 가져오기
-import { useState } from "react";
+import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/Comment";
+import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
 
-// CommentWithPost 타입 정의
-export type CommentWithPost = {
-  id: string;
-  comment: string;
-  created_at: string;
-  post_id: string;
-  user_id: string;
-  users?: {
-    id: string;
-    nickname: string;
-    profile_image_url: string | null;
-  }; // 댓글 작성자 정보 (선택적)
-  posts: {
-    id: string; // 게시물 ID 추가
-    title: string;
-    content: string;
-    created_at: string; // 게시물 생성 시간 추가
-    categories: string;
-    post_image_url: string[] | null; // 이미지 URL 배열
-  }; // 게시물 정보
+import clsx from "clsx";
+import Image from "next/image";
+import Link from "next/link";
+import { type FC, useState } from "react";
+
+type MyCommentCardProps = {
+  comment: CommentWithPost;
+  onDelete: (commentId: string) => void;
 };
 
-const MyCommentCard = ({
-  comment,
-  onDelete,
-}: {
-  comment: CommentWithPost;
-  onDelete: (commentId: string) => void; // 삭제 함수
-}) => {
-  const [isContentVisible, setIsContentVisible] = useState(false); // 내용 표시 여부
+const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(false);
 
-  const toggleContentVisibility = () => {
-    setIsContentVisible(!isContentVisible); // 내용 표시 상태 토글
+  const handleDelete = async () => {
+    try {
+      await onDelete(comment.id);
+      setIsConfirm(false);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("댓글 삭제 실패:", error);
+    }
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    setIsConfirm(false);
   };
 
   return (
-    <div className="mb-4 rounded-lg border p-4 shadow-md">
-      <Link
-        href={`/honeytips/${comment.post_id}`}
-        className="flex h-full flex-col"
-      >
-        <div className="flex items-start">
-          {/* 게시글 첫 번째 이미지 */}
-          {comment.posts.post_image_url &&
-            comment.posts.post_image_url.length > 0 && (
+    <>
+      <div className={clsx("flex h-[64px] w-full items-center justify-between px-5")}>
+        <Link 
+          href={`/honeytips/${comment.post_id}`}
+          className={clsx("flex items-center gap-3 flex-1")}
+        >
+          {comment.posts?.post_image_url && comment.posts.post_image_url.length > 0 ? (
+            <div className={clsx("relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]")}>
               <Image
-                src={comment.posts.post_image_url[0]} // 첫 번째 이미지 URL 사용
+                src={comment.posts.post_image_url[0]}
                 alt={`게시글 이미지`}
-                width={120} // 원하는 너비 설정
-                height={120} // 세로 길이 증가 (길게 설정)
-                className="mr-4 rounded-lg object-cover" // 스타일 조정
+                fill
+                className={clsx("object-cover")}
+                priority
               />
-            )}
-          <div className="flex-grow">
-            {" "}
-            {/* 제목과 내용이 들어갈 부분 */}
-            <div className="flex items-center justify-between">
-              <h3 className="font-bold text-blue-600 hover:underline">
-                {comment.posts.title} {/* 게시물 제목 */}
-              </h3>
-              {/* 삭제 버튼 */}
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  onDelete(comment.id); // 삭제 버튼 클릭 시 호출
-                }}
-                className="text-red-500 hover:text-red-700"
-              >
-                삭제
-              </button>
             </div>
-            {/* 게시물 생성 시간 표시 */}
-            <p className="mt-1 text-xs text-gray-500">
-              {new Date(comment.posts.created_at).toLocaleDateString()}{" "}
-              {/* 날짜 형식으로 변환 */}
-            </p>
-            {/* 댓글 내용 */}
-            <p className={`mt-2 ${isContentVisible ? "" : "line-clamp-2"}`}>
+          ) : (
+            <div className={clsx("h-[48px] w-[48px] shrink-0")} /> 
+          )}
+          <div className={clsx("flex flex-col gap-[2px] flex-1 min-w-0")}>
+            <div className={clsx("flex items-center justify-between w-full")}>
+              <h3 className={clsx("text-[16px] font-medium text-[#424242] line-clamp-1")}>
+                {comment.posts?.title}
+              </h3>
+              <span className={clsx("text-[14px] text-[#8F8F8F] ml-2 -mt-[5px]")}>
+                {new Date(comment.created_at)
+                  .toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                  })
+                  .replace(/\. /g, '.')
+                  .slice(0, -1)}
+              </span>
+            </div>
+            <p className={clsx("text-[14px] text-[#8F8F8F] line-clamp-1")}>
               {comment.comment}
             </p>
           </div>
+        </Link>
+        <div className={clsx("flex items-center ml-4")}>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setIsConfirm(true);
+              setIsModalOpen(true);
+            }}
+            className={clsx(
+              "flex items-center justify-center w-[24px] h-[16px]",
+              "text-[12px] text-[#424242] border border-[#424242]"
+            )}
+          >
+            삭제
+          </button>
         </div>
-      </Link>
+      </div>
 
-      {/* 더보기/숨기기 버튼 */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          toggleContentVisibility(); // 내용 표시 상태 토글
-        }}
-        className="mt-2 text-blue-500"
-      >
-        {isContentVisible ? "숨기기" : "더보기"}
-      </button>
-    </div>
+      <ConfirmModal
+        isOpen={isModalOpen}
+        isConfirm={isConfirm}
+        text="삭제"
+        onAction={handleDelete}
+        onClose={handleClose}
+      />
+    </>
   );
 };
 
 export default MyCommentCard;
 
-// "use client";
 
-// // 댓글과 게시물 정보를 포함한 타입
-// import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 임포트
-// import Image from "next/image"; // Next.js의 Image 컴포넌트 가져오기
-// import Link from "next/link"; // Link 컴포넌트 가져오기
-// import { useState } from "react"; // 상태 관리
-
-// // Supabase 클라이언트 생성
-// const supabase = createClient();
-
-// // 타입 정의
-// export type User = {
-//   id: string;
-//   email: string;
-//   nickname: string;
-//   profile_image_url: string | null;
-//   created_at: string;
-// };
-
-// export type Post = {
-//   id: string; // 게시물 ID 추가
-//   title: string;
-//   content: string;
-//   created_at: string;
-//   categories: string;
-//   post_image_url: string[] | null; // 이미지 URL 배열
-// };
-
-// export type Comment = {
-//   id: string;
-//   comment: string;
-//   created_at: string;
-//   post_id: string;
-//   user_id: string;
-// };
-
-// // CommentWithPost 타입 정의
-// export type CommentWithPost = Comment & {
-//   users?: User; // 댓글 작성자 정보 (선택적)
-//   posts: Post; // 게시물 정보
-// };
-
-// // 댓글 데이터 가져오는 쿼리 훅
-// const fetchCommentPostsData = async (
-//   userId: string,
-// ): Promise<CommentWithPost[]> => {
-//   const { data, error } = await supabase
-//     .from("comments")
-//     .select(
-//       `
-//     *,
-//     users(nickname, profile_image_url),
-//     posts(
-//       id,
-//       post_image_url,
-//       title,
-//       content,
-//       created_at,
-//       categories,
-//       user_id,
-//       users(nickname, profile_image_url)
-//     )
-//   `,
-//     )
-//     .eq("user_id", userId)
-//     .order("created_at", { ascending: false });
-
-//   if (error) {
-//     console.error("댓글이 달린 게시물 불러오기 실패:", error);
-//     throw error;
-//   }
-
-//   return (data as CommentWithPost[]) || []; // 타입 단언 추가
-// };
-
-// const MyCommentCard = ({
-//   comment,
-//   onDelete,
-//   onEdit,
-// }: {
-//   comment: CommentWithPost;
-//   onDelete: (commentId: string) => void;
-//   onEdit: (commentId: string, newContent: string) => void;
-// }) => {
-//   const [isContentVisible, setIsContentVisible] = useState(false); // 내용 표시 여부
-
-//   const handleEdit = () => {
-//     const newContent = prompt("댓글을 수정하세요:", comment.comment);
-//     if (newContent) {
-//       onEdit(comment.id, newContent); // 수정된 내용으로 댓글 업데이트
-//     }
-//   };
-
-//   const toggleContentVisibility = () => {
-//     setIsContentVisible(!isContentVisible); // 내용 표시 상태 토글
-//   };
-
-//   return (
-//     <div className="mb-4 rounded-lg border p-4 shadow-md">
-//       <Link
-//         href={`/honeytips/${comment.post_id}`}
-//         className="flex h-full flex-col"
-//       >
-//         <div className="flex items-start">
-//           {/* 게시글 첫 번째 이미지 */}
-//           {comment.posts.post_image_url &&
-//             comment.posts.post_image_url.length > 0 && (
-//               <Image
-//                 src={comment.posts.post_image_url[0]} // 첫 번째 이미지 URL 사용
-//                 alt={`게시글 이미지`}
-//                 width={120} // 원하는 너비 설정
-//                 height={120} // 세로 길이 증가 (길게 설정)
-//                 className="mr-4 rounded-lg object-cover" // 스타일 조정
-//               />
-//             )}
-//           <div className="flex-grow">
-//             {" "}
-//             {/* 제목과 내용이 들어갈 부분 */}
-//             <div className="flex items-center justify-between">
-//               <h3 className="font-bold text-blue-600 hover:underline">
-//                 {comment.posts.title} {/* 게시물 제목 */}
-//               </h3>
-//               {/* 수정 및 삭제 버튼 */}
-//               <div className="flex items-center">
-//                 <button
-//                   onClick={(e) => {
-//                     e.preventDefault();
-//                     onDelete(comment.id); // 삭제 버튼 클릭 시 호출
-//                   }}
-//                   className="text-red-500 hover:text-red-700"
-//                 >
-//                   삭제
-//                 </button>
-//                 <button
-//                   onClick={(e) => {
-//                     e.preventDefault();
-//                     handleEdit(); // 수정 버튼 클릭 시 호출
-//                   }}
-//                   className="ml-2 text-blue-500 hover:text-blue-700"
-//                 >
-//                   수정
-//                 </button>
-//               </div>
-//             </div>
-//             {/* 댓글 내용 */}
-//             <p className={`mt-2 ${isContentVisible ? "" : "line-clamp-2"}`}>
-//               {comment.comment}
-//             </p>
-//           </div>
-//         </div>
-//       </Link>
-
-//       {/* 더보기/숨기기 버튼 */}
-//       <button
-//         onClick={(e) => {
-//           e.stopPropagation();
-//           toggleContentVisibility(); // 내용 표시 상태 토글
-//         }}
-//         className="mt-2 text-blue-500"
-//       >
-//         {isContentVisible ? "숨기기" : "더보기"}
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default MyCommentCard;

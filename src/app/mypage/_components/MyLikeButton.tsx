@@ -1,74 +1,44 @@
-// src/app/mypage/_components/MyLikeButton.tsx
-"use client";
+import { UseLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/UseMyLikes";
+import YesHeart from "@/assets/images/honeytips/love_selected_42.svg";
+import NoHeart from "@/assets/images/honeytips/love_unselected_42.svg";
+import { useEffect, useState } from "react";
 
-import { useLikeMutation } from "@/app/honeytips/[id]/_hooks/useLikeMutation";
-import { useLikeDataQuery } from "@/app/honeytips/[id]/_hooks/useLikeQuery";
-import type { Like } from "@/app/honeytips/_types/honeytips.type";
-import { getId } from "@/app/honeytips/_utils/auth";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+export type LikeButtonProps = {
+  postId: string;
+  isLiked: boolean;
+  onLikeChange: (postId: string, action: "add" | "delete") => Promise<void>;
+};
 
-// LikeButton component
-const MyLikeButton = ({
-  postId,
-  onLikeChange,
-}: {
-  postId: Like["post_id"];
-  onLikeChange: (postId: string, action: "add" | "delete") => void; // 수정된 부분
-}) => {
-  const { data: likeData, isError, isPending } = useLikeDataQuery(postId);
-  const likeMutation = useLikeMutation(postId);
+const MyLikeButton = ({ postId, isLiked, onLikeChange }: LikeButtonProps) => {
+  const { isLiking } = UseLikes();
+  const [liked, setLiked] = useState(isLiked);
 
-  const handleLikeBtn = async () => {
-    const userId: Like["user_id"] | null = await getId();
+  useEffect(() => {
+    setLiked(isLiked);
+  }, [isLiked]);
 
-    if (!userId) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
-
-    if (likeData && likeData.length > 0) {
-      likeMutation.mutate(
-        { action: "delete", userId, postId },
-        {
-          onSuccess: () => {
-            onLikeChange(postId, "delete"); // 수정된 부분
-          },
-        }
-      );
-    } else {
-      likeMutation.mutate(
-        { action: "add", userId, postId },
-        {
-          onSuccess: () => {
-            onLikeChange(postId, "add"); // 수정된 부분
-          },
-        }
-      );
-    }
+  const handleClick = async () => {
+    const action = liked ? "delete" : "add";
+    setLiked(!liked);
+    await onLikeChange(postId, action);
   };
 
-  if (isPending) {
-    return <p>로딩중...</p>;
-  }
-
-  if (isError) {
-    return <p>에러가 발생했습니다.</p>;
-  }
-
   return (
-    <section className="flex text-2xl">
-      <button onClick={handleLikeBtn}>
-        {likeData?.length ? (
-          <FaHeart className="text-primary-500" />
-        ) : (
-          <FaRegHeart />
-        )}
-      </button>
-    </section>
+    <button
+      onClick={handleClick}
+      disabled={isLiking(postId)}
+      className={`flex items-center justify-center transition-all ${
+        isLiking(postId) ? "cursor-not-allowed opacity-50" : "hover:scale-110"
+      }`}
+      aria-label={liked ? "좋아요 취소" : "좋아요"}
+    >
+      {liked ? (
+        <YesHeart className="h-[50px] w-[50px] text-[#FF7600]" />
+      ) : (
+        <NoHeart className="h-[50px] w-[50px] text-[#999999]" />
+      )}
+    </button>
   );
 };
 
 export default MyLikeButton;
-
-
-

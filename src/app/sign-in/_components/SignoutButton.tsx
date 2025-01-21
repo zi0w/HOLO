@@ -1,14 +1,16 @@
 "use client";
 
-import { useSignout } from "@/app/sign-in/_hooks/useSignout"; // 로그아웃 훅 임포트
+import { useSignout } from "@/app/sign-in/_hooks/UseSignout";
+
+
 
 const SignoutButton = () => {
-  const { handleLogout } = useSignout(); // 로그아웃 핸들러 가져오기
+  const { handleLogout } = useSignout();
 
   return (
     <button
-      onClick={handleLogout} // 클릭 시 로그아웃 함수 호출
-      className="w-full rounded-[10px] border-2 border-orange-600 bg-white text-orange-600 hover:bg-gray-100 px-4 py-2" // 스타일 적용
+      onClick={handleLogout}
+      className="w-full h-[48px] rounded-[4px] border border-[#FF7600] text-[#FF7600] font-pretendard text-base hover:bg-gray-50 flex items-center justify-center"
     >
       로그아웃
     </button>
