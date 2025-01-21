@@ -1,5 +1,5 @@
 
-import { User } from "@/app/sign-up/_types/UserType";
+import { User } from "@/app/sign-up/_types/userType";
 
 export type Session = {
   accessToken: string;

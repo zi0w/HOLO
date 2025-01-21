@@ -1,5 +1,5 @@
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
-import type { PaginationProps } from "@/types/pagination.types";
+import type { PaginationProps } from "@/types/paginationTypes";
 import clsx from "clsx";
 
 const Pagination = ({

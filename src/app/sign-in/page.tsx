@@ -1,7 +1,4 @@
-// page.tsx
-
-
-import SignInForm from "@/app/sign-in/_components/SignIn";
+import SignInForm from "@/app/sign-in/_components/Signin";
 import splash_logo from "@/assets/images/splash/splash_logo.png";
 import Image from "next/image";
 

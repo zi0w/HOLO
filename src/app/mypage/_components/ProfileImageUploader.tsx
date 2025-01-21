@@ -1,4 +1,3 @@
-// components/ProfileImageUploader.tsx
 import Image from "next/image";
 
 type ProfileImageUploaderProps = {

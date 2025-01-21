@@ -1,10 +1,10 @@
 // src/app/sign-up/_components/SignUp.tsx
 "use client";
 
-import { useSignUpForm } from "@/app/sign-up/_hooks/UseSignUpForm";
-import { useSignUpMutation } from "@/app/sign-up/_hooks/UseSignUpMutation";
+import { useSignUpForm } from "@/app/sign-up/_hooks/useSignUpForm";
+import { useSignUpMutation } from "@/app/sign-up/_hooks/useSignUpMutation";
 import { useRouter } from "next/navigation";
-import type { SignUpPayload } from "../_types/SignupType";
+import type { SignUpPayload } from "../_types/SsignupType";
 
 const SignUp = () => {
   const { formData, errors, handleChange, validateAll } = useSignUpForm();
@@ -17,7 +17,9 @@ const SignUp = () => {
 
     if (Object.keys(newErrors).length > 0) {
       if (newErrors.nickname === "이미 사용 중인 닉네임입니다.") {
-        alert("중복된 닉네임으로는 회원가입이 불가능합니다. 다른 닉네임을 사용해주세요.");
+        alert(
+          "중복된 닉네임으로는 회원가입이 불가능합니다. 다른 닉네임을 사용해주세요.",
+        );
         return;
       }
       alert("입력한 정보에 오류가 있습니다. 다시 확인해주세요.");
@@ -28,9 +30,10 @@ const SignUp = () => {
       email: formData.email,
       password: formData.password,
       nickname: formData.nickname,
-      ...(formData.profile_image_url && formData.profile_image_url.trim() !== "" && {
-        profile_image_url: formData.profile_image_url,
-      }),
+      ...(formData.profile_image_url &&
+        formData.profile_image_url.trim() !== "" && {
+          profile_image_url: formData.profile_image_url,
+        }),
     };
 
     mutate(signUpData);
@@ -97,7 +100,7 @@ const SignUp = () => {
               <p className="text-[12px] text-red-500">{errors.checkPassword}</p>
             )}
           </div>
-          
+
           <button
             type="submit"
             className={`mt-[16px] h-[56px] w-full rounded-[4px] text-[16px] font-medium text-white ${
@@ -111,8 +114,8 @@ const SignUp = () => {
           </button>
         </div>
       </form>
-      
-      <div className="w-full mt-[16px]">
+
+      <div className="mt-[16px] w-full">
         <button
           type="button"
           onClick={handleGoToLogin}
@@ -126,6 +129,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-
-

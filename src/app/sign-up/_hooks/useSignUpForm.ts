@@ -1,7 +1,7 @@
 // src/app/sign-up/_hooks/UseSignUpForm.ts
 "use client";
 
-import type { SignUpFormData } from "@/app/sign-up/_types/SignupType";
+import type { SignUpFormData } from "@/app/sign-up/_types/SsignupType";
 import { useState } from "react";
 
 export const useSignUpForm = () => {
@@ -18,7 +18,7 @@ export const useSignUpForm = () => {
   // value 매개변수의 타입을 string | undefined로 변경
   const validate = (name: string, value: string | undefined): string => {
     if (!value) {
-      if (name === 'profile_image_url') return ""; // profile_image_url은 선택사항
+      if (name === "profile_image_url") return ""; // profile_image_url은 선택사항
       return "필수 입력 항목입니다.";
     }
 
@@ -44,7 +44,7 @@ export const useSignUpForm = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
+
     const error = validate(name, value);
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
@@ -52,7 +52,7 @@ export const useSignUpForm = () => {
   const validateAll = async () => {
     const newErrors: Record<string, string> = {};
     Object.keys(formData).forEach((key) => {
-      if (key !== 'profile_image_url') {
+      if (key !== "profile_image_url") {
         const error = validate(key, formData[key as keyof SignUpFormData]);
         if (error) newErrors[key] = error;
       }
@@ -63,4 +63,3 @@ export const useSignUpForm = () => {
 
   return { formData, errors, handleChange, validateAll };
 };
-

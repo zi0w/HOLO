@@ -1,8 +1,9 @@
 "use client";
 
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
-import { useUpdateUserInfo } from "@/app/mypage/_hooks/UseUpdateUserInfo";
-import type { User } from "@/app/mypage/_types/Mypage";
+import { useUpdateUserInfo } from "@/app/mypage/_hooks/useUpdateUserInfo";
+
+import type { User } from "@/app/mypage/_types/mypPage";
 import useAuthStore from "@/store/authStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -83,7 +84,8 @@ const UserProfile = () => {
               width={100}
               height={100}
               src={
-                userData.profile_image_url??"https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/e6a1c347-c123-40c4-ae51-fdc0ffcb910e-1737345924767.jpg"
+                userData.profile_image_url ??
+                "https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/e6a1c347-c123-40c4-ae51-fdc0ffcb910e-1737345924767.jpg"
               }
               alt="프로필 이미지"
               className="h-full w-full rounded-full object-cover"

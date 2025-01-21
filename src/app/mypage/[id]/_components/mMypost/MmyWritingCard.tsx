@@ -1,8 +1,7 @@
-// src/app/mypage/[id]/_components/Mypost/MyWritingCard.tsx
 "use client";
 
 import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
-import type { Post } from "@/app/mypage/_types/Mypage";
+import type { Post } from "@/app/mypage/_types/mypPage";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -107,4 +106,3 @@ const MyWritingCard = ({ post, onDelete, isDeleting }: MyWritingCardProps) => {
 };
 
 export default MyWritingCard;
-

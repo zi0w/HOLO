@@ -1,7 +1,5 @@
-
-
 export type Like = {
-  user_id: string;  // null을 허용하지 않도록 수정
+  user_id: string; // null을 허용하지 않도록 수정
   post_id?: string;
   id?: string;
 };
@@ -19,4 +17,4 @@ export type Post = {
     nickname: string;
     profile_image_url: string | null;
   };
-}; 
+};

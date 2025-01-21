@@ -1,14 +1,15 @@
-
 import { getId } from "@/app/honeytips/_utils/auth";
-import type { Post } from "@/app/mypage/_types/Mypage";
+import type { Post } from "@/app/mypage/_types/mypPage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { deletePost, fetchMyPostsData } from "../_utils/Posts";
-import type { MutationContext } from "@/app/mypage/[id]/_components/_type/Post";
 
+import type { MutationContext } from "@/app/mypage/[id]/_components/_type/Ppost";
+import {
+  deletePost,
+  fetchMyPostsData,
+} from "@/app/mypage/[id]/_components/mMypost/_utils/posts";
 
-
-export const UseMyPosts = () => {
+export const useMyPosts = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [deletingPosts, setDeletingPosts] = useState<Set<string>>(new Set());
   const queryClient = useQueryClient();

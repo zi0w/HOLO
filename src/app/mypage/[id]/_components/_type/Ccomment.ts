@@ -1,4 +1,3 @@
-
 export type Comment = {
   id: string;
   user_id: string;
@@ -8,9 +7,7 @@ export type Comment = {
   updated_at?: string;
   nickname?: string;
   profile_image_url?: string | null;
-}
-
-
+};
 
 export type CommentWithPost = {
   id: string;

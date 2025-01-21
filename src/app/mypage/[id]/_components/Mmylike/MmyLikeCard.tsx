@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { formatDate } from "@/app/mypage/[id]/_components/Mylike/_utils/formatDate";
+import { formatDate } from "@/app/mypage/[id]/_components/Mmylike/_utils/formatDate";
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
-import type { Post } from "@/app/mypage/_types/Mypage";
+import type { Post } from "@/app/mypage/_types/mypPage";
 
 export type LikeCardProps = {
   post: Post;

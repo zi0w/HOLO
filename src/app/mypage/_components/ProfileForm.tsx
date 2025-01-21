@@ -1,5 +1,6 @@
 // components/ProfileForm.tsx
-import type { ProfileFormProps } from '@/app/mypage/_types/User';
+
+import type { ProfileFormProps } from '@/app/mypage/_types/user';
 import React from 'react';
 
 
