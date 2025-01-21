@@ -5,6 +5,7 @@ import { createClient } from "@/lib/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
+// 반환 타입을 명시적으로 CommentWithPost[]로 지정
 const fetchCommentData = async (userId: string): Promise<CommentWithPost[]> => {
   const supabase = createClient();
   const { data, error } = await supabase
@@ -36,6 +37,7 @@ const fetchCommentData = async (userId: string): Promise<CommentWithPost[]> => {
   if (error) throw error;
   if (!data) return [];
 
+  // 타입 단언을 사용하여 반환 타입을 명확히 함
   return data as CommentWithPost[];
 };
 
@@ -61,6 +63,7 @@ export const useComments = () => {
     fetchUserId();
   }, []);
 
+  // 쿼리 옵션 타입을 명시적으로 지정
   const { data: comments = [], isLoading } = useQuery<CommentWithPost[]>({
     queryKey: ["comments", userId],
     queryFn: () => fetchCommentData(userId || ""),
@@ -71,23 +74,26 @@ export const useComments = () => {
     void,
     Error,
     string,
-    { previousComments: CommentWithPost[] }
+    { previousComments: CommentWithPost[]; postId?: string }
   >({
     mutationFn: deleteComment,
     onMutate: async (commentId) => {
       await queryClient.cancelQueries({ queryKey: ["comments", userId] });
-
+      
       const previousComments =
         queryClient.getQueryData<CommentWithPost[]>(["comments", userId]) || [];
+      
+      const targetComment = previousComments.find(
+        (comment) => comment.id === commentId
+      );
+      const postId = targetComment?.post_id;
 
       queryClient.setQueryData<CommentWithPost[]>(
         ["comments", userId],
-        (old = []) => {
-          return old.filter((comment) => comment.id !== commentId);
-        },
+        (old = []) => old.filter((comment) => comment.id !== commentId)
       );
 
-      return { previousComments };
+      return { previousComments, postId };
     },
     onError: (_, __, context) => {
       if (context?.previousComments) {
@@ -98,22 +104,31 @@ export const useComments = () => {
       }
       alert("댓글 삭제 중 오류가 발생했습니다.");
     },
-    onSuccess: () => {
-      // alert("댓글이 삭제되었습니다.");
+    onSuccess: (_, __, context) => {
+      if (context?.postId) {
+        queryClient.invalidateQueries({ queryKey: ["post", context.postId] });
+        queryClient.invalidateQueries({ 
+          queryKey: ["postComments", context.postId] 
+        });
+      }
     },
-    onSettled: () => {
+    onSettled: (_, __, ___, context) => {
       queryClient.invalidateQueries({ queryKey: ["comments", userId] });
+      if (context?.postId) {
+        queryClient.invalidateQueries({ queryKey: ["post", context.postId] });
+        queryClient.invalidateQueries({ 
+          queryKey: ["postComments", context.postId] 
+        });
+      }
     },
   });
 
   const handleDelete = async (commentId: string) => {
-    // if (window.confirm("댓글을 삭제하시겠습니까?")) {
     try {
       await deleteCommentMutation.mutateAsync(commentId);
     } catch (error) {
       console.error("댓글 삭제 중 오류:", error);
     }
-    // }
   };
 
   return {
@@ -122,3 +137,4 @@ export const useComments = () => {
     handleDelete,
   };
 };
+

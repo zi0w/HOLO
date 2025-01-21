@@ -2,7 +2,6 @@
 
 import type { User } from "@/app/sign-in/_types/UserType";
 
-
 export type Session = {
   accessToken: string;
   refreshToken: string;
