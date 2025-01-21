@@ -61,41 +61,41 @@ const UserProfile = () => {
     return (
       <div className="flex h-screen items-center justify-center">로딩중...</div>
     );
-  }return (
+  }
+  return (
     <div className="w-full bg-white">
       <div className="flex flex-col">
         {/* 헤더 */}
-        <div className="flex w-full items-center justify-between px-5 pt-[5px]">
-          <button className="flex items-center" onClick={() => router.back()}>
-            <Image
-              src="/icons/arrow-left.svg"
-              alt="뒤로가기"
-              width={24}
-              height={24}
-              className="w-7 h-6"
-            />
-          </button>
-          <h1 className="font-pretendard text-[24px] font-bold">마이페이지</h1>
-          <div className="w-6" />
+        <div className="flex w-full items-center px-5 pt-[5px]">
+          <div className="relative flex items-center">
+            <button className="flex items-center" onClick={() => router.back()}>
+              <h1 className="font-pretendard whitespace-nowrap text-[24px] font-bold">
+                마이페이지
+              </h1>
+            </button>
+          </div>
         </div>
-  
+
         {/* 프로필 */}
-        <div className="mt-[20px] flex flex-col items-center">
+        <div className="mt-[5px] flex flex-col items-center">
           <button className="relative h-[100px] w-[100px]">
             <Image
               width={100}
               height={100}
-              src={""}
+              src={
+                "https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/profile_image_798026d3-5b0e-47eb-ae61-e1c9cbba90e3.png"
+              }
               alt="프로필 이미지"
               className="h-full w-full rounded-full object-cover"
               priority
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.src = "https://tjxonwrcuvvfxkfkgadc.supabase.co/storage/v1/object/public/profile_image/profile_default_img.jpg";
+                target.src =
+                  "https://tjxonwrcuvvfxkfkgadc.supabase.co/storage/v1/object/public/profile_image/profile_default_img.jpg";
               }}
             />
           </button>
-          <div className="mt-[12px] flex items-center">
+          <div className="mt-[8px] flex items-center">
             <span className="font-pretendard text-[18px] font-medium text-[#424242]">
               {userData.nickname || "마이스토링"}
             </span>
@@ -108,7 +108,7 @@ const UserProfile = () => {
             </button>
           </div>
         </div>
-  
+
         <ProfileEditModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}

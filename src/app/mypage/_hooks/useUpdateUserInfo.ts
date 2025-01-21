@@ -8,11 +8,14 @@ export function useUpdateUserInfo(forceUpdate: boolean = false) {
   const updateUserInfo = useCallback(async () => {
     if (user?.id) {
       const userInfo = await fetchUserInfo(user.id);
+      console.log(user);
+      console.log(userInfo);
       if (userInfo) {
-        // forceUpdate가 true이거나 실제 변경사항이 있을 때만 업데이트
-        if (forceUpdate || 
-            user.nickname !== userInfo.nickname || 
-            user.profile_image_url !== userInfo.profile_image_url
+       
+        if (
+          forceUpdate ||
+          user.nickname !== userInfo.nickname ||
+          user.profile_image_url !== userInfo.profile_image_url
         ) {
           setAuth(
             {
@@ -20,7 +23,7 @@ export function useUpdateUserInfo(forceUpdate: boolean = false) {
               nickname: userInfo.nickname,
               profile_image_url: userInfo.profile_image_url,
             },
-            null
+            null,
           );
         }
       }

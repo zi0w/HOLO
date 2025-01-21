@@ -7,7 +7,7 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query"; // React
 import { useRouter } from "next/navigation"; // Next.js 라우터 가져오기
 import { Session } from "@supabase/supabase-js"; // Supabase의 Session 타입 가져오기
 import type { SignInPayload } from "@/app/sign-in/_types/sign-in.type";
-import type { User } from "@/app/sign-in/_types/User";
+import type { User } from "@/app/sign-in/_types/userType";
 
 // SignInResult 타입 정의
 export type SignInResult = {

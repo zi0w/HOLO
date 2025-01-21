@@ -13,44 +13,46 @@ export type LikeCardProps = {
 
 const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
   // MyLikeCard.tsx의 return 부분
-  return (
-    <div className="flex h-[50px] w-[322px] items-center justify-between mx-5 mb-2">
-      <Link 
-        href={`/honeytips/${post.id}`}
-        className="flex items-center gap-2 flex-1"
-      >
-        {post.post_image_url && post.post_image_url.length > 0 ? (
-          <div className="relative h-[40px] w-[40px] shrink-0 overflow-hidden rounded-[4px]">
-            <Image
-              src={post.post_image_url[0]}
-              alt={post.title}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        ) : (
-          <div className="h-[40px] w-[40px] shrink-0" /> 
-        )}
-        <div className="flex flex-col gap-1 flex-1 min-w-0">
-          <h3 className="text-[14px] font-medium text-[#424242] line-clamp-1">{post.title}</h3>
-          <p className="text-[12px] text-[#8F8F8F] line-clamp-1">{post.content}</p>
-        </div>
-      </Link>
-      <div className="flex items-center gap-2">
-        <span className="text-[12px] text-[#8F8F8F]">
-          {formatDate(post.created_at)}
-        </span>
-        <div className="flex items-center justify-center w-[20px]">
-          <MyLikeButton
-            postId={post.id}
-            isLiked={true}
-            onLikeChange={onLikeChange}
+return (
+  <div className="flex h-[64px] w-full items-center justify-between px-5"> {/* border-b 제거 */}
+    <Link 
+      href={`/honeytips/${post.id}`}
+      className="flex items-center gap-3 flex-1"
+    >
+      {post.post_image_url && post.post_image_url.length > 0 ? (
+        <div className="relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]">
+          <Image
+            src={post.post_image_url[0]}
+            alt={post.title}
+            fill
+            className="object-cover"
+            priority
           />
         </div>
+      ) : (
+        <div className="h-[48px] w-[48px] shrink-0" /> 
+      )}
+      <div className="flex flex-col gap-[2px] flex-1 min-w-0">
+        <div className="flex items-center justify-between w-full">
+          <h3 className="text-[16px] font-medium text-[#424242] line-clamp-1">{post.title}</h3>
+          <span className="text-[14px] text-[#8F8F8F] ml-2 -mt-[5px]">
+            {formatDate(post.created_at)}
+          </span>
+        </div>
+        <p className="text-[14px] text-[#8F8F8F] line-clamp-1">{post.content}</p>
+      </div>
+    </Link>
+    <div className="flex items-center ml-4">
+      <div className="flex items-center justify-center w-[32px] h-[32px]">
+        <MyLikeButton
+          postId={post.id}
+          isLiked={true}
+          onLikeChange={onLikeChange}
+        />
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default MyLikeCard;

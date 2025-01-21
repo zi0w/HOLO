@@ -25,22 +25,22 @@ const MyLikeButton = ({ postId, isLiked, onLikeChange }: LikeButtonProps) => {
   };
 
   // src/app/mypage/_components/MyLikeButton.tsx
-return (
-  <button
-    onClick={handleClick}
-    disabled={isLiking(postId)}
-    className={`flex items-center justify-center transition-all ${
-      isLiking(postId) ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'
-    }`}
-    aria-label={liked ? "좋아요 취소" : "좋아요"}
-  >
-    {liked ? (
-      <YesHeart className="h-[16.8px] w-[19.2px] text-[#FF7600]" />
-    ) : (
-      <NoHeart className="h-[16.8px] w-[19.2px] text-[#999999]" />
-    )}
-  </button>
-);
+  return (
+    <button
+      onClick={handleClick}
+      disabled={isLiking(postId)}
+      className={`flex items-center justify-center transition-all ${
+        isLiking(postId) ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'
+      }`}
+      aria-label={liked ? "좋아요 취소" : "좋아요"}
+    >
+      {liked ? (
+        <YesHeart className="h-[50px] w-[50px] text-[#FF7600]" />
+      ) : (
+        <NoHeart className="h-[50px] w-[50px] text-[#999999]" />
+      )}
+    </button>
+  );
 };
 
 export default MyLikeButton;

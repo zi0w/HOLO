@@ -96,7 +96,7 @@ export const useComments = () => {
       alert("댓글 삭제 중 오류가 발생했습니다.");
     },
     onSuccess: () => {
-      alert("댓글이 삭제되었습니다.");
+      // alert("댓글이 삭제되었습니다.");
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", userId] });
@@ -104,13 +104,13 @@ export const useComments = () => {
   });
 
   const handleDelete = async (commentId: string) => {
-    if (window.confirm("댓글을 삭제하시겠습니까?")) {
+    // if (window.confirm("댓글을 삭제하시겠습니까?")) {
       try {
         await deleteCommentMutation.mutateAsync(commentId);
       } catch (error) {
         console.error("댓글 삭제 중 오류:", error);
       }
-    }
+    // }
   };
 
   return {

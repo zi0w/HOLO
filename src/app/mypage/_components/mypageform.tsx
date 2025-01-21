@@ -44,13 +44,14 @@ const Mypageform: React.FC = () => {
         return null;
     }
   };
-  
   return (
     <div className="relative w-[402px] h-[1069px] bg-white">
-      <UserProfile />
+      <div className="mt-[-5px]">
+        <UserProfile />
+      </div>
       
       {/* 탭 버튼들 */}
-      <div className="mt-0">
+      <div className="mt-[60px]">
         <div className="flex justify-center gap-16">
           <div className="relative">
             <button 
@@ -100,15 +101,16 @@ const Mypageform: React.FC = () => {
       <div className="border-t border-[#FFE4CC] mt-1" />
   
       {/* 컨텐츠 영역 */}
-         {/* 컨텐츠 영역 */}
-    <div className="mt-[10px] mx-[21px] mr-[19px] h-[460px] border border-[#E0E0E0] rounded-lg bg-white overflow-y-auto mb-[27px]">
-      {renderSection()}
-    </div>
+      <div className="mt-[10px] mx-[20px] w-[362px] h-[400px] border border-[#E0E0E0] rounded-lg bg-white">
+        {renderSection()}
+      </div>
   
       {/* 버튼 영역 */}
-      <div className="fixed bottom-16 left-[21px] right-[19px] flex flex-col gap-3">
+      <div className="mt-[27px] mx-[20px] flex flex-col">
         <SignoutButton />
-        <DeleteAccount />
+        <div className="mt-[16px]">
+          <DeleteAccount />
+        </div>
       </div>
     </div>
   );

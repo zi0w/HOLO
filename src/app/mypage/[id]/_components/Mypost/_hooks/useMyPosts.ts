@@ -48,10 +48,10 @@ export const useMyPosts = () => {
       if (context) {
         queryClient.setQueryData(["myPosts", userId], context.previousPosts);
       }
-      alert("게시글 삭제 중 오류가 발생했습니다.");
+      // alert("게시글 삭제 중 오류가 발생했습니다.");
     },
     onSuccess: () => {
-      alert("게시글이 삭제되었습니다.");
+      // alert("게시글이 삭제되었습니다.");
     },
     onSettled: (_, __, postId) => {
       setDeletingPosts(prev => {
@@ -64,13 +64,13 @@ export const useMyPosts = () => {
   });
 
   const handleDelete = async (postId: string) => {
-    if (window.confirm("게시글을 삭제하시겠습니까?")) {
+    // if (window.confirm("게시글을 삭제하시겠습니까?")) {
       try {
         await deletePostMutation.mutateAsync(postId);
       } catch (error) {
         console.error("게시글 삭제 중 오류:", error);
       }
-    }
+    // }
   };
 
   return {
