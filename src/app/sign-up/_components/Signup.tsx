@@ -4,7 +4,7 @@
 import { useSignUpForm } from "@/app/sign-up/_hooks/useSignUpForm";
 import { useSignUpMutation } from "@/app/sign-up/_hooks/useSignUpMutation";
 import { useRouter } from "next/navigation";
-import type { SignUpPayload } from "../_types/SsignupType";
+import type { SignUpPayload } from "../_types/signupType";
 
 const SignUp = () => {
   const { formData, errors, handleChange, validateAll } = useSignUpForm();

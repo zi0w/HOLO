@@ -3,7 +3,7 @@
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
 import { useUpdateUserInfo } from "@/app/mypage/_hooks/useUpdateUserInfo";
 
-import type { User } from "@/app/mypage/_types/mypPage";
+import type { User } from "@/app/mypage/_types/myPage";
 import useAuthStore from "@/store/authStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";

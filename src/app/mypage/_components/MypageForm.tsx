@@ -1,12 +1,12 @@
 // src/app/mypage/_components/mypageform.tsx
 "use client";
 
-import MyLikeList from "@/app/mypage/[id]/_components/Mmylike/MmyLikeList";
-import MyWritingList from "@/app/mypage/[id]/_components/mMypost/MmyWritingList";
 import MyCommentList from "@/app/mypage/[id]/_components/my-comment/useMyCommentList";
+import MyLikeList from "@/app/mypage/[id]/_components/mylike/myLikeList";
+import MyWritingList from "@/app/mypage/[id]/_components/mypost/myWritingList";
 import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
 import UserProfile from "@/app/mypage/_components/UserProfile";
-import type { ActiveSection } from "@/app/mypage/_types/mypPage";
+import type { ActiveSection } from "@/app/mypage/_types/myPage";
 import SignoutButton from "@/app/sign-in/_components/SignoutButton";
 import useAuthStore from "@/store/authStore";
 import { useQueryClient } from "@tanstack/react-query";

@@ -3,9 +3,9 @@
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 
-import { UseLikes } from "@/app/mypage/[id]/_components/Mmylike/_hooks/UuseMyLikes";
-import MyLikeCard from "@/app/mypage/[id]/_components/Mmylike/MmyLikeCard";
-import type { Post } from "@/app/mypage/_types/mypPage";
+import { UseLikes } from "@/app/mypage/[id]/_components/mylike/_hooks/useMyLikes";
+import MyLikeCard from "@/app/mypage/[id]/_components/mylike/myLikeCard";
+import type { Post } from "@/app/mypage/_types/myPage";
 
 const MyLikeList = () => {
   const { likedPosts, isPending, handleLikeChange } = UseLikes();

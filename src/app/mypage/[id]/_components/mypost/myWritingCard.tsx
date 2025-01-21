@@ -1,7 +1,7 @@
 "use client";
 
 import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
-import type { Post } from "@/app/mypage/_types/mypPage";
+import type { Post } from "@/app/mypage/_types/myPage";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

@@ -1,7 +1,7 @@
 // src/app/sign-up/_hooks/UseSignUpForm.ts
 "use client";
 
-import type { SignUpFormData } from "@/app/sign-up/_types/SsignupType";
+import type { SignUpFormData } from "@/app/sign-up/_types/signupType";
 import { useState } from "react";
 
 export const useSignUpForm = () => {

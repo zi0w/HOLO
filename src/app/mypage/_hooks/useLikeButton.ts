@@ -1,5 +1,5 @@
 // hooks/useLikeButton.ts
-import type { LikeAction } from "@/app/mypage/_types/Llike";
+import type { LikeAction } from "@/app/mypage/_types/like";
 import { getCurrentUser, toggleLikeStatus } from "@/app/mypage/_utils/likes";
 
 import { useGuestStore } from "@/hooks/useGuestAccess";

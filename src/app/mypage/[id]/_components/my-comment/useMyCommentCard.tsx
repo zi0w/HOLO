@@ -1,7 +1,7 @@
 // src/app/mypage/[id]/_components/Mycomment/MyCommentCard.tsx
 "use client";
 
-import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/Ccomment";
+import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/comment";
 import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
 
 import clsx from "clsx";

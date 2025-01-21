@@ -1,4 +1,4 @@
-import type { User } from "@/app/mypage/_types/mypPage";
+import type { User } from "@/app/mypage/_types/myPage";
 import type { UserData } from "@/app/mypage/_types/profile";
 
 import { createClient } from "@/lib/utils/supabase/client";

@@ -1,8 +1,8 @@
 "use client";
 
-import { useMyPosts } from "@/app/mypage/[id]/_components/mMypost/_hooks/uuseMyWriting";
-import MyWritingCard from "@/app/mypage/[id]/_components/mMypost/MmyWritingCard";
-import type { Post } from "@/app/mypage/_types/mypPage";
+import { useMyPosts } from "@/app/mypage/[id]/_components/mypost/_hooks/useMyWriting";
+import MyWritingCard from "@/app/mypage/[id]/_components/mypost/myWritingCard";
+import type { Post } from "@/app/mypage/_types/myPage";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 

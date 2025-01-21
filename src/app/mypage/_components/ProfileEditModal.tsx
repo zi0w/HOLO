@@ -1,8 +1,8 @@
 // components/ProfileEditModal.tsx
 "use client";
 
-import { UseProfileEdit } from "@/app/mypage/_hooks/UuseMyProfileEdit";
-import type { User } from "@/app/mypage/_types/mypPage";
+import { UseProfileEdit } from "@/app/mypage/_hooks/useMyProfileEdit";
+import type { User } from "@/app/mypage/_types/myPage";
 import type { ProfileEditModalProps } from "@/app/mypage/_types/profile";
 import ProfileForm from "./ProfileForm";
 import ProfileImageUploader from "./ProfileImageUploader";

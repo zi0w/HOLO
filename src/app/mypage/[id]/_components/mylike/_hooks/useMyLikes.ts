@@ -1,13 +1,13 @@
 import { getId } from "@/app/honeytips/_utils/auth";
-import type { Like } from "@/app/mypage/[id]/_components/_type/Ttypes";
+import type { Like } from "@/app/mypage/[id]/_components/_type/types";
 import {
   addLike,
   deleteLike,
   fetchLikePostsData,
-} from "@/app/mypage/[id]/_components/Mmylike/_utils/likes";
-import type { MutationContext } from "@/app/mypage/_types/Llike";
+} from "@/app/mypage/[id]/_components/mylike/_utils/likes";
+import type { MutationContext } from "@/app/mypage/_types/like";
 
-import type { Post } from "@/app/mypage/_types/mypPage";
+import type { Post } from "@/app/mypage/_types/myPage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 

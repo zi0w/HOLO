@@ -1,4 +1,4 @@
-import Mypageform from "@/app/mypage/_components/mMypageform";
+import Mypageform from "@/app/mypage/_components/MypageForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

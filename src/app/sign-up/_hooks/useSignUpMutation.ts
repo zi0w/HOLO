@@ -3,7 +3,7 @@ import type { Database } from "@/lib/types/supabase";
 import { createClient } from "@/lib/utils/supabase/client";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import type { SignUpPayload } from "../_types/SsignupType";
+import type { SignUpPayload } from "../_types/signupType";
 
 const supabase = createClient();
 

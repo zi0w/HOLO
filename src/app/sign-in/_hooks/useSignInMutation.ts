@@ -1,7 +1,7 @@
 "use client";
 
-import type { User } from "@/app/sign-in/_types/UuserType";
 import type { SignInPayload } from "@/app/sign-in/_types/signInType";
+import type { User } from "@/app/sign-in/_types/userType";
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 가져오기
 import AuthStore from "@/store/authStore"; // Zustand 스토어 가져오기
 import { Session } from "@supabase/supabase-js"; // Supabase의 Session 타입 가져오기

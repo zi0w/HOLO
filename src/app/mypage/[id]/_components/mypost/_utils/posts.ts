@@ -1,5 +1,5 @@
 // src/app/mypage/[id]/_components/Mypost/_utils/posts.ts
-import type { Post } from "@/app/mypage/_types/mypPage";
+import type { Post } from "@/app/mypage/_types/myPage";
 import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();
