@@ -1,13 +1,14 @@
 "use client";
-import { useLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/UseLikes";
+
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 
 import MyLikeCard from "@/app/mypage/[id]/_components/Mylike/MyLikeCard";
 import type { Post } from "@/app/mypage/_types/Mypage";
+import { UseLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/useLikes";
 
 const MyLikeList = () => {
-  const { likedPosts, isPending, handleLikeChange } = useLikes();
+  const { likedPosts, isPending, handleLikeChange } = UseLikes();
 
   const {
     currentItems: currentPosts,

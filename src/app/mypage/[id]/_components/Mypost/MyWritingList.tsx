@@ -1,12 +1,14 @@
 "use client";
-import { useMyPosts } from "@/app/mypage/[id]/_components/Mypost/_hooks/UseMyPosts";
+
+
+import { UseMyPosts } from "@/app/mypage/[id]/_components/Mypost/_hooks/useMyPosts";
 import MyWritingCard from "@/app/mypage/[id]/_components/Mypost/MyWritingCard";
 import type { Post } from "@/app/mypage/_types/Mypage";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 
 const MyWritingList = () => {
-  const { posts, isLoading, handleDelete, isDeleting } = useMyPosts();
+  const { posts, isLoading, handleDelete, isDeleting } = UseMyPosts();
 
   const {
     currentItems: currentPosts,

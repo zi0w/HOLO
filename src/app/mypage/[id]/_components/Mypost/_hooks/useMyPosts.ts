@@ -1,4 +1,4 @@
-// src/app/mypage/[id]/_components/Mypost/_hooks/useMyPosts.ts
+
 import { getId } from "@/app/honeytips/_utils/auth";
 import type { Post } from "@/app/mypage/_types/Mypage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -8,7 +8,7 @@ import type { MutationContext } from "@/app/mypage/[id]/_components/_type/Post";
 
 
 
-export const useMyPosts = () => {
+export const UseMyPosts = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [deletingPosts, setDeletingPosts] = useState<Set<string>>(new Set());
   const queryClient = useQueryClient();

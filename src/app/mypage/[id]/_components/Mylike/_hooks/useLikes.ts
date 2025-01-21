@@ -1,4 +1,4 @@
-// hooks/useLikes.ts
+
 import { getId } from "@/app/honeytips/_utils/auth";
 import type { Like } from "@/app/mypage/[id]/_components/_type/Types";
 import {
@@ -11,7 +11,7 @@ import type { Post } from "@/app/mypage/_types/Mypage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-export const useLikes = () => {
+export const UseLikes = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [likingPosts, setLikingPosts] = useState<Set<string>>(new Set());
   const queryClient = useQueryClient();

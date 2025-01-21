@@ -2,7 +2,7 @@
 "use client";
 
 
-import { useComments } from "@/app/mypage/[id]/_components/Mycomment/hooks/UseComments";
+import { useComments } from "@/app/mypage/[id]/_components/Mycomment/hooks/useComments";
 import MyCommentCard from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";

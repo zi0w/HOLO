@@ -1,4 +1,4 @@
-// app/mypage/_hooks/useProfileEdit.ts
+
 import type { User } from "@/app/mypage/_types/Mypage";
 import type { UserData } from "@/app/mypage/_types/Profile";
 import { createClient } from "@/lib/utils/supabase/client";
@@ -6,7 +6,7 @@ import useAuthStore from "@/store/authStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-export const useProfileEdit = (onClose: () => void, initialData: User) => {
+export const UseProfileEdit = (onClose: () => void, initialData: User) => {
   const [nickname, setNickname] = useState(initialData.nickname || "");
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState(

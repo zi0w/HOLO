@@ -1,7 +1,7 @@
 // components/ProfileEditModal.tsx
 "use client";
 
-import { useProfileEdit } from "@/app/mypage/_hooks/UseProfileEdit";
+import { UseProfileEdit } from "@/app/mypage/_hooks/UseProfileEdit";
 import type { User } from "@/app/mypage/_types/Mypage";
 import type { ProfileEditModalProps } from "@/app/mypage/_types/Profile";
 import ProfileForm from "./ProfileForm";
@@ -31,7 +31,7 @@ const ProfileEditModal = ({
     setPassword,
     setConfirmPassword,
     handleSubmit,
-  } = useProfileEdit(onClose, initialData);
+  } = UseProfileEdit(onClose, initialData);
 
   if (!isOpen) return null;
 
