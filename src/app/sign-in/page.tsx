@@ -1,18 +1,25 @@
-import Signin from "@/app/sign-in/_components/Signin";
-import logo from "@/assets/images/common/logo.png"
+import SignInForm from "@/app/sign-in/_components/Signin";
+import splash_logo from "@/assets/images/splash/splash_logo.png";
 import Image from "next/image";
-const page = () => {
+
+const Page = () => {
   return (
-    <div className="bg-white-800 flex min-h-screen items-center justify-center">
-      <div className="text-center">
-      <Image src={logo}
-       alt="로고"
-       width={343}
-       height={165}/>
-        <Signin />
+    <div className="flex h-[874px] w-[402px] flex-col items-center bg-white">
+      <div className="mb-[40px] mt-[80px] flex flex-col items-center">
+        <div className="relative">
+          <div className="-ml-[20px] mt-[20px]">
+            <Image 
+              src={splash_logo} 
+              alt="로고" 
+              width={343} 
+              height={165}
+            />
+          </div>
+        </div>
       </div>
+      <SignInForm/>
     </div>
   );
 };
 
-export default page;
+export default Page;

@@ -1,0 +1,145 @@
+import { getId } from "@/app/honeytips/_utils/auth";
+import type { Like } from "@/app/mypage/[id]/_components/_type/types";
+import {
+  addLike,
+  deleteLike,
+  fetchLikePostsData,
+} from "@/app/mypage/[id]/_components/mylike/_utils/likes";
+import type { MutationContext } from "@/app/mypage/_types/like";
+
+import type { Post } from "@/app/mypage/_types/myPage";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+
+export const UseLikes = () => {
+  const [userId, setUserId] = useState<string | null>(null);
+  const [likingPosts, setLikingPosts] = useState<Set<string>>(new Set());
+  const queryClient = useQueryClient();
+
+  // userId를 가져오는 즉시 데이터를 prefetch
+  useEffect(() => {
+    const fetchUserIdAndData = async () => {
+      const id = await getId();
+      setUserId(id);
+      if (id) {
+        // userId가 있으면 즉시 데이터 prefetch
+        await queryClient.prefetchQuery({
+          queryKey: ["likedPosts", id],
+          queryFn: () => fetchLikePostsData(id),
+          staleTime: 0,
+        });
+      }
+    };
+    fetchUserIdAndData();
+  }, [queryClient]);
+
+  const { data: likedPosts, isPending } = useQuery<Post[]>({
+    queryKey: ["likedPosts", userId],
+    queryFn: () => fetchLikePostsData(userId || ""),
+    enabled: !!userId,
+    staleTime: 0, // 항상 최신 데이터를 가져오도록 설정
+    refetchOnMount: true, // 컴포넌트 마운트 시 항상 새로운 데이터 fetch
+  });
+
+  const likeMutation = useMutation<
+    void,
+    Error,
+    { postId: string; action: "add" | "delete" },
+    MutationContext
+  >({
+    mutationFn: async ({ postId, action }) => {
+      if (!userId) throw new Error("사용자가 로그인하지 않았습니다");
+      if (action === "add") {
+        await addLike(userId, postId);
+      } else {
+        await deleteLike(userId, postId);
+      }
+    },
+    onMutate: async ({ postId, action }) => {
+      if (!userId) throw new Error("사용자가 로그인하지 않았습니다");
+
+      setLikingPosts((prev) => new Set(prev).add(postId));
+
+      await queryClient.cancelQueries({ queryKey: ["likedPosts", userId] });
+      await queryClient.cancelQueries({ queryKey: ["post", postId] });
+      await queryClient.cancelQueries({ queryKey: ["likes", postId] });
+
+      const previousPosts = queryClient.getQueryData<Post[]>([
+        "likedPosts",
+        userId,
+      ]);
+      const previousPost = queryClient.getQueryData<Post>(["post", postId]);
+      const previousLikeData = queryClient.getQueryData<Like[]>([
+        "likes",
+        postId,
+      ]);
+
+      queryClient.setQueryData<Post[]>(["likedPosts", userId], (old) => {
+        if (!old) return old;
+        if (action === "delete") {
+          return old.filter((post) => post.id !== postId);
+        }
+        return old;
+      });
+
+      return { previousPosts, previousPost, previousLikeData };
+    },
+    onSuccess: (_, { action }) => {
+      alert(
+        action === "add"
+          ? "게시글을 좋아요 했습니다."
+          : "게시글 좋아요를 취소했습니다.",
+      );
+    },
+    onError: (_, __, context) => {
+      if (!userId) return;
+
+      alert("좋아요 처리 중 오류가 발생했습니다.");
+
+      if (context?.previousPosts) {
+        queryClient.setQueryData(["likedPosts", userId], context.previousPosts);
+      }
+      if (context?.previousPost) {
+        queryClient.setQueryData(
+          ["post", context.previousPost.id],
+          context.previousPost,
+        );
+      }
+      if (context?.previousLikeData) {
+        queryClient.setQueryData(
+          ["likes", context.previousPost?.id],
+          context.previousLikeData,
+        );
+      }
+    },
+    onSettled: (_, __, { postId }) => {
+      if (!userId) return;
+
+      setLikingPosts((prev) => {
+        const next = new Set(prev);
+        next.delete(postId);
+        return next;
+      });
+
+      queryClient.invalidateQueries({ queryKey: ["likedPosts", userId] });
+      queryClient.invalidateQueries({ queryKey: ["post"] });
+      queryClient.invalidateQueries({ queryKey: ["likes"] });
+    },
+  });
+
+  const handleLikeChange = async (postId: string, action: "add" | "delete") => {
+    if (!userId) return;
+    try {
+      await likeMutation.mutateAsync({ postId, action });
+    } catch (error) {
+      console.error("좋아요 처리 중 오류:", error);
+    }
+  };
+
+  return {
+    likedPosts,
+    isPending,
+    handleLikeChange,
+    isLiking: (postId: string) => likingPosts.has(postId),
+  };
+};
