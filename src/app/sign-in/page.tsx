@@ -4,8 +4,8 @@ import Image from "next/image";
 
 const Page = () => {
   return (
-    <div className="flex h-[874px] w-[402px] flex-col items-center bg-white">
-      <div className="mb-[40px] mt-[80px] flex flex-col items-center">
+    <div className="flex flex-col items-center bg-white">
+      <div className="mb-[40px] flex flex-col items-center">
         <div className="relative">
           <div className="-ml-[20px] mt-[20px]">
             <Image 

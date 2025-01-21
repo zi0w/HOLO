@@ -1,9 +1,9 @@
 // src/app/mypage/_components/mypageform.tsx
 "use client";
 
-import MyCommentList from "@/app/mypage/[id]/_components/my-comment/useMyCommentList";
-import MyLikeList from "@/app/mypage/[id]/_components/mylike/myLikeList";
-import MyWritingList from "@/app/mypage/[id]/_components/mypost/myWritingList";
+import MyCommentList from "@/app/mypage/[id]/_components/my-comment/MyCommentList";
+import MyLikeList from "@/app/mypage/[id]/_components/mylike/LikeList";
+import MyWritingList from "@/app/mypage/[id]/_components/mypost/WritingList";
 import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
 import UserProfile from "@/app/mypage/_components/UserProfile";
 import type { ActiveSection } from "@/app/mypage/_types/myPage";
@@ -63,7 +63,7 @@ const Mypageform = () => {
   };
 
   return (
-    <div className={clsx("relative h-[1069px] w-[402px] bg-white")}>
+    <div className="relative bg-white">
       <div className={clsx("mt-[-5px]")}>
         <UserProfile />
       </div>
@@ -137,7 +137,7 @@ const Mypageform = () => {
 
       <div
         className={clsx(
-          "mx-[20px] mt-[10px] h-[400px] w-[362px] rounded-lg border border-[#E0E0E0] bg-white",
+          "mx-[20px] mt-[10px] h-[400px] rounded-lg border border-[#E0E0E0] bg-white",
         )}
       >
         {renderSection()}

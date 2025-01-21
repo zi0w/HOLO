@@ -1,17 +1,16 @@
 "use client";
 
-import { useComments } from "@/app/mypage/[id]/_components/my-comment/hooks/useComments";
-import MyCommentCard from "@/app/mypage/[id]/_components/my-comment/useMyCommentCard";
+import { useMyPosts } from "@/app/mypage/[id]/_components/mypost/_hooks/useMyWriting";
+import MyWritingCard from "@/app/mypage/[id]/_components/mypost/WritingCard";
+import type { Post } from "@/app/mypage/_types/myPage";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
-// import Image from "next/image";
-// import Link from "next/link";
 
-const MyCommentList = () => {
-  const { comments, isLoading, handleDelete } = useComments();
+const MyWritingList = () => {
+  const { posts, isLoading, handleDelete, isDeleting } = useMyPosts();
 
   const {
-    currentItems: currentComments,
+    currentItems: currentPosts,
     currentPage,
     totalPages,
     startButtonIndex,
@@ -19,20 +18,21 @@ const MyCommentList = () => {
     nextPage,
     prevPage,
     goToPage,
-  } = usePagination(comments, 5);
+  } = usePagination<Post>(posts, 5);
 
   if (isLoading) return <p>로딩중입니다...</p>;
 
   return (
     <div className="h-full w-full pt-[10px]">
-      {currentComments.length > 0 ? (
+      {currentPosts.length > 0 ? (
         <div className="relative flex h-full flex-col">
           <div className="flex-1">
-            {currentComments.map((comment) => (
-              <MyCommentCard
-                key={comment.id}
-                comment={comment}
+            {currentPosts.map((post) => (
+              <MyWritingCard
+                key={post.id}
+                post={post}
                 onDelete={handleDelete}
+                isDeleting={isDeleting(post.id)}
               />
             ))}
           </div>
@@ -50,11 +50,11 @@ const MyCommentList = () => {
         </div>
       ) : (
         <p className="py-4 text-center text-[#8F8F8F]">
-          작성한 댓글이 없습니다.
+          작성한 게시물이 없습니다.
         </p>
       )}
     </div>
   );
 };
 
-export default MyCommentList;
+export default MyWritingList;

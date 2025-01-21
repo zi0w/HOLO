@@ -44,7 +44,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex w-[362px] flex-col items-center">
+    <div className="mx-5 flex flex-col items-center pb-5">
       <form onSubmit={handleSubmit} className="w-full">
         <div className="w-full">
           <div className="space-y-[8px]">

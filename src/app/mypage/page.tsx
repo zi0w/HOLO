@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <div className="h-screen w-full overflow-hidden">
+    <div className="w-full">
       <Mypageform />
     </div>
   );
