@@ -11,3 +11,4 @@ export type SignUpPayload = {
   password: string;
   nickname: string;
 };
+

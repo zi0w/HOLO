@@ -1,8 +1,8 @@
-// app/sign-up/_components/Signup.tsx
+
 "use client";
 
-import { useSignUpForm } from "@/app/sign-up/_hooks/useSignUpForm";
-import { useSignUpMutation } from "@/app/sign-up/_hooks/useSignUpMutation";
+import { useSignUpForm } from "@/app/sign-up/_hooks/UseSignUpForm";
+import { useSignUpMutation } from "@/app/sign-up/_hooks/UseSignUpMutation";
 
 import { useRouter } from "next/navigation";
 

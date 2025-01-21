@@ -6,10 +6,10 @@ type ProfileImageUploaderProps = {
   onImageChange: (file: File | null) => void;
 }
 
-const ProfileImageUploader: React.FC<ProfileImageUploaderProps> = ({
+const ProfileImageUploader = ({
   previewUrl,
   onImageChange
-}) => {
+}:ProfileImageUploaderProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     onImageChange(file || null);
@@ -23,7 +23,7 @@ const ProfileImageUploader: React.FC<ProfileImageUploaderProps> = ({
         className="relative w-24 h-24 rounded-full overflow-hidden"
       >
         <Image
-          src={""}
+          src={previewUrl}
           alt="프로필 이미지"
           fill
           className="object-cover"

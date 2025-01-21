@@ -1,8 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-export async function DELETE(request: Request) {
-  console.log("회원 탈퇴 API 호출됨");
+export const DELETE = async (request: Request) => {
+  
   
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -38,19 +38,19 @@ export async function DELETE(request: Request) {
     }
 
     try {
-      // 1. 좋아요 삭제
+      
       await supabase.from("likes").delete().eq("user_id", userId);
       
-      // 2. 댓글 삭제
+      
       await supabase.from("comments").delete().eq("user_id", userId);
       
-      // 3. 게시물 삭제
+      
       await supabase.from("posts").delete().eq("user_id", userId);
       
-      // 4. 사용자 프로필 삭제
+      
       await supabase.from("users").delete().eq("id", userId);
 
-      // 5. Auth 사용자 삭제 (중요!)
+      
       const { error: authError } = await supabase.auth.admin.deleteUser(userId);
       
       if (authError) {
@@ -75,4 +75,19 @@ export async function DELETE(request: Request) {
       { status: 500 }
     );
   }
-}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

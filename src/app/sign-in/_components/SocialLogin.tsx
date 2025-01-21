@@ -1,7 +1,7 @@
 // components/SocialLogin.tsx
 "use client";
 
-import { useSocialLogin } from "@/app/sign-in/_hooks/useSocialLogin";
+import { useSocialLogin } from "@/app/sign-in/_hooks/UseSocialLogin";
 import githubimg from "@/assets/images/social-login/githubimg.png";
 import googleimg from "@/assets/images/social-login/googleimg.png";
 import kakaoimg from "@/assets/images/social-login/kakaoimg.png";

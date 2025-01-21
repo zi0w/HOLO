@@ -1,18 +1,17 @@
 // hooks/useLikes.ts
-import { useEffect, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getId } from "@/app/honeytips/_utils/auth";
-// iy
-;
-import { addLike, deleteLike, fetchLikePostsData } from "@/app/mypage/[id]/_components/Mylike/_utils/likes";
-import type { Post } from "@/app/mypage/_types/mypage";
-import type { Like } from "@/app/mypage/[id]/_components/_type/types";
+import type { Like } from "@/app/mypage/[id]/_components/_type/Types";
+import {
+  addLike,
+  deleteLike,
+  fetchLikePostsData,
+} from "@/app/mypage/[id]/_components/Mylike/_utils/likes";
+import type { MutationContext } from "@/app/mypage/_types/Like";
+import type { Post } from "@/app/mypage/_types/Mypage";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
-type MutationContext = {
-  previousPosts: Post[] | undefined;
-  previousPost: Post | undefined;
-  previousLikeData: Like[] | undefined;
-};
+
 
 export const useLikes = () => {
   const [userId, setUserId] = useState<string | null>(null);
@@ -27,7 +26,7 @@ export const useLikes = () => {
     fetchUserId();
   }, []);
 
-  const { data: likedPosts, isLoading } = useQuery<Post[]>({
+  const { data: likedPosts, isPending } = useQuery<Post[]>({
     queryKey: ["likedPosts", userId],
     queryFn: () => fetchLikePostsData(userId || ""),
     enabled: !!userId,
@@ -40,7 +39,7 @@ export const useLikes = () => {
     MutationContext
   >({
     mutationFn: async ({ postId, action }) => {
-      if (!userId) throw new Error("User not logged in");
+      if (!userId) throw new Error("사용자가 로그인하지 않았습니다");
       if (action === "add") {
         await addLike(userId, postId);
       } else {
@@ -48,17 +47,23 @@ export const useLikes = () => {
       }
     },
     onMutate: async ({ postId, action }) => {
-      if (!userId) throw new Error("User not logged in");
+      if (!userId) throw new Error("사용자가 로그인하지 않았습니다");
 
-      setLikingPosts(prev => new Set(prev).add(postId));
+      setLikingPosts((prev) => new Set(prev).add(postId));
 
       await queryClient.cancelQueries({ queryKey: ["likedPosts", userId] });
       await queryClient.cancelQueries({ queryKey: ["post", postId] });
       await queryClient.cancelQueries({ queryKey: ["likes", postId] });
 
-      const previousPosts = queryClient.getQueryData<Post[]>(["likedPosts", userId]);
+      const previousPosts = queryClient.getQueryData<Post[]>([
+        "likedPosts",
+        userId,
+      ]);
       const previousPost = queryClient.getQueryData<Post>(["post", postId]);
-      const previousLikeData = queryClient.getQueryData<Like[]>(["likes", postId]);
+      const previousLikeData = queryClient.getQueryData<Like[]>([
+        "likes",
+        postId,
+      ]);
 
       queryClient.setQueryData<Post[]>(["likedPosts", userId], (old) => {
         if (!old) return old;
@@ -72,9 +77,9 @@ export const useLikes = () => {
     },
     onSuccess: (_, { action }) => {
       alert(
-        action === "add" 
-          ? "게시글을 좋아요 했습니다." 
-          : "게시글 좋아요를 취소했습니다."
+        action === "add"
+          ? "게시글을 좋아요 했습니다."
+          : "게시글 좋아요를 취소했습니다.",
       );
     },
     onError: (_, __, context) => {
@@ -86,16 +91,22 @@ export const useLikes = () => {
         queryClient.setQueryData(["likedPosts", userId], context.previousPosts);
       }
       if (context?.previousPost) {
-        queryClient.setQueryData(["post", context.previousPost.id], context.previousPost);
+        queryClient.setQueryData(
+          ["post", context.previousPost.id],
+          context.previousPost,
+        );
       }
       if (context?.previousLikeData) {
-        queryClient.setQueryData(["likes", context.previousPost?.id], context.previousLikeData);
+        queryClient.setQueryData(
+          ["likes", context.previousPost?.id],
+          context.previousLikeData,
+        );
       }
     },
     onSettled: (_, __, { postId }) => {
       if (!userId) return;
 
-      setLikingPosts(prev => {
+      setLikingPosts((prev) => {
         const next = new Set(prev);
         next.delete(postId);
         return next;
@@ -118,9 +129,8 @@ export const useLikes = () => {
 
   return {
     likedPosts,
-    isLoading,
+    isPending,
     handleLikeChange,
     isLiking: (postId: string) => likingPosts.has(postId),
   };
 };
-

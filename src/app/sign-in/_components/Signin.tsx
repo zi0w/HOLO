@@ -2,9 +2,9 @@
 "use client";
 
 import SocialLogin from "./SocialLogin";
-import { useSignInForm } from "@/app/sign-in/_hooks/useSignInForm";
-import useSignInMutation from "@/app/sign-in/_hooks/useSignInMutation";
-import { useSignInNavigation } from "@/app/sign-in/_hooks/useSignInNavigation";
+import { useSignInForm } from "@/app/sign-in/_hooks/UseSignInForm";
+import useSignInMutation from "@/app/sign-in/_hooks/UseSignInMutation";
+import { useSignInNavigation } from "@/app/sign-in/_hooks/UseSignInNavigation";
 
 const SignInForm = () => {
   const { formData, errors, handleChange, validateAll } = useSignInForm();

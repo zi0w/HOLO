@@ -1,9 +1,8 @@
 // hooks/useDeleteAccount.ts
-import { useQueryClient } from "@tanstack/react-query";
+import { clearAllStorage } from "@/app/mypage/_utils/CleanUp";
+import { deleteUserAccount, signOutUser } from "@/app/mypage/_utils/User";
 import useAuthStore from "@/store/authStore";
-import { deleteUserAccount, signOutUser } from "@/app/mypage/_utils/user";
-import { clearAllStorage } from "@/app/mypage/_utils/cleanup";
-
+import { useQueryClient } from "@tanstack/react-query";
 
 export const useDeleteAccount = () => {
   const user = useAuthStore((state) => state.user);

@@ -1,13 +1,14 @@
 // src/app/mypage/[id]/_components/Mypost/_utils/posts.ts
-import { createClient } from '@/lib/utils/supabase/client';
-import type { Post } from "@/app/mypage/_types/mypage";
+import type { Post } from "@/app/mypage/_types/Mypage";
+import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();
 
 export const fetchMyPostsData = async (userId: string): Promise<Post[]> => {
   const { data, error } = await supabase
-    .from('posts')
-    .select(`
+    .from("posts")
+    .select(
+      `
       id,
       title,
       content,
@@ -19,19 +20,17 @@ export const fetchMyPostsData = async (userId: string): Promise<Post[]> => {
         nickname,
         profile_image_url
       )
-    `)
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false });
+    `,
+    )
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
 
   if (error) throw error;
   return data || [];
 };
 
 export const deletePost = async (postId: string): Promise<void> => {
-  const { error } = await supabase
-    .from('posts')
-    .delete()
-    .eq('id', postId);
+  const { error } = await supabase.from("posts").delete().eq("id", postId);
 
   if (error) throw error;
 };

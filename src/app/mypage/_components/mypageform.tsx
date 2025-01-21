@@ -1,17 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import useAuthStore from "@/store/authStore";
-import UserProfile from "@/app/mypage/_components/UserProfile";
-import MyWritingList from "@/app/mypage/[id]/_components/Mypost/MyWritingList";
 import MyCommentList from "@/app/mypage/[id]/_components/Mycomment/MyCommentList";
 import MyLikeList from "@/app/mypage/[id]/_components/Mylike/MyLikeList";
-import SignoutButton from "@/app/sign-in/_components/SignoutButton";
+import MyWritingList from "@/app/mypage/[id]/_components/Mypost/MyWritingList";
 import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
-import type { ActiveSection } from "@/app/mypage/_types/mypage";
+import UserProfile from "@/app/mypage/_components/UserProfile";
+import type { ActiveSection } from "@/app/mypage/_types/Mypage";
+import SignoutButton from "@/app/sign-in/_components/SignoutButton";
+import useAuthStore from "@/store/authStore";
+import { useQueryClient } from "@tanstack/react-query";
+import clsx from "clsx";
+import { useState } from "react";
 
-const Mypageform: React.FC = () => {
+const Mypageform = () => {
   const [activeSection, setActiveSection] = useState<ActiveSection>("likes");
   const queryClient = useQueryClient();
   const userId = useAuthStore((state) => state.user?.id);
@@ -45,70 +46,73 @@ const Mypageform: React.FC = () => {
     }
   };
   return (
-    <div className="relative w-[402px] h-[1069px] bg-white">
-      <div className="mt-[-5px]">
+    <div className={clsx("relative h-[1069px] w-[402px] bg-white")}>
+      <div className={clsx("mt-[-5px]")}>
         <UserProfile />
       </div>
+  
       
-      {/* 탭 버튼들 */}
-      <div className="mt-[60px]">
-        <div className="flex justify-center gap-16">
-          <div className="relative">
-            <button 
+      <div className={clsx("mt-[60px]")}>
+        <div className={clsx("flex justify-center gap-16")}>
+          <div className={clsx("relative")}>
+            <button
               onClick={() => handleSectionChange("likes")}
-              className={`px-2 font-pretendard text-base font-medium ${
+              className={clsx(
+                "font-pretendard px-2 text-base font-medium",
                 activeSection === "likes" ? "text-[#FF7600]" : "text-[#8F8F8F]"
-              }`}
+              )}
             >
               좋아요
             </button>
             {activeSection === "likes" && (
-              <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#FF7600]" />
+              <div className={clsx("absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]")} />
             )}
           </div>
   
-          <div className="relative">
-            <button 
+          <div className={clsx("relative")}>
+            <button
               onClick={() => handleSectionChange("comments")}
-              className={`px-2 font-pretendard text-base font-medium ${
+              className={clsx(
+                "font-pretendard px-2 text-base font-medium",
                 activeSection === "comments" ? "text-[#FF7600]" : "text-[#8F8F8F]"
-              }`}
+              )}
             >
               댓글
             </button>
             {activeSection === "comments" && (
-              <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#FF7600]" />
+              <div className={clsx("absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]")} />
             )}
           </div>
   
-          <div className="relative">
-            <button 
+          <div className={clsx("relative")}>
+            <button
               onClick={() => handleSectionChange("myPosts")}
-              className={`px-2 font-pretendard text-base font-medium ${
+              className={clsx(
+                "font-pretendard px-2 text-base font-medium",
                 activeSection === "myPosts" ? "text-[#FF7600]" : "text-[#8F8F8F]"
-              }`}
+              )}
             >
               내가 쓴 글
             </button>
             {activeSection === "myPosts" && (
-              <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#FF7600]" />
+              <div className={clsx("absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]")} />
             )}
           </div>
         </div>
       </div>
   
-      {/* 구분선 */}
-      <div className="border-t border-[#FFE4CC] mt-1" />
+      
+      <div className={clsx("mt-1 border-t border-[#FFE4CC]")} />
   
-      {/* 컨텐츠 영역 */}
-      <div className="mt-[10px] mx-[20px] w-[362px] h-[400px] border border-[#E0E0E0] rounded-lg bg-white">
+      
+      <div className={clsx("mx-[20px] mt-[10px] h-[400px] w-[362px] rounded-lg border border-[#E0E0E0] bg-white")}>
         {renderSection()}
       </div>
   
-      {/* 버튼 영역 */}
-      <div className="mt-[27px] mx-[20px] flex flex-col">
+      
+      <div className={clsx("mx-[20px] mt-[27px] flex flex-col")}>
         <SignoutButton />
-        <div className="mt-[16px]">
+        <div className={clsx("mt-[16px]")}>
           <DeleteAccount />
         </div>
       </div>
@@ -117,4 +121,3 @@ const Mypageform: React.FC = () => {
 };
 
 export default Mypageform;
-

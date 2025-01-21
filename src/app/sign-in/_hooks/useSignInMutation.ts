@@ -6,10 +6,10 @@ import AuthStore from "@/store/authStore"; // Zustand 스토어 가져오기
 import { useMutation, UseMutationResult } from "@tanstack/react-query"; // React Query 가져오기
 import { useRouter } from "next/navigation"; // Next.js 라우터 가져오기
 import { Session } from "@supabase/supabase-js"; // Supabase의 Session 타입 가져오기
-import type { SignInPayload } from "@/app/sign-in/_types/sign-in.type";
-import type { User } from "@/app/sign-in/_types/userType";
+import type { SignInPayload } from "@/app/sign-in/_types/Sign-in.type";
+import type { User } from "@/app/sign-in/_types/UserType";
 
-// SignInResult 타입 정의
+
 export type SignInResult = {
   user: Record<string, string> | null; // 사용자 정보
   session: Session; // 세션 정보

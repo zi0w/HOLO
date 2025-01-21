@@ -1,15 +1,16 @@
 // hooks/useComments.ts
-import { useEffect, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getId } from "@/app/honeytips/_utils/auth";
-import { createClient } from '@/lib/utils/supabase/client';
-import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/comment";
+import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/Comment";
+import { createClient } from "@/lib/utils/supabase/client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 const fetchCommentData = async (userId: string): Promise<CommentWithPost[]> => {
   const supabase = createClient();
   const { data, error } = await supabase
-    .from('comments')
-    .select(`
+    .from("comments")
+    .select(
+      `
       id,
       comment,
       created_at,
@@ -28,21 +29,22 @@ const fetchCommentData = async (userId: string): Promise<CommentWithPost[]> => {
         categories,
         post_image_url
       )
-    `)
-    .eq('user_id', userId);
+    `,
+    )
+    .eq("user_id", userId);
 
   if (error) throw error;
   if (!data) return [];
-  
+
   return data as CommentWithPost[];
 };
 
 const deleteComment = async (commentId: string): Promise<void> => {
   const supabase = createClient();
   const { error } = await supabase
-    .from('comments')
+    .from("comments")
     .delete()
-    .eq('id', commentId);
+    .eq("id", commentId);
 
   if (error) throw error;
 };
@@ -75,14 +77,15 @@ export const useComments = () => {
     onMutate: async (commentId) => {
       await queryClient.cancelQueries({ queryKey: ["comments", userId] });
 
-      const previousComments = queryClient.getQueryData<CommentWithPost[]>([
-        "comments",
-        userId,
-      ]) || [];
+      const previousComments =
+        queryClient.getQueryData<CommentWithPost[]>(["comments", userId]) || [];
 
-      queryClient.setQueryData<CommentWithPost[]>(["comments", userId], (old = []) => {
-        return old.filter((comment) => comment.id !== commentId);
-      });
+      queryClient.setQueryData<CommentWithPost[]>(
+        ["comments", userId],
+        (old = []) => {
+          return old.filter((comment) => comment.id !== commentId);
+        },
+      );
 
       return { previousComments };
     },
@@ -105,11 +108,11 @@ export const useComments = () => {
 
   const handleDelete = async (commentId: string) => {
     // if (window.confirm("댓글을 삭제하시겠습니까?")) {
-      try {
-        await deleteCommentMutation.mutateAsync(commentId);
-      } catch (error) {
-        console.error("댓글 삭제 중 오류:", error);
-      }
+    try {
+      await deleteCommentMutation.mutateAsync(commentId);
+    } catch (error) {
+      console.error("댓글 삭제 중 오류:", error);
+    }
     // }
   };
 

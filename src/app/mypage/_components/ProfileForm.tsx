@@ -1,19 +1,9 @@
 // components/ProfileForm.tsx
+import type { ProfileFormProps } from '@/app/mypage/_types/User';
 import React from 'react';
 
-type ProfileFormProps = {
-  nickname: string;
-  password: string;
-  confirmPassword: string;
-  nicknameError: string;
-  passwordError: string;
-  isCheckingNickname: boolean;
-  onNicknameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onConfirmPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
 
-const ProfileForm: React.FC<ProfileFormProps> = ({
+const ProfileForm = ({
   nickname,
   password,
   confirmPassword,
@@ -23,7 +13,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   onNicknameChange,
   onPasswordChange,
   onConfirmPasswordChange
-}) => {
+}:ProfileFormProps) => {
   return (
     <>
       <div className="mb-4">

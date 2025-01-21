@@ -1,13 +1,13 @@
-// src/app/mypage/[id]/_components/Mycomment/MyCommentList.tsx
+
 "use client";
 
 
-import { useComments } from "@/app/mypage/[id]/_components/Mycomment/hooks/useComments";
+import { useComments } from "@/app/mypage/[id]/_components/Mycomment/hooks/UseComments";
 import MyCommentCard from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
-import Image from "next/image";
-import Link from "next/link";
+// import Image from "next/image";
+// import Link from "next/link";
 
 const MyCommentList = () => {
   const { comments, isLoading, handleDelete } = useComments();

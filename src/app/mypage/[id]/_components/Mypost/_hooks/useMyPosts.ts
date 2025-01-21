@@ -1,14 +1,12 @@
 // src/app/mypage/[id]/_components/Mypost/_hooks/useMyPosts.ts
-import { useEffect, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getId } from "@/app/honeytips/_utils/auth";
-import { fetchMyPostsData, deletePost } from "../_utils/posts";
-import type { Post } from "@/app/mypage/_types/mypage";
+import type { Post } from "@/app/mypage/_types/Mypage";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { deletePost, fetchMyPostsData } from "../_utils/Posts";
+import type { MutationContext } from "@/app/mypage/[id]/_components/_type/Post";
 
-// mutation context 타입 정의
-type MutationContext = {
-  previousPosts: Post[];
-};
+
 
 export const useMyPosts = () => {
   const [userId, setUserId] = useState<string | null>(null);
@@ -25,7 +23,7 @@ export const useMyPosts = () => {
 
   const { data: posts = [], isLoading } = useQuery<Post[]>({
     queryKey: ["myPosts", userId],
-    queryFn: () => userId ? fetchMyPostsData(userId) : Promise.resolve([]),
+    queryFn: () => (userId ? fetchMyPostsData(userId) : Promise.resolve([])),
     enabled: !!userId,
   });
 
@@ -33,15 +31,16 @@ export const useMyPosts = () => {
     mutationFn: deletePost,
     onMutate: async (postId) => {
       await queryClient.cancelQueries({ queryKey: ["myPosts", userId] });
-      
-      const previousPosts = queryClient.getQueryData<Post[]>(["myPosts", userId]) || [];
-      
+
+      const previousPosts =
+        queryClient.getQueryData<Post[]>(["myPosts", userId]) || [];
+
       queryClient.setQueryData<Post[]>(["myPosts", userId], (old = []) => {
-        return old.filter(post => post.id !== postId);
+        return old.filter((post) => post.id !== postId);
       });
 
-      setDeletingPosts(prev => new Set(prev).add(postId));
-      
+      setDeletingPosts((prev) => new Set(prev).add(postId));
+
       return { previousPosts };
     },
     onError: (_, __, context) => {
@@ -54,7 +53,7 @@ export const useMyPosts = () => {
       // alert("게시글이 삭제되었습니다.");
     },
     onSettled: (_, __, postId) => {
-      setDeletingPosts(prev => {
+      setDeletingPosts((prev) => {
         const next = new Set(prev);
         next.delete(postId);
         return next;
@@ -65,11 +64,11 @@ export const useMyPosts = () => {
 
   const handleDelete = async (postId: string) => {
     // if (window.confirm("게시글을 삭제하시겠습니까?")) {
-      try {
-        await deletePostMutation.mutateAsync(postId);
-      } catch (error) {
-        console.error("게시글 삭제 중 오류:", error);
-      }
+    try {
+      await deletePostMutation.mutateAsync(postId);
+    } catch (error) {
+      console.error("게시글 삭제 중 오류:", error);
+    }
     // }
   };
 

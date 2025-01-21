@@ -1,6 +1,6 @@
 // app/mypage/_hooks/useProfileEdit.ts
-import type { User } from "@/app/mypage/_types/mypage";
-import type { UserData } from "@/app/mypage/_types/profile";
+import type { User } from "@/app/mypage/_types/Mypage";
+import type { UserData } from "@/app/mypage/_types/Profile";
 import { createClient } from "@/lib/utils/supabase/client";
 import useAuthStore from "@/store/authStore";
 import { useQueryClient } from "@tanstack/react-query";

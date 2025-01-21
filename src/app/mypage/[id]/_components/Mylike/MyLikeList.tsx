@@ -1,13 +1,13 @@
-// components/MyLikeList.tsx
-import { useLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/useLikes";
+"use client";
+import { useLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/UseLikes";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 
 import MyLikeCard from "@/app/mypage/[id]/_components/Mylike/MyLikeCard";
-import type { Post } from "@/app/mypage/_types/mypage";
+import type { Post } from "@/app/mypage/_types/Mypage";
 
 const MyLikeList = () => {
-  const { likedPosts, isLoading, handleLikeChange } = useLikes();
+  const { likedPosts, isPending, handleLikeChange } = useLikes();
 
   const {
     currentItems: currentPosts,
@@ -20,15 +20,14 @@ const MyLikeList = () => {
     goToPage,
   } = usePagination<Post>(likedPosts || [], 5);
 
-  if (isLoading) return <p>로딩중입니다...</p>;
-  // MyLikeList.tsx의 return 부분// MyLikeList.tsx return 부분
-  // MyLikeList.tsx의 return 부분retu// MyLikeList.tsx의 return 부분
-  // MyLikeList.tsx의 return 부분
-  // MyLikeList.tsx의 return 부분
+  if (isPending) return <p>로딩중입니다...</p>;
+
   return (
     <div className="h-full w-full pt-[10px]">
       {currentPosts.length > 0 ? (
-        <div className="flex h-full flex-col relative"> {/* relative 추가 */}
+        <div className="relative flex h-full flex-col">
+          {" "}
+          {/* relative 추가 */}
           <div className="flex-1">
             {currentPosts.map((post) => (
               <MyLikeCard
@@ -38,7 +37,9 @@ const MyLikeList = () => {
               />
             ))}
           </div>
-          <div className="absolute bottom-0 left-0 right-0 px-[86px] py-4 pr-[90px] bg-white"> {/* absolute, bottom-0, left-0, right-0, bg-white 추가 */}
+          <div className="absolute bottom-0 left-0 right-0 bg-white px-[86px] py-4 pr-[90px]">
+            {" "}
+            {/* absolute, bottom-0, left-0, right-0, bg-white 추가 */}
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

@@ -8,3 +8,7 @@ export type Post = {
     post_image_url: string[] | null;
     user_id: string;
   };
+
+  export type MutationContext = {
+    previousPosts: Post[];
+  };

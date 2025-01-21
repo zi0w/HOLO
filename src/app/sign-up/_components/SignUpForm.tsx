@@ -1,18 +1,13 @@
 // app/sign-up/_components/SignUpForm.tsx
 "use client";
-import { signUp, type SignUpData } from "@/app/sign-up/_utils/auth";
+import type { FormData } from "@/app/sign-up/_types/SignupType";
+import { signUp, type SignUpData } from "@/app/sign-up/_utils/Auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export type FormData = {
-  email: string;
-  nickname: string;
-  password: string;
-  checkPassword: string;
-  profile_image_url: string;
-};
 
-const SignUpForm: React.FC = () => {
+
+const SignUpForm = () => {
   const [formData, setFormData] = useState<FormData>({
     email: "",
     nickname: "",

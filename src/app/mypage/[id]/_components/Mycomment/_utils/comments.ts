@@ -1,14 +1,14 @@
 // api/comments.ts
-import type { Comment } from "@/app/mypage/[id]/_components/_type/comment";
+import type { Comment } from "@/app/mypage/[id]/_components/_type/Comment";
 import { createClient } from "@/lib/utils/supabase/client";
-
 
 const supabase = createClient();
 
 export const fetchCommentData = async (userId: string): Promise<Comment[]> => {
   const { data, error } = await supabase
     .from("comments")
-    .select(`
+    .select(
+      `
       *,
       posts(
         id,
@@ -17,7 +17,8 @@ export const fetchCommentData = async (userId: string): Promise<Comment[]> => {
         created_at,
         categories
       )
-    `)
+    `,
+    )
     .eq("user_id", userId)
     .order("created_at", { ascending: false });
 

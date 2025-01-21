@@ -1,14 +1,13 @@
 // hooks/useLikeButton.ts
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { LikeAction } from "@/app/mypage/_types/Like";
+import { getCurrentUser, toggleLikeStatus } from "@/app/mypage/_utils/Likes";
 import { useGuestStore } from "@/hooks/useGuestAccess";
-import type { LikeAction } from "@/app/mypage/_types/like";
-import { getCurrentUser, toggleLikeStatus } from "@/app/mypage/_utils/likes";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useLikeButton = (
   postId: string,
   isLiked: boolean,
-  onLikeChange?: (postId: string, action: LikeAction) => Promise<void>
+  onLikeChange?: (postId: string, action: LikeAction) => Promise<void>,
 ) => {
   const queryClient = useQueryClient();
   const isGuest = useGuestStore((state) => state.isGuest);
@@ -25,7 +24,7 @@ export const useLikeButton = (
       queryClient.invalidateQueries({ queryKey: ["userPosts"] });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       queryClient.invalidateQueries({ queryKey: ["post", postId] });
-      
+
       if (onLikeChange) {
         await onLikeChange(postId, action);
       }

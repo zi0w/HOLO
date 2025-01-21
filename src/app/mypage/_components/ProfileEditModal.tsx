@@ -1,21 +1,23 @@
 // components/ProfileEditModal.tsx
 "use client";
 
-import type { ProfileEditModalProps } from "@/app/mypage/_types/profile";
-import type { User } from "@/app/mypage/_types/mypage";
-import ProfileImageUploader from "./ProfileImageUploader";
+import { useProfileEdit } from "@/app/mypage/_hooks/UseProfileEdit";
+import type { User } from "@/app/mypage/_types/Mypage";
+import type { ProfileEditModalProps } from "@/app/mypage/_types/Profile";
 import ProfileForm from "./ProfileForm";
-import { useProfileEdit } from "@/app/mypage/_hooks/useProfileEdit";
+import ProfileImageUploader from "./ProfileImageUploader";
 
-interface ExtendedProfileEditModalProps extends ProfileEditModalProps {
+// interface ExtendedProfileEditModalProps extends ProfileEditModalProps {
+//   initialData: User;
+// }
+type ExtendedProfileEditModalProps = ProfileEditModalProps & {
   initialData: User;
-}
-
-const ProfileEditModal: React.FC<ExtendedProfileEditModalProps> = ({ 
-  isOpen, 
-  onClose, 
-  initialData 
-}) => {
+};
+const ProfileEditModal = ({
+  isOpen,
+  onClose,
+  initialData,
+}: ExtendedProfileEditModalProps) => {
   const {
     nickname,
     previewUrl,
@@ -28,15 +30,15 @@ const ProfileEditModal: React.FC<ExtendedProfileEditModalProps> = ({
     handleImageChange,
     setPassword,
     setConfirmPassword,
-    handleSubmit
+    handleSubmit,
   } = useProfileEdit(onClose, initialData);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg w-96">
-        <h2 className="text-xl font-bold mb-4">프로필 수정</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-96 rounded-lg bg-white p-6">
+        <h2 className="mb-4 text-xl font-bold">프로필 수정</h2>
         <form onSubmit={handleSubmit}>
           <ProfileImageUploader
             previewUrl={previewUrl}
@@ -57,13 +59,13 @@ const ProfileEditModal: React.FC<ExtendedProfileEditModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-200 rounded"
+              className="rounded bg-gray-200 px-4 py-2"
             >
               취소
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded"
+              className="rounded bg-blue-500 px-4 py-2 text-white"
               disabled={isCheckingNickname || !!nicknameError}
             >
               저장

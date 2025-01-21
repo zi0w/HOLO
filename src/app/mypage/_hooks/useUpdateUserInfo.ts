@@ -1,4 +1,4 @@
-import { fetchUserInfo } from "@/app/mypage/_utils/user";
+import { fetchUserInfo } from "@/app/mypage/_utils/User";
 import useAuthStore from "@/store/authStore";
 import { useCallback } from "react";
 
@@ -11,7 +11,6 @@ export function useUpdateUserInfo(forceUpdate: boolean = false) {
       console.log(user);
       console.log(userInfo);
       if (userInfo) {
-       
         if (
           forceUpdate ||
           user.nickname !== userInfo.nickname ||

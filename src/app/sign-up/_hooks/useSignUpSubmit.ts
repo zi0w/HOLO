@@ -1,6 +1,7 @@
-// hooks/useSignUpSubmit.ts
-import type { FormData } from "@/app/sign-up/_components/SignUpForm";
-import { signUp, type SignUpData } from "@/app/sign-up/_utils/auth";
+
+
+import type { FormData } from "@/app/sign-up/_types/SignupType";
+import { signUp, type SignUpData } from "@/app/sign-up/_utils/Auth";
 
 import { useRouter } from "next/navigation";
 

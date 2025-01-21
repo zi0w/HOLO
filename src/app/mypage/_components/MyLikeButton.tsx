@@ -1,5 +1,5 @@
-// components/LikeButton.tsx
-import { useLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/useLikes";
+
+import { useLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/UseLikes";
 import YesHeart from "@/assets/images/honeytips/love_selected_42.svg";
 import NoHeart from "@/assets/images/honeytips/love_unselected_42.svg";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ export type LikeButtonProps = {
   postId: string;
   isLiked: boolean;
   onLikeChange: (postId: string, action: "add" | "delete") => Promise<void>;
-}
+};
 
 const MyLikeButton = ({ postId, isLiked, onLikeChange }: LikeButtonProps) => {
   const { isLiking } = useLikes();
@@ -24,13 +24,13 @@ const MyLikeButton = ({ postId, isLiked, onLikeChange }: LikeButtonProps) => {
     await onLikeChange(postId, action);
   };
 
-  // src/app/mypage/_components/MyLikeButton.tsx
+  
   return (
     <button
       onClick={handleClick}
       disabled={isLiking(postId)}
       className={`flex items-center justify-center transition-all ${
-        isLiking(postId) ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'
+        isLiking(postId) ? "cursor-not-allowed opacity-50" : "hover:scale-110"
       }`}
       aria-label={liked ? "좋아요 취소" : "좋아요"}
     >
@@ -44,19 +44,6 @@ const MyLikeButton = ({ postId, isLiked, onLikeChange }: LikeButtonProps) => {
 };
 
 export default MyLikeButton;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //원본 건드리지마라
 // // components/LikeButton.tsx
@@ -102,6 +89,3 @@ export default MyLikeButton;
 // };
 
 // export default MyLikeButton;
-
-
-

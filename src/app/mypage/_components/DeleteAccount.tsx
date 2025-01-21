@@ -1,13 +1,13 @@
-// src/app/mypage/_components/DeleteAccount.tsx
+
 "use client";
 
-import { useDeleteAccount } from "@/app/mypage/_hooks/useDeleteAccount";
+import { useDeleteAccount } from "@/app/mypage/_hooks/UseDeleteAccount";
 import Modal from "@/components/common/Modal";
 import useModalStore from "@/store/modalStore";
 
-const DeleteAccount: React.FC = () => {
+const DeleteAccount = () => {
   const { handleDeleteAccount } = useDeleteAccount();
-  const { setIsModalOpen, setIsConfirm, isConfirm } = useModalStore();
+  const { setIsModalOpen, setIsConfirm,  } = useModalStore();
 
   const handleDelete = async () => {
     try {
