@@ -11,25 +11,34 @@ import type { Post } from "@/app/mypage/_types/Mypage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-
-
 export const useLikes = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [likingPosts, setLikingPosts] = useState<Set<string>>(new Set());
   const queryClient = useQueryClient();
 
+  // userId를 가져오는 즉시 데이터를 prefetch
   useEffect(() => {
-    const fetchUserId = async () => {
+    const fetchUserIdAndData = async () => {
       const id = await getId();
       setUserId(id);
+      if (id) {
+        // userId가 있으면 즉시 데이터 prefetch
+        await queryClient.prefetchQuery({
+          queryKey: ["likedPosts", id],
+          queryFn: () => fetchLikePostsData(id),
+          staleTime: 0,
+        });
+      }
     };
-    fetchUserId();
-  }, []);
+    fetchUserIdAndData();
+  }, [queryClient]);
 
   const { data: likedPosts, isPending } = useQuery<Post[]>({
     queryKey: ["likedPosts", userId],
     queryFn: () => fetchLikePostsData(userId || ""),
     enabled: !!userId,
+    staleTime: 0, // 항상 최신 데이터를 가져오도록 설정
+    refetchOnMount: true, // 컴포넌트 마운트 시 항상 새로운 데이터 fetch
   });
 
   const likeMutation = useMutation<
@@ -134,3 +143,5 @@ export const useLikes = () => {
     isLiking: (postId: string) => likingPosts.has(postId),
   };
 };
+
+

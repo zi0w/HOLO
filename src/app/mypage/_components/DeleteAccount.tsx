@@ -1,13 +1,13 @@
-
 "use client";
 
-import { useDeleteAccount } from "@/app/mypage/_hooks/UseDeleteAccount";
+import { useDeleteAccount } from "@/app/mypage/_hooks/useDeleteAccount";
 import Modal from "@/components/common/Modal";
 import useModalStore from "@/store/modalStore";
 
+
 const DeleteAccount = () => {
   const { handleDeleteAccount } = useDeleteAccount();
-  const { setIsModalOpen, setIsConfirm,  } = useModalStore();
+  const { setIsModalOpen, setIsConfirm } = useModalStore();
 
   const handleDelete = async () => {
     try {
@@ -26,11 +26,11 @@ const DeleteAccount = () => {
           setIsConfirm(true);
           setIsModalOpen(true);
         }}
-        className="w-full h-[48px] mb-[56px] rounded-[4px] border border-[#E0E0E0] text-[#8F8F8F] font-pretendard text-base hover:bg-gray-50 flex items-center justify-center"
+        className="font-pretendard mb-[56px] flex h-[48px] w-full items-center justify-center rounded-[4px] border border-[#E0E0E0] text-base text-[#8F8F8F] hover:bg-gray-50"
       >
         회원탈퇴
       </button>
-      
+
       <Modal
         text="회원탈퇴"
         onAction={handleDelete}

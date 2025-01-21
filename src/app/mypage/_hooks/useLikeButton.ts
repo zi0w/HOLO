@@ -1,6 +1,7 @@
 // hooks/useLikeButton.ts
 import type { LikeAction } from "@/app/mypage/_types/Like";
-import { getCurrentUser, toggleLikeStatus } from "@/app/mypage/_utils/Likes";
+import { getCurrentUser, toggleLikeStatus } from "@/app/mypage/_utils/likes";
+
 import { useGuestStore } from "@/hooks/useGuestAccess";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 

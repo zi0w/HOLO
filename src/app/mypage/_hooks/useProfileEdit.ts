@@ -19,6 +19,7 @@ export const useProfileEdit = (onClose: () => void, initialData: User) => {
   const [isCheckingNickname, setIsCheckingNickname] = useState(false);
 
   const user = useAuthStore((state) => state.user);
+  const setAuth = useAuthStore((state) => state.setAuth);
   const supabase = createClient();
   const queryClient = useQueryClient();
 

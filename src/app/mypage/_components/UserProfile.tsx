@@ -83,7 +83,7 @@ const UserProfile = () => {
               width={100}
               height={100}
               src={
-                "https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/profile_image_798026d3-5b0e-47eb-ae61-e1c9cbba90e3.png"
+                userData.profile_image_url??"https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/e6a1c347-c123-40c4-ae51-fdc0ffcb910e-1737345924767.jpg"
               }
               alt="프로필 이미지"
               className="h-full w-full rounded-full object-cover"
