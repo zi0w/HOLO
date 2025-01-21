@@ -1,5 +1,7 @@
 // src/app/sign-in/_types/authType.ts
-import { User } from "@/app/sign-in/_types/User";
+
+import type { User } from "@/app/sign-in/_types/UserType";
+
 
 export type Session = {
   accessToken: string;
