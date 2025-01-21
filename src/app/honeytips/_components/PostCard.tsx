@@ -1,17 +1,12 @@
 "use client";
 
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
+import { formatDate } from "@/app/honeytips/_utils/formatDate";
 import SmallComment from "@/assets/images/honeytips/comment.svg";
 import SmallDot from "@/assets/images/honeytips/dot.svg";
 import SmallHeart from "@/assets/images/honeytips/heart.svg";
-import dayjs from "dayjs";
-import "dayjs/locale/ko";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import Link from "next/link";
-
-dayjs.extend(relativeTime);
-dayjs.locale("ko");
 
 type PostCardProps = {
   post: Post;
@@ -20,14 +15,6 @@ type PostCardProps = {
 };
 
 const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
-  const formatDate = (date: string) => {
-    const now = dayjs();
-    const createdAt = dayjs(date);
-    if (now.diff(createdAt, "hour") < 24) {
-      return createdAt.fromNow();
-    }
-    return createdAt.format("YY.MM.DD");
-  };
 
   return (
     <Link href={`/honeytips/${post.id}`}>

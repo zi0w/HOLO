@@ -2,6 +2,7 @@
 
 import PostCard from "@/app/honeytips/_components/PostCard";
 import PostCardLoading from "@/app/honeytips/_components/PostCardLoading";
+import SortButton from "@/app/honeytips/_components/SortButton";
 import { POST_CATEGORIES } from "@/app/honeytips/_constans/post";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
@@ -16,6 +17,7 @@ import { useEffect, useState } from "react";
 const PostList = () => {
   const { isLoggedIn: isAuthenticated } = useAuthStore();
   const [selectedCategory, setSelectedCategory] = useState<string>("전체");
+  const [sortBy, setSortBy] = useState<"popular" | "recent">("recent");
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -51,11 +53,26 @@ const PostList = () => {
       selectedCategory === "전체"
         ? posts
         : posts.filter((post) => post.categories === selectedCategory);
-    setFilteredPosts(filtered);
-  }, [selectedCategory, posts]);
+
+    const sorted =
+      sortBy === "recent"
+        ? [...filtered].sort(
+            (a, b) =>
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime(),
+          )
+        : [...filtered].sort(
+            (a, b) => (b.likes[0]?.count || 0) - (a.likes[0]?.count || 0),
+          );
+
+    setFilteredPosts(sorted);
+  }, [selectedCategory, sortBy, posts]);
 
   const handleGoToPost = () => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
     router.push(`/honeytips/post?category=${selectedCategory}`);
   };
 
@@ -89,17 +106,13 @@ const PostList = () => {
       <div className="fixed bottom-14 right-4 z-50">
         <button
           onClick={handleGoToPost}
-          className={clsx(
-            "relative flex items-center justify-center rounded-full",
-            {
-              "cursor-not-allowed opacity-50": !isAuthenticated,
-            },
-          )}
-          disabled={!isAuthenticated}
+          className="relative flex items-center justify-center rounded-full"
         >
           <PlusButton />
         </button>
       </div>
+
+      <SortButton sortBy={sortBy} setSortBy={setSortBy} />
 
       <section className="grid grid-cols-1 gap-4">
         {isLoading ? (
