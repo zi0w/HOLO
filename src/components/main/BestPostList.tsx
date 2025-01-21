@@ -1,8 +1,10 @@
+
 "use client";
 
 import PostCard from "@/app/honeytips/_components/PostCard";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
+import LoadingSmall from "@/components/common/LoadingSmall";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -19,7 +21,10 @@ const BestPostList = () => {
           .slice(0, 3);
         setBestPosts(sortedPosts);
       } catch (error) {
-        console.error("베스트 게시글을 불러오는 중 오류가 발생했습니다.", error);
+        console.error(
+          "베스트 게시글을 불러오는 중 오류가 발생했습니다.",
+          error,
+        );
       } finally {
         setLoading(false);
       }
@@ -30,14 +35,14 @@ const BestPostList = () => {
 
   if (loading)
     return (
-      <p className="mx-auto flex h-[200px] items-center justify-center text-base-400">
-        로딩중...
-      </p>
+      <div className="mb-4">
+        <LoadingSmall />
+      </div>
     );
 
   return (
     <div className="relative mx-5">
-      <h2 className="!text-[22px] common-title">꿀팁 게시판</h2>
+      <h2 className="common-title !text-[22px]">꿀팁 게시판</h2>
       <ul className="mt-4 flex flex-col gap-4">
         {bestPosts.map((post) => (
           <PostCard

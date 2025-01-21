@@ -8,6 +8,9 @@ const supabase = createClient();
 export const fetchLikesData = async (postId: Like["post_id"]) => {
   try {
     const user_id = await getId();
+
+    if (!user_id) return [];
+
     const { data: likesData, error } = await supabase
       .from("likes")
       .select("*")
