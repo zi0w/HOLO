@@ -1,14 +1,12 @@
 "use client";
 
-
+import type { SignInPayload } from "@/app/sign-in/_types/signInType";
+import type { User } from "@/app/sign-in/_types/userType";
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 가져오기
 import AuthStore from "@/store/authStore"; // Zustand 스토어 가져오기
+import { Session } from "@supabase/supabase-js"; // Supabase의 Session 타입 가져오기
 import { useMutation, UseMutationResult } from "@tanstack/react-query"; // React Query 가져오기
 import { useRouter } from "next/navigation"; // Next.js 라우터 가져오기
-import { Session } from "@supabase/supabase-js"; // Supabase의 Session 타입 가져오기
-import type { SignInPayload } from "@/app/sign-in/_types/Sign-in.type";
-import type { User } from "@/app/sign-in/_types/UserType";
-
 
 export type SignInResult = {
   user: Record<string, string> | null; // 사용자 정보
@@ -97,7 +95,3 @@ const fetchUserDetails = async (userId: string) => {
 };
 
 export default useSignInMutation;
-
-
-
-

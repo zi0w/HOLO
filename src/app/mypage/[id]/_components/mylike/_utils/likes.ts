@@ -1,5 +1,5 @@
 // api/likes.ts
-import type { Post } from "@/app/mypage/[id]/_components/_type/Types";
+import type { Post } from "@/app/mypage/[id]/_components/_type/types";
 import { createClient } from "@/lib/utils/supabase/client";
 import { v4 as uuidv4 } from "uuid";
 

@@ -1,4 +1,4 @@
-import Mypageform from "@/app/mypage/_components/mypageform";
+import Mypageform from "@/app/mypage/_components/MypageForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <div className="h-screen w-full overflow-hidden">
+    <div className="w-full">
       <Mypageform />
     </div>
   );

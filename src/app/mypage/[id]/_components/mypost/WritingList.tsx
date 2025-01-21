@@ -1,14 +1,13 @@
 "use client";
 
+import { useMyPosts } from "@/app/mypage/[id]/_components/mypost/_hooks/useMyWriting";
+import MyWritingCard from "@/app/mypage/[id]/_components/mypost/WritingCard";
+import type { Post } from "@/app/mypage/_types/myPage";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 
-import MyLikeCard from "@/app/mypage/[id]/_components/Mylike/MyLikeCard";
-import type { Post } from "@/app/mypage/_types/Mypage";
-import { UseLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/UseMyLikes";
-
-const MyLikeList = () => {
-  const { likedPosts, isPending, handleLikeChange } = UseLikes();
+const MyWritingList = () => {
+  const { posts, isLoading, handleDelete, isDeleting } = useMyPosts();
 
   const {
     currentItems: currentPosts,
@@ -19,28 +18,25 @@ const MyLikeList = () => {
     nextPage,
     prevPage,
     goToPage,
-  } = usePagination<Post>(likedPosts || [], 5);
+  } = usePagination<Post>(posts, 5);
 
-  if (isPending) return <p>로딩중입니다...</p>;
+  if (isLoading) return <p>로딩중입니다...</p>;
 
   return (
     <div className="h-full w-full pt-[10px]">
       {currentPosts.length > 0 ? (
         <div className="relative flex h-full flex-col">
-          {" "}
-          {/* relative 추가 */}
           <div className="flex-1">
             {currentPosts.map((post) => (
-              <MyLikeCard
+              <MyWritingCard
                 key={post.id}
                 post={post}
-                onLikeChange={handleLikeChange}
+                onDelete={handleDelete}
+                isDeleting={isDeleting(post.id)}
               />
             ))}
           </div>
           <div className="absolute bottom-0 left-0 right-0 bg-white px-[86px] py-4 pr-[90px]">
-            {" "}
-            {/* absolute, bottom-0, left-0, right-0, bg-white 추가 */}
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -54,11 +50,11 @@ const MyLikeList = () => {
         </div>
       ) : (
         <p className="py-4 text-center text-[#8F8F8F]">
-          좋아요한 게시물이 없습니다.
+          작성한 게시물이 없습니다.
         </p>
       )}
     </div>
   );
 };
 
-export default MyLikeList;
+export default MyWritingList;

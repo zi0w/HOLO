@@ -1,6 +1,6 @@
 // hooks/useComments.ts
 import { getId } from "@/app/honeytips/_utils/auth";
-import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/Comment";
+import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/comment";
 import { createClient } from "@/lib/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -79,18 +79,18 @@ export const useComments = () => {
     mutationFn: deleteComment,
     onMutate: async (commentId) => {
       await queryClient.cancelQueries({ queryKey: ["comments", userId] });
-      
+
       const previousComments =
         queryClient.getQueryData<CommentWithPost[]>(["comments", userId]) || [];
-      
+
       const targetComment = previousComments.find(
-        (comment) => comment.id === commentId
+        (comment) => comment.id === commentId,
       );
       const postId = targetComment?.post_id;
 
       queryClient.setQueryData<CommentWithPost[]>(
         ["comments", userId],
-        (old = []) => old.filter((comment) => comment.id !== commentId)
+        (old = []) => old.filter((comment) => comment.id !== commentId),
       );
 
       return { previousComments, postId };
@@ -107,8 +107,8 @@ export const useComments = () => {
     onSuccess: (_, __, context) => {
       if (context?.postId) {
         queryClient.invalidateQueries({ queryKey: ["post", context.postId] });
-        queryClient.invalidateQueries({ 
-          queryKey: ["postComments", context.postId] 
+        queryClient.invalidateQueries({
+          queryKey: ["postComments", context.postId],
         });
       }
     },
@@ -116,8 +116,8 @@ export const useComments = () => {
       queryClient.invalidateQueries({ queryKey: ["comments", userId] });
       if (context?.postId) {
         queryClient.invalidateQueries({ queryKey: ["post", context.postId] });
-        queryClient.invalidateQueries({ 
-          queryKey: ["postComments", context.postId] 
+        queryClient.invalidateQueries({
+          queryKey: ["postComments", context.postId],
         });
       }
     },
@@ -137,4 +137,3 @@ export const useComments = () => {
     handleDelete,
   };
 };
-

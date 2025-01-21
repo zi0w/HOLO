@@ -1,5 +1,5 @@
 // api/likes.ts
-import type { LikeAction } from "@/app/mypage/_types/Like";
+import type { LikeAction } from "@/app/mypage/_types/like";
 import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();

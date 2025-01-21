@@ -15,7 +15,7 @@ const SocialLogin = () => {
     <div className="flex items-center justify-center space-x-[24px]">
       <button
         onClick={() => handleSocialLogin("kakao")}
-        className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-[#FAE100] hover:bg-[#F2D900]"
+        className="flex h-[40px] w-[40px] items-center justify-center rounded-full"
       >
         <Image
           src={kakaoimg}
@@ -27,7 +27,7 @@ const SocialLogin = () => {
       </button>
       <button
         onClick={() => handleSocialLogin("google")}
-        className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-50"
+        className="flex h-[40px] w-[40px] items-center justify-center rounded-full"
       >
         <Image
           src={googleimg}
@@ -39,7 +39,7 @@ const SocialLogin = () => {
       </button>
       <button
         onClick={() => handleSocialLogin("github")}
-        className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-black hover:bg-gray-900"
+        className="flex h-[40px] w-[40px] items-center justify-center rounded-full"
       >
         <Image
           src={githubimg}

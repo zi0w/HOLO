@@ -1,8 +1,6 @@
 "use client";
 
-import { useSignout } from "@/app/sign-in/_hooks/UseSignout";
-
-
+import { useSignout } from "@/app/sign-in/_hooks/useSignout";
 
 const SignoutButton = () => {
   const { handleLogout } = useSignout();
@@ -10,7 +8,7 @@ const SignoutButton = () => {
   return (
     <button
       onClick={handleLogout}
-      className="w-full h-[48px] rounded-[4px] border border-[#FF7600] text-[#FF7600] font-pretendard text-base hover:bg-gray-50 flex items-center justify-center"
+      className="font-pretendard flex h-[48px] w-full items-center justify-center rounded-[4px] border border-[#FF7600] text-base text-[#FF7600] hover:bg-gray-50"
     >
       로그아웃
     </button>

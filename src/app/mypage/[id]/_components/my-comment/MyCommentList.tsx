@@ -1,9 +1,7 @@
-
 "use client";
 
-
-import { useComments } from "@/app/mypage/[id]/_components/Mycomment/hooks/useComments";
-import MyCommentCard from "@/app/mypage/[id]/_components/Mycomment/MyCommentCard";
+import { useComments } from "@/app/mypage/[id]/_components/my-comment/hooks/useComments";
+import MyCommentCard from "@/app/mypage/[id]/_components/my-comment/MyCommentCard";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 // import Image from "next/image";
@@ -28,7 +26,7 @@ const MyCommentList = () => {
   return (
     <div className="h-full w-full pt-[10px]">
       {currentComments.length > 0 ? (
-        <div className="flex h-full flex-col relative">
+        <div className="relative flex h-full flex-col">
           <div className="flex-1">
             {currentComments.map((comment) => (
               <MyCommentCard
@@ -38,7 +36,7 @@ const MyCommentList = () => {
               />
             ))}
           </div>
-          <div className="absolute bottom-0 left-0 right-0 px-[86px] py-4 pr-[90px] bg-white">
+          <div className="absolute bottom-0 left-0 right-0 bg-white px-[86px] py-4 pr-[90px]">
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -60,10 +58,3 @@ const MyCommentList = () => {
 };
 
 export default MyCommentList;
-
-
-
-
-
-
-

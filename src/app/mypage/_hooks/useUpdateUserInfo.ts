@@ -1,5 +1,6 @@
 // src/hooks/useUpdateUserInfo.ts
-import { fetchUserInfo } from "@/app/mypage/_utils/User";
+
+import { fetchUserInfo } from "@/app/mypage/_utils/user";
 import useAuthStore from "@/store/authStore";
 import { useCallback } from "react";
 
@@ -11,9 +12,10 @@ export function useUpdateUserInfo(forceUpdate: boolean = false) {
 
     try {
       const userInfo = await fetchUserInfo(user.id);
-      
+
       if (userInfo) {
-        const shouldUpdate = forceUpdate || 
+        const shouldUpdate =
+          forceUpdate ||
           user.nickname !== userInfo.nickname ||
           user.profile_image_url !== userInfo.profile_image_url;
 
@@ -25,19 +27,17 @@ export function useUpdateUserInfo(forceUpdate: boolean = false) {
               nickname: userInfo.nickname,
               profile_image_url: userInfo.profile_image_url,
             },
-            session // 기존 세션 유지
+            session, // 기존 세션 유지
           );
         }
       }
     } catch (error) {
-      console.error('Failed to update user info:', error);
+      console.error("Failed to update user info:", error);
     }
   }, [user, session, setAuth, forceUpdate]);
 
   return updateUserInfo;
 }
-
-
 
 // import { fetchUserInfo } from "@/app/mypage/_utils/User";
 // import useAuthStore from "@/store/authStore";
@@ -49,7 +49,7 @@ export function useUpdateUserInfo(forceUpdate: boolean = false) {
 //   const updateUserInfo = useCallback(async () => {
 //     if (user?.id) {
 //       const userInfo = await fetchUserInfo(user.id);
-      
+
 //       if (userInfo) {
 //         if (
 //           forceUpdate ||
