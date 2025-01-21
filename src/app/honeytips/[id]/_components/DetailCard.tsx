@@ -189,14 +189,11 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       <p className="mb-10 mt-2 whitespace-pre-wrap text-base-800">
         {postDetailData.content}
       </p>
-
-      {currentId && (
-        <LikeButton
-          postId={postDetailData.id}
-          likesCounts={likesCounts}
-          setLikesCounts={setLikesCounts}
-        />
-      )}
+      <LikeButton
+        postId={postDetailData.id}
+        likesCounts={likesCounts}
+        setLikesCounts={setLikesCounts}
+      />
     </section>
   );
 };

@@ -6,17 +6,13 @@ import {
 } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
+import { formatDate } from "@/app/honeytips/_utils/formatDate";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import Modal from "@/components/common/Modal";
 import useModalStore from "@/store/modalStore";
-import dayjs from "dayjs";
-import "dayjs/locale/ko";
-import relativeTime from "dayjs/plugin/relativeTime";
+
 import Image from "next/image";
 import { useState } from "react";
-
-dayjs.extend(relativeTime);
-dayjs.locale("ko");
 
 type CommentCardProps = {
   comment: Comment;
@@ -33,16 +29,6 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
 
   const updateCommentMutation = useUpdateCommentMutation();
   const deleteCommentMutation = useDeleteCommentMutation();
-
-  const formatDate = (date: string) => {
-    const now = dayjs();
-    const createdAt = dayjs(date);
-
-    if (now.diff(createdAt, "hour") < 24) {
-      return createdAt.fromNow();
-    }
-    return createdAt.format("YY.MM.DD");
-  };
 
   const handleCommentSave = (id: string) => {
     if (!editedComment.trim()) {

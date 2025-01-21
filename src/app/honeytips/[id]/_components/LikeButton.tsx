@@ -26,7 +26,10 @@ const LikeButton = ({
   const handleLikeBtn = async () => {
     const userId: Like["user_id"] | null = await getId();
 
-    if (!userId) return;
+    if (!userId) {
+      alert("로그인이 필요합니다.")
+      return;
+    }
 
     if (likeData!.length > 0) {
       likeMutation.mutate(
