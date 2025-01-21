@@ -1,7 +1,8 @@
 // components/SocialLogin.tsx
 "use client";
 
-import { useSocialLogin } from "@/app/sign-in/_hooks/UseSocialLogin";
+
+import { useSocialLogin } from "@/app/sign-in/_hooks/useSocialLogin";
 import githubimg from "@/assets/images/social-login/githubimg.png";
 import googleimg from "@/assets/images/social-login/googleimg.png";
 import kakaoimg from "@/assets/images/social-login/kakaoimg.png";
@@ -19,8 +20,8 @@ const SocialLogin = () => {
         <Image
           src={kakaoimg}
           alt="카카오 로그인"
-          width={24}
-          height={24}
+          width={48}
+          height={48}
           className="object-contain"
         />
       </button>
@@ -31,8 +32,8 @@ const SocialLogin = () => {
         <Image
           src={googleimg}
           alt="구글 로그인"
-          width={24}
-          height={24}
+          width={48}
+          height={48}
           className="object-contain"
         />
       </button>
@@ -43,8 +44,8 @@ const SocialLogin = () => {
         <Image
           src={githubimg}
           alt="깃허브 로그인"
-          width={32}
-          height={32}
+          width={48}
+          height={48}
           className="object-cover"
         />
       </button>
