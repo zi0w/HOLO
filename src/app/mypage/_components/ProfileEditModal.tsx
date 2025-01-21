@@ -1,7 +1,7 @@
 // components/ProfileEditModal.tsx
 "use client";
 
-import { UseProfileEdit } from "@/app/mypage/_hooks/UseProfileEdit";
+import { UseProfileEdit } from "@/app/mypage/_hooks/UseMyProfileEdit";
 import type { User } from "@/app/mypage/_types/Mypage";
 import type { ProfileEditModalProps } from "@/app/mypage/_types/Profile";
 import ProfileForm from "./ProfileForm";

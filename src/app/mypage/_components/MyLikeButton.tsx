@@ -1,4 +1,4 @@
-import { UseLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/useLikes";
+import { UseLikes } from "@/app/mypage/[id]/_components/Mylike/_hooks/UseMyLikes";
 import YesHeart from "@/assets/images/honeytips/love_selected_42.svg";
 import NoHeart from "@/assets/images/honeytips/love_unselected_42.svg";
 import { useEffect, useState } from "react";
