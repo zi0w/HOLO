@@ -111,6 +111,9 @@ const Result = ({ answerData }: ResultProps) => {
             <SaveResultButton elementId="result-container" />
             <ShareLinkButton link={shareLink} />
           </div>
+          <span className="text-base-500 text-xs text-center mt-4">아이폰에서는 저장 기능이 원활하게 작동하지 않습니다. <br />
+                (세 번 연속 저장하시면, 완성된 이미지가 저장됩니다.)
+          </span>
         </>
       )}
     </div>

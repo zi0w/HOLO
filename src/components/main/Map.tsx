@@ -26,6 +26,8 @@ const Map = () => {
     placeDetail,
     setSelectedPlace,
     setPlaceDetail,
+    setSelectedMarkerId,
+    selectedMarkerId,
   } = useCategoriesSearch(mapCenter);
 
   return (
@@ -53,6 +55,8 @@ const Map = () => {
           placeDetail={placeDetail}
           setPlaceDetail={setPlaceDetail}
           isMain={true}
+          setSelectedMarkerId={setSelectedMarkerId}
+          selectedMarkerId={selectedMarkerId}
         />
       </div>
       <Link href={"/map"} className="mt-4 block text-center text-primary-500">
