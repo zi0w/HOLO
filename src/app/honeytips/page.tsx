@@ -1,6 +1,8 @@
 import PostList from "@/app/honeytips/_components/PostList";
 import SearchForm from "@/app/honeytips/_components/SearchForm";
+import Loading from "@/components/common/Loading";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "자취 꿀팁 게시판",
@@ -24,8 +26,11 @@ const HoneyTipsPage = () => {
         <section className="mb-2">
           <SearchForm />
         </section>
+
         <section>
-          <PostList />
+          <Suspense fallback={<Loading />}>
+            <PostList />
+          </Suspense>
         </section>
       </section>
     </div>
