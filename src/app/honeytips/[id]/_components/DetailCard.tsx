@@ -2,6 +2,7 @@
 
 import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
+import ShareButton from "@/app/honeytips/[id]/_components/ShareButton";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
@@ -29,6 +30,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   const [likesCounts, setLikesCounts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
   const router = useRouter();
 
   const { setIsModalOpen, setIsConfirm, isConfirm } = useModalStore();
@@ -162,23 +164,19 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         centeredSlides={true}
         pagination={{ clickable: true }}
         navigation={true}
-        className="my-4 ml-0 h-auto max-w-[362px]"
+        className="flex items-center my-4 ml-0 h-auto max-w-[300px]"
       >
         {postDetailData.post_image_url?.map((imageUrl, index) => (
           <SwiperSlide
             key={index}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+            className="my-auto"
           >
             <Image
               src={imageUrl}
               alt={`게시물 이미지 ${index + 1}`}
               width={400}
               height={400}
-              className="rounded"
+              className="rounded w-[300px] h-[300px] object-cover mx-auto"
             />
           </SwiperSlide>
         ))}
@@ -189,11 +187,14 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       <p className="mb-10 mt-2 whitespace-pre-wrap text-base-800">
         {postDetailData.content}
       </p>
-      <LikeButton
-        postId={postDetailData.id}
-        likesCounts={likesCounts}
-        setLikesCounts={setLikesCounts}
-      />
+      <div className="flex justify-center items-start gap-3">
+        <LikeButton
+          postId={postDetailData.id}
+          likesCounts={likesCounts}
+          setLikesCounts={setLikesCounts}
+        />
+        <ShareButton url={window.location.href} />
+      </div>
     </section>
   );
 };

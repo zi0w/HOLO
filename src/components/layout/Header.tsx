@@ -1,14 +1,33 @@
-import MyPageIcon from "@/assets/images/common/header/mypage.svg";
+import HeaderAuthLink from "@/components/layout/HeaderAuthLink";
 import { NAVIGATION_PATHS } from "@/constants/navigation";
-import useAuthStore from "@/store/authStore";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Header = ({ allHidden }: { allHidden: boolean }) => {
-  const { isLoggedIn } = useAuthStore();
-  const pathname = usePathname();
+const isActiveLink = (pathname: string, path: string) => {
+  if (path === "/") return pathname === "/";
+  return pathname.startsWith(path);
+};
 
+const NavLink = ({ path, label, icon: Icon }: (typeof NAVIGATION_PATHS)[0]) => {
+  const pathname = usePathname();
+  const isActive = isActiveLink(pathname, path);
+
+  return (
+    <Link
+      href={path}
+      className={clsx(
+        "flex flex-col items-center justify-between",
+        isActive && "text-primary-500",
+      )}
+    >
+      <Icon className={clsx("mb-1", isActive && "text-primary-500")} />
+      {label}
+    </Link>
+  );
+};
+
+const Header = ({ allHidden }: { allHidden: boolean }) => {
   return (
     <header
       className={clsx(
@@ -17,55 +36,10 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
       )}
     >
       <nav className="flex justify-between border-t border-base-200 bg-white px-5 py-2 text-xs text-base-700 lg:h-full lg:flex-col lg:justify-center lg:gap-10 lg:border-r lg:border-t-0 lg:p-5">
-        {NAVIGATION_PATHS.map(({ path, label, icon: Icon }) => (
-          <Link
-            key={path}
-            href={path}
-            className={clsx(
-              "flex flex-col items-center",
-              path === "/"
-                ? pathname === "/"
-                  ? "text-primary-500"
-                  : "text-base-700"
-                : pathname.startsWith(path) && "text-primary-500",
-            )}
-          >
-            <Icon
-              className={clsx(
-                "mb-1",
-                path === "/"
-                  ? pathname === "/"
-                    ? "text-primary-500"
-                    : "text-base-700"
-                  : pathname.startsWith(path) && "text-primary-500",
-              )}
-            />
-            {label}
-          </Link>
+        {NAVIGATION_PATHS.map((navItem) => (
+          <NavLink key={navItem.path} {...navItem} />
         ))}
-        {isLoggedIn ? (
-          <Link
-            href="/mypage"
-            className={clsx(
-              "flex flex-col items-center",
-              pathname.startsWith("/mypage") && "text-primary-500",
-            )}
-          >
-            <MyPageIcon className="mb-1" />
-            마이 페이지
-          </Link>
-        ) : (
-          <Link
-            href="/sign-in"
-            className={clsx(
-              "flex flex-col items-center",
-              pathname.startsWith("/sign-in") && "text-primary-500",
-            )}
-          >
-            <MyPageIcon />
-            로그인
-          </Link>
-        )}
+        <HeaderAuthLink />
       </nav>
     </header>
   );

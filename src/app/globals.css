@@ -76,12 +76,21 @@ body {
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: #222222 !important;
+  @apply !text-base-500;
+  background-color: white;
 }
 
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  color: #ff7600 !important;
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 14px !important;
+}
+
+.swiper-button-next {
+  right: 0 !important;
+}
+
+.swiper-button-prev {
+  left: 0 !important;
 }
 
 .common-select {

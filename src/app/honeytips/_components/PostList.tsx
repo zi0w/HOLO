@@ -24,7 +24,6 @@ const PostList = () => {
 
   const router = useRouter();
   const searchQuery = useSearchParams();
-  // 컴포넌트 분리 후 서스펜스로 감싼다
 
   const {
     currentItems: currentPosts,
