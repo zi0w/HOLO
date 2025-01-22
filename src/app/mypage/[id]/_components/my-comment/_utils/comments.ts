@@ -1,5 +1,6 @@
 // api/comments.ts
-import type { Comment } from "@/app/mypage/[id]/_components/_type/comment";
+
+import type { Comment } from "@/app/mypage/_types/useMyTypes";
 import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();
