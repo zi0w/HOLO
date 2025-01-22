@@ -31,8 +31,8 @@ const nextConfig = {
         pathname: "/**", // 모든 경로 허용
       },
       {
-        protocol: "http",
-        hostname: "githubusercontent.com",
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
         pathname: "/**",
       },
     ],

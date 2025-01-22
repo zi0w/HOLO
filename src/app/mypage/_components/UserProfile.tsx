@@ -62,7 +62,9 @@ const UserProfile = () => {
     return (
       <div className="flex h-screen items-center justify-center">로딩중...</div>
     );
+    
   }
+  console.log(userData.profile_image_url);
   return (
     <div className="w-full bg-white">
       <div className="flex flex-col">
