@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "자취 꿀팁 게시판",
     description:
       "다양한 카테고리의 자취 꿀팁을 확인하고, 다른 사람들과 꿀팁을 공유하세요.",
-    url: "https://localhost:3000/honeytips",
+    url: "https://holo-psi.vercel.app/honeytips",
   },
 };
 
