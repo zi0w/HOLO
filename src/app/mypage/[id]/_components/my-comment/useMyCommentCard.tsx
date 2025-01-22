@@ -1,8 +1,9 @@
 // src/app/mypage/[id]/_components/Mycomment/MyCommentCard.tsx
 "use client";
 
-import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/comment";
+
 import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
+import type { CommentWithPost } from "@/app/mypage/_types/useMyTypes";
 
 import clsx from "clsx";
 import Image from "next/image";

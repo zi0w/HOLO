@@ -1,7 +1,10 @@
-import { Tables } from "@/lib/types/supabase";
+//기능 테스트후 삭제예정
 
 
-export type User = Tables<'users'> ;
+// import { Tables } from "@/lib/types/supabase";
+
+
+// export type User = Tables<'users'> ;
 
 
 
