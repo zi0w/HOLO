@@ -1,9 +1,9 @@
 "use client";
 
 import type { SignInPayload } from "@/app/sign-in/_types/signInType";
-import type { User } from "@/app/sign-in/_types/userType";
+
 import { createClient } from "@/lib/utils/supabase/client";
-import AuthStore from "@/store/authStore";
+import AuthStore, { type User } from "@/store/authStore";
 import { Session } from "@supabase/supabase-js";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";

@@ -3,11 +3,12 @@ import type { Post } from "@/app/mypage/_types/myPage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-import type { MutationContext } from "@/app/mypage/[id]/_components/_type/post";
+
 import {
   deletePost,
   fetchMyPostsData,
 } from "@/app/mypage/[id]/_components/mypost/_utils/posts";
+import type { MutationContext } from "@/app/mypage/_types/useMyTypes";
 
 export const useMyPosts = () => {
   const [userId, setUserId] = useState<string | null>(null);
