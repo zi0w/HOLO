@@ -22,7 +22,13 @@ export type Post = {
     updated_at?: string;
     nickname?: string;
     profile_image_url?: string | null;
-    posts?: Post;
+    posts?: {
+      id: string;
+      title: string;
+      content: string;
+      created_at: string;
+      categories: string;
+    };
   };
   
   export type Like = {

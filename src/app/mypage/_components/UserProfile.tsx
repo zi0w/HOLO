@@ -2,7 +2,6 @@
 
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
 import { useUpdateUserInfo } from "@/app/mypage/_hooks/useUpdateUserInfo";
-
 import type { User } from "@/app/mypage/_types/myPage";
 import useAuthStore from "@/store/authStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -14,7 +13,12 @@ const UserProfile = () => {
   const router = useRouter();
   const { user } = useAuthStore();
   const queryClient = useQueryClient();
-  const updateUserInfo = useUpdateUserInfo();
+  const { 
+    handleNicknameChange, 
+    checkNicknameDuplicate, 
+    nicknameError, 
+    isNicknameValid 
+  } = useUpdateUserInfo(user?.id || '');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [previousData, setPreviousData] = useState<User | null>(null);
 
@@ -28,7 +32,6 @@ const UserProfile = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  // 모달 관련 핸들러
   const handleOpenModal = () => {
     if (userData) {
       setPreviousData(userData);
@@ -37,19 +40,31 @@ const UserProfile = () => {
   };
 
   const handleCloseModal = async () => {
-    setIsModalOpen(false);
     try {
-      const currentData = queryClient.getQueryData<User>([
-        "userInfo",
-        user?.id,
-      ]);
-      if (currentData) {
-        setPreviousData(currentData);
+      const currentData = queryClient.getQueryData<User>(["userInfo", user?.id]);
+      if (!currentData?.nickname) {
+        alert("닉네임을 입력해주세요.");
+        return;
       }
-      await updateUserInfo();
+
+      // 닉네임 중복 체크
+      const isDuplicateNickname = await checkNicknameDuplicate(currentData.nickname);
+      if (!isDuplicateNickname) {
+        alert(nicknameError || "이미 사용 중인 닉네임입니다.");
+        return;
+      }
+
+      if (!isNicknameValid) {
+        alert("올바른 닉네임 형식이 아닙니다.");
+        return;
+      }
+
+      // 닉네임 변경 처리
+      await handleNicknameChange(currentData.nickname);
       await queryClient.invalidateQueries({ queryKey: ["userInfo", user?.id] });
+      setIsModalOpen(false);
       setPreviousData(null);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("프로필 업데이트 실패:", error);
       if (user?.id && previousData) {
         queryClient.setQueryData(["userInfo", user.id], previousData);
@@ -62,9 +77,8 @@ const UserProfile = () => {
     return (
       <div className="flex h-screen items-center justify-center">로딩중...</div>
     );
-    
   }
-  console.log(userData.profile_image_url);
+
   return (
     <div className="w-full bg-white">
       <div className="flex flex-col">
