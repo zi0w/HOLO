@@ -4,7 +4,6 @@ import { useDeleteAccount } from "@/app/mypage/_hooks/useDeleteAccount";
 import Modal from "@/components/common/Modal";
 import useModalStore from "@/store/modalStore";
 
-
 const DeleteAccount = () => {
   const { handleDeleteAccount } = useDeleteAccount();
   const { setIsModalOpen, setIsConfirm } = useModalStore();
@@ -13,9 +12,12 @@ const DeleteAccount = () => {
     try {
       await handleDeleteAccount();
       setIsConfirm(false);
-      setIsModalOpen(true); // "회원탈퇴되었습니다" 모달 표시
+      setIsModalOpen(true);
     } catch (error) {
       console.error("회원탈퇴 실패:", error);
+      alert("회원탈퇴 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      setIsConfirm(false);
+      setIsModalOpen(false);
     }
   };
 
@@ -44,3 +46,8 @@ const DeleteAccount = () => {
 };
 
 export default DeleteAccount;
+
+
+
+
+
