@@ -1,17 +1,27 @@
-// hooks/useComments.ts
 import { getId } from "@/app/honeytips/_utils/auth";
 import type { CommentWithPost } from "@/app/mypage/_types/useMyTypes";
 import { createClient } from "@/lib/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-// 반환 타입을 명시적으로 CommentWithPost[]로 지정
+export type PostComment = {
+  id: string;
+  comment: string;
+  created_at: string;
+  user_id: string;
+  post_id: string;
+  users?: {
+    id: string;
+    nickname: string;
+    profile_image_url?: string;
+  };
+}
+
 const fetchCommentData = async (userId: string): Promise<CommentWithPost[]> => {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("comments")
-    .select(
-      `
+    .select(`
       id,
       comment,
       created_at,
@@ -30,14 +40,11 @@ const fetchCommentData = async (userId: string): Promise<CommentWithPost[]> => {
         categories,
         post_image_url
       )
-    `,
-    )
+    `)
     .eq("user_id", userId);
 
   if (error) throw error;
   if (!data) return [];
-
-  // 타입 단언을 사용하여 반환 타입을 명확히 함
   return data as CommentWithPost[];
 };
 
@@ -63,7 +70,6 @@ export const useComments = () => {
     fetchUserId();
   }, []);
 
-  // 쿼리 옵션 타입을 명시적으로 지정
   const { data: comments = [], isLoading } = useQuery<CommentWithPost[]>({
     queryKey: ["comments", userId],
     queryFn: () => fetchCommentData(userId || ""),
@@ -78,7 +84,9 @@ export const useComments = () => {
   >({
     mutationFn: deleteComment,
     onMutate: async (commentId) => {
+      // 모든 관련 쿼리 취소
       await queryClient.cancelQueries({ queryKey: ["comments", userId] });
+      await queryClient.cancelQueries({ queryKey: ["myLikes", userId] });
 
       const previousComments =
         queryClient.getQueryData<CommentWithPost[]>(["comments", userId]) || [];
@@ -88,10 +96,25 @@ export const useComments = () => {
       );
       const postId = targetComment?.post_id;
 
+      if (postId) {
+        // 게시물 관련 쿼리도 취소
+        await queryClient.cancelQueries({ queryKey: ["post", postId] });
+        await queryClient.cancelQueries({ queryKey: ["comments", postId] });
+      }
+
+      // 낙관적 업데이트
       queryClient.setQueryData<CommentWithPost[]>(
         ["comments", userId],
         (old = []) => old.filter((comment) => comment.id !== commentId),
       );
+
+      // 게시물의 댓글 목록도 낙관적 업데이트
+      if (postId) {
+        queryClient.setQueryData<PostComment[]>(
+          ["comments", postId],
+          (old = []) => old.filter((comment) => comment.id !== commentId)
+        );
+      }
 
       return { previousComments, postId };
     },
@@ -104,22 +127,25 @@ export const useComments = () => {
       }
       alert("댓글 삭제 중 오류가 발생했습니다.");
     },
-    onSuccess: (_, __, context) => {
+    onSuccess: async (_, commentId, context) => {
       if (context?.postId) {
-        queryClient.invalidateQueries({ queryKey: ["post", context.postId] });
-        queryClient.invalidateQueries({
-          queryKey: ["postComments", context.postId],
-        });
+        // 게시물 관련 쿼리 무효화
+        await queryClient.invalidateQueries({ queryKey: ["post", context.postId] });
+        await queryClient.invalidateQueries({ queryKey: ["comments", context.postId] });
+        await queryClient.invalidateQueries({ queryKey: ["postComments", context.postId] });
       }
+      // 마이페이지 관련 쿼리 무효화
+      await queryClient.invalidateQueries({ queryKey: ["comments", userId] });
+      await queryClient.invalidateQueries({ queryKey: ["myLikes", userId] });
     },
-    onSettled: (_, __, ___, context) => {
-      queryClient.invalidateQueries({ queryKey: ["comments", userId] });
+    onSettled: async (_, __, ___, context) => {
       if (context?.postId) {
-        queryClient.invalidateQueries({ queryKey: ["post", context.postId] });
-        queryClient.invalidateQueries({
-          queryKey: ["postComments", context.postId],
-        });
+        await queryClient.invalidateQueries({ queryKey: ["post", context.postId] });
+        await queryClient.invalidateQueries({ queryKey: ["comments", context.postId] });
+        await queryClient.invalidateQueries({ queryKey: ["postComments", context.postId] });
       }
+      await queryClient.invalidateQueries({ queryKey: ["comments", userId] });
+      await queryClient.invalidateQueries({ queryKey: ["myLikes", userId] });
     },
   });
 
@@ -137,3 +163,4 @@ export const useComments = () => {
     handleDelete,
   };
 };
+

@@ -1,6 +1,7 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-
 import { formatDate } from "@/app/mypage/[id]/_components/mylike/_utils/formatDate";
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
 import type { Post } from "@/app/mypage/_types/myPage";
@@ -13,8 +14,6 @@ export type LikeCardProps = {
 const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
   return (
     <div className="flex h-[64px] w-full items-center justify-between px-5">
-      {" "}
-      {/* border-b 제거 */}
       <Link
         href={`/honeytips/${post.id}`}
         className="flex flex-1 items-center gap-3"
@@ -47,7 +46,7 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
         </div>
       </Link>
       <div className="ml-4 flex items-center">
-        <div className="flex h-[32px] w-[32px] items-center justify-center">
+        <div className="flex items-center justify-center">
           <MyLikeButton
             postId={post.id}
             isLiked={true}

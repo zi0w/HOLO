@@ -52,7 +52,7 @@ const useSignInMutation = (): UseMutationResult<
       // 세션 및 토큰 검증
       if (!session?.access_token) {
         console.error("세션 또는 엑세스 토큰이 없습니다.");
-        alert("로그인에 실패했습니다. 다시 시도해 주세요.");
+        // alert("로그인에 실패했습니다. 다시 시도해 주세요.");
         return;
       }
 
@@ -82,7 +82,7 @@ const useSignInMutation = (): UseMutationResult<
 
         // 상태 업데이트 및 리다이렉트
         setAuth(userDetails as User, session);
-        alert("로그인 성공");
+        // alert("로그인 성공");
         router.push("/");
       } catch (error) {
         console.error("유저 정보 업데이트 실패:", error);
