@@ -1,5 +1,6 @@
-import type { Like } from "@/app/mypage/[id]/_components/_type/types";
+
 import type { Post } from "@/app/mypage/_types/myPage";
+import type { Like } from "@/app/mypage/_types/useMyTypes";
 export type LikeButtonProps = {
   postId: string;
   isLiked: boolean;

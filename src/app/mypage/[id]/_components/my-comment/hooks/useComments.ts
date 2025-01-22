@@ -1,6 +1,6 @@
 // hooks/useComments.ts
 import { getId } from "@/app/honeytips/_utils/auth";
-import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/comment";
+import type { CommentWithPost } from "@/app/mypage/_types/useMyTypes";
 import { createClient } from "@/lib/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
