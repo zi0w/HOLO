@@ -14,16 +14,16 @@ const SearchForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (searchQuery.trim()) {
-      // 쿼리 파라미터를 전달 `search-results` 페이지로 이동
-      router.push(`/search-results?query=${encodeURIComponent(searchQuery)}`);
+      router.push(`/honeytips?query=${encodeURIComponent(searchQuery)}`);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2" role="search">
       <div className="relative w-full">
-        <button type="button" disabled>
+        <button type="submit">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 transform" />
         </button>
         <input
@@ -33,7 +33,6 @@ const SearchForm = () => {
           onChange={handleSearch}
           placeholder="키워드를 입력해주세요."
           className="h-[40px] w-full rounded border px-11 py-2"
-          disabled
         />
       </div>
     </form>

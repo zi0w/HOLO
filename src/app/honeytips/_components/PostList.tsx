@@ -11,7 +11,7 @@ import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import useAuthStore from "@/store/authStore";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const PostList = () => {
@@ -23,6 +23,8 @@ const PostList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const router = useRouter();
+  const searchQuery = useSearchParams();
+  // 컴포넌트 분리 후 서스펜스로 감싼다
 
   const {
     currentItems: currentPosts,
@@ -39,14 +41,25 @@ const PostList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       setIsLoading(true);
-      const postsData = await fetchPostsData();
+      let postsData = await fetchPostsData();
+
+      const searchTerm = searchQuery.get("query");
+
+      if (searchTerm) {
+        postsData = postsData.filter(
+          (post) =>
+            post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            post.content.toLowerCase().includes(searchTerm.toLowerCase()),
+        );
+      }
+
       setPosts(postsData);
       setFilteredPosts(postsData);
       setIsLoading(false);
     };
 
     fetchPosts();
-  }, []);
+  }, [searchQuery]);
 
   useEffect(() => {
     const filtered =

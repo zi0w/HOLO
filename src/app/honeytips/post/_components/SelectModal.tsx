@@ -29,7 +29,7 @@ const CategorySelectModal = ({
     <div className="relative">
       <button
         onClick={handleButtonClick}
-        className="flex w-[68px] items-center justify-between rounded-md px-2 py-1 font-bold text-base-800"
+        className="flex items-center justify-between rounded-md px-2 py-1 font-bold text-base-800"
       >
         {selectedCategory}
         <ChevronDown />
