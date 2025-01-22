@@ -1,20 +1,20 @@
+"use client";
+
 import CloseIcon from "@/assets/images/common/close-icon.svg";
 
-type CustomLogoutModalProps = {
+interface DeleteModalProps {
   isOpen: boolean;
+  isConfirm: boolean;
+  onAction: () => void;
   onClose: () => void;
-  onLogout: () => void;
-  isSuccess?: boolean;
-  errorMessage?: string;
-};
+}
 
-const CustomLogoutModal = ({ 
-  isOpen, 
-  onClose, 
-  onLogout, 
-  isSuccess, 
-  errorMessage 
-}: CustomLogoutModalProps) => {
+const DeleteModal = ({
+  isOpen,
+  isConfirm,
+  onAction,
+  onClose,
+}: DeleteModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -27,15 +27,13 @@ const CustomLogoutModal = ({
             </button>
           </div>
           <p className="text-center">
-            {errorMessage 
-              ? errorMessage 
-              : isSuccess 
-                ? "로그아웃되었습니다." 
-                : "로그아웃 하시겠습니까?"}
+            {isConfirm
+              ? "회원탈퇴 하시겠습니까?"
+              : "회원탈퇴가 완료되었습니다."}
           </p>
         </div>
         <div className="mt-12 flex">
-          {!isSuccess && !errorMessage && (
+          {isConfirm && (
             <button
               onClick={onClose}
               className="flex-1 !rounded-none !rounded-bl border border-base-300 !text-lg"
@@ -43,19 +41,27 @@ const CustomLogoutModal = ({
               취소
             </button>
           )}
-          <button
-            className="common-btn type-a flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800"
-            onClick={isSuccess || errorMessage ? onClose : onLogout}
-          >
-            {isSuccess || errorMessage ? "확인" : "로그아웃"}
-          </button>
+          {isConfirm ? (
+            <button
+              className="common-btn type-a flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800"
+              onClick={onAction}
+            >
+              회원탈퇴
+            </button>
+          ) : (
+            <button
+              className="common-btn type-a flex-1 !rounded-t-none !text-base"
+              onClick={onClose}
+            >
+              닫기
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default CustomLogoutModal;
-
+export default DeleteModal;
 
 

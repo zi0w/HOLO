@@ -15,7 +15,7 @@ export const useSignUpForm = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // value 매개변수의 타입을 string | undefined로 변경
+  
   const validate = (name: string, value: string | undefined): string => {
     if (!value) {
       if (name === "profile_image_url") return ""; // profile_image_url은 선택사항
