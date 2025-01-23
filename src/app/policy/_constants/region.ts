@@ -1,36 +1,3 @@
-import districtData from "@/app/policy/_data/district.json";
-
-type DistrictData = {
-  [key: string]: string[];
-};
-
-const isDistrictData = (data: unknown): data is DistrictData[] => {
-  return (
-    Array.isArray(data) &&
-    data.every((item) => {
-      return (
-        typeof item === "object" &&
-        item !== null &&
-        Object.keys(item).length === 1 &&
-        Array.isArray(Object(item)[Object.keys(item)[0]])
-      );
-    })
-  );
-};
-
-const districts = isDistrictData(districtData) ? districtData : [];
-
-export const REGIONS = [
-  ...districts.map((item, index) => {
-    const region = Object.keys(item)[0];
-    return {
-      id: index + 1,
-      code: region,
-      name: region,
-    };
-  }),
-];
-
 export const REGION_CODES: { [key: string]: string } = {
   서울특별시: "003002001",
   부산광역시: "003002002",

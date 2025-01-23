@@ -1,6 +1,10 @@
 import CustomSelect from "@/app/policy/_components/CustomSelect";
 import { POLICY_CATEGORIES } from "@/app/policy/_constants/policy";
-import { REGIONS } from "@/app/policy/_constants/region";
+import districtData from "@/app/policy/_data/district.json";
+
+type DistrictData = {
+  [key: string]: string[];
+};
 
 type PolicyFilterProps = {
   regionSelected: string;
@@ -9,6 +13,33 @@ type PolicyFilterProps = {
   onFieldChange: (field: string) => void;
   onSearch: () => void;
 };
+
+const isDistrictData = (data: unknown): data is DistrictData[] => {
+  return (
+    Array.isArray(data) &&
+    data.every((item) => {
+      return (
+        typeof item === "object" &&
+        item !== null &&
+        Object.keys(item).length === 1 &&
+        Array.isArray(Object(item)[Object.keys(item)[0]])
+      );
+    })
+  );
+};
+
+const districts = isDistrictData(districtData) ? districtData : [];
+
+const REGIONS = [
+  ...districts.map((item, index) => {
+    const region = Object.keys(item)[0];
+    return {
+      id: index + 1,
+      code: region,
+      name: region,
+    };
+  }),
+];
 
 const PolicyFilter = ({
   regionSelected,
