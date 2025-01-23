@@ -6,13 +6,14 @@ import {
 } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
+import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import { formatDate } from "@/app/honeytips/_utils/formatDate";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import Modal from "@/components/common/Modal";
 import useModalStore from "@/store/modalStore";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type CommentCardProps = {
   comment: Comment;
@@ -24,11 +25,27 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editedComment, setEditedComment] = useState<string>("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
 
-  const { setIsModalOpen, setIsConfirm, isConfirm } = useModalStore();
+  const { setIsModalOpen, isConfirm, setIsConfirm } = useModalStore();
 
   const updateCommentMutation = useUpdateCommentMutation();
   const deleteCommentMutation = useDeleteCommentMutation();
+
+  useEffect(() => {
+    const fetchPostOwner = async () => {
+      try {
+        const postDetail = await fetchPostDetail(postId);
+        if (postDetail && postDetail.user_id === comment.user_id) {
+          setIsOwner(true);
+        }
+      } catch (error) {
+        console.error("포스트 데이터를 불러오지 못했습니다", error);
+      }
+    };
+
+    fetchPostOwner();
+  }, [postId, comment.user_id]);
 
   const handleCommentSave = (id: string) => {
     if (!editedComment.trim()) {
@@ -47,9 +64,14 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   const handleCommentDelete = (id: string) => {
     setIsConfirm(true);
     setIsModalOpen(true);
-  
+
     if (!isConfirm) return;
-  
+
+    // if (!isConfirm) {
+    //   setIsModalOpen(false);
+    //   return;
+    // }
+
     deleteCommentMutation.mutate(id, {
       onSuccess: () => {
         setIsModalOpen(false);
@@ -62,6 +84,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   return (
     <article className="mx-5 w-full rounded-lg">
       <Modal text={"삭제"} onAction={() => handleCommentDelete(comment.id)} />
+
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-[14px]">
           {comment.users.profile_image_url && (
@@ -81,6 +104,11 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
               <p className="text-[14px] text-base-500">
                 {formatDate(comment.created_at)}
               </p>
+              {isOwner && (
+                <p className="rounded border px-2 py-1 text-xs text-primary-500">
+                  작성자
+                </p>
+              )}
             </div>
             {editingCommentId === comment.id ? (
               <input
