@@ -1,4 +1,4 @@
-import PolicyCont from "@/app/policy/_components/PolicyCont";
+// import PolicyCont from "@/app/policy/_components/PolicyCont";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
