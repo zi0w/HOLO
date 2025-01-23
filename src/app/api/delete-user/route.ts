@@ -18,8 +18,6 @@ export const DELETE = async (request: Request) => {
     
     const body = await request.json().catch(() => ({}));
     const userId = body.userId;
-    
-    console.log("삭제 요청된 userId:", userId);
 
     if (!userId) {
       return NextResponse.json(

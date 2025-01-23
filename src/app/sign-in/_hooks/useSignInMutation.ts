@@ -58,7 +58,6 @@ const useSignInMutation = (): UseMutationResult<
 
       // 토큰 저장
       document.cookie = `access_token=${session.access_token}; path=/; secure;`;
-      console.log("엑세스 토큰이 쿠키에 저장되었습니다:", session.access_token);
 
       // 사용자 정보 검증
       if (!user) {
