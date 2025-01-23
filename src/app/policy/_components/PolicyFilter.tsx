@@ -1,5 +1,11 @@
+import CustomSelect from "@/app/policy/_components/CustomSelect";
 import { POLICY_CATEGORIES } from "@/app/policy/_constants/policy";
-import RegionSelect from "@/app/policy/_components/RegionSelect";
+import districtData from "@/app/policy/_data/district.json";
+
+type DistrictData = {
+  [key: string]: string[];
+};
+
 type PolicyFilterProps = {
   regionSelected: string;
   fieldSelected: string;
@@ -8,6 +14,33 @@ type PolicyFilterProps = {
   onSearch: () => void;
 };
 
+const isDistrictData = (data: unknown): data is DistrictData[] => {
+  return (
+    Array.isArray(data) &&
+    data.every((item) => {
+      return (
+        typeof item === "object" &&
+        item !== null &&
+        Object.keys(item).length === 1 &&
+        Array.isArray(Object(item)[Object.keys(item)[0]])
+      );
+    })
+  );
+};
+
+const districts = isDistrictData(districtData) ? districtData : [];
+
+const REGIONS = [
+  ...districts.map((item, index) => {
+    const region = Object.keys(item)[0];
+    return {
+      id: index + 1,
+      code: region,
+      name: region,
+    };
+  }),
+];
+
 const PolicyFilter = ({
   regionSelected,
   fieldSelected,
@@ -15,35 +48,23 @@ const PolicyFilter = ({
   onFieldChange,
   onSearch,
 }: PolicyFilterProps) => {
-  const isDisabled =
-    !regionSelected ||
-    regionSelected === "지역선택" ||
-    !fieldSelected ||
-    fieldSelected === "선택";
+  const isDisabled = !regionSelected || !fieldSelected;
 
   return (
     <div>
       <div className="grid grid-cols-2 gap-2">
-        {/* 지역 셀렉박스 */}
-        <RegionSelect
-          selectedRegion={regionSelected}
+        <CustomSelect
+          options={REGIONS}
+          selectedValue={regionSelected}
           onChange={onRegionChange}
+          placeholder="지역 선택"
         />
-        {/* 분야 셀렉박스 */}
-        <select
-          name="field"
-          id="field"
-          className="common-select"
-          onChange={(e) => onFieldChange(e.target.value)}
-          value={fieldSelected}
-        >
-          <option value="선택">정책 분야 선택</option>
-          {POLICY_CATEGORIES.map((field) => (
-            <option key={field.id} value={field.code}>
-              {field.name}
-            </option>
-          ))}
-        </select>
+        <CustomSelect
+          options={POLICY_CATEGORIES}
+          selectedValue={fieldSelected}
+          onChange={onFieldChange}
+          placeholder="정책 분야 선택"
+        />
       </div>
       <button
         type="button"

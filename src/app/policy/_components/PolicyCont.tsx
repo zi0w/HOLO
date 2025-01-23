@@ -19,8 +19,8 @@ const PolicyCont = () => {
   const [shouldFetch, setShouldFetch] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
   const [filters, setFilters] = useState<SearchFilters>({
-    region: "",
-    field: "",
+    region: "지역 선택",
+    field: "정책 분야 선택",
   });
 
   const {
