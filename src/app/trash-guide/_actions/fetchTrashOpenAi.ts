@@ -18,8 +18,8 @@ const openai = new OpenAI({
 });
 
 // 프롬프트
-const createSchedulePrompt = (regionData: string, districtData: string) =>
-  `${regionData}의 ${districtData}의 쓰레기 종류별 배출 요일을 알려줘.
+const createSchedulePrompt = (regionData: string) =>
+  `${regionData}의 쓰레기 종류별 배출 요일을 알려줘.
   다음 순서대로 각 쓰레기 종류의 배출 요일을 알려주되:
   - 재활용
   - 일반 쓰레기
@@ -53,7 +53,6 @@ const createFoodWastePrompt = (foodWasteData: string) =>
 // 쓰레기 배출 요일
 export const fetchOpenAiDay = async (
   regionData: string,
-  districtData: string,
 ): Promise<WasteSchedule[]> => {
   try {
     const completion = await openai.chat.completions.create({
@@ -61,7 +60,7 @@ export const fetchOpenAiDay = async (
       messages: [
         {
           role: "user",
-          content: createSchedulePrompt(regionData, districtData),
+          content: createSchedulePrompt(regionData),
         },
       ],
     });
@@ -69,16 +68,22 @@ export const fetchOpenAiDay = async (
     const completionContent = completion.choices[0].message.content;
     if (!completionContent) return [];
 
-    return completionContent
+    const result = completionContent
       .split("\n")
-      .map((item) => item.replace("- ", "").trim())
-      .filter(Boolean)
+      .map((item) => {
+        return item.replace("- ", "").trim();
+      })
+      .filter((item) => {
+        return item && item.includes(":");
+      })
       .map((item) => {
         const [wasteName, wasteDay] = item
           .split(":")
           .map((part) => part.trim());
-        return { [wasteName]: wasteDay };
-      });
+        return wasteName && wasteDay ? { [wasteName]: wasteDay } : null;
+      })
+      .filter((item) => item !== null);
+    return result;
   } catch (error) {
     console.error("쓰레기 배출 일정 조회 오류입니다.", error);
     throw new Error(ERROR_MESSAGES.TRASH_SCHEDULE);
