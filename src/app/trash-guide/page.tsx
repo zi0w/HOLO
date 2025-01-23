@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "우리동네 쓰레기 정보",
     description: "우리 동네 쓰레기 배출 일정과 분리배출 정보",
-    url: "https://localhost:3000/trash-guide",
+    url: `${process.env.NEXT_PUBLIC_API_URL}/trash-guide`,
   },
 };
 
