@@ -1,6 +1,5 @@
 import { POLICY_CATEGORIES } from "@/app/policy/_constants/policy";
-import RegionSelect from "@/components/common/RegionSelect";
-
+import RegionSelect from "@/app/policy/_components/RegionSelect";
 type PolicyFilterProps = {
   regionSelected: string;
   fieldSelected: string;
