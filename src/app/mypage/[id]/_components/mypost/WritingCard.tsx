@@ -9,18 +9,17 @@ import { type FC, useState } from "react";
 
 type WritingCardProps = {
   post: Post;
-  onDelete: (postId: string) => void;
+  onDelete: (postId: string) => Promise<void>;
+  isDeleting: boolean;
 };
 
-const WritingCard: FC<WritingCardProps> = ({ post, onDelete }) => {
+const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirm, setIsConfirm] = useState(false);
 
   const handleDelete = async () => {
     try {
       await onDelete(post.id);
-      setIsConfirm(false);
-      setIsModalOpen(true);
+      setIsModalOpen(false);
     } catch (error) {
       console.error("게시글 삭제 실패:", error);
     }
@@ -28,7 +27,6 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete }) => {
 
   const handleClose = () => {
     setIsModalOpen(false);
-    setIsConfirm(false);
   };
 
   return (
@@ -90,19 +88,19 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete }) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              setIsConfirm(true);
               setIsModalOpen(true);
             }}
-            className="flex items-center justify-center border border-[#424242] text-[12px] text-[#424242] h-[28px] w-[38px] px-[7px] py-[6px]"
+            disabled={isDeleting}
+            className="flex h-[28px] w-[38px] items-center justify-center border border-[#424242] px-[7px] py-[6px] text-[12px] text-[#424242] disabled:opacity-50"
           >
-            삭제
+            {isDeleting ? "삭제 중..." : "삭제"}
           </button>
         </div>
       </div>
 
       <ConfirmModal
         isOpen={isModalOpen}
-        isConfirm={isConfirm}
+        isConfirm={true}
         text="삭제"
         onAction={handleDelete}
         onClose={handleClose}
@@ -112,3 +110,5 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete }) => {
 };
 
 export default WritingCard;
+
+
