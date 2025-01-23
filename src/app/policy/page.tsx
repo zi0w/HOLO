@@ -1,4 +1,4 @@
-import PolicyCont from "@/app/policy/_components/PolicyCont";
+// import PolicyCont from "@/app/policy/_components/PolicyCont";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 const page = () => {
   return (
     <>
-      <p className="mb-4 font-bold text-base-800">지역 및 정책 분야 선택</p>
-      <PolicyCont />
+      <p className="mb-4 font-bold text-base-800 text-center">서비스 점검중입니다.</p>
+      {/* <PolicyCont /> */}
     </>
   );
 };
