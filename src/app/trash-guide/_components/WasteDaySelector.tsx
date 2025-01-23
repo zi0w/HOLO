@@ -1,15 +1,12 @@
 "use client";
 import { fetchOpenAiDay } from "@/app/trash-guide/_actions/fetchTrashOpenAi";
+import SearchForm from "@/app/trash-guide/_components/SearchForm";
 import type { WasteDayAnswerData } from "@/app/trash-guide/_types/trashTypes";
 import Loading from "@/components/common/Loading";
-import RegionSelect from "@/components/common/RegionSelect";
 import { useState } from "react";
 
 const WasteDaySelector = () => {
-  const [regionSelected, setRegionSelected] = useState<string>("");
-  const [districtSelected, setDistrictSelected] = useState<string>("");
-  const [districts, setDistricts] = useState<string[]>([]);
-
+  const [region, setRegion] = useState<string>("");
   const [wasteDayAnswer, setWasteDayAnswer] =
     useState<WasteDayAnswerData>(null);
 
@@ -18,7 +15,7 @@ const WasteDaySelector = () => {
   const handleFetchWasteDay = async (): Promise<void> => {
     setLoading(true);
     try {
-      const result = await fetchOpenAiDay(regionSelected, districtSelected);
+      const result = await fetchOpenAiDay(region);
       if (result) {
         setWasteDayAnswer(result);
       }
@@ -30,53 +27,24 @@ const WasteDaySelector = () => {
     }
   };
 
-  const handleRegionChange = (region: string, districts: string[]) => {
-    setRegionSelected(region);
-    setDistrictSelected("");
-    setDistricts(districts);
+  const handleSubmit = (e: React.FormEvent<Element>) => {
+    e.preventDefault();
+    handleFetchWasteDay();
   };
 
-  const isDisabled =
-    !regionSelected ||
-    regionSelected === "지역선택" ||
-    !districtSelected ||
-    districtSelected === "시군구";
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRegion(e.target.value);
+  };
 
   return (
     <div>
-      <p className="mb-4 font-bold text-base-800">지역 선택</p>
-      <div className="grid grid-cols-2 gap-2">
-        <RegionSelect
-          selectedRegion={regionSelected}
-          onChange={handleRegionChange}
-        />
-        <select
-          name="district"
-          id="district"
-          className="common-select"
-          onChange={(e) => setDistrictSelected(e.target.value)}
-          value={districtSelected}
-          disabled={!regionSelected}
-        >
-          <option value="시군구">시군구(전체)</option>
-          {districts.map((district, i) => (
-            <option value={district} key={i}>
-              {district}
-            </option>
-          ))}
-        </select>
-      </div>
-      <button
-        type="button"
-        onClick={handleFetchWasteDay}
-        className="lookup-btn"
-        disabled={isDisabled}
-      >
-        조회
-      </button>
-      {!wasteDayAnswer && !loading && (
-        <p className="mt-5 text-base-500">지역을 선택해주세요.</p>
-      )}
+      <p className="mb-4 font-bold text-base-800">주소 검색</p>
+      <SearchForm
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        isDisabled={!region}
+        placeholder="서울 용산구 한남동"
+      />
       {loading && <Loading />}
       {wasteDayAnswer && wasteDayAnswer.length > 0 && (
         <ul className="mt-5 grid gap-5">
