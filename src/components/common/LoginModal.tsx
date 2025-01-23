@@ -1,5 +1,5 @@
 import CloseIcon from "@/assets/images/common/close-icon.svg";
-import useModalStore from "@/store/modalStore";
+import useLoginModalStore from "@/store/loginModalStore";
 
 type ModalProps = {
   text: string;
@@ -7,12 +7,12 @@ type ModalProps = {
   onClose?: () => void;
 };
 
-const Modal = ({ text, onAction, onClose }: ModalProps) => {
-  const { isModalOpen, setIsModalOpen, isConfirm } = useModalStore();
-  if (!isModalOpen) return null;
+const LoginModal = ({ text, onAction, onClose }: ModalProps) => {
+  const { isLoginModalOpen, setIsLoginModalOpen, isLoginConfirm } = useLoginModalStore();
+  if (!isLoginModalOpen) return null;
 
   const handleClose = () => {
-    setIsModalOpen(false);
+    setIsLoginModalOpen(false);
     if (onClose) {
       onClose();
     }
@@ -27,12 +27,12 @@ const Modal = ({ text, onAction, onClose }: ModalProps) => {
               <CloseIcon />
             </button>
           </div>
-          <p className="text-center">
-            {isConfirm ? `${text}하시겠습니까?` : `${text}되었습니다.`}
+          <p className="text-center text-lg">
+            {isLoginConfirm ? `${text}하시겠습니까?` : `${text}되었습니다.`}
           </p>
         </div>
         <div className="mt-12 flex">
-          {isConfirm && (
+          {isLoginConfirm && (
             <button
               onClick={handleClose}
               className="flex-1 !rounded-none !rounded-bl border border-base-300 !text-lg"
@@ -40,7 +40,7 @@ const Modal = ({ text, onAction, onClose }: ModalProps) => {
               취소
             </button>
           )}
-          {isConfirm ? (
+          {isLoginConfirm ? (
             <button
               className="common-btn type-a flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800"
               onClick={onAction}
@@ -61,4 +61,4 @@ const Modal = ({ text, onAction, onClose }: ModalProps) => {
   );
 };
 
-export default Modal;
+export default LoginModal;

@@ -4,8 +4,10 @@ import { updatePost } from "@/app/honeytips/_actions/update";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
 import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
-import Plus from "@/assets/images/honeytips/plus.svg";
 import XButton from "@/assets/images/honeytips/BigX.svg";
+import Plus from "@/assets/images/honeytips/plus.svg";
+import Modal from "@/components/common/Modal";
+import useModalStore from "@/store/modalStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -21,13 +23,13 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   const [category, setCategory] = useState<string>(
     postDetailData?.categories || "청소",
   );
-
   const [images, setImages] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>(
     postDetailData?.post_image_url || [],
   );
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { setIsModalOpen, setIsConfirm } = useModalStore();
 
   const mode = !!postDetailData ? "edit" : "create";
 
@@ -89,7 +91,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
         router.push("/honeytips");
       }
 
-      handleCancel();
+      // handleCancel();
     } catch (error) {
       console.error("게시물 저장 중 오류가 발생했습니다.", error);
     } finally {
@@ -98,6 +100,11 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   };
 
   const handleCancel = () => {
+    setIsConfirm(true);
+    setIsModalOpen(true);
+  };
+
+  const handleCancelConfirm = () => {
     if (mode === "edit" && postDetailData) {
       router.push(`/honeytips/${postDetailData.id}`);
     } else {
@@ -107,6 +114,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
       setImages([]);
       router.push("/honeytips");
     }
+    setIsModalOpen(false);
   };
 
   const handleImageChange = (
@@ -138,6 +146,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
 
   return (
     <form className="mx-5 mt-4">
+      <Modal text={"취소"} onAction={handleCancelConfirm} />
       <section className="mb-6 flex items-center justify-between">
         <button
           type="button"

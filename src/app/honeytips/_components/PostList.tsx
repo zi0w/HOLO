@@ -7,9 +7,11 @@ import { POST_CATEGORIES } from "@/app/honeytips/_constans/post";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
 import PlusButton from "@/assets/images/honeytips/plus-circle.svg";
+import LoginModal from "@/components/common/LoginModal";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import useAuthStore from "@/store/authStore";
+import useLoginModalStore from "@/store/loginModalStore";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,6 +23,8 @@ const PostList = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const { setIsLoginModalOpen, setIsLoginConfirm } = useLoginModalStore();
 
   const router = useRouter();
   const searchQuery = useSearchParams();
@@ -82,10 +86,16 @@ const PostList = () => {
 
   const handleGoToPost = () => {
     if (!isAuthenticated) {
-      alert("로그인이 필요합니다.");
+      setIsLoginModalOpen(true);
+      setIsLoginConfirm(true);
       return;
     }
     router.push(`/honeytips/post?category=${selectedCategory}`);
+  };
+
+  const handleConfirm = () => {
+    setIsLoginModalOpen(false);
+    router.push("/sign-in");
   };
 
   const handleClickCategory = (category: string) => {
@@ -114,6 +124,12 @@ const PostList = () => {
           </button>
         ))}
       </div>
+
+      <LoginModal
+        text={"로그인 페이지로 이동"}
+        onAction={handleConfirm}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
 
       <div className="fixed bottom-14 right-4 z-50">
         <button
