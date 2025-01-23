@@ -1,9 +1,9 @@
 // hooks/useLikeButton.ts
 import type { LikeAction } from "@/app/mypage/_types/like";
 import { getCurrentUser, toggleLikeStatus } from "@/app/mypage/_utils/likes";
-
 import { useGuestStore } from "@/hooks/useGuestAccess";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 export const useLikeButton = (
   postId: string,
@@ -12,6 +12,12 @@ export const useLikeButton = (
 ) => {
   const queryClient = useQueryClient();
   const isGuest = useGuestStore((state) => state.isGuest);
+  const [showModal, setShowModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({
+    text: "",
+    isConfirm: false,
+    onAction: () => {},
+  });
 
   const { mutate: toggleLike } = useMutation({
     mutationFn: async () => {
@@ -19,7 +25,6 @@ export const useLikeButton = (
       return toggleLikeStatus(user.id, postId, isLiked);
     },
     onSuccess: async (action) => {
-      // 캐시 무효화 키 수정
       queryClient.invalidateQueries({ queryKey: ["myPosts"] });
       queryClient.invalidateQueries({ queryKey: ["myLikes"] });
       queryClient.invalidateQueries({ queryKey: ["userPosts"] });
@@ -32,13 +37,23 @@ export const useLikeButton = (
     },
     onError: (error) => {
       console.error("좋아요 처리 중 오류:", error);
-      alert("좋아요 처리 중 오류가 발생했습니다.");
+      setModalConfig({
+        text: "좋아요 처리 중 오류가 발생",
+        isConfirm: false,
+        onAction: () => setShowModal(false),
+      });
+      setShowModal(true);
     },
   });
 
   const handleLike = async () => {
     if (isGuest) {
-      alert("로그인이 필요한 기능입니다.");
+      setModalConfig({
+        text: "로그인이 필요한 기능",
+        isConfirm: false,
+        onAction: () => setShowModal(false),
+      });
+      setShowModal(true);
       return;
     }
 
@@ -49,5 +64,12 @@ export const useLikeButton = (
     }
   };
 
-  return { handleLike };
+  return { 
+    handleLike,
+    showModal,
+    modalConfig,
+    closeModal: () => setShowModal(false)
+  };
 };
+
+

@@ -1,39 +1,50 @@
 "use client";
 
 import { useDeleteAccount } from "@/app/mypage/_hooks/useDeleteAccount";
-import Modal from "@/components/common/Modal";
-import useModalStore from "@/store/modalStore";
-import { useEffect } from 'react'; // useEffect 추가
+import DeleteModal from "@/app/mypage/_components/DeleteModal";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const DeleteAccount = () => {
+  const router = useRouter();
   const { handleDeleteAccount } = useDeleteAccount();
-  const { setIsModalOpen, setIsConfirm, isModalOpen } = useModalStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(false);
 
-  // 컴포넌트 마운트 시 모달 상태 초기화
   useEffect(() => {
+    setIsModalOpen(false);
+    setIsConfirm(false);
+
     return () => {
       setIsModalOpen(false);
       setIsConfirm(false);
     };
-  }, [setIsModalOpen, setIsConfirm]);
+  }, []);
 
-  const handleDelete = async () => {
+  const handleDeleteClick = () => {
+    setIsModalOpen(true);
+    setIsConfirm(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setIsConfirm(true);  // 첫 번째 모달에서 취소 시 초기 상태로
+  };
+
+  const handleConfirmDelete = async () => {
     try {
       await handleDeleteAccount();
-      setIsConfirm(false);
-      setIsModalOpen(false); // 회원탈퇴 성공 시 모달 닫기
+      setIsConfirm(false);  // 완료 모달로 전환
     } catch (error) {
       console.error("회원탈퇴 실패:", error);
       alert("회원탈퇴 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-      setIsConfirm(false);
       setIsModalOpen(false);
+      setIsConfirm(true);
     }
   };
 
-  // 회원탈퇴 버튼 클릭 핸들러
-  const handleDeleteClick = () => {
-    setIsConfirm(true);
-    setIsModalOpen(true);
+  const handleCompleteClose = () => {
+    router.push("/login");  // 완료 모달에서 확인 클릭 시 로그인 페이지로 이동
   };
 
   return (
@@ -45,22 +56,15 @@ const DeleteAccount = () => {
         회원탈퇴
       </button>
 
-      {isModalOpen && (
-        <Modal
-          text="회원탈퇴"
-          onAction={handleDelete}
-          onClose={() => {
-            setIsModalOpen(false);
-            setIsConfirm(false);
-          }}
-        />
-      )}
+      <DeleteModal
+        isOpen={isModalOpen}
+        isConfirm={isConfirm}
+        onAction={isConfirm ? handleConfirmDelete : handleCompleteClose}
+        onClose={handleCloseModal}
+      />
     </>
   );
 };
 
 export default DeleteAccount;
-
-
-
 

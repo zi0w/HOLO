@@ -1,12 +1,12 @@
 import CloseIcon from "@/assets/images/common/close-icon.svg";
 
-type SignUpModalProps = {
+type SigninModalProps = {
   isOpen: boolean;
   message: string;
   onClose: () => void;
 };
 
-const SignUpModal = ({ isOpen, message, onClose }: SignUpModalProps) => {
+const SigninModal = ({ isOpen, message, onClose }: SigninModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -33,4 +33,7 @@ const SignUpModal = ({ isOpen, message, onClose }: SignUpModalProps) => {
   );
 };
 
-export default SignUpModal;
+export default SigninModal;
+
+
+
