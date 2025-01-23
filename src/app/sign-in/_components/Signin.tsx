@@ -1,6 +1,6 @@
 "use client";
 
-import SigninModal from "@/app/sign-in/_components/\bSigninModal";
+import SigninModal from "@/app/sign-in/_components/SigninModal";
 import SocialLogin from "@/app/sign-in/_components/SocialLogin";
 import { useSignInForm } from "@/app/sign-in/_hooks/useSignInForm";
 import useSignInMutation from "@/app/sign-in/_hooks/useSignInMutation";

@@ -77,7 +77,6 @@ const useSignInMutation = (): UseMutationResult<SignInResult, unknown, SignInPay
       }
 
       document.cookie = `access_token=${session.access_token}; path=/; secure;`;
-      console.log("엑세스 토큰이 쿠키에 저장되었습니다:", session.access_token);
 
       if (!user) {
         console.error("사용자 정보가 없습니다.");

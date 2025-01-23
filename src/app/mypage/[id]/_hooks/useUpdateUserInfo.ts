@@ -40,7 +40,6 @@ export const useUpdateUserInfo = () => {
     onSuccess: () => {
       // 캐시 무효화
       queryClient.invalidateQueries({ queryKey: ["userInfo"] });
-      console.log("프로필이 성공적으로 업데이트되었습니다.");
     },
     onError: (error: Error) => {
       console.error("프로필 업데이트 중 오류:", error);

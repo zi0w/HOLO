@@ -51,9 +51,6 @@ export const useLikeMutation = (postId: Like["post_id"]) => {
         queryClient.setQueryData(["likes", postId], context.previousLikes);
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["likes", postId] });
-    }, 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["likes", postId] });
     },
