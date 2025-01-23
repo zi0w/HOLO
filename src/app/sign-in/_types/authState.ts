@@ -1,6 +1,10 @@
 // src/app/sign-in/_types/authType.ts
 
-import type { User } from "@/app/sign-in/_types/userType";
+import type { User } from "@supabase/supabase-js";
+
+
+
+
 
 export type Session = {
   accessToken: string;
@@ -9,7 +13,7 @@ export type Session = {
 
 export type AuthState = {
   isLoggedIn: boolean;
-  user: User | null;
+  user: User| null;
   session: Session | null;
   setAuth: (user: User | null, session: Session | null) => void;
   clearAuth: () => void;

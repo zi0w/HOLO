@@ -1,70 +1,58 @@
 "use client";
 
 import ProfileEditModal from "@/app/mypage/_components/ProfileEditModal";
-import { useUpdateUserInfo } from "@/app/mypage/_hooks/useUpdateUserInfo";
-
 import type { User } from "@/app/mypage/_types/myPage";
 import useAuthStore from "@/store/authStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { createClient } from "@/lib/utils/supabase/client";
 
 const UserProfile = () => {
   const router = useRouter();
   const { user } = useAuthStore();
   const queryClient = useQueryClient();
-  const updateUserInfo = useUpdateUserInfo();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [previousData, setPreviousData] = useState<User | null>(null);
+  const supabase = createClient();
 
-  // 유저 정보 쿼리
+  // 유저 정보 쿼리 수정
   const { data: userData, isLoading } = useQuery<User>({
     queryKey: ["userInfo", user?.id],
-    queryFn: () => user as User,
-    initialData: user as User,
-    enabled: !!user,
+    queryFn: async () => {
+      if (!user?.id) throw new Error("User ID is required");
+      
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", user.id)  // user?.id 대신 user.id 사용
+        .single();
+
+      if (error) throw error;
+      return data as User;
+    },
+    enabled: !!user?.id,
     gcTime: 1000 * 60 * 30,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 0,
   });
 
-  // 모달 관련 핸들러
   const handleOpenModal = () => {
-    if (userData) {
-      setPreviousData(userData);
-    }
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = async () => {
-    setIsModalOpen(false);
-    try {
-      const currentData = queryClient.getQueryData<User>([
-        "userInfo",
-        user?.id,
-      ]);
-      if (currentData) {
-        setPreviousData(currentData);
-      }
-      await updateUserInfo();
-      await queryClient.invalidateQueries({ queryKey: ["userInfo", user?.id] });
-      setPreviousData(null);
-    } catch (error) {
-      console.error("프로필 업데이트 실패:", error);
-      if (user?.id && previousData) {
-        queryClient.setQueryData(["userInfo", user.id], previousData);
-      }
-      alert("프로필 업데이트에 실패했습니다.");
+  const handleCloseModal = () => {
+    if (user?.id) {
+      queryClient.invalidateQueries({ queryKey: ["userInfo", user.id] });
     }
+    setIsModalOpen(false);
   };
 
   if (isLoading || !userData) {
     return (
       <div className="flex h-screen items-center justify-center">로딩중...</div>
     );
-    
   }
-  console.log(userData.profile_image_url);
+
   return (
     <div className="w-full bg-white">
       <div className="flex flex-col">
@@ -85,17 +73,13 @@ const UserProfile = () => {
             <Image
               width={100}
               height={100}
-              src={
-                userData.profile_image_url ??
-                "https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/e6a1c347-c123-40c4-ae51-fdc0ffcb910e-1737345924767.jpg"
-              }
+              src={userData.profile_image_url || "https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/e6a1c347-c123-40c4-ae51-fdc0ffcb910e-1737345924767.jpg"}
               alt="프로필 이미지"
               className="h-full w-full rounded-full object-cover"
               priority
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.src =
-                  "https://tjxonwrcuvvfxkfkgadc.supabase.co/storage/v1/object/public/profile_image/profile_default_img.jpg";
+                target.src = "https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/e6a1c347-c123-40c4-ae51-fdc0ffcb910e-1737345924767.jpg";
               }}
             />
           </button>
@@ -124,3 +108,6 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
+
+

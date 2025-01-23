@@ -1,9 +1,7 @@
-// src/app/mypage/[id]/_components/Mycomment/MyCommentCard.tsx
 "use client";
 
-import type { CommentWithPost } from "@/app/mypage/[id]/_components/_type/comment";
 import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
-
+import type { CommentWithPost } from "@/app/mypage/_types/useMyTypes";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -96,10 +94,7 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
               setIsConfirm(true);
               setIsModalOpen(true);
             }}
-            className={clsx(
-              "flex h-[16px] w-[24px] items-center justify-center",
-              "border border-[#424242] text-[12px] text-[#424242]",
-            )}
+            className="flex items-center justify-center border border-[#424242] text-[12px] text-[#424242] h-[28px] w-[38px] px-[7px] py-[6px]"
           >
             삭제
           </button>

@@ -3,6 +3,7 @@
 
 import MyCommentList from "@/app/mypage/[id]/_components/my-comment/MyCommentList";
 import MyLikeList from "@/app/mypage/[id]/_components/mylike/LikeList";
+
 import MyWritingList from "@/app/mypage/[id]/_components/mypost/WritingList";
 import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
 import UserProfile from "@/app/mypage/_components/UserProfile";

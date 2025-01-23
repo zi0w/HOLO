@@ -1,28 +1,31 @@
 import { getId } from "@/app/honeytips/_utils/auth";
-import type { Like } from "@/app/mypage/[id]/_components/_type/types";
 import {
   addLike,
   deleteLike,
   fetchLikePostsData,
 } from "@/app/mypage/[id]/_components/mylike/_utils/likes";
 import type { MutationContext } from "@/app/mypage/_types/like";
-
 import type { Post } from "@/app/mypage/_types/myPage";
+import type { Like } from "@/app/mypage/_types/useMyTypes";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 export const UseLikes = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [likingPosts, setLikingPosts] = useState<Set<string>>(new Set());
+  const [showModal, setShowModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({
+    text: "",
+    isConfirm: false,
+    onAction: () => {},
+  });
   const queryClient = useQueryClient();
 
-  // userId를 가져오는 즉시 데이터를 prefetch
   useEffect(() => {
     const fetchUserIdAndData = async () => {
       const id = await getId();
       setUserId(id);
       if (id) {
-        // userId가 있으면 즉시 데이터 prefetch
         await queryClient.prefetchQuery({
           queryKey: ["likedPosts", id],
           queryFn: () => fetchLikePostsData(id),
@@ -37,8 +40,8 @@ export const UseLikes = () => {
     queryKey: ["likedPosts", userId],
     queryFn: () => fetchLikePostsData(userId || ""),
     enabled: !!userId,
-    staleTime: 0, // 항상 최신 데이터를 가져오도록 설정
-    refetchOnMount: true, // 컴포넌트 마운트 시 항상 새로운 데이터 fetch
+    staleTime: 0,
+    refetchOnMount: true,
   });
 
   const likeMutation = useMutation<
@@ -85,16 +88,22 @@ export const UseLikes = () => {
       return { previousPosts, previousPost, previousLikeData };
     },
     onSuccess: (_, { action }) => {
-      alert(
-        action === "add"
-          ? "게시글을 좋아요 했습니다."
-          : "게시글 좋아요를 취소했습니다.",
-      );
+      setModalConfig({
+        text: action === "add" ? "게시글을 좋아요" : "게시글 좋아요 가 취소",
+        isConfirm: false,
+        onAction: () => setShowModal(false),
+      });
+      setShowModal(true);
     },
     onError: (_, __, context) => {
       if (!userId) return;
 
-      alert("좋아요 처리 중 오류가 발생했습니다.");
+      setModalConfig({
+        text: "좋아요 처리 중 오류가 발생",
+        isConfirm: false,
+        onAction: () => setShowModal(false),
+      });
+      setShowModal(true);
 
       if (context?.previousPosts) {
         queryClient.setQueryData(["likedPosts", userId], context.previousPosts);
@@ -141,5 +150,9 @@ export const UseLikes = () => {
     isPending,
     handleLikeChange,
     isLiking: (postId: string) => likingPosts.has(postId),
+    showModal,
+    modalConfig,
+    closeModal: () => setShowModal(false),
   };
 };
+

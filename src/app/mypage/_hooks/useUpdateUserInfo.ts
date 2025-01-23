@@ -1,73 +1,79 @@
-// src/hooks/useUpdateUserInfo.ts
+import { createClient } from "@/lib/utils/supabase/client";
+import { useState, useCallback } from "react";
 
-import { fetchUserInfo } from "@/app/mypage/_utils/user";
-import useAuthStore from "@/store/authStore";
-import { useCallback } from "react";
+export const useUpdateUserInfo = (userId: string) => {
+  const supabase = createClient();
+  const [nickname, setNickname] = useState("");
+  const [isNicknameValid, setIsNicknameValid] = useState(true);
+  const [nicknameError, setNicknameError] = useState("");
 
-export function useUpdateUserInfo(forceUpdate: boolean = false) {
-  const { user, session, setAuth } = useAuthStore();
-
-  const updateUserInfo = useCallback(async () => {
-    if (!user?.id) return;
-
-    try {
-      const userInfo = await fetchUserInfo(user.id);
-
-      if (userInfo) {
-        const shouldUpdate =
-          forceUpdate ||
-          user.nickname !== userInfo.nickname ||
-          user.profile_image_url !== userInfo.profile_image_url;
-
-        if (shouldUpdate) {
-          setAuth(
-            {
-              id: user.id,
-              email: user.email,
-              nickname: userInfo.nickname,
-              profile_image_url: userInfo.profile_image_url,
-            },
-            session, // 기존 세션 유지
-          );
-        }
-      }
-    } catch (error) {
-      console.error("Failed to update user info:", error);
+  const validateNickname = (value: string) => {
+    const nicknameRegex = /^[a-zA-Z0-9가-힣]{2,10}$/;
+    if (!value.trim()) {
+      setIsNicknameValid(false);
+      setNicknameError("닉네임을 입력해주세요.");
+      return false;
     }
-  }, [user, session, setAuth, forceUpdate]);
+    if (!nicknameRegex.test(value)) {
+      setIsNicknameValid(false);
+      setNicknameError("닉네임은 2~10자의 한글, 영문, 숫자만 사용 가능합니다.");
+      return false;
+    }
+    setIsNicknameValid(true);
+    setNicknameError("");
+    return true;
+  };
 
-  return updateUserInfo;
-}
+  const handleNicknameChange = useCallback(
+    (newNickname: string) => {
+      setNickname(newNickname);
+      validateNickname(newNickname);
+    },
+    []
+  );
 
-// import { fetchUserInfo } from "@/app/mypage/_utils/User";
-// import useAuthStore from "@/store/authStore";
-// import { useCallback } from "react";
+  const checkNicknameDuplicate = useCallback(
+    async (newNickname: string) => {
+      if (!validateNickname(newNickname)) {
+        return false;
+      }
 
-// export function useUpdateUserInfo(forceUpdate: boolean = false) {
-//   const { user, setAuth } = useAuthStore();
+      try {
+        const encodedNickname = encodeURIComponent(newNickname);
+        const { data, error } = await supabase
+          .from("users")
+          .select("nickname")
+          .eq("nickname", encodedNickname)
+          .neq("id", userId)
+          .single();
 
-//   const updateUserInfo = useCallback(async () => {
-//     if (user?.id) {
-//       const userInfo = await fetchUserInfo(user.id);
+        if (error && error.code !== "PGRST116") {
+          console.error("닉네임 중복 확인 에러:", error);
+          return false;
+        }
 
-//       if (userInfo) {
-//         if (
-//           forceUpdate ||
-//           user.nickname !== userInfo.nickname ||
-//           user.profile_image_url !== userInfo.profile_image_url
-//         ) {
-//           setAuth(
-//             {
-//               ...user,
-//               nickname: userInfo.nickname,
-//               profile_image_url: userInfo.profile_image_url,
-//             },
-//             null,
-//           );
-//         }
-//       }
-//     }
-//   }, [user, setAuth, forceUpdate]);
+        if (data) {
+          setNicknameError("이미 사용 중인 닉네임입니다.");
+          return false;
+        }
 
-//   return updateUserInfo;
-// }
+        setNicknameError("");
+        return true;
+      } catch (error) {
+        console.error("닉네임 중복 확인 실패:", error);
+        return false;
+      }
+    },
+    [userId, supabase]
+  );
+
+  return {
+    nickname,
+    isNicknameValid,
+    nicknameError,
+    handleNicknameChange,
+    checkNicknameDuplicate,
+  };
+};
+
+

@@ -13,3 +13,12 @@ export type SignUpPayload = {
   nickname: string;
   profile_image_url?: string;  
 };
+
+
+export type SignUpModalProps = {
+  isOpen: boolean;
+  message: string;
+  isConfirm?: boolean;
+  onClose: () => void;
+  onConfirm?: () => void;
+};

@@ -2,6 +2,7 @@
 
 import CommentCard from "@/app/honeytips/[id]/_components/CommentCard";
 import CommentForm from "@/app/honeytips/[id]/_components/CommentForm";
+import CommentLoading from "@/app/honeytips/[id]/_components/CommentLoading";
 import { useCommentDataQuery } from "@/app/honeytips/[id]/_hooks/useCommentQuery";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
@@ -21,13 +22,12 @@ const CommentList = () => {
   useEffect(() => {
     const fetchUserId = async () => {
       const userId = await getId();
-
       setCurrentId(userId);
     };
     fetchUserId();
   }, []);
 
-  if (isPending) return null;
+  if (isPending) return <CommentLoading />;
   if (isError) return <div>에러가 발생했습니다!</div>;
 
   return (
