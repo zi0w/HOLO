@@ -4,10 +4,11 @@ import { fetchOpenAiFoodWaste } from "@/app/trash-guide/_actions/fetchTrashOpenA
 import FoodNoIcon from "@/assets/images/trash/foodwaste-no.png";
 import FoodYesIcon from "@/assets/images/trash/foodwaste-yes.png";
 import PersonIcon from "@/assets/images/main/bnr/person-trash.png";
-import SearchIcon from "@/assets/images/trash/search-icon.svg";
+
 import Loading from "@/components/common/Loading";
 import Image from "next/image";
 import { useState, type ChangeEvent } from "react";
+import SearchForm from "@/app/trash-guide/_components/SearchForm";
 
 const FoodWasteCheck = () => {
   const [foodWaste, setFoodWaste] = useState<string>("");
@@ -45,22 +46,12 @@ const FoodWasteCheck = () => {
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmitFoodWaste}
-        className="flex items-center gap-1 rounded border border-base-400 px-3 py-2"
-      >
-        <button type="submit" disabled={!foodWaste}>
-          <SearchIcon />
-        </button>
-        <input
-          type="text"
-          name="prog"
-          id="prog"
-          className="w-full border-none text-base-600 focus:bg-transparent focus:outline-none"
-          onChange={handleChangeFoodWaste}
-          placeholder="달걀 껍질은 음쓰?"
-        />
-      </form>
+      <SearchForm
+        handleSubmit={handleSubmitFoodWaste}
+        handleChange={handleChangeFoodWaste}
+        isDisabled={!foodWaste}
+        placeholder="달걀 껍질은 음쓰?"
+      />
       {!isWasteFoodAnswer && !loading && (
         <div className="mt-20">
           <Image
