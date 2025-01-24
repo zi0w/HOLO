@@ -24,7 +24,7 @@ const MainContainer = ({ children }: { children: React.ReactNode }) => {
       <NavigateBack />
       <main
         className={clsx(
-          "pb-[90px] lg:ml-[240px] lg:h-screen lg:pb-0",
+          "lg:ml-[240px] lg:h-screen lg:pb-0",
           allHideHeaderPages && "!pb-0 lg:!ml-0",
           nonePaddingPages && "!pb-0 lg:!h-auto",
         )}
