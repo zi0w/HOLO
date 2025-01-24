@@ -9,8 +9,8 @@ import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
-import Modal from "@/components/common/Modal";
-import useModalStore from "@/store/modalStore";
+import DetailModal from "@/components/modal/DetailModal";
+import useDetailModalStore from "@/store/modal/deatilModalStore";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
@@ -33,7 +33,8 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
   const router = useRouter();
 
-  const { setIsModalOpen, setIsConfirm, isConfirm } = useModalStore();
+  const { setIsDetailModalOpen, setIsDetailConfirm, isDetailConfirm } =
+    useDetailModalStore();
 
   const formatDate = (date: string) => {
     return dayjs(date).format("YYYY년 MM월 DD일 HH:mm:ss");
@@ -75,14 +76,14 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   }, []);
 
   const handleDeletePost = async (postId: Post["id"]) => {
-    setIsConfirm(true);
-    setIsModalOpen(true);
+    setIsDetailConfirm(true);
+    setIsDetailModalOpen(true);
 
-    if (!isConfirm) return;
+    if (!isDetailConfirm) return;
 
     try {
       await deletePost(postId);
-      setIsConfirm(false);
+      setIsDetailConfirm(false);
     } catch (error) {
       setIsError(true);
       console.error("게시물 삭제에 실패했습니다.", error);
@@ -103,7 +104,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       >
         <ArrowLeftIcon />
       </button>
-      <Modal
+      <DetailModal
         text={"삭제"}
         onAction={() => handleDeletePost(postId)}
         onClose={() => router.push("/honeytips")}
@@ -145,8 +146,8 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                 <DropdownButton
                   label="삭제"
                   onClick={() => {
-                    setIsConfirm(true);
-                    setIsModalOpen(true);
+                    setIsDetailConfirm(true);
+                    setIsDetailModalOpen(true);
                   }}
                 />
               </div>
@@ -164,19 +165,16 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         centeredSlides={true}
         pagination={{ clickable: true }}
         navigation={true}
-        className="flex items-center my-4 ml-0 h-auto max-w-[300px]"
+        className="my-4 ml-0 flex h-auto max-w-[300px] items-center"
       >
         {postDetailData.post_image_url?.map((imageUrl, index) => (
-          <SwiperSlide
-            key={index}
-            className="my-auto"
-          >
+          <SwiperSlide key={index} className="my-auto">
             <Image
               src={imageUrl}
               alt={`게시물 이미지 ${index + 1}`}
               width={400}
               height={400}
-              className="rounded w-[300px] h-[300px] object-cover mx-auto"
+              className="mx-auto h-[300px] w-[300px] rounded object-cover"
             />
           </SwiperSlide>
         ))}
@@ -187,7 +185,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       <p className="mb-10 mt-2 whitespace-pre-wrap text-base-800">
         {postDetailData.content}
       </p>
-      <div className="flex justify-center items-start gap-3">
+      <div className="flex items-start justify-center gap-3">
         <LikeButton
           postId={postDetailData.id}
           likesCounts={likesCounts}

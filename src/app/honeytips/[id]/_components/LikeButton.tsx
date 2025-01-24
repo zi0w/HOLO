@@ -6,8 +6,8 @@ import type { Like, Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import YesHeart from "@/assets/images/honeytips/love_selected_42.svg";
 import NoHeart from "@/assets/images/honeytips/love_unselected_42.svg";
-import LoginModal from "@/components/common/LoginModal";
-import useLoginModalStore from "@/store/loginModalStore";
+import LoginModal from "@/components/modal/LoginModal";
+import useLoginModalStore from "@/store/modal/loginModalStore";
 import { useIsMutating } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
