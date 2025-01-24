@@ -49,7 +49,7 @@ const UserProfile = () => {
 
   if (isLoading || !userData) {
     return (
-      <div className="flex h-screen items-center justify-center">로딩중...</div>
+      <div className="flex h-screen items-center justify-center"></div>
     );
   }
 

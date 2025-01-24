@@ -3,9 +3,9 @@
 
 import MyCommentList from "@/app/mypage/[id]/_components/my-comment/MyCommentList";
 import MyLikeList from "@/app/mypage/[id]/_components/mylike/LikeList";
-
 import MyWritingList from "@/app/mypage/[id]/_components/mypost/WritingList";
 import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
+
 import UserProfile from "@/app/mypage/_components/UserProfile";
 import type { ActiveSection } from "@/app/mypage/_types/myPage";
 import SignoutButton from "@/app/sign-in/_components/SignoutButton";
@@ -69,8 +69,8 @@ const Mypageform = () => {
         <UserProfile />
       </div>
 
-      <div className={clsx("mt-[60px]")}>
-        <div className={clsx("flex justify-center gap-16")}>
+      <div className="mt-[60px]">
+        <div className="flex justify-center gap-16">
           <div className={clsx("relative")}>
             <button
               onClick={() => handleSectionChange("likes")}
@@ -84,7 +84,7 @@ const Mypageform = () => {
             {activeSection === "likes" && (
               <div
                 className={clsx(
-                  "absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]",
+                  "absolute -bottom-1 left-0 h-[2px] w-full bg-[#FF7600]",
                 )}
               />
             )}
@@ -105,7 +105,7 @@ const Mypageform = () => {
             {activeSection === "comments" && (
               <div
                 className={clsx(
-                  "absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]",
+                  "absolute -bottom-1 left-0 h-[2px] w-full bg-[#FF7600]",
                 )}
               />
             )}
@@ -126,7 +126,7 @@ const Mypageform = () => {
             {activeSection === "myPosts" && (
               <div
                 className={clsx(
-                  "absolute -bottom-2 left-0 h-[2px] w-full bg-[#FF7600]",
+                  "absolute -bottom-1 left-0 h-[2px] w-full bg-[#FF7600]",
                 )}
               />
             )}
@@ -138,7 +138,7 @@ const Mypageform = () => {
 
       <div
         className={clsx(
-          "mx-[20px] mt-[10px] h-[400px] rounded-lg border border-[#E0E0E0] bg-white",
+          "mx-[20px] mt-[30px] h-[400px] rounded-lg border border-[#E0E0E0] bg-white",
         )}
       >
         {renderSection()}
@@ -155,4 +155,3 @@ const Mypageform = () => {
 };
 
 export default Mypageform;
-

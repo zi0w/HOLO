@@ -28,7 +28,7 @@ const MyLikeList = () => {
     goToPage,
   } = usePagination<Post>(likedPosts || [], 5);
 
-  if (isPending) return <p>로딩중입니다...</p>;
+  if (isPending) return <p></p>;
 
   return (
     <>
