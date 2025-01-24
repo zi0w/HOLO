@@ -94,7 +94,7 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
               setIsConfirm(true);
               setIsModalOpen(true);
             }}
-            className="flex items-center justify-center border border-[#424242] text-[12px] text-[#424242] h-[28px] w-[38px] px-[7px] py-[6px]"
+            className="flex h-[28px] w-[38px] items-center justify-center border border-[#424242] px-[7px] py-[6px] text-[12px] text-[#424242]"
           >
             삭제
           </button>

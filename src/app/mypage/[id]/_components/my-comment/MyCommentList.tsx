@@ -21,7 +21,7 @@ const MyCommentList = () => {
     goToPage,
   } = usePagination(comments, 5);
 
-  if (isLoading) return <p>로딩중입니다...</p>;
+  if (isLoading) return <p></p>;
 
   return (
     <div className="h-full w-full pt-[10px]">
