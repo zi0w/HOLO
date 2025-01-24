@@ -9,8 +9,8 @@ import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import { formatDate } from "@/app/honeytips/_utils/formatDate";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
-import Modal from "@/components/common/Modal";
-import useModalStore from "@/store/modalStore";
+import CommentModal from "@/components/modal/CommentModal";
+import useCommentModalStore from "@/store/modal/commentModalStore";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -27,7 +27,8 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
 
-  const { setIsModalOpen, isConfirm, setIsConfirm } = useModalStore();
+  const { setIsCommentModalOpen, isCommentConfirm, setIsCommentConfirm } =
+    useCommentModalStore();
 
   const updateCommentMutation = useUpdateCommentMutation();
   const deleteCommentMutation = useDeleteCommentMutation();
@@ -62,28 +63,26 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
   };
 
   const handleCommentDelete = (id: string) => {
-    setIsConfirm(true);
-    setIsModalOpen(true);
+    setIsCommentConfirm(true);
+    setIsCommentModalOpen(true);
 
-    if (!isConfirm) return;
-
-    // if (!isConfirm) {
-    //   setIsModalOpen(false);
-    //   return;
-    // }
+    if (!isCommentConfirm) return;
 
     deleteCommentMutation.mutate(id, {
       onSuccess: () => {
-        setIsModalOpen(false);
+        setIsCommentModalOpen(false);
       },
     });
-    setIsConfirm(false);
+    setIsCommentConfirm(false);
     setIsDropdownOpen(false);
   };
 
   return (
     <article className="mx-5 w-full rounded-lg">
-      <Modal text={"삭제"} onAction={() => handleCommentDelete(comment.id)} />
+      <CommentModal
+        text={"삭제"}
+        onAction={() => handleCommentDelete(comment.id)}
+      />
 
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-[14px]">

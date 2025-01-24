@@ -6,8 +6,8 @@ import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
 import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
 import XButton from "@/assets/images/honeytips/BigX.svg";
 import Plus from "@/assets/images/honeytips/plus.svg";
-import Modal from "@/components/common/Modal";
-import useModalStore from "@/store/modalStore";
+import FormModal from "@/components/modal/FormModal";
+import useFormModalStore from "@/store/modal/formModalStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,7 +29,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { setIsModalOpen, setIsConfirm } = useModalStore();
+  const { setIsFormModalOpen, setIsFormConfirm } = useFormModalStore();
 
   const mode = !!postDetailData ? "edit" : "create";
 
@@ -100,8 +100,8 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   };
 
   const handleCancel = () => {
-    setIsConfirm(true);
-    setIsModalOpen(true);
+    setIsFormConfirm(true);
+    setIsFormModalOpen(true);
   };
 
   const handleCancelConfirm = () => {
@@ -114,7 +114,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
       setImages([]);
       router.push("/honeytips");
     }
-    setIsModalOpen(false);
+    setIsFormModalOpen(false);
   };
 
   const handleImageChange = (
@@ -146,7 +146,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
 
   return (
     <form className="mx-5 mt-4">
-      <Modal text={"취소"} onAction={handleCancelConfirm} />
+      <FormModal text={"취소"} onAction={handleCancelConfirm} />
       <section className="mb-6 flex items-center justify-between">
         <button
           type="button"

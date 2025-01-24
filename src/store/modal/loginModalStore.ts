@@ -4,8 +4,8 @@ import { persist } from "zustand/middleware";
 type LoginModalState = {
   isLoginModalOpen: boolean;
   isLoginConfirm: boolean;
-  setIsLoginModalOpen: (isModalOpen: boolean) => void;
-  setIsLoginConfirm: (isConfirm: boolean) => void;
+  setIsLoginModalOpen: (isLoginModalOpen: boolean) => void;
+  setIsLoginConfirm: (isLoginConfirm: boolean) => void;
 };
 
 const useLoginModalStore = create<LoginModalState>()(
