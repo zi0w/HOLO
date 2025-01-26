@@ -28,13 +28,13 @@ const DeleteAccount = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setIsConfirm(true);  // 첫 번째 모달에서 취소 시 초기 상태로
+    setIsConfirm(true);  
   };
 
   const handleConfirmDelete = async () => {
     try {
       await handleDeleteAccount();
-      setIsConfirm(false);  // 완료 모달로 전환
+      setIsConfirm(false);  
     } catch (error) {
       console.error("회원탈퇴 실패:", error);
       alert("회원탈퇴 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
@@ -44,7 +44,7 @@ const DeleteAccount = () => {
   };
 
   const handleCompleteClose = () => {
-    router.push("/login");  // 완료 모달에서 확인 클릭 시 로그인 페이지로 이동
+    router.push("/login");  
   };
 
   return (

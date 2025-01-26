@@ -25,7 +25,7 @@ export const MyfetchWritingPostsData = async (
     throw error;
   }
 
-  // 데이터 구조 변환
+  
   const formattedData =
     data?.map((post) => ({
       ...post,

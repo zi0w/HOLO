@@ -3,6 +3,7 @@
 import { useMyPosts } from "@/app/mypage/[id]/_components/mypost/_hooks/useMyWriting";
 import MyWritingCard from "@/app/mypage/[id]/_components/mypost/WritingCard";
 import type { Post } from "@/app/mypage/_types/myPage";
+import LoadingSmall from "@/components/common/LoadingSmall";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 
@@ -20,7 +21,7 @@ const MyWritingList = () => {
     goToPage,
   } = usePagination<Post>(posts, 5);
 
-  if (isLoading) return <p></p>;
+  if (isLoading) return <div><LoadingSmall/></div>;
 
   return (
     <div className="h-full w-full pt-[10px]">
@@ -36,7 +37,7 @@ const MyWritingList = () => {
               />
             ))}
           </div>
-          <div className="absolute bottom-0 left-0 right-0 bg-white px-[86px] py-4 pr-[90px]">
+          <div className="absolute bottom-0 left-0 right-0 bg-base-50 px-[86px] py-4 pr-[90px]">
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -49,7 +50,7 @@ const MyWritingList = () => {
           </div>
         </div>
       ) : (
-        <p className="py-4 text-center text-[#8F8F8F]">
+        <p className="py-4 text-center  text-base-800">
           작성한 게시물이 없습니다.
         </p>
       )}

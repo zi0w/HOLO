@@ -1,4 +1,4 @@
-// hooks/useSignInNavigation.ts
+"use client";
 import { useRouter } from "next/navigation";
 import { useGuestStore } from "@/hooks/useGuestAccess";
 

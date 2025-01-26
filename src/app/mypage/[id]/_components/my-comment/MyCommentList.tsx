@@ -2,10 +2,10 @@
 
 import { useComments } from "@/app/mypage/[id]/_components/my-comment/hooks/useComments";
 import MyCommentCard from "@/app/mypage/[id]/_components/my-comment/MyCommentCard";
+import LoadingSmall from "@/components/common/LoadingSmall";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
-// import Image from "next/image";
-// import Link from "next/link";
+
 
 const MyCommentList = () => {
   const { comments, isLoading, handleDelete } = useComments();
@@ -21,7 +21,7 @@ const MyCommentList = () => {
     goToPage,
   } = usePagination(comments, 5);
 
-  if (isLoading) return <p></p>;
+  if (isLoading) return <div><LoadingSmall/></div>;
 
   return (
     <div className="h-full w-full pt-[10px]">

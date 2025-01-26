@@ -1,4 +1,4 @@
-// types.ts
+
 export type CommentWithPost = {
     id: string;
     comment: string;
