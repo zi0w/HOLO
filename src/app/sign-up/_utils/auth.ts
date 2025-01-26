@@ -28,7 +28,6 @@ export const signUp = async ({
   password,
   nickname,
 }: SignUpData): Promise<SignUpResult> => {
-  // Supabase에 회원가입 요청
   const { data, error } = await supabase.auth.signUp({
     email,
     password,

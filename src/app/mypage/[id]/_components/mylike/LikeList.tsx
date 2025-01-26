@@ -6,6 +6,7 @@ import { UseLikes } from "@/app/mypage/[id]/_components/mylike/_hooks/useMyLikes
 import MyLikeCard from "@/app/mypage/[id]/_components/mylike/LikeCard";
 import type { Post } from "@/app/mypage/_types/myPage";
 import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
+import LoadingSmall from "@/components/common/LoadingSmall";
 
 const MyLikeList = () => {
   const { 
@@ -28,7 +29,7 @@ const MyLikeList = () => {
     goToPage,
   } = usePagination<Post>(likedPosts || [], 5);
 
-  if (isPending) return <p></p>;
+  if (isPending) return <div><LoadingSmall /></div>;
 
   return (
     <>

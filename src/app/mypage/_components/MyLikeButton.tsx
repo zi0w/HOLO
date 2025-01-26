@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import mylikebutton from "@/assets/images/mypage/mylikebutton.png";
+import mylikebutton from "@/assets/images/mypage/mylikesbutton.svg"
+
 
 export type LikeButtonProps = {
   postId: string;
@@ -15,7 +16,7 @@ const MyLikeButton = ({ postId, onLikeChange, onClick }: LikeButtonProps) => {
     if (onClick) {
       onClick();
     } else {
-      // 마이페이지의 좋아요 목록에서는 항상 delete만 수행
+      
       await onLikeChange(postId, "delete");
     }
   };

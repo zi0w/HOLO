@@ -1,4 +1,4 @@
-// src/app/mypage/_components/mypageform.tsx
+
 "use client";
 
 import MyCommentList from "@/app/mypage/[id]/_components/my-comment/MyCommentList";
@@ -24,7 +24,7 @@ const Mypageform = () => {
     if (userId && isInitialLoad) {
       await queryClient.prefetchQuery({
         queryKey: ["likedPosts", userId],
-        staleTime: 1000 * 60 * 5, // 5분 동안 데이터를 fresh하게 유지
+        staleTime: 1000 * 60 * 5, 
       });
       setIsInitialLoad(false);
     }
@@ -143,7 +143,8 @@ const Mypageform = () => {
       >
         {renderSection()}
       </div>
-
+  
+ 
       <div className={clsx("mx-[20px] mt-[27px] flex flex-col")}>
         <SignoutButton />
         <div className={clsx("mt-[16px]")}>

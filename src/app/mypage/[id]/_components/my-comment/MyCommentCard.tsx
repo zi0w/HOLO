@@ -64,13 +64,13 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
             <div className={clsx("flex w-full items-center justify-between")}>
               <h3
                 className={clsx(
-                  "line-clamp-1 text-[16px] font-medium text-[#424242]",
+                  "line-clamp-1 text-[16px] font-medium text-base-800",
                 )}
               >
                 {comment.posts?.title}
               </h3>
               <span
-                className={clsx("-mt-[5px] ml-2 text-[14px] text-[#8F8F8F]")}
+                className={clsx("-mt-[5px] ml-2 text-[14px] text-base-500")}
               >
                 {new Date(comment.created_at)
                   .toLocaleDateString("ko-KR", {
@@ -82,7 +82,7 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
                   .slice(0, -1)}
               </span>
             </div>
-            <p className={clsx("line-clamp-1 text-[14px] text-[#8F8F8F]")}>
+            <p className={clsx("line-clamp-1 text-[14px] text-base-800")}>
               {comment.comment}
             </p>
           </div>
@@ -94,7 +94,7 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
               setIsConfirm(true);
               setIsModalOpen(true);
             }}
-            className="flex h-[28px] w-[38px] items-center justify-center border border-[#424242] px-[7px] py-[6px] text-[12px] text-[#424242]"
+            className="flex h-[28px] w-[38px] items-center justify-center border border-base-800 px-[7px] py-[6px] text-[12px] text-base-800"
           >
             삭제
           </button>

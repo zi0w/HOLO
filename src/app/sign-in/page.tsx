@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 const Page = () => {
   return (
-    <div className="flex flex-col items-center bg-white">
+    <div className="flex flex-col items-center bg-base-50">
       <div className="mb-[40px] flex flex-col items-center">
         <div className="relative">
           <div className="-ml-[20px] mt-[20px]">

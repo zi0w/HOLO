@@ -1,4 +1,4 @@
-// src/app/mypage/_utils/profile.ts
+
 import { createClient } from "@/lib/utils/supabase/client";
 
 export const uploadProfileImage = async (file: File) => {
