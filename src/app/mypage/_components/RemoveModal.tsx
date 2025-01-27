@@ -1,18 +1,33 @@
 "use client";
 
+
 import CloseIcon from "@/assets/images/common/close-icon.svg";
+import type { ModalType } from "@/store/mypagemodal/useMypageModal";
 
 type RemoveModalProps = {
-  text: string;  
   isOpen: boolean;
+  modalType: ModalType | null;
   onAction: () => void;
   onClose: () => void;
-}
+};
+
+const getModalText = (type: ModalType | null) => {
+  switch (type) {
+    case 'comment':
+      return '댓글을 삭제';
+    case 'like':
+      return '좋아요 취소';
+    case 'post':
+      return '게시물을 삭제';
+    default:
+      return '';
+  }
+};
 
 const RemoveModal = ({
-  text,  
-  isOpen, 
-  onAction, 
+  isOpen,
+  modalType,
+  onAction,
   onClose,
 }: RemoveModalProps) => {
   if (!isOpen) return null;
@@ -27,7 +42,7 @@ const RemoveModal = ({
             </button>
           </div>
           <p className="text-center">
-            {`${text} 하시겠습니까?`}
+            {`${getModalText(modalType)} 하시겠습니까?`}
           </p>
         </div>
         <div className="mt-12 flex">
@@ -50,6 +65,7 @@ const RemoveModal = ({
 };
 
 export default RemoveModal;
+
 
 
 

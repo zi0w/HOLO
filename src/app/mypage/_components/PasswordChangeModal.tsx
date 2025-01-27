@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/utils/supabase/client";
-import ProfileModal from "@/app/mypage/_components/ProfileModal"; // ProfileModal import 추가
-import CancelIcon from "@/app/mypage/_components/CancelIcon";
+import ProfileModal from "@/app/mypage/_components/ProfileModal"; 
+import CancelIcon from "@/assets/images/mypage/cancel.svg";
 import { useRouter } from "next/navigation";
 
 type PasswordChangeModalProps = {
@@ -93,11 +93,11 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
               className="absolute right-4 top-4" // 오른쪽 모서리 끝에 위치하도록 수정
               onClick={() => router.push("/mypage")}
             >
-              <CancelIcon
-                width={24}
-                height={24}
-                className="transition-transform hover:scale-110"
-              />
+              <CancelIcon 
+  width={24} 
+  height={24} 
+  className="transition-transform hover:scale-110" 
+/>
             </button>
             <h1 className="mb-8 font-gmarket-bold text-[24px] leading-[32px] text-base-800">
               비밀번호 수정

@@ -6,8 +6,10 @@ import type { Post } from "@/app/mypage/_types/myPage";
 import LoadingSmall from "@/components/common/LoadingSmall";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
+import { useQueryClient } from "@tanstack/react-query"; 
 
 const MyWritingList = () => {
+  const queryClient = useQueryClient(); 
   const { posts, isLoading, handleDelete, isDeleting } = useMyPosts();
 
   const {
@@ -21,7 +23,19 @@ const MyWritingList = () => {
     goToPage,
   } = usePagination<Post>(posts, 5);
 
-  if (isLoading) return <div><LoadingSmall/></div>;
+  // 게시글 삭제 핸들러
+  const handleDeleteWithRefresh = async (postId: string) => {
+    await handleDelete(postId);
+    // 데이터 갱신
+    queryClient.invalidateQueries({ queryKey: ["posts"] });
+  };
+
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSmall />
+      </div>
+    );
 
   return (
     <div className="h-full w-full pt-[10px]">
@@ -32,7 +46,7 @@ const MyWritingList = () => {
               <MyWritingCard
                 key={post.id}
                 post={post}
-                onDelete={handleDelete}
+                onDelete={handleDeleteWithRefresh} 
                 isDeleting={isDeleting(post.id)}
               />
             ))}
@@ -50,7 +64,7 @@ const MyWritingList = () => {
           </div>
         </div>
       ) : (
-        <p className="py-4 text-center  text-base-800">
+        <p className="py-4 text-center text-base-800">
           작성한 게시물이 없습니다.
         </p>
       )}
@@ -59,3 +73,4 @@ const MyWritingList = () => {
 };
 
 export default MyWritingList;
+
