@@ -1,13 +1,13 @@
 "use client";
 
+import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
 import { updatePost } from "@/app/honeytips/_actions/update";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
 import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
 import XButton from "@/assets/images/honeytips/BigX.svg";
 import Plus from "@/assets/images/honeytips/plus.svg";
-import FormModal from "@/components/modal/FormModal";
-import useFormModalStore from "@/store/modal/formModalStore";
+import ConfirmModal from "@/components/common/ConfirmModal";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,7 +29,11 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { setIsFormModalOpen, setIsFormConfirm } = useFormModalStore();
+  const {
+    isOpen: isModalOpen,
+    open: openModal,
+    close: closeModal,
+  } = useToggle();
 
   const mode = !!postDetailData ? "edit" : "create";
 
@@ -90,8 +94,6 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
         });
         router.push("/honeytips");
       }
-
-      // handleCancel();
     } catch (error) {
       console.error("게시물 저장 중 오류가 발생했습니다.", error);
     } finally {
@@ -100,11 +102,6 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   };
 
   const handleCancel = () => {
-    setIsFormConfirm(true);
-    setIsFormModalOpen(true);
-  };
-
-  const handleCancelConfirm = () => {
     if (mode === "edit" && postDetailData) {
       router.push(`/honeytips/${postDetailData.id}`);
     } else {
@@ -114,7 +111,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
       setImages([]);
       router.push("/honeytips");
     }
-    setIsFormModalOpen(false);
+    closeModal();
   };
 
   const handleImageChange = (
@@ -146,11 +143,16 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
 
   return (
     <form className="mx-5 mt-4">
-      <FormModal text={"취소"} onAction={handleCancelConfirm} />
+      <ConfirmModal
+        text={"취소"}
+        isOpen={isModalOpen}
+        onConfirm={handleCancel}
+        onCancel={() => closeModal()}
+      />
       <section className="mb-6 flex items-center justify-between">
         <button
           type="button"
-          onClick={handleCancel}
+          onClick={() => openModal()}
           className="rounded px-3 py-1.5 text-base-800"
           disabled={isLoading}
         >

@@ -1,5 +1,6 @@
 "use client";
 
+import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
 import PostCard from "@/app/honeytips/_components/PostCard";
 import PostCardLoading from "@/app/honeytips/_components/PostCardLoading";
 import SortButton from "@/app/honeytips/_components/SortButton";
@@ -7,11 +8,11 @@ import { POST_CATEGORIES } from "@/app/honeytips/_constans/post";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
 import PlusButton from "@/assets/images/honeytips/plus-circle.svg";
+import ConfirmModal from "@/components/common/ConfirmModal";
 import Pagination from "@/components/common/Pagination";
-import LoginModal from "@/components/modal/LoginModal";
 import usePagination from "@/hooks/usePagination";
 import useAuthStore from "@/store/authStore";
-import useLoginModalStore from "@/store/modal/loginModalStore";
+
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,8 +24,11 @@ const PostList = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const { setIsLoginModalOpen, setIsLoginConfirm } = useLoginModalStore();
+  const {
+    isOpen: isModalOpen,
+    open: openModal,
+    close: closeModal,
+  } = useToggle();
 
   const router = useRouter();
   const searchQuery = useSearchParams();
@@ -86,16 +90,10 @@ const PostList = () => {
 
   const handleGoToPost = () => {
     if (!isAuthenticated) {
-      setIsLoginModalOpen(true);
-      setIsLoginConfirm(true);
+      openModal();
       return;
     }
     router.push(`/honeytips/post?category=${selectedCategory}`);
-  };
-
-  const handleConfirm = () => {
-    setIsLoginModalOpen(false);
-    router.push("/sign-in");
   };
 
   const handleClickCategory = (category: string) => {
@@ -105,6 +103,12 @@ const PostList = () => {
 
   return (
     <section className="mx-auto mb-4">
+      <ConfirmModal
+        isOpen={isModalOpen}
+        onConfirm={() => router.push("/sign-in")}
+        onCancel={() => closeModal()}
+        text="로그인으로 이동"
+      />
       <div className="mb-4 flex justify-between border-b border-primary-100">
         {POST_CATEGORIES.map((category) => (
           <button
@@ -124,12 +128,6 @@ const PostList = () => {
           </button>
         ))}
       </div>
-
-      <LoginModal
-        text={"로그인 페이지로 이동"}
-        onAction={handleConfirm}
-        onClose={() => setIsLoginModalOpen(false)}
-      />
 
       <div className="fixed bottom-14 right-4 z-50">
         <button
