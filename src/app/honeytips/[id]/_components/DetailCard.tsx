@@ -11,6 +11,7 @@ import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
+import { useModalStore } from "@/store/modalStore";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
@@ -35,11 +36,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
     toggle: toggleDropdown,
     close: closeDropdown,
   } = useToggle();
-  const {
-    isOpen: isModalOpen,
-    open: openModal,
-    close: closeModal,
-  } = useToggle();
+  const { isModalOpen, openModal, closeModal } = useModalStore();
 
   const router = useRouter();
 
@@ -83,7 +80,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   }, []);
 
   const handleDeleteClick = () => {
-    openModal();
+    openModal('detail');
   };
 
   const handleDeletePost = async () => {
@@ -110,7 +107,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
   return (
     <section className="mx-5 lg:mx-auto lg:max-w-[762px]">
-      <h2 className="mb-5 lg:mt-5 hidden text-2xl text-base-800 lg:block">
+      <h2 className="mb-5 hidden text-2xl text-base-800 lg:mt-5 lg:block">
         꿀팁 게시판
       </h2>
       <button
@@ -164,10 +161,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                   label="수정"
                   href={`/honeytips/post?edit=${postDetailData.id}`}
                 />
-                <DropdownButton
-                  label="삭제"
-                  onClick={handleDeleteClick}
-                />
+                <DropdownButton label="삭제" onClick={handleDeleteClick} />
               </div>
             )}
           </div>
@@ -185,7 +179,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
             centeredSlides={true}
             pagination={{ clickable: true }}
             navigation={true}
-            className="mx-auto my-4 flex h-auto max-w-[300px] items-center lg:max-w-[762px] lg:my-6"
+            className="mx-auto my-4 flex h-auto max-w-[300px] items-center lg:my-6 lg:max-w-[762px] lg:!pb-8"
           >
             {postDetailData.post_image_url?.map((imageUrl, index) => (
               <SwiperSlide key={index} className="my-auto">
@@ -202,7 +196,9 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         </div>
 
         <div>
-          <h2 className="text-[22px] text-base-900 lg:mt-4">{postDetailData.title}</h2>
+          <h2 className="text-[22px] text-base-900 lg:mt-4">
+            {postDetailData.title}
+          </h2>
           <p className="my-2 whitespace-pre-wrap text-base-800">
             {postDetailData.content}
           </p>

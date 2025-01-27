@@ -1,6 +1,5 @@
 "use client";
 
-import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
 import { updatePost } from "@/app/honeytips/_actions/update";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
@@ -8,6 +7,7 @@ import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
 import XButton from "@/assets/images/honeytips/BigX.svg";
 import Plus from "@/assets/images/honeytips/plus.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
+import { useModalStore } from "@/store/modalStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,11 +29,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const {
-    isOpen: isModalOpen,
-    open: openModal,
-    close: closeModal,
-  } = useToggle();
+  const { isModalOpen, openModal, closeModal } = useModalStore();
 
   const mode = !!postDetailData ? "edit" : "create";
 
@@ -154,7 +150,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
         <section className="mb-6 flex items-center justify-between">
           <button
             type="button"
-            onClick={() => openModal()}
+            onClick={() => openModal("form")}
             className="rounded px-3 py-1.5 text-base-800 lg:hidden"
             disabled={isLoading}
           >
@@ -192,12 +188,12 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력해주세요."
-            className="lg:mt-3 w-full rounded-md border border-primary-200 p-2"
+            className="w-full rounded-md border border-primary-200 p-2 lg:mt-3"
             disabled={isLoading}
           />
         </section>
 
-        <section className="mb-2 lg:mt-10 lg:mb-6">
+        <section className="mb-2 lg:mb-6 lg:mt-10">
           <label
             htmlFor="content"
             className="hidden lg:block lg:font-bold lg:text-base-800"
@@ -209,7 +205,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             id="content"
             onChange={(e) => setContent(e.target.value)}
             placeholder="내용을 입력해주세요."
-            className="lg:mt-3 h-[297px] w-full rounded-md border border-primary-200 p-2"
+            className="h-[297px] w-full rounded-md border border-primary-200 p-2 lg:mt-3"
             rows={10}
             disabled={isLoading}
           />
@@ -260,7 +256,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
           <section className="hidden lg:block">
             <button
               type="button"
-              onClick={() => openModal()}
+              onClick={() => openModal('post')}
               className="mr-2 rounded border px-6 pb-1.5 pt-2 font-gmarket text-base-800"
               disabled={isLoading}
             >
