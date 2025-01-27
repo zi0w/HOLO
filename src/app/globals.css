@@ -92,12 +92,27 @@ body {
   left: 0 !important;
 }
 
+.form-wrap {
+  @apply relative;
+}
+
+.form-wrap input {
+  @apply hidden;
+}
+
+.form-wrap label {
+  @apply cursor-pointer inline-block pl-6 text-sm text-base-800 before:absolute before:left-0 before:top-1/2 before:h-4 before:w-4 before:-translate-y-1/2 before:bg-[url('/images/chk-icon.svg')] before:bg-contain before:bg-center before:bg-no-repeat before:content-[''];
+}
+.form-wrap input:checked + label {
+  @apply before:bg-[url('/images/chk-icon_active.svg')];
+}
+
 .common-form {
   @apply flex items-center gap-1 rounded border border-base-400 px-3 py-2;
 }
 
 .common-select {
-  @apply absolute left-0 top-10 w-full rounded-[4px] border border-base-400 bg-white overflow-hidden;
+  @apply absolute left-0 top-10 w-full overflow-hidden rounded-[4px] border border-base-400 bg-white;
 }
 .common-select-btn {
   @apply h-10 w-full cursor-pointer appearance-none rounded border border-base-400 px-3 py-2 pr-9 text-left text-sm text-base-800 focus:outline-none;

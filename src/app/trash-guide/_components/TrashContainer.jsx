@@ -1,7 +1,7 @@
 "use client";
 
 import TrashLayoutBox from "@/app/trash-guide/_components/TrashLayoutBox";
-import { TAB_ITEMS } from "@/app/trash-guide/_components/tab";
+import { TAB_ITEMS } from "@/app/trash-guide/_constants/tab";
 import clsx from "clsx";
 import { useState } from "react";
 
