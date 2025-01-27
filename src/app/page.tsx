@@ -9,7 +9,7 @@ import Map from "@/components/main/Map";
 
 const Home = () => {
   return (
-    <div className="mt-[70px]">
+    <div className="mt-[70px] lg:mt-10">
       <div className="lg:hidden">
         <MainHeader />
       </div>
