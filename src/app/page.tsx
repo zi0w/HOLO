@@ -9,17 +9,29 @@ import Map from "@/components/main/Map";
 
 const Home = () => {
   return (
-    <div className="mt-[70px] lg:mt-10">
+    <div className="mt-[70px] lg:mx-auto lg:mt-10 lg:max-w-[979px]">
       <div className="lg:hidden">
         <MainHeader />
       </div>
       <MainBanner />
-      <Map />
-      {/* 정책 배너 */}
-      <PolicyAndTrashBanner isPolicy={true} />
-      {/* 쓰레기 배너 */}
-      <PolicyAndTrashBanner isPolicy={false} />
-      <BestPostList />
+      <div className="lg:mb-10 lg:grid lg:grid-cols-[597px_auto] lg:gap-4">
+        <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:h-full">
+          <BestPostList />
+        </div>
+        <div className="lg:col-start-1 lg:row-start-1">
+          <Map />
+        </div>
+        <div className="lg:col-start-1 lg:row-start-2 lg:flex lg:gap-6">
+          {/* 정책 배너 */}
+          <div className="lg:flex-1">
+            <PolicyAndTrashBanner isPolicy={true} />
+          </div>
+          {/* 쓰레기 배너 */}
+          <div className="lg:flex-1">
+            <PolicyAndTrashBanner isPolicy={false} />
+          </div>
+        </div>
+      </div>
       <DailyMenu />
       <DailyFortune />
     </div>
