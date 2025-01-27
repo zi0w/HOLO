@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { createClient } from "@/lib/utils/supabase/client";
 import ProfileModal from "@/app/mypage/_components/ProfileModal"; // ProfileModal import 추가
+import CancelIcon from "@/app/mypage/_components/CancelIcon";
+import { useRouter } from "next/navigation";
 
-interface PasswordChangeModalProps {
+type PasswordChangeModalProps = {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -13,12 +15,14 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); // ProfileModal 상태 추가
   const supabase = createClient();
+  const router = useRouter();
 
   const validatePasswords = () => {
     let isValid = true;
@@ -85,6 +89,16 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
       <div className="fixed inset-0 z-10 flex items-center justify-center bg-base-800 bg-opacity-30">
         <div className="absolute left-1/2 top-1/2 w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-[4px] bg-white">
           <div className="px-5 py-10">
+            <button
+              className="absolute right-4 top-4" // 오른쪽 모서리 끝에 위치하도록 수정
+              onClick={() => router.push("/mypage")}
+            >
+              <CancelIcon
+                width={24}
+                height={24}
+                className="transition-transform hover:scale-110"
+              />
+            </button>
             <h1 className="mb-8 font-gmarket-bold text-[24px] leading-[32px] text-base-800">
               비밀번호 수정
             </h1>
@@ -161,6 +175,7 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
     </>
   );
 };
+
 
 
 

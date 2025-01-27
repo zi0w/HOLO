@@ -1,5 +1,3 @@
-// src/app/mypage/_components/MyLikeButton.tsx
-
 "use client";
 import LikeButtonIcon from "@/assets/images/mypage/likebutton.svg";
 

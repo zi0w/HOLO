@@ -2,10 +2,9 @@
 
 import CloseIcon from "@/assets/images/common/close-icon.svg";
 
-interface RemoveModalProps {
+type RemoveModalProps = {
   text: string;  
   isOpen: boolean;
-  isConfirm: boolean;
   onAction: () => void;
   onClose: () => void;
 }
@@ -13,7 +12,6 @@ interface RemoveModalProps {
 const RemoveModal = ({
   text,  
   isOpen, 
-  isConfirm, 
   onAction, 
   onClose,
 }: RemoveModalProps) => {
@@ -29,35 +27,22 @@ const RemoveModal = ({
             </button>
           </div>
           <p className="text-center">
-            {isConfirm
-              ? `${text} 을 삭제하시겠습니까?`
-              : `${text} 삭제가 완료되었습니다.`}
+            {`${text} 하시겠습니까?`}
           </p>
         </div>
         <div className="mt-12 flex">
-          {isConfirm && (
-            <button
-              onClick={onClose}
-              className="flex-1 !rounded-none !rounded-bl border border-base-300 !text-lg"
-            >
-              취소
-            </button>
-          )}
-          {isConfirm ? (
-            <button
-              className="common-btn type-a flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800"
-              onClick={onAction}
-            >
-              삭제
-            </button>
-          ) : (
-            <button
-              className="common-btn type-a flex-1 !rounded-t-none !text-base"
-              onClick={onClose}
-            >
-              확인
-            </button>
-          )}
+          <button
+            onClick={onClose}
+            className="flex-1 !rounded-none !rounded-bl border border-base-300 !text-lg"
+          >
+            취소
+          </button>
+          <button
+            className="common-btn type-a flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800"
+            onClick={onAction}
+          >
+            삭제
+          </button>
         </div>
       </div>
     </div>
@@ -65,3 +50,6 @@ const RemoveModal = ({
 };
 
 export default RemoveModal;
+
+
+

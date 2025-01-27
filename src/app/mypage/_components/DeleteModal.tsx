@@ -2,7 +2,7 @@
 
 import CloseIcon from "@/assets/images/common/close-icon.svg";
 
-interface DeleteModalProps {
+type DeleteModalProps = {
   isOpen: boolean;
   isConfirm: boolean;
   onAction: () => void;

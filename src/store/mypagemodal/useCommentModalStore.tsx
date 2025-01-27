@@ -1,26 +1,18 @@
 // src/store/modal/commentModalStore.ts
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 type CommentModalState = {
   isCommentModalOpen: boolean;
-  isCommentConfirm: boolean;
-  setIsCommentModalOpen: (isCommentModalOpen: boolean) => void;
-  setIsCommentConfirm: (isCommentConfirm: boolean) => void;
+  openCommentModal: () => void;
+  closeCommentModal: () => void;
 };
 
-const useCommentModalStore = create<CommentModalState>()(
-  persist(
-    (set) => ({
-      isCommentModalOpen: false,
-      isCommentConfirm: false,
-      setIsCommentModalOpen: (isCommentModalOpen) => set({ isCommentModalOpen }),
-      setIsCommentConfirm: (isCommentConfirm) => set({ isCommentConfirm }),
-    }),
-    {
-      name: "usecomment-modal-storage",
-    },
-  ),
-);
+const useCommentModalStore = create<CommentModalState>((set) => ({
+  isCommentModalOpen: false,
+  openCommentModal: () => set({ isCommentModalOpen: true }),
+  closeCommentModal: () => set({ isCommentModalOpen: false }),
+}));
 
 export default useCommentModalStore;
+
+

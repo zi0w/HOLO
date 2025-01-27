@@ -15,45 +15,23 @@ type WritingCardProps = {
 };
 
 const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
-  const {
-    isPostModalOpen,
-    isPostConfirm,
-    setIsPostModalOpen,
-    setIsPostConfirm,
-  } = usePostModalStore();
+  const { isPostModalOpen, openPostModal, closePostModal } = usePostModalStore();
 
   const handleDelete = async () => {
     try {
       await onDelete(post.id);
-      setIsPostConfirm(false); // 완료 후 상태 초기화
-      setIsPostModalOpen(true); // 완료 모달 열기
+      closePostModal();
     } catch (error) {
       console.error("게시글 삭제 실패:", error);
     }
   };
 
-  const handleClose = () => {
-    setIsPostModalOpen(false);
-    setIsPostConfirm(false); // 상태 초기화
-  };
-
   return (
     <>
-      <div
-        className={clsx(
-          "flex h-[64px] w-full items-center justify-between px-5",
-        )}
-      >
-        <Link
-          href={`/honeytips/${post.id}`}
-          className={clsx("flex flex-1 items-center gap-3")}
-        >
+      <div className={clsx("flex h-[64px] w-full items-center justify-between px-5")}>
+        <Link href={`/honeytips/${post.id}`} className={clsx("flex flex-1 items-center gap-3")}>
           {post.post_image_url && post.post_image_url.length > 0 ? (
-            <div
-              className={clsx(
-                "relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]",
-              )}
-            >
+            <div className={clsx("relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]")}>
               <Image
                 src={post.post_image_url[0]}
                 alt={`게시글 이미지`}
@@ -67,16 +45,10 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
           )}
           <div className={clsx("flex min-w-0 flex-1 flex-col gap-[2px]")}>
             <div className={clsx("flex w-full items-center justify-between")}>
-              <h3
-                className={clsx(
-                  "line-clamp-1 text-[16px] font-medium text-base-800",
-                )}
-              >
+              <h3 className={clsx("line-clamp-1 text-[16px] font-medium text-base-800")}>
                 {post.title}
               </h3>
-              <span
-                className={clsx("-mt-[5px] ml-2 text-[14px] text-base-500")}
-              >
+              <span className={clsx("-mt-[5px] ml-2 text-[14px] text-base-500")}>
                 {new Date(post.created_at)
                   .toLocaleDateString("ko-KR", {
                     year: "numeric",
@@ -96,8 +68,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              setIsPostConfirm(true);
-              setIsPostModalOpen(true);
+              openPostModal();
             }}
             disabled={isDeleting}
             className="flex h-[28px] w-[38px] items-center justify-center border border-base-800 px-[7px] py-[6px] text-[12px] text-base-800 disabled:opacity-50"
@@ -109,15 +80,15 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
 
       <RemoveModal
         isOpen={isPostModalOpen}
-        isConfirm={isPostConfirm}
-        text="게시물"
+        text="게시물 을 삭제"
         onAction={handleDelete}
-        onClose={handleClose}
+        onClose={closePostModal}
       />
     </>
   );
 };
 
 export default WritingCard;
+
 
 
