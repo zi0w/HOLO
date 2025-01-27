@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 const useMediaQuery = (query: string): boolean => {
   const [matches, setMatches] = useState(false);
-
+  
   useEffect(() => {
     const media = window.matchMedia(query);
     if (media.matches !== matches) {
@@ -46,7 +46,6 @@ const BestPostList = () => {
         setLoading(false);
       }
     };
-
     fetchBestPosts();
   }, [isLargeScreen]);
 
