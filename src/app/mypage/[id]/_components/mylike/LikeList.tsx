@@ -6,8 +6,11 @@ import LoadingSmall from "@/components/common/LoadingSmall";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import type { Post } from "@/app/mypage/_types/myPage";
+import { useQueryClient } from "@tanstack/react-query";
 
 const MyLikeList = () => {
+  const queryClient = useQueryClient();
+  
   const {
     likedPosts,
     isPending,
@@ -25,6 +28,13 @@ const MyLikeList = () => {
     goToPage,
   } = usePagination<Post>(likedPosts || [], 5);
 
+  
+  const handleLikeChangeWithRefresh = async (postId: string, action: "add" | "delete") => {
+    await handleLikeChange(postId, action);
+   
+    queryClient.invalidateQueries({ queryKey: ['likedPosts'] });
+  };
+
   if (isPending)
     return (
       <div>
@@ -41,7 +51,7 @@ const MyLikeList = () => {
               <MyLikeCard
                 key={post.id}
                 post={post}
-                onLikeChange={handleLikeChange}
+                onLikeChange={handleLikeChangeWithRefresh}
               />
             ))}
           </div>
@@ -67,7 +77,6 @@ const MyLikeList = () => {
 };
 
 export default MyLikeList;
-
 
 
 

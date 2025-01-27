@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ProfileModal from "@/app/mypage/_components/ProfileModal"; 
-import ImageEditIcon from "@/app/mypage/_components/ImageEditIcon";
+import ImageEditIcon from "@/assets/images/mypage/imageedit.svg";
 
 const ImageNicknameForm = () => {
   const router = useRouter();

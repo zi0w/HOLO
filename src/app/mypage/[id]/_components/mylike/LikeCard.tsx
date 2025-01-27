@@ -1,12 +1,10 @@
-
-
 "use client";
 
-import { formatDate } from "@/app/mypage/[id]/_components/mylike/_utils/formatDate";
+import { formatDate } from "./_utils/formatDate";
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
 import type { Post } from "@/app/mypage/_types/myPage";
-import useLikeModalStore from "@/store/mypagemodal/useLikeModalStore";
+import useModalStore from "@/store/mypagemodal/useMypageModal"; 
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,15 +14,15 @@ export type LikeCardProps = {
 };
 
 const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
-  const { isLikeModalOpen, openLikeModal, closeLikeModal } = useLikeModalStore();
+  const { isOpen, selectedId, modalType, openModal, closeModal } = useModalStore(); 
 
   const handleLikeCancel = async () => {
     try {
       await onLikeChange(post.id, "delete");
-      closeLikeModal();
+      closeModal();
     } catch (error) {
       console.error("좋아요 취소 실패:", error);
-      closeLikeModal();
+      closeModal();
     }
   };
 
@@ -67,22 +65,24 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
             <MyLikeButton
               postId={post.id}
               onLikeChange={onLikeChange}
-              onClick={openLikeModal}
+              onClick={() => openModal(post.id, 'like')} 
             />
           </div>
         </div>
       </div>
 
       <RemoveModal
-        isOpen={isLikeModalOpen}
-        text="좋아요 취소"
+        isOpen={isOpen && selectedId === post.id} 
+        modalType={modalType} 
         onAction={handleLikeCancel}
-        onClose={closeLikeModal}
+        onClose={closeModal}
       />
     </>
   );
 };
 
 export default MyLikeCard;
+
+
 
 

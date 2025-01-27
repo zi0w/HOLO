@@ -5,9 +5,10 @@ import MyCommentCard from "@/app/mypage/[id]/_components/my-comment/MyCommentCar
 import LoadingSmall from "@/components/common/LoadingSmall";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
-
+import { useQueryClient } from "@tanstack/react-query"; 
 
 const MyCommentList = () => {
+  const queryClient = useQueryClient(); 
   const { comments, isLoading, handleDelete } = useComments();
 
   const {
@@ -21,7 +22,19 @@ const MyCommentList = () => {
     goToPage,
   } = usePagination(comments, 5);
 
-  if (isLoading) return <div><LoadingSmall/></div>;
+  // 댓글 삭제 핸들러
+  const handleDeleteWithRefresh = async (commentId: string) => {
+    await handleDelete(commentId);
+    // 데이터 갱신
+    queryClient.invalidateQueries({ queryKey: ["comments"] });
+  };
+
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSmall />
+      </div>
+    );
 
   return (
     <div className="h-full w-full pt-[10px]">
@@ -32,7 +45,7 @@ const MyCommentList = () => {
               <MyCommentCard
                 key={comment.id}
                 comment={comment}
-                onDelete={handleDelete}
+                onDelete={handleDeleteWithRefresh} 
               />
             ))}
           </div>
@@ -58,3 +71,4 @@ const MyCommentList = () => {
 };
 
 export default MyCommentList;
+
