@@ -39,20 +39,18 @@ export const useUpdateUserInfo = (userId: string) => {
       }
 
       try {
-        const encodedNickname = encodeURIComponent(newNickname);
         const { data, error } = await supabase
           .from("users")
           .select("nickname")
-          .eq("nickname", encodedNickname)
-          .neq("id", userId)
-          .single();
+          .eq("nickname", newNickname)
+          .neq("id", userId);
 
-        if (error && error.code !== "PGRST116") {
+        if (error) {
           console.error("닉네임 중복 확인 에러:", error);
           return false;
         }
 
-        if (data) {
+        if (data && data.length > 0) {
           setNicknameError("이미 사용 중인 닉네임입니다.");
           return false;
         }

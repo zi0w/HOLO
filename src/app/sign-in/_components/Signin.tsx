@@ -1,6 +1,6 @@
 "use client";
 
-import SigninModal from "@/app/sign-in/_components/SigninModal"
+import SigninModal from "@/app/sign-in/_components/SigninModal";
 import SocialLogin from "@/app/sign-in/_components/SocialLogin";
 import { useSignInForm } from "@/app/sign-in/_hooks/useSignInForm";
 import useSignInMutation from "@/app/sign-in/_hooks/useSignInMutation";
@@ -53,7 +53,9 @@ const SignInForm = () => {
                   required
                 />
                 {errors.password && (
-                  <p className="text-[12px] text-primary-500">{errors.password}</p>
+                  <p className="text-[12px] text-primary-500">
+                    {errors.password}
+                  </p>
                 )}
               </div>
             </div>
@@ -89,7 +91,7 @@ const SignInForm = () => {
             <button
               type="button"
               onClick={handleGuestAccess}
-              className="text-[14px] font-normal text-base-400 hover:text-base-500"
+              className="text-[14px] font-normal text-primary-800 hover:text-primary-900"
             >
               비회원으로 둘러보기
             </button>
@@ -107,11 +109,3 @@ const SignInForm = () => {
 };
 
 export default SignInForm;
-
-
-
-
-
-
-
-
