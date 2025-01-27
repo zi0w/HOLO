@@ -12,22 +12,21 @@
 }
 @font-face {
   font-family: "GmarketSansLight";
-  src: url("../assets/fonts/GmarketSansTTFLight.ttf") format("truetype");
+  src: url("../assets/fonts/GmarketSansLight.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: "GmarketSansMedium";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
-    format("woff");
+  src: url("../assets/fonts/GmarketSansMedium.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "GmarketSansBold";
-  src: url("../assets/fonts/GmarketSansTTFBold.ttf") format("truetype");
+  src: url("../assets/fonts/GmarketSansBold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
 }

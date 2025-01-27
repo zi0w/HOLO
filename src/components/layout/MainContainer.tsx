@@ -20,7 +20,6 @@ const MainContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Header allHidden={allHideHeaderPages} />
-      
       <NavigateBack />
       <main
         className={clsx(
