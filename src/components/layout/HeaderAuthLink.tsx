@@ -44,7 +44,7 @@ const HeaderAuthLink = () => {
         <Link
           href="/mypage"
           className={clsx(
-            "flex flex-col items-center justify-between font-gmarket lg:mt-[180px] lg:items-start lg:text-lg",
+            "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-[180px] lg:items-start lg:text-lg",
             pathname.startsWith("/mypage") && "text-primary-500",
           )}
         >
@@ -52,7 +52,7 @@ const HeaderAuthLink = () => {
           마이 페이지
         </Link>
         <button
-          className="hidden text-left font-gmarket text-lg lg:block"
+          className="hidden text-left font-gmarket text-lg text-base-800 lg:block"
           onClick={handleLogoutClick}
         >
           로그아웃
@@ -72,7 +72,7 @@ const HeaderAuthLink = () => {
     <Link
       href="/sign-in"
       className={clsx(
-        "flex flex-col items-center justify-between font-gmarket lg:mt-[180px] lg:items-start lg:text-lg",
+        "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-[180px] lg:items-start lg:text-lg",
         pathname.startsWith("/mypage") && "text-primary-500",
       )}
     >

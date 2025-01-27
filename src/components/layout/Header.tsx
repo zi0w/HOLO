@@ -18,7 +18,7 @@ const NavLink = ({ path, label, icon: Icon }: (typeof NAVIGATION_PATHS)[0]) => {
     <Link
       href={path}
       className={clsx(
-        "flex flex-col items-center justify-between font-gmarket lg:text-lg lg:items-start",
+        "flex flex-col items-center justify-between font-gmarket lg:text-lg lg:items-start text-base-800",
         isActive && "font-gmarket-bold text-primary-500",
       )}
     >
@@ -34,7 +34,7 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
   return (
     <header
       className={clsx(
-        "fixed bottom-0 z-20 w-full bg-white lg:left-0 lg:top-0 lg:h-screen lg:w-[240px] lg:border-r lg:border-base-200",
+        "fixed bottom-0 z-20 w-full bg-white lg:left-0 lg:top-0 lg:h-screen lg:w-[254px] lg:border-r lg:border-base-200",
         allHidden && "hidden",
       )}
     >
