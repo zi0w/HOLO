@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 
 const CommentList = () => {
   const [currentId, setCurrentId] = useState<string | null>(null);
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [editedComment, setEditedComment] = useState<string>("");
 
   const params = useParams();
 
@@ -45,6 +47,10 @@ const CommentList = () => {
               comment={comment}
               currentId={currentId}
               postId={postId}
+              editingCommentId={editingCommentId}
+              setEditingCommentId={setEditingCommentId}
+              editedComment={editedComment}
+              setEditedComment={setEditedComment}
             />
           ))
         )}

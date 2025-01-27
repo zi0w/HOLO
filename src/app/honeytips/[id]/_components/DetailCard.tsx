@@ -3,14 +3,14 @@
 import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import ShareButton from "@/app/honeytips/[id]/_components/ShareButton";
+import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
-import DetailModal from "@/components/modal/DetailModal";
-import useDetailModalStore from "@/store/modal/deatilModalStore";
+import ConfirmModal from "@/components/common/ConfirmModal";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
@@ -25,16 +25,23 @@ type DetailCardProps = {
 
 const DetailCard = ({ postId }: DetailCardProps) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [postDetailData, setPostDetailData] = useState<Post | null>(null);
   const [likesCounts, setLikesCounts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const router = useRouter();
+  const {
+    isOpen: isDropdownOpen,
+    toggle: toggleDropdown,
+    close: closeDropdown,
+  } = useToggle();
+  const {
+    isOpen: isModalOpen,
+    open: openModal,
+    close: closeModal,
+  } = useToggle();
 
-  const { setIsDetailModalOpen, setIsDetailConfirm, isDetailConfirm } =
-    useDetailModalStore();
+  const router = useRouter();
 
   const formatDate = (date: string) => {
     return dayjs(date).format("YYYY년 MM월 DD일 HH:mm:ss");
@@ -75,19 +82,25 @@ const DetailCard = ({ postId }: DetailCardProps) => {
     fetchUserId();
   }, []);
 
-  const handleDeletePost = async (postId: Post["id"]) => {
-    setIsDetailConfirm(true);
-    setIsDetailModalOpen(true);
+  const handleDeleteClick = () => {
+    openModal();
+  };
 
-    if (!isDetailConfirm) return;
-
+  const handleDeletePost = async () => {
     try {
-      await deletePost(postId);
-      setIsDetailConfirm(false);
+      await deletePost(postDetailData!.id);
+      router.push("/honeytips");
     } catch (error) {
       setIsError(true);
       console.error("게시물 삭제에 실패했습니다.", error);
+    } finally {
+      closeModal();
     }
+  };
+
+  const handleCancelDelete = () => {
+    closeModal();
+    closeDropdown();
   };
 
   if (isLoading) return <DetailLoading />;
@@ -104,11 +117,16 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       >
         <ArrowLeftIcon />
       </button>
-      <DetailModal
-        text={"삭제"}
-        onAction={() => handleDeletePost(postId)}
-        onClose={() => router.push("/honeytips")}
-      />
+
+      {isModalOpen && (
+        <ConfirmModal
+          text={"삭제"}
+          isOpen={isModalOpen}
+          onConfirm={handleDeletePost}
+          onCancel={handleCancelDelete}
+        />
+      )}
+
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center gap-2">
@@ -134,7 +152,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
         {currentId === postDetailData.user_id && (
           <div className="relative">
-            <button onClick={() => setIsDropdownOpen((prev) => !prev)}>
+            <button onClick={toggleDropdown}>
               <MenuDots />
             </button>
             {isDropdownOpen && (
@@ -145,10 +163,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                 />
                 <DropdownButton
                   label="삭제"
-                  onClick={() => {
-                    setIsDetailConfirm(true);
-                    setIsDetailModalOpen(true);
-                  }}
+                  onClick={handleDeleteClick} // 삭제 버튼 클릭 시 모달 열기
                 />
               </div>
             )}

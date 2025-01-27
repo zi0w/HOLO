@@ -86,6 +86,7 @@ export const updateComment = async ({
 
 // 코멘트 삭제
 export const deleteComment = async (id: Comment["id"]) => {
+  console.log('supabase_id', id)
   try {
     const { data: commentData, error } = await supabase
       .from("comments")
