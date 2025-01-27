@@ -7,6 +7,7 @@ import SortButton from "@/app/honeytips/_components/SortButton";
 import { POST_CATEGORIES } from "@/app/honeytips/_constans/post";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
+import EditButton from "@/assets/images/honeytips/edit-post.svg";
 import PlusButton from "@/assets/images/honeytips/plus-circle.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
 import Pagination from "@/components/common/Pagination";
@@ -20,7 +21,7 @@ import { useEffect, useState } from "react";
 const PostList = () => {
   const { isLoggedIn: isAuthenticated } = useAuthStore();
   const [selectedCategory, setSelectedCategory] = useState<string>("전체");
-  const [sortBy, setSortBy] = useState<"popular" | "recent">("recent");
+  const [sortBy, setSortBy] = useState<"popular" | "recent">("popular");
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -109,38 +110,45 @@ const PostList = () => {
         onCancel={() => closeModal()}
         text="로그인으로 이동"
       />
-      <div className="mb-4 flex justify-between border-b border-primary-100">
+      <div className="flex justify-between border-b border-primary-100 lg:justify-normal lg:gap-6">
         {POST_CATEGORIES.map((category) => (
           <button
             key={category}
             className={clsx(
-              "relative flex-1 py-3 font-semibold text-base-500 transition-colors",
+              "relative flex justify-center py-3 font-semibold text-base-500 transition-colors",
               selectedCategory === category
                 ? "text-base-800"
                 : "hover:text-base-800",
+              "flex-1 lg:w-[72px] lg:flex-none",
             )}
             onClick={() => handleClickCategory(category)}
           >
             {category}
             {selectedCategory === category && (
-              <span className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-primary-500"></span>
+              <span
+                className={clsx(
+                  "absolute bottom-0 h-1 w-full rounded-full bg-primary-500",
+                  "lg:left-0 lg:w-[72px]",
+                )}
+              ></span>
             )}
           </button>
         ))}
       </div>
 
-      <div className="fixed bottom-14 right-4 z-50">
+      <div className="fixed bottom-14 right-4 z-50 lg:bottom-10 lg:right-10">
         <button
           onClick={handleGoToPost}
           className="relative flex items-center justify-center rounded-full"
         >
-          <PlusButton />
+          <PlusButton className="lg:hidden" />
+          <EditButton className="hidden lg:block" />
         </button>
       </div>
 
       <SortButton sortBy={sortBy} setSortBy={setSortBy} />
 
-      <section className="grid grid-cols-1 gap-4">
+      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
         {isLoading ? (
           <PostCardLoading />
         ) : currentPosts.length > 0 ? (

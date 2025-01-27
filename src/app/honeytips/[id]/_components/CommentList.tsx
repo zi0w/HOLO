@@ -33,7 +33,7 @@ const CommentList = () => {
   if (isError) return <div>에러가 발생했습니다!</div>;
 
   return (
-    <div className="mx-5 mt-[14px] flex flex-col">
+    <div className="mx-5 lg:max-w-[762px] lg:mx-auto mt-[14px] flex flex-col">
       <p className="border-b border-base-400 pb-2 font-bold text-base-800">
         댓글 {comments.length || 0}
       </p>
