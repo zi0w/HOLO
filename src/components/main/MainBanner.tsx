@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const MainBanner = () => {
   return (
-    <div className="relative mx-5 mb-10 flex justify-between rounded bg-primary-100 pl-5 pr-3 lg:justify-center lg:p-0 lg:h-[120px] lg:overflow-hidden">
+    <div className="relative mx-5 mb-10 flex justify-between rounded bg-primary-100 pl-5 pr-3 lg:justify-center lg:p-0 lg:h-[120px] lg:overflow-hidden lg:mx-0">
       <Image
         src={BannerPcLeft}
         alt="배너 이미지"
