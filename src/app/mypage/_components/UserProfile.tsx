@@ -6,7 +6,7 @@ import type { ProfileUpdateData } from "@/app/mypage/_types/myPage";
 import ProfileEditIcon from "@/assets/images/mypage/profileedit.svg";
 import Loading from "@/components/common/Loading";
 import { createClient } from "@/lib/utils/supabase/client";
-import useAuthStore from "@/store/useAuthStore";
+import useAuthStore from "@/store/authStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

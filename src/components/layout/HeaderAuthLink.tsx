@@ -1,7 +1,7 @@
 import CustomLogoutModal from "@/app/sign-in/_components/CustomLogoutModal";
 import { useSignout } from "@/app/sign-in/_hooks/useSignout";
 import MyPageIcon from "@/assets/images/common/header/mypage.svg";
-import useAuthStore from "@/store/useAuthStore";
+import useAuthStore from "@/store/authStore";
 import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

@@ -1,6 +1,5 @@
 "use client";
 
-import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
 import { updatePost } from "@/app/honeytips/_actions/update";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { addPost, uploadPostImageFile } from "@/app/honeytips/_utils/post";
@@ -8,6 +7,7 @@ import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
 import XButton from "@/assets/images/honeytips/BigX.svg";
 import Plus from "@/assets/images/honeytips/plus.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
+import { useModalStore } from "@/store/modalStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,11 +29,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const {
-    isOpen: isModalOpen,
-    open: openModal,
-    close: closeModal,
-  } = useToggle();
+  const { isModalOpen, openModal, closeModal } = useModalStore();
 
   const mode = !!postDetailData ? "edit" : "create";
 
@@ -142,8 +138,8 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   const isSubmitDisabled = !title.trim() || !content.trim() || isLoading;
 
   return (
-    <div className="mx-5 mt-[120px] lg:mx-auto lg:max-w-[762px]">
-      <h2 className="hidden lg:block text-2xl text-base-800">꿀팁 쓰기</h2>
+    <div className="mx-5 lg:mx-auto lg:mt-[120px] lg:max-w-[762px]">
+      <h2 className="hidden text-2xl text-base-800 lg:block">꿀팁 쓰기</h2>
       <form className="mt-5">
         <ConfirmModal
           text={"취소"}
@@ -154,7 +150,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
         <section className="mb-6 flex items-center justify-between">
           <button
             type="button"
-            onClick={() => openModal()}
+            onClick={() => openModal("form")}
             className="rounded px-3 py-1.5 text-base-800 lg:hidden"
             disabled={isLoading}
           >
@@ -180,7 +176,10 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
         </section>
 
         <section className="mb-4 mt-8">
-          <label htmlFor="title" className="font-bold text-base-800">
+          <label
+            htmlFor="title"
+            className="hidden lg:block lg:font-bold lg:text-base-800"
+          >
             제목
           </label>
           <input
@@ -189,13 +188,16 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력해주세요."
-            className="mt-3 w-full rounded-md border border-primary-200 p-2"
+            className="w-full rounded-md border border-primary-200 p-2 lg:mt-3"
             disabled={isLoading}
           />
         </section>
 
-        <section className="mb-2 mt-10 lg:mb-6">
-          <label htmlFor="content" className="font-bold text-base-800">
+        <section className="mb-2 lg:mb-6 lg:mt-10">
+          <label
+            htmlFor="content"
+            className="hidden lg:block lg:font-bold lg:text-base-800"
+          >
             내용
           </label>
           <textarea
@@ -203,7 +205,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             id="content"
             onChange={(e) => setContent(e.target.value)}
             placeholder="내용을 입력해주세요."
-            className="mt-3 h-[297px] w-full rounded-md border border-primary-200 p-2"
+            className="h-[297px] w-full rounded-md border border-primary-200 p-2 lg:mt-3"
             rows={10}
             disabled={isLoading}
           />
@@ -254,8 +256,8 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
           <section className="hidden lg:block">
             <button
               type="button"
-              onClick={() => openModal()}
-              className="font-gmarket mr-2 rounded border px-6 pt-2 pb-1.5 text-base-800"
+              onClick={() => openModal('post')}
+              className="mr-2 rounded border px-6 pb-1.5 pt-2 font-gmarket text-base-800"
               disabled={isLoading}
             >
               취소
@@ -264,7 +266,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
               type="button"
               onClick={handleSubmit}
               className={clsx(
-                "font-gmarket rounded border bg-primary-500 px-6 pt-2 pb-1.5 text-white",
+                "rounded border bg-primary-500 px-6 pb-1.5 pt-2 font-gmarket text-white",
                 {
                   "cursor-not-allowed opacity-50": isSubmitDisabled,
                 },

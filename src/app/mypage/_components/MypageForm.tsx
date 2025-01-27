@@ -8,7 +8,7 @@ import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
 import UserProfile from "@/app/mypage/_components/UserProfile";
 import type { ActiveSection } from "@/app/mypage/_types/myPage";
 import SignoutButton from "@/app/sign-in/_components/SignoutButton";
-import useAuthStore from "@/store/useAuthStore";
+import useAuthStore from "@/store/authStore";
 import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
@@ -138,12 +138,7 @@ const Mypageform = () => {
         )}
       />
 
-      
-      <div
-    
-      >
-        {renderSection()}
-      </div>
+      <div>{renderSection()}</div>
 
       <div
         className={clsx(

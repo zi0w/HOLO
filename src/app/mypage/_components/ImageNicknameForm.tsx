@@ -7,7 +7,7 @@ import ProfileModal from "@/app/mypage/_components/ProfileModal";
 import ImageEditIcon from "@/assets/images/mypage/imageedit.svg";
 import Loading from "@/components/common/Loading";
 import { createClient } from "@/lib/utils/supabase/client";
-import useAuthStore from "@/store/useAuthStore";
+import useAuthStore from "@/store/authStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
