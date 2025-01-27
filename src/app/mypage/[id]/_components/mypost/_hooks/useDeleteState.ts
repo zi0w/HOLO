@@ -1,4 +1,4 @@
-// hooks/useDeleteState.ts
+
 import { useState } from "react";
 
 export const useDeleteState = () => {

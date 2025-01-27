@@ -50,21 +50,3 @@ export const useUpdateUserInfo = () => {
 
 export default useUpdateUserInfo;
 
-// import { createClient } from "@/lib/utils/supabase/client";
-// import { useMutation } from "@tanstack/react-query";
-// import { UpdateUserData } from "@/app/mypage/_types/user";
-
-// const supabase = createClient();
-
-// export const useUpdateUserInfo = () => {
-//   return useMutation({
-//     mutationFn: async (data: UpdateUserData) => {
-//       const { error } = await supabase
-//         .from('users')
-//         .update(data)
-//         .eq('id', (await supabase.auth.getUser()).data.user?.id);
-
-//       if (error) throw error;
-//     },
-//   });
-// };
