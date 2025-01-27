@@ -2,7 +2,7 @@
 
 import { PasswordChangeModal } from "@/app/mypage/_components/PasswordChangeModal";
 import { useUpdateUserInfo } from "@/app/mypage/_hooks/useUpdateUserInfo";
-import profileEditIcon from "@/assets/images/mypage/profileedit.png";
+
 import Loading from "@/components/common/Loading";
 import { createClient } from "@/lib/utils/supabase/client";
 import useAuthStore from "@/store/authStore";
@@ -10,7 +10,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import ProfileModal from "@/app/mypage/_components/ProfileModal"; // ProfileModal import 추가
+import ProfileModal from "@/app/mypage/_components/ProfileModal"; 
+import ImageEditIcon from "@/app/mypage/_components/ImageEditIcon";
 
 const ImageNicknameForm = () => {
   const router = useRouter();
@@ -145,7 +146,7 @@ const ImageNicknameForm = () => {
 
   const handleProfileModalClose = () => {
     setIsProfileModalOpen(false);
-    router.push("/mypage"); // 마이페이지로 이동
+    router.push("/mypage"); 
   };
 
   if (isLoading || !userData) {
@@ -160,26 +161,7 @@ const ImageNicknameForm = () => {
     <>
       <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="relative h-[874px] w-[402px] bg-white px-5">
-          {/* <button
-            className="absolute left-4 top-4"
-            onClick={() => router.push("/mypage")}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15 18L9 12L15 6"
-                stroke="#424242"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button> */}
+        
           <h1 className="pt-[60px] font-gmarket text-[24px] font-medium leading-[32px] text-base-800">
             프로필 수정
           </h1>
@@ -202,14 +184,11 @@ const ImageNicknameForm = () => {
               className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full"
               onClick={handleImageButtonClick}
             >
-              <Image
-                src={profileEditIcon}
-                alt="프로필 수정"
-                width={32}
-                height={32}
-                className="transition-transform hover:scale-110"
-                priority
-              />
+ <ImageEditIcon 
+  width={32} 
+  height={32} 
+  className="transition-transform hover:scale-110" 
+/>
             </button>
           </div>
           <div className="mt-12 space-y-4">

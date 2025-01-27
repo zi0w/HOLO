@@ -1,14 +1,14 @@
-// src/app/mypage/[id]/_components/mylike/LikeCard.tsx
+
 
 "use client";
 
 import { formatDate } from "@/app/mypage/[id]/_components/mylike/_utils/formatDate";
-import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
+import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
 import type { Post } from "@/app/mypage/_types/myPage";
+import useLikeModalStore from "@/store/mypagemodal/useLikeModalStore";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export type LikeCardProps = {
   post: Post;
@@ -16,29 +16,16 @@ export type LikeCardProps = {
 };
 
 const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirm, setIsConfirm] = useState(false);
+  const { isLikeModalOpen, openLikeModal, closeLikeModal } = useLikeModalStore();
 
   const handleLikeCancel = async () => {
     try {
       await onLikeChange(post.id, "delete");
-      setIsConfirm(false);
-      setIsModalOpen(false);
+      closeLikeModal();
     } catch (error) {
       console.error("좋아요 취소 실패:", error);
-      setIsModalOpen(false);
-      setIsConfirm(false);
+      closeLikeModal();
     }
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setIsConfirm(false);
-  };
-
-  const handleLikeClick = () => {
-    setIsConfirm(true);
-    setIsModalOpen(true);
   };
 
   return (
@@ -80,18 +67,17 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
             <MyLikeButton
               postId={post.id}
               onLikeChange={onLikeChange}
-              onClick={handleLikeClick}
+              onClick={openLikeModal}
             />
           </div>
         </div>
       </div>
 
-      <ConfirmModal
-        isOpen={isModalOpen}
-        isConfirm={isConfirm}
+      <RemoveModal
+        isOpen={isLikeModalOpen}
         text="좋아요 취소"
         onAction={handleLikeCancel}
-        onClose={handleModalClose}
+        onClose={closeLikeModal}
       />
     </>
   );

@@ -3,7 +3,7 @@
 "use client";
 
 import type { ProfileUpdateData } from "@/app/mypage/_types/myPage";
-import profileEditIcon from "@/assets/images/mypage/profileedit.png";
+import ProfileEditIcon from "@/assets/images/mypage/profileedit.svg";
 import Loading from "@/components/common/Loading";
 import { createClient } from "@/lib/utils/supabase/client";
 import useAuthStore from "@/store/authStore";
@@ -100,14 +100,7 @@ const UserProfile = () => {
             className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full"
             aria-label="프로필 수정"
           >
-            <Image
-              src={profileEditIcon}
-              alt="프로필 수정"
-              width={32}
-              height={32}
-              className="transition-transform hover:scale-110"
-              priority
-            />
+            <ProfileEditIcon className="transition-transform hover:scale-110" />
           </button>
         </div>
         <div className="mt-2 flex items-center">
