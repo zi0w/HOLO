@@ -15,7 +15,11 @@ export type SignInResult = {
 
 const supabase = createClient();
 
-const useSignInMutation = (): UseMutationResult<SignInResult, unknown, SignInPayload> & {
+const useSignInMutation = (): UseMutationResult<
+  SignInResult,
+  unknown,
+  SignInPayload
+> & {
   modalState: { isOpen: boolean; message: string };
   closeModal: () => void;
 } => {
@@ -23,7 +27,7 @@ const useSignInMutation = (): UseMutationResult<SignInResult, unknown, SignInPay
   const setAuth = AuthStore((state) => state.setAuth);
   const [modalState, setModalState] = useState({
     isOpen: false,
-    message: ""
+    message: "",
   });
 
   const closeModal = async () => {
@@ -38,7 +42,7 @@ const useSignInMutation = (): UseMutationResult<SignInResult, unknown, SignInPay
       console.error("페이지 이동 중 오류 발생:", error);
       setModalState({
         isOpen: true,
-        message: "페이지 이동 중 오류가 발생했습니다."
+        message: "페이지 이동 중 오류가 발생했습니다.",
       });
     }
   };
@@ -71,7 +75,7 @@ const useSignInMutation = (): UseMutationResult<SignInResult, unknown, SignInPay
         console.error("세션 또는 엑세스 토큰이 없습니다.");
         setModalState({
           isOpen: true,
-          message: "로그인에 실패했습니다. 다시 시도해 주세요."
+          message: "로그인에 실패했습니다. 다시 시도해 주세요.",
         });
         return;
       }
@@ -82,7 +86,7 @@ const useSignInMutation = (): UseMutationResult<SignInResult, unknown, SignInPay
         console.error("사용자 정보가 없습니다.");
         setModalState({
           isOpen: true,
-          message: "사용자 정보를 찾을 수 없습니다."
+          message: "사용자 정보를 찾을 수 없습니다.",
         });
         return;
       }
@@ -102,28 +106,34 @@ const useSignInMutation = (): UseMutationResult<SignInResult, unknown, SignInPay
         setAuth(userDetails as User, session);
         setModalState({
           isOpen: true,
-          message: "로그인 성공했습니다."
+          message: "로그인 성공했습니다.",
         });
       } catch (error) {
         console.error("유저 정보 업데이트 실패:", error);
         setModalState({
           isOpen: true,
-          message: error instanceof Error ? error.message : "오류가 발생했습니다."
+          message:
+            error instanceof Error ? error.message : "오류가 발생했습니다.",
         });
       }
     },
 
     onError: (error) => {
-      const errorMessage = error instanceof Error ? error.message : "로그인에 실패했습니다.";
-      const userFriendlyMessage = {
-        "이메일 또는 비밀번호가 일치하지 않습니다.": "이메일 또는 비밀번호를 다시 확인해주세요.",
-        "유저 정보를 가져오는 중 오류가 발생했습니다.": "일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
-        "사용자 정보가 존재하지 않습니다.": "계정 정보를 찾을 수 없습니다. 회원가입을 해주세요."
-      }[errorMessage] || errorMessage;
+      const errorMessage =
+        error instanceof Error ? error.message : "로그인에 실패했습니다.";
+      const userFriendlyMessage =
+        {
+          "이메일 또는 비밀번호가 일치하지 않습니다.":
+            "이메일 또는 비밀번호를 다시 확인해주세요.",
+          "유저 정보를 가져오는 중 오류가 발생했습니다.":
+            "일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+          "사용자 정보가 존재하지 않습니다.":
+            "계정 정보를 찾을 수 없습니다. 회원가입을 해주세요.",
+        }[errorMessage] || errorMessage;
 
       setModalState({
         isOpen: true,
-        message: userFriendlyMessage
+        message: userFriendlyMessage,
       });
     },
   });
@@ -131,7 +141,7 @@ const useSignInMutation = (): UseMutationResult<SignInResult, unknown, SignInPay
   return {
     ...mutation,
     modalState,
-    closeModal
+    closeModal,
   };
 };
 
@@ -146,4 +156,3 @@ const fetchUserDetails = async (userId: string) => {
 };
 
 export default useSignInMutation;
-

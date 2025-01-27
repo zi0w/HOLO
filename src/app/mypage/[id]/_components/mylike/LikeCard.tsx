@@ -1,10 +1,11 @@
 "use client";
 
-import { formatDate } from "./_utils/formatDate";
-import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
+import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
-import useModalStore from "@/store/mypagemodal/useMypageModal"; 
+import { formatDate } from "./_utils/formatDate";
+
+import { useModalStore } from "@/store/mypagemodal/useMypageModalStore";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,7 +15,8 @@ export type LikeCardProps = {
 };
 
 const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
-  const { isOpen, selectedId, modalType, openModal, closeModal } = useModalStore(); 
+  const { isOpen, selectedId, modalType, openModal, closeModal } =
+    useModalStore();
 
   const handleLikeCancel = async () => {
     try {
@@ -31,7 +33,7 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
       <div className="flex h-[64px] w-full items-center justify-between px-5">
         <Link
           href={`/honeytips/${post.id}`}
-          className="flex flex-1 items-center gap-3"
+          className="flex w-[calc(100%-28px)] flex-1 items-center gap-3"
         >
           {post.post_image_url && post.post_image_url.length > 0 ? (
             <div className="relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]">
@@ -65,15 +67,15 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
             <MyLikeButton
               postId={post.id}
               onLikeChange={onLikeChange}
-              onClick={() => openModal(post.id, 'like')} 
+              onClick={() => openModal(post.id, "like")}
             />
           </div>
         </div>
       </div>
 
       <RemoveModal
-        isOpen={isOpen && selectedId === post.id} 
-        modalType={modalType} 
+        isOpen={isOpen && selectedId === post.id}
+        modalType={modalType}
         onAction={handleLikeCancel}
         onClose={closeModal}
       />
@@ -82,7 +84,3 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
 };
 
 export default MyLikeCard;
-
-
-
-

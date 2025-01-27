@@ -1,8 +1,7 @@
 "use client";
 
-
 import CloseIcon from "@/assets/images/common/close-icon.svg";
-import type { ModalType } from "@/store/mypagemodal/useMypageModal";
+import type { ModalType } from "@/store/mypagemodal/useMypageModalStore";
 
 type RemoveModalProps = {
   isOpen: boolean;
@@ -13,14 +12,14 @@ type RemoveModalProps = {
 
 const getModalText = (type: ModalType | null) => {
   switch (type) {
-    case 'comment':
-      return '댓글을 삭제';
-    case 'like':
-      return '좋아요 취소';
-    case 'post':
-      return '게시물을 삭제';
+    case "comment":
+      return "댓글을 삭제";
+    case "like":
+      return "좋아요 취소";
+    case "post":
+      return "게시물을 삭제";
     default:
-      return '';
+      return "";
   }
 };
 
@@ -65,7 +64,3 @@ const RemoveModal = ({
 };
 
 export default RemoveModal;
-
-
-
-

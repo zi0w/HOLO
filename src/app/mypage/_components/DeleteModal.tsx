@@ -45,6 +45,7 @@ const DeleteModal = ({
             <button
               className="common-btn type-a flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800"
               onClick={onAction}
+              
             >
               회원탈퇴
             </button>
