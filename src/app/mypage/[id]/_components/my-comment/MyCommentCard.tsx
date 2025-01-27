@@ -1,11 +1,12 @@
 "use client";
 
-import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
+import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { CommentWithPost } from "@/app/mypage/_types/useMyTypes";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { type FC, useState } from "react";
+import { type FC } from "react";
+import useCommentModalStore from "@/store/mypagemodal/useCommentModalStore";
 
 type MyCommentCardProps = {
   comment: CommentWithPost;
@@ -13,22 +14,26 @@ type MyCommentCardProps = {
 };
 
 const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirm, setIsConfirm] = useState(false);
+  const {
+    isCommentModalOpen,
+    isCommentConfirm,
+    setIsCommentModalOpen,
+    setIsCommentConfirm,
+  } = useCommentModalStore();
 
   const handleDelete = async () => {
     try {
       await onDelete(comment.id);
-      setIsConfirm(false);
-      setIsModalOpen(true);
+      setIsCommentConfirm(false); // 완료 후 상태 초기화
+      setIsCommentModalOpen(true); // 완료 모달 열기
     } catch (error) {
       console.error("댓글 삭제 실패:", error);
     }
   };
 
   const handleClose = () => {
-    setIsModalOpen(false);
-    setIsConfirm(false);
+    setIsCommentModalOpen(false);
+    setIsCommentConfirm(false); // 상태 초기화
   };
 
   return (
@@ -91,8 +96,8 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              setIsConfirm(true);
-              setIsModalOpen(true);
+              setIsCommentConfirm(true);
+              setIsCommentModalOpen(true);
             }}
             className="flex h-[28px] w-[38px] items-center justify-center border border-base-800 px-[7px] py-[6px] text-[12px] text-base-800"
           >
@@ -101,10 +106,10 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
         </div>
       </div>
 
-      <ConfirmModal
-        isOpen={isModalOpen}
-        isConfirm={isConfirm}
-        text="삭제"
+      <RemoveModal
+        isOpen={isCommentModalOpen}
+        isConfirm={isCommentConfirm}
+        text="댓글"
         onAction={handleDelete}
         onClose={handleClose}
       />
@@ -113,3 +118,4 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
 };
 
 export default MyCommentCard;
+

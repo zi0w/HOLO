@@ -1,4 +1,4 @@
-// app/mypage/_hooks/useLikeList.ts
+
 import { createClient } from "@/lib/utils/supabase/client";
 import { useState, useEffect } from "react";
 import { getId } from "@/app/honeytips/_utils/auth";
