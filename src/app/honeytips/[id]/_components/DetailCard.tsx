@@ -109,11 +109,14 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   if (!postDetailData) return null;
 
   return (
-    <section className="mx-5">
+    <section className="mx-5 lg:mx-auto lg:max-w-[762px]">
+      <h2 className="mb-5 lg:mt-5 hidden text-2xl text-base-800 lg:block">
+        꿀팁 게시판
+      </h2>
       <button
         type="button"
         onClick={() => router.push("/honeytips")}
-        className="py-5"
+        className="py-5 lg:hidden"
       >
         <ArrowLeftIcon />
       </button>
@@ -163,7 +166,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                 />
                 <DropdownButton
                   label="삭제"
-                  onClick={handleDeleteClick} // 삭제 버튼 클릭 시 모달 열기
+                  onClick={handleDeleteClick}
                 />
               </div>
             )}
@@ -171,42 +174,47 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         )}
       </div>
 
-      <Swiper
-        modules={[Pagination, Navigation]}
-        spaceBetween={10}
-        slidesPerView={1}
-        simulateTouch={true}
-        grabCursor={true}
-        centeredSlides={true}
-        pagination={{ clickable: true }}
-        navigation={true}
-        className="my-4 ml-0 flex h-auto max-w-[300px] items-center"
-      >
-        {postDetailData.post_image_url?.map((imageUrl, index) => (
-          <SwiperSlide key={index} className="my-auto">
-            <Image
-              src={imageUrl}
-              alt={`게시물 이미지 ${index + 1}`}
-              width={400}
-              height={400}
-              className="mx-auto h-[300px] w-[300px] rounded object-cover"
+      <div>
+        <div>
+          <Swiper
+            modules={[Pagination, Navigation]}
+            spaceBetween={10}
+            slidesPerView={1}
+            simulateTouch={true}
+            grabCursor={true}
+            centeredSlides={true}
+            pagination={{ clickable: true }}
+            navigation={true}
+            className="mx-auto my-4 flex h-auto max-w-[300px] items-center lg:max-w-[762px] lg:my-6"
+          >
+            {postDetailData.post_image_url?.map((imageUrl, index) => (
+              <SwiperSlide key={index} className="my-auto">
+                <Image
+                  src={imageUrl}
+                  alt={`게시물 이미지 ${index + 1}`}
+                  width={800}
+                  height={800}
+                  className="mx-auto h-[300px] w-[300px] rounded object-cover lg:h-[762px] lg:w-[762px]"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
+        <div>
+          <h2 className="text-[22px] text-base-900 lg:mt-4">{postDetailData.title}</h2>
+          <p className="my-2 whitespace-pre-wrap text-base-800">
+            {postDetailData.content}
+          </p>
+          <div className="mt-6 flex items-start justify-center gap-3">
+            <LikeButton
+              postId={postDetailData.id}
+              likesCounts={likesCounts}
+              setLikesCounts={setLikesCounts}
             />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      <h2 className="text-[22px] text-base-900">{postDetailData.title}</h2>
-
-      <p className="mb-10 mt-2 whitespace-pre-wrap text-base-800">
-        {postDetailData.content}
-      </p>
-      <div className="flex items-start justify-center gap-3">
-        <LikeButton
-          postId={postDetailData.id}
-          likesCounts={likesCounts}
-          setLikesCounts={setLikesCounts}
-        />
-        <ShareButton url={window.location.href} />
+            <ShareButton url={window.location.href} />
+          </div>
+        </div>
       </div>
     </section>
   );

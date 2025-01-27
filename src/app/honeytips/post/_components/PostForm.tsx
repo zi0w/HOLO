@@ -142,105 +142,141 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   const isSubmitDisabled = !title.trim() || !content.trim() || isLoading;
 
   return (
-    <form className="mx-5 mt-4">
-      <ConfirmModal
-        text={"취소"}
-        isOpen={isModalOpen}
-        onConfirm={handleCancel}
-        onCancel={() => closeModal()}
-      />
-      <section className="mb-6 flex items-center justify-between">
-        <button
-          type="button"
-          onClick={() => openModal()}
-          className="rounded px-3 py-1.5 text-base-800"
-          disabled={isLoading}
-        >
-          취소
-        </button>
-        <CategorySelectModal
-          selectedCategory={category}
-          onChange={setCategory}
+    <div className="mx-5 mt-[120px] lg:mx-auto lg:max-w-[762px]">
+      <h2 className="hidden lg:block text-2xl text-base-800">꿀팁 쓰기</h2>
+      <form className="mt-5">
+        <ConfirmModal
+          text={"취소"}
+          isOpen={isModalOpen}
+          onConfirm={handleCancel}
+          onCancel={() => closeModal()}
         />
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className={clsx(
-            "hover: rounded px-3 py-1.5 text-base-800 hover:text-primary-500",
-            {
-              "cursor-not-allowed opacity-50": isSubmitDisabled,
-            },
-          )}
-          disabled={isSubmitDisabled}
-        >
-          {isLoading ? "등록 중..." : "등록"}
-        </button>
-      </section>
-
-      <section className="mb-4">
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="제목을 입력해주세요."
-          className="w-full rounded-md border border-primary-200 p-2"
-          disabled={isLoading}
-        />
-      </section>
-
-      <section className="mb-2">
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="내용을 입력해주세요."
-          className="h-[297px] w-full rounded-md border border-primary-200 p-2"
-          rows={10}
-          disabled={isLoading}
-        />
-      </section>
-
-      <section className="mx-auto grid grid-cols-3 gap-4">
-        {[0, 1, 2].map((index) => (
-          <article key={index} className="relative w-full">
-            <label
-              htmlFor={`image-upload-${index}`}
-              className="flex aspect-square cursor-pointer items-center justify-center rounded-md border border-primary-200"
-            >
-              {imageUrls[index] ? (
-                <Image
-                  src={imageUrls[index]}
-                  alt={`Preview ${index}`}
-                  width={200}
-                  height={200}
-                  className="h-full w-full rounded-md object-cover"
-                />
-              ) : (
-                <span className="text-base-500">
-                  <Plus />
-                </span>
-              )}
-              <input
-                id={`image-upload-${index}`}
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageChange(e, index)}
-                className="hidden"
-              />
-            </label>
-
-            {imageUrls[index] && (
-              <button
-                type="button"
-                onClick={() => handleImageDelete(index)}
-                className="absolute right-0 top-0 p-1 text-black"
-              >
-                <XButton />
-              </button>
+        <section className="mb-6 flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => openModal()}
+            className="rounded px-3 py-1.5 text-base-800 lg:hidden"
+            disabled={isLoading}
+          >
+            취소
+          </button>
+          <CategorySelectModal
+            selectedCategory={category}
+            onChange={setCategory}
+          />
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className={clsx(
+              "hover: rounded px-3 py-1.5 text-base-800 hover:text-primary-500 lg:hidden",
+              {
+                "cursor-not-allowed opacity-50": isSubmitDisabled,
+              },
             )}
-          </article>
-        ))}
-      </section>
-    </form>
+            disabled={isSubmitDisabled}
+          >
+            {isLoading ? "등록 중..." : "등록"}
+          </button>
+        </section>
+
+        <section className="mb-4 mt-8">
+          <label htmlFor="title" className="font-bold text-base-800">
+            제목
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="제목을 입력해주세요."
+            className="mt-3 w-full rounded-md border border-primary-200 p-2"
+            disabled={isLoading}
+          />
+        </section>
+
+        <section className="mb-2 mt-10 lg:mb-6">
+          <label htmlFor="content" className="font-bold text-base-800">
+            내용
+          </label>
+          <textarea
+            value={content}
+            id="content"
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="내용을 입력해주세요."
+            className="mt-3 h-[297px] w-full rounded-md border border-primary-200 p-2"
+            rows={10}
+            disabled={isLoading}
+          />
+        </section>
+
+        <div className="flex justify-between">
+          <section className="mx-auto grid flex-1 grid-cols-3 gap-4 lg:ml-0 lg:max-w-[358px]">
+            {[0, 1, 2].map((index) => (
+              <article key={index} className="relative w-full">
+                <label
+                  htmlFor={`image-upload-${index}`}
+                  className="flex aspect-square cursor-pointer items-center justify-center rounded-md border border-primary-200"
+                >
+                  {imageUrls[index] ? (
+                    <Image
+                      src={imageUrls[index]}
+                      alt={`Preview ${index}`}
+                      width={200}
+                      height={200}
+                      className="h-full w-full rounded-md object-cover"
+                    />
+                  ) : (
+                    <span className="text-base-500">
+                      <Plus />
+                    </span>
+                  )}
+                  <input
+                    id={`image-upload-${index}`}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageChange(e, index)}
+                    className="hidden"
+                  />
+                </label>
+
+                {imageUrls[index] && (
+                  <button
+                    type="button"
+                    onClick={() => handleImageDelete(index)}
+                    className="absolute right-0 top-0 p-1 text-black"
+                  >
+                    <XButton />
+                  </button>
+                )}
+              </article>
+            ))}
+          </section>
+          <section className="hidden lg:block">
+            <button
+              type="button"
+              onClick={() => openModal()}
+              className="font-gmarket mr-2 rounded border px-6 pt-2 pb-1.5 text-base-800"
+              disabled={isLoading}
+            >
+              취소
+            </button>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className={clsx(
+                "font-gmarket rounded border bg-primary-500 px-6 pt-2 pb-1.5 text-white",
+                {
+                  "cursor-not-allowed opacity-50": isSubmitDisabled,
+                },
+              )}
+              disabled={isSubmitDisabled}
+            >
+              {isLoading ? "등록 중..." : "등록"}
+            </button>
+          </section>
+        </div>
+      </form>
+    </div>
   );
 };
 
