@@ -15,8 +15,9 @@ export const useSignout = () => {
       if (error) throw error;
 
       clearAuth();
-      document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      
+      document.cookie =
+        "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
       return { success: true };
     } catch (error: unknown) {
       let errorMessage = "알 수 없는 오류가 발생했습니다.";
@@ -29,4 +30,3 @@ export const useSignout = () => {
 
   return { handleLogout, router };
 };
-

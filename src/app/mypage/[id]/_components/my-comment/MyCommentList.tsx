@@ -37,7 +37,10 @@ const MyCommentList = () => {
     );
 
   return (
-    <div className="h-full w-full pt-[10px]">
+    <div className="h-full w-full pt-[10px] mt-[30px] md:mt-[15px] md:w-[549px] w-[362px] md:h-[442px] h-[442px] rounded-[4px] border border-[#E0E0E0] bg-white flex-shrink-0 md:mx-auto md:flex md:items-center">
+
+
+
       {currentComments.length > 0 ? (
         <div className="relative flex h-full flex-col">
           <div className="flex-1">
@@ -62,7 +65,8 @@ const MyCommentList = () => {
           </div>
         </div>
       ) : (
-        <p className="py-4 text-center text-[#8F8F8F]">
+        <p className="py-4 text-center text-base-800 md:text-center md:mx-auto md:w-[549px]">
+
           작성한 댓글이 없습니다.
         </p>
       )}

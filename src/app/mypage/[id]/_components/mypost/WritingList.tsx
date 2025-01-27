@@ -6,10 +6,10 @@ import type { Post } from "@/app/mypage/_types/myPage";
 import LoadingSmall from "@/components/common/LoadingSmall";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
-import { useQueryClient } from "@tanstack/react-query"; 
+import { useQueryClient } from "@tanstack/react-query";
 
 const MyWritingList = () => {
-  const queryClient = useQueryClient(); 
+  const queryClient = useQueryClient();
   const { posts, isLoading, handleDelete, isDeleting } = useMyPosts();
 
   const {
@@ -38,7 +38,7 @@ const MyWritingList = () => {
     );
 
   return (
-    <div className="h-full w-full pt-[10px]">
+    <div className="h-full w-full pt-[10px] mt-[30px] md:mt-[15px] md:w-[549px] w-[362px] md:h-[442px] h-[442px] rounded-[4px] border border-[#E0E0E0] bg-white flex-shrink-0 md:mx-auto md:flex md:items-center">
       {currentPosts.length > 0 ? (
         <div className="relative flex h-full flex-col">
           <div className="flex-1">
@@ -46,12 +46,12 @@ const MyWritingList = () => {
               <MyWritingCard
                 key={post.id}
                 post={post}
-                onDelete={handleDeleteWithRefresh} 
+                onDelete={handleDeleteWithRefresh}
                 isDeleting={isDeleting(post.id)}
               />
             ))}
           </div>
-          <div className="absolute bottom-0 left-0 right-0 bg-base-50 px-[86px] py-4 pr-[90px]">
+          <div className="absolute bottom-0 left-0 right-0 bg-white px-[86px] py-4 pr-[90px]">
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -64,7 +64,7 @@ const MyWritingList = () => {
           </div>
         </div>
       ) : (
-        <p className="py-4 text-center text-base-800">
+        <p className="py-4 text-center text-base-800 md:text-center md:mx-auto md:w-[549px]">
           작성한 게시물이 없습니다.
         </p>
       )}
@@ -73,4 +73,3 @@ const MyWritingList = () => {
 };
 
 export default MyWritingList;
-

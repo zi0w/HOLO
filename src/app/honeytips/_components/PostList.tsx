@@ -13,7 +13,6 @@ import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import useAuthStore from "@/store/authStore";
 import { useModalStore } from "@/store/modalStore";
-
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -87,7 +86,7 @@ const PostList = () => {
 
   const handleGoToPost = () => {
     if (!isAuthenticated) {
-      openModal('post');
+      openModal("post");
       return;
     }
     router.push(`/honeytips/post?category=${selectedCategory}`);

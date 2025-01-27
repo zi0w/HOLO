@@ -1,4 +1,3 @@
-
 "use client";
 
 import MyCommentList from "@/app/mypage/[id]/_components/my-comment/MyCommentList";
@@ -24,7 +23,7 @@ const Mypageform = () => {
     if (userId && isInitialLoad) {
       await queryClient.prefetchQuery({
         queryKey: ["likedPosts", userId],
-        staleTime: 1000 * 60 * 5, 
+        staleTime: 1000 * 60 * 5,
       });
       setIsInitialLoad(false);
     }
@@ -133,21 +132,21 @@ const Mypageform = () => {
           </div>
         </div>
       </div>
+      <div
+        className={clsx(
+          "mt-1 w-full border-t border-[#FFE4CC] bg-[#FFE4CC] md:mx-auto md:h-[1px] md:w-[549px]",
+        )}
+      />
 
-      <div className={clsx("mt-1 border-t border-[#FFE4CC]")} />
+      <div>{renderSection()}</div>
 
       <div
         className={clsx(
-          "mx-[20px] mt-[30px] h-[400px] rounded-lg border border-[#E0E0E0] bg-white",
+          "mx-[20px] mt-[20px] flex flex-col lg:mx-auto lg:flex-row lg:items-center lg:justify-center lg:gap-2",
         )}
       >
-        {renderSection()}
-      </div>
-  
- 
-      <div className={clsx("mx-[20px] mt-[27px] flex flex-col")}>
         <SignoutButton />
-        <div className={clsx("mt-[16px]")}>
+        <div className={clsx("mt-[16px] lg:mt-0")}>
           <DeleteAccount />
         </div>
       </div>

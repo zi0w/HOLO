@@ -10,7 +10,7 @@ type ModalState = {
   closeModal: () => void;
 };
 
-const useModalStore = create<ModalState>((set) => ({
+export const useModalStore = create<ModalState>((set) => ({
   isOpen: false,
   selectedId: null,
   modalType: null,
@@ -18,4 +18,3 @@ const useModalStore = create<ModalState>((set) => ({
   closeModal: () => set({ isOpen: false, selectedId: null, modalType: null }),
 }));
 
-export default useModalStore;

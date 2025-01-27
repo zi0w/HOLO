@@ -1,4 +1,3 @@
-
 import { clearAllStorage } from "@/app/mypage/_utils/cleanup";
 import { deleteUserAccount, signOutUser } from "@/app/mypage/_utils/user";
 import useAuthStore from "@/store/authStore";
@@ -15,23 +14,16 @@ export const useDeleteAccount = () => {
       return;
     }
 
-    
-
     try {
-     
       await deleteUserAccount(user.id);
 
-    
       await signOutUser();
 
-   
       queryClient.clear();
       clearAuth();
 
-     
       clearAllStorage();
 
-      
       window.location.href = "/sign-in";
     } catch (error) {
       console.error("회원 탈퇴 중 오류:", error);

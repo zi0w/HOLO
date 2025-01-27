@@ -34,7 +34,7 @@ const CommentForm = () => {
       >
         <div className="relative w-full">
           <input
-            className="h-[40px] w-full border border-base-400 flex-grow rounded py-1 pl-2 pr-12 text-sm"
+            className="h-[40px] w-full flex-grow rounded border border-base-400 py-1 pl-2 pr-12 text-sm"
             type="text"
             placeholder={
               isAuthenticated ? "댓글을 입력해주세요." : "로그인이 필요합니다."
