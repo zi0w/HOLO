@@ -3,14 +3,14 @@
 import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import ShareButton from "@/app/honeytips/[id]/_components/ShareButton";
+import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
-import Modal from "@/components/common/Modal";
-import useModalStore from "@/store/modalStore";
+import ConfirmModal from "@/components/common/ConfirmModal";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
@@ -25,15 +25,23 @@ type DetailCardProps = {
 
 const DetailCard = ({ postId }: DetailCardProps) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [postDetailData, setPostDetailData] = useState<Post | null>(null);
   const [likesCounts, setLikesCounts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const router = useRouter();
+  const {
+    isOpen: isDropdownOpen,
+    toggle: toggleDropdown,
+    close: closeDropdown,
+  } = useToggle();
+  const {
+    isOpen: isModalOpen,
+    open: openModal,
+    close: closeModal,
+  } = useToggle();
 
-  const { setIsModalOpen, setIsConfirm, isConfirm } = useModalStore();
+  const router = useRouter();
 
   const formatDate = (date: string) => {
     return dayjs(date).format("YYYY년 MM월 DD일 HH:mm:ss");
@@ -74,19 +82,25 @@ const DetailCard = ({ postId }: DetailCardProps) => {
     fetchUserId();
   }, []);
 
-  const handleDeletePost = async (postId: Post["id"]) => {
-    setIsConfirm(true);
-    setIsModalOpen(true);
+  const handleDeleteClick = () => {
+    openModal();
+  };
 
-    if (!isConfirm) return;
-
+  const handleDeletePost = async () => {
     try {
-      await deletePost(postId);
-      setIsConfirm(false);
+      await deletePost(postDetailData!.id);
+      router.push("/honeytips");
     } catch (error) {
       setIsError(true);
       console.error("게시물 삭제에 실패했습니다.", error);
+    } finally {
+      closeModal();
     }
+  };
+
+  const handleCancelDelete = () => {
+    closeModal();
+    closeDropdown();
   };
 
   if (isLoading) return <DetailLoading />;
@@ -103,11 +117,16 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       >
         <ArrowLeftIcon />
       </button>
-      <Modal
-        text={"삭제"}
-        onAction={() => handleDeletePost(postId)}
-        onClose={() => router.push("/honeytips")}
-      />
+
+      {isModalOpen && (
+        <ConfirmModal
+          text={"삭제"}
+          isOpen={isModalOpen}
+          onConfirm={handleDeletePost}
+          onCancel={handleCancelDelete}
+        />
+      )}
+
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center gap-2">
@@ -133,7 +152,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
         {currentId === postDetailData.user_id && (
           <div className="relative">
-            <button onClick={() => setIsDropdownOpen((prev) => !prev)}>
+            <button onClick={toggleDropdown}>
               <MenuDots />
             </button>
             {isDropdownOpen && (
@@ -144,10 +163,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                 />
                 <DropdownButton
                   label="삭제"
-                  onClick={() => {
-                    setIsConfirm(true);
-                    setIsModalOpen(true);
-                  }}
+                  onClick={handleDeleteClick} // 삭제 버튼 클릭 시 모달 열기
                 />
               </div>
             )}
@@ -164,19 +180,16 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         centeredSlides={true}
         pagination={{ clickable: true }}
         navigation={true}
-        className="flex items-center my-4 ml-0 h-auto max-w-[300px]"
+        className="my-4 ml-0 flex h-auto max-w-[300px] items-center"
       >
         {postDetailData.post_image_url?.map((imageUrl, index) => (
-          <SwiperSlide
-            key={index}
-            className="my-auto"
-          >
+          <SwiperSlide key={index} className="my-auto">
             <Image
               src={imageUrl}
               alt={`게시물 이미지 ${index + 1}`}
               width={400}
               height={400}
-              className="rounded w-[300px] h-[300px] object-cover mx-auto"
+              className="mx-auto h-[300px] w-[300px] rounded object-cover"
             />
           </SwiperSlide>
         ))}
@@ -187,7 +200,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       <p className="mb-10 mt-2 whitespace-pre-wrap text-base-800">
         {postDetailData.content}
       </p>
-      <div className="flex justify-center items-start gap-3">
+      <div className="flex items-start justify-center gap-3">
         <LikeButton
           postId={postDetailData.id}
           likesCounts={likesCounts}

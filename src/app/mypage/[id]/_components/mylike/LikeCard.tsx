@@ -44,7 +44,8 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
       <div className="flex h-[64px] w-full items-center justify-between px-5">
         <Link
           href={`/honeytips/${post.id}`}
-          className="flex flex-1 items-center gap-3"
+          className="flex flex-1 items-center gap-3
+          "
         >
           {post.post_image_url && post.post_image_url.length > 0 ? (
             <div className="relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]">
@@ -61,14 +62,14 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
           )}
           <div className="flex min-w-0 flex-1 flex-col gap-[2px]">
             <div className="flex w-full items-center justify-between">
-              <h3 className="line-clamp-1 text-[16px] font-medium text-[#424242]">
+              <h3 className="line-clamp-1 text-[16px] font-medium text-base-800">
                 {post.title}
               </h3>
-              <span className="-mt-[5px] ml-2 text-[14px] text-[#8F8F8F]">
+              <span className="-mt-[5px] ml-2 text-[14px] text-base-500">
                 {formatDate(post.created_at)}
               </span>
             </div>
-            <p className="line-clamp-1 text-[14px] text-[#8F8F8F]">
+            <p className="line-clamp-1 text-[14px] text-base-800">
               {post.content}
             </p>
           </div>

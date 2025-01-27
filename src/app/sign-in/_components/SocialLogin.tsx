@@ -1,4 +1,4 @@
-// components/SocialLogin.tsx
+
 "use client";
 
 

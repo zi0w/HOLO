@@ -103,8 +103,8 @@ export const UseProfileEdit = (
   };
 
   const validatePasswords = () => {
-    if (password && password.length < 6) {
-      setPasswordError("비밀번호는 최소 6자 이상이어야 합니다.");
+    if (password && password.length < 8) {
+      setPasswordError("비밀번호는 최소 8자 이상이어야 합니다.");
       return false;
     }
     if (password && password !== confirmPassword) {

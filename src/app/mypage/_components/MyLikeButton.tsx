@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import mylikebutton from "@/assets/images/mypage/mylikebutton.png";
+import mylikebutton from "@/assets/images/mypage/mylikesbutton.svg"
+
 
 export type LikeButtonProps = {
   postId: string;
@@ -15,7 +16,7 @@ const MyLikeButton = ({ postId, onLikeChange, onClick }: LikeButtonProps) => {
     if (onClick) {
       onClick();
     } else {
-      // 마이페이지의 좋아요 목록에서는 항상 delete만 수행
+      
       await onLikeChange(postId, "delete");
     }
   };
@@ -27,12 +28,12 @@ const MyLikeButton = ({ postId, onLikeChange, onClick }: LikeButtonProps) => {
       aria-label="좋아요 취소"
     >
       <Image 
-        src={mylikebutton}
-        alt="좋아요 취소"
-        width={50}
-        height={50}
-        className="h-[50px] w-[50px] opacity-100"
-      />
+      src={mylikebutton}
+      alt="좋아요 취소"
+      width={50}
+      height={50}
+      className="h-[30px] w-[30px] opacity-100"
+    />
     </button>
   );
 };

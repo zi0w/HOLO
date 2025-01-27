@@ -1,25 +1,37 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
-type ModalState = {
+type ModalStore = {
   isModalOpen: boolean;
-  isConfirm: boolean;
-  setIsModalOpen: (isModalOpen: boolean) => void;
-  setIsConfirm: (isConfirm: boolean) => void;
+  openModal: () => void;
+  closeModal: () => void;
 };
 
-const useModalStore = create<ModalState>()(
-  persist(
-    (set) => ({
-      isModalOpen: false,
-      isConfirm: false,
-      setIsModalOpen: (isModalOpen) => set({ isModalOpen }),
-      setIsConfirm: (isConfirm) => set({ isConfirm }),
-    }),
-    {
-      name: "modal-storage",
-    },
-  ),
-);
+export const useCommentModalStore = create<ModalStore>((set) => ({
+  isModalOpen: false,
+  openModal: () => set({ isModalOpen: true }),
+  closeModal: () => set({ isModalOpen: false }),
+}));
 
-export default useModalStore;
+// export const useDetailModalStore = create<ModalStore>((set) => ({
+//   isModalOpen: false,
+//   openModal: () => set({ isModalOpen: true }),
+//   closeModal: () => set({ isModalOpen: false }),
+// }));
+
+// export const useFormModalStore = create<ModalStore>((set) => ({
+//   isModalOpen: false,
+//   openModal: () => set({ isModalOpen: true }),
+//   closeModal: () => set({ isModalOpen: false }),
+// }));
+
+// export const useLikeModalStore = create<ModalStore>((set) => ({
+//   isModalOpen: false,
+//   openModal: () => set({ isModalOpen: true }),
+//   closeModal: () => set({ isModalOpen: false }),
+// }));
+
+// export const usePostModalStore = create<ModalStore>((set) => ({
+//   isModalOpen: false,
+//   openModal: () => set({ isModalOpen: true }),
+//   closeModal: () => set({ isModalOpen: false }),
+// }));

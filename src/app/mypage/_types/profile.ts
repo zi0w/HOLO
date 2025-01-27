@@ -1,4 +1,4 @@
-// app/mypage/_types/profile.ts
+
 export type UserData ={
     id: string;
     nickname: string;
