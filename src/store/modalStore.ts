@@ -2,36 +2,17 @@ import { create } from "zustand";
 
 type ModalStore = {
   isModalOpen: boolean;
-  openModal: () => void;
+  modalCommentId: string | null;
+  modalType: 'default' | 'detail' | 'form' | 'like' | 'post';
+  openModal: (type: ModalStore['modalType'], id?: string) => void;
   closeModal: () => void;
 };
 
-export const useCommentModalStore = create<ModalStore>((set) => ({
+export const useModalStore = create<ModalStore>((set) => ({
   isModalOpen: false,
-  openModal: () => set({ isModalOpen: true }),
-  closeModal: () => set({ isModalOpen: false }),
+  modalCommentId: null,
+  modalType: 'default',
+  openModal: (type: ModalStore['modalType'], id?: string) => 
+    set({ isModalOpen: true, modalType: type, modalCommentId: id || null }),
+  closeModal: () => set({ isModalOpen: false, modalType: 'default', modalCommentId: null }),
 }));
-
-// export const useDetailModalStore = create<ModalStore>((set) => ({
-//   isModalOpen: false,
-//   openModal: () => set({ isModalOpen: true }),
-//   closeModal: () => set({ isModalOpen: false }),
-// }));
-
-// export const useFormModalStore = create<ModalStore>((set) => ({
-//   isModalOpen: false,
-//   openModal: () => set({ isModalOpen: true }),
-//   closeModal: () => set({ isModalOpen: false }),
-// }));
-
-// export const useLikeModalStore = create<ModalStore>((set) => ({
-//   isModalOpen: false,
-//   openModal: () => set({ isModalOpen: true }),
-//   closeModal: () => set({ isModalOpen: false }),
-// }));
-
-// export const usePostModalStore = create<ModalStore>((set) => ({
-//   isModalOpen: false,
-//   openModal: () => set({ isModalOpen: true }),
-//   closeModal: () => set({ isModalOpen: false }),
-// }));
