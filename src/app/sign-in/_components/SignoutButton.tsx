@@ -36,11 +36,11 @@ const SignoutButton = () => {
     <>
       <button
         onClick={handleLogoutClick}
-        className="font-pretendard flex h-[48px] w-full items-center justify-center rounded-[4px] border border-primary-500 text-base text-primary-500 hover:bg-base-100"
+        className="font-pretendard flex h-[48px] w-full items-center justify-center rounded-[4px] border border-primary-500 text-base text-primary-500 hover:bg-base-100  md:w-[180px]"
       >
         로그아웃
       </button>
-      <CustomLogoutModal 
+      <CustomLogoutModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onLogout={handleConfirmLogout}
@@ -52,5 +52,3 @@ const SignoutButton = () => {
 };
 
 export default SignoutButton;
-
-

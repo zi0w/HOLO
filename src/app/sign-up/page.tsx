@@ -33,7 +33,7 @@ const Page = () => {
             priority
           />
         </div>
-        <div className="flex flex-col items-center lg:mt-[55px]">
+        <div className="flex flex-col items-center pt-14 lg:mt-[55px]">
           <div className="mb-[40px] flex flex-col items-center">
             <div className="relative">
               <div className="-ml-[20px] mt-[20px]">
