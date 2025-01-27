@@ -142,8 +142,8 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   const isSubmitDisabled = !title.trim() || !content.trim() || isLoading;
 
   return (
-    <div className="mx-5 mt-[120px] lg:mx-auto lg:max-w-[762px]">
-      <h2 className="hidden lg:block text-2xl text-base-800">꿀팁 쓰기</h2>
+    <div className="mx-5 lg:mx-auto lg:mt-[120px] lg:max-w-[762px]">
+      <h2 className="hidden text-2xl text-base-800 lg:block">꿀팁 쓰기</h2>
       <form className="mt-5">
         <ConfirmModal
           text={"취소"}
@@ -180,7 +180,10 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
         </section>
 
         <section className="mb-4 mt-8">
-          <label htmlFor="title" className="font-bold text-base-800">
+          <label
+            htmlFor="title"
+            className="hidden lg:block lg:font-bold lg:text-base-800"
+          >
             제목
           </label>
           <input
@@ -189,13 +192,16 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력해주세요."
-            className="mt-3 w-full rounded-md border border-primary-200 p-2"
+            className="lg:mt-3 w-full rounded-md border border-primary-200 p-2"
             disabled={isLoading}
           />
         </section>
 
-        <section className="mb-2 mt-10 lg:mb-6">
-          <label htmlFor="content" className="font-bold text-base-800">
+        <section className="mb-2 lg:mt-10 lg:mb-6">
+          <label
+            htmlFor="content"
+            className="hidden lg:block lg:font-bold lg:text-base-800"
+          >
             내용
           </label>
           <textarea
@@ -203,7 +209,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             id="content"
             onChange={(e) => setContent(e.target.value)}
             placeholder="내용을 입력해주세요."
-            className="mt-3 h-[297px] w-full rounded-md border border-primary-200 p-2"
+            className="lg:mt-3 h-[297px] w-full rounded-md border border-primary-200 p-2"
             rows={10}
             disabled={isLoading}
           />
@@ -255,7 +261,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             <button
               type="button"
               onClick={() => openModal()}
-              className="font-gmarket mr-2 rounded border px-6 pt-2 pb-1.5 text-base-800"
+              className="mr-2 rounded border px-6 pb-1.5 pt-2 font-gmarket text-base-800"
               disabled={isLoading}
             >
               취소
@@ -264,7 +270,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
               type="button"
               onClick={handleSubmit}
               className={clsx(
-                "font-gmarket rounded border bg-primary-500 px-6 pt-2 pb-1.5 text-white",
+                "rounded border bg-primary-500 px-6 pb-1.5 pt-2 font-gmarket text-white",
                 {
                   "cursor-not-allowed opacity-50": isSubmitDisabled,
                 },

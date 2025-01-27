@@ -1,11 +1,5 @@
 "use client";
 
-import {
-  useDeleteCommentMutation,
-  useUpdateCommentMutation,
-} from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
-import useIsOwner from "@/app/honeytips/[id]/_hooks/useIsOwner";
-import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import { formatDate } from "@/app/honeytips/_utils/formatDate";
@@ -16,65 +10,53 @@ import Image from "next/image";
 type CommentCardProps = {
   comment: Comment;
   currentId: string | null;
-  postId: Comment["post_id"];
   editingCommentId: string | null;
   setEditingCommentId: React.Dispatch<React.SetStateAction<string | null>>;
   editedComment: string;
   setEditedComment: React.Dispatch<React.SetStateAction<string>>;
+  isDropdownOpen: boolean;
+  toggleDropdown: () => void;
+  closeDropdown: () => void;
+  isModalOpen: boolean;
+  openModal: (id: string) => void;
+  closeModal: () => void;
+  modalCommentId: string | null;
+  handleCommentDelete: (id: string) => void;
+  handleCommentSave: (id: string) => void;
+  isOwner: boolean;
 };
 
 const CommentCard = ({
   comment,
   currentId,
-  postId,
   editingCommentId,
   setEditingCommentId,
   editedComment,
   setEditedComment,
+  isDropdownOpen,
+  toggleDropdown,
+  closeDropdown,
+  isModalOpen,
+  openModal,
+  closeModal,
+  modalCommentId,
+  handleCommentDelete,
+  handleCommentSave,
+  isOwner,
 }: CommentCardProps) => {
-  const {
-    isOpen: isDropdownOpen,
-    toggle: toggleDropdown,
-    close: closeDropdown,
-  } = useToggle();
-  const {
-    isOpen: isModalOpen,
-    open: openModal,
-    close: closeModal,
-  } = useToggle();
   
-  const updateCommentMutation = useUpdateCommentMutation();
-  const deleteCommentMutation = useDeleteCommentMutation();
-  const isOwner = useIsOwner(postId, comment.user_id);
-
-  const handleCommentSave = (id: string) => {
-    if (!editedComment.trim()) return;
-
-    updateCommentMutation.mutate({
-      editingComment: editedComment,
-      editingId: id,
-      postId,
-    });
-    setEditingCommentId(null);
-    closeDropdown();
-  };
-
-  const handleCommentDelete = (id: string) => {
-    deleteCommentMutation.mutate(id);
-    closeModal();
-  };
-
   return (
     <article className="mx-5 w-full rounded-lg">
       <ConfirmModal
-        text={"삭제"}
-        isOpen={isModalOpen}
+        text="삭제"
+        isOpen={isModalOpen && modalCommentId === comment.id}
         onConfirm={() => handleCommentDelete(comment.id)}
         onCancel={() => {
           closeModal();
           closeDropdown();
         }}
       />
+
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-[14px]">
           {comment.users.profile_image_url && (
@@ -100,6 +82,7 @@ const CommentCard = ({
                 </p>
               )}
             </div>
+
             {editingCommentId === comment.id ? (
               <input
                 value={editedComment}
@@ -114,6 +97,7 @@ const CommentCard = ({
             )}
           </div>
         </div>
+
         {currentId && currentId === comment.user_id && (
           <div className="relative">
             <button
@@ -147,7 +131,10 @@ const CommentCard = ({
                         setEditedComment(comment.comment);
                       }}
                     />
-                    <DropdownButton label="삭제" onClick={openModal} />
+                    <DropdownButton
+                      label="삭제"
+                      onClick={() => openModal(comment.id)}
+                    />
                   </>
                 )}
               </div>
