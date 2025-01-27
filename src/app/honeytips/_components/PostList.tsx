@@ -12,7 +12,7 @@ import PlusButton from "@/assets/images/honeytips/plus-circle.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
-import useAuthStore from "@/store/authStore";
+import useAuthStore from "@/store/useAuthStore";
 
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";

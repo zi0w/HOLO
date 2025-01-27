@@ -2,7 +2,8 @@
 
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
-import useModalStore from "@/store/mypagemodal/useMypageModal"; 
+import { useModalStore } from "@/store/mypagemodal/useMypageModalStore";
+
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,7 +37,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
       >
         <Link
           href={`/honeytips/${post.id}`}
-          className={clsx("flex flex-1 items-center gap-3")}
+          className="flex w-[calc(100%-36px)] flex-1 items-center gap-3"
         >
           {post.post_image_url && post.post_image_url.length > 0 ? (
             <div
@@ -86,7 +87,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              openModal(post.id, "post"); 
+              openModal(post.id, "post");
             }}
             disabled={isDeleting}
             className="flex h-[28px] w-[38px] items-center justify-center border border-base-800 px-[7px] py-[6px] text-[12px] text-base-800 disabled:opacity-50"
@@ -97,8 +98,8 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
       </div>
 
       <RemoveModal
-        isOpen={isOpen && selectedId === post.id} 
-        modalType={modalType} 
+        isOpen={isOpen && selectedId === post.id}
+        modalType={modalType}
         onAction={handleDelete}
         onClose={closeModal}
       />
@@ -107,4 +108,3 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
 };
 
 export default WritingCard;
-

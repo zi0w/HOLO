@@ -3,15 +3,15 @@
 import { PasswordChangeModal } from "@/app/mypage/_components/PasswordChangeModal";
 import { useUpdateUserInfo } from "@/app/mypage/_hooks/useUpdateUserInfo";
 
+import ProfileModal from "@/app/mypage/_components/ProfileModal";
+import ImageEditIcon from "@/assets/images/mypage/imageedit.svg";
 import Loading from "@/components/common/Loading";
 import { createClient } from "@/lib/utils/supabase/client";
-import useAuthStore from "@/store/authStore";
+import useAuthStore from "@/store/useAuthStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import ProfileModal from "@/app/mypage/_components/ProfileModal"; 
-import ImageEditIcon from "@/assets/images/mypage/imageedit.svg";
 
 const ImageNicknameForm = () => {
   const router = useRouter();
@@ -146,7 +146,7 @@ const ImageNicknameForm = () => {
 
   const handleProfileModalClose = () => {
     setIsProfileModalOpen(false);
-    router.push("/mypage"); 
+    router.push("/mypage");
   };
 
   if (isLoading || !userData) {
@@ -161,13 +161,12 @@ const ImageNicknameForm = () => {
     <>
       <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="relative h-[874px] w-[402px] bg-white px-5">
-        
           <h1 className="pt-[60px] font-gmarket text-[24px] font-medium leading-[32px] text-base-800">
             프로필 수정
           </h1>
           <div className="relative mx-auto mt-8 h-[120px] w-[120px]">
             <Image
-              src={previewUrl||defaultImageUrl}
+              src={previewUrl || defaultImageUrl}
               alt="프로필 이미지"
               fill
               className="rounded-full object-cover"
@@ -184,11 +183,11 @@ const ImageNicknameForm = () => {
               className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full"
               onClick={handleImageButtonClick}
             >
- <ImageEditIcon 
-  width={32} 
-  height={32} 
-  className="transition-transform hover:scale-110" 
-/>
+              <ImageEditIcon
+                width={32}
+                height={32}
+                className="transition-transform hover:scale-110"
+              />
             </button>
           </div>
           <div className="mt-12 space-y-4">
@@ -264,8 +263,3 @@ const ImageNicknameForm = () => {
 };
 
 export default ImageNicknameForm;
-
-
-
-
-

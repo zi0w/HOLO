@@ -20,16 +20,16 @@ const MyLikeButton = ({ postId, onLikeChange, onClick }: LikeButtonProps) => {
   return (
     <button
       onClick={handleClick}
-      className="flex h-[50px] w-[50px] items-center justify-center transition-all hover:scale-110"
+      className="flex items-center justify-center p-2 transition-all hover:scale-110"
       aria-label="좋아요 취소"
     >
-      <LikeButtonIcon width={50} height={50} className="h-[30px] w-[30px] opacity-100" />
+      <LikeButtonIcon
+        width={50}
+        height={50}
+        className="h-[30px] w-[30px] opacity-100"
+      />
     </button>
   );
 };
 
 export default MyLikeButton;
-
-
-
-

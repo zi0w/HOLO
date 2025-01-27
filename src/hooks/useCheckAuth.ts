@@ -1,7 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 가져오기
-import useAuthStore from "@/store/authStore";
+import useAuthStore from "@/store/useAuthStore";
 import { Session } from "@supabase/supabase-js"; // Supabase의 Session 타입 가져오기
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

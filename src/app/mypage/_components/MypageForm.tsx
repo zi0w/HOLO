@@ -1,4 +1,3 @@
-
 "use client";
 
 import MyCommentList from "@/app/mypage/[id]/_components/my-comment/MyCommentList";
@@ -9,7 +8,7 @@ import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
 import UserProfile from "@/app/mypage/_components/UserProfile";
 import type { ActiveSection } from "@/app/mypage/_types/myPage";
 import SignoutButton from "@/app/sign-in/_components/SignoutButton";
-import useAuthStore from "@/store/authStore";
+import useAuthStore from "@/store/useAuthStore";
 import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
@@ -24,7 +23,7 @@ const Mypageform = () => {
     if (userId && isInitialLoad) {
       await queryClient.prefetchQuery({
         queryKey: ["likedPosts", userId],
-        staleTime: 1000 * 60 * 5, 
+        staleTime: 1000 * 60 * 5,
       });
       setIsInitialLoad(false);
     }
@@ -143,8 +142,7 @@ const Mypageform = () => {
       >
         {renderSection()}
       </div>
-  
- 
+
       <div className={clsx("mx-[20px] mt-[27px] flex flex-col")}>
         <SignoutButton />
         <div className={clsx("mt-[16px]")}>
