@@ -3,9 +3,13 @@
 import CommentCard from "@/app/honeytips/[id]/_components/CommentCard";
 import CommentForm from "@/app/honeytips/[id]/_components/CommentForm";
 import CommentLoading from "@/app/honeytips/[id]/_components/CommentLoading";
+import {
+  useDeleteCommentMutation,
+  useUpdateCommentMutation,
+} from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import { useCommentDataQuery } from "@/app/honeytips/[id]/_hooks/useCommentQuery";
-import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
+import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import "dayjs/locale/ko";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,26 +18,89 @@ const CommentList = () => {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editedComment, setEditedComment] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalCommentId, setModalCommentId] = useState<string | null>(null);
+  const [dropdownStates, setDropdownStates] = useState<Record<string, boolean>>(
+    {},
+  );
+  const [postOwnerId, setPostOwnerId] = useState<string | null>(null);
 
   const params = useParams();
-
-  const postId: Comment["post_id"] = params.id as string;
+  const postId = params.id as string;
 
   const { data: comments, isError, isPending } = useCommentDataQuery(postId);
+  const deleteCommentMutation = useDeleteCommentMutation();
+  const updateCommentMutation = useUpdateCommentMutation();
 
   useEffect(() => {
-    const fetchUserId = async () => {
+    const fetchUserIdAndPostOwner = async () => {
       const userId = await getId();
       setCurrentId(userId);
+
+      try {
+        const postDetail = await fetchPostDetail(postId);
+        if (postDetail) {
+          setPostOwnerId(postDetail.user_id);
+        }
+      } catch (error) {
+        console.error("포스트 데이터를 불러오지 못했습니다", error);
+      }
     };
-    fetchUserId();
-  }, []);
+
+    fetchUserIdAndPostOwner();
+  }, [postId]);
+
+  const openModal = (id: string) => {
+    setModalCommentId(id);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalCommentId(null);
+    setIsModalOpen(false);
+  };
+
+  const handleCommentDelete = (id: string) => {
+    deleteCommentMutation.mutate(id);
+    setIsModalOpen(false);
+  };
+
+  const handleCommentSave = (id: string) => {
+    if (!editedComment.trim()) return;
+
+    updateCommentMutation.mutate({
+      editingComment: editedComment,
+      editingId: id,
+      postId,
+    });
+
+    setEditingCommentId(null);
+    closeDropdown(id);
+  };
+
+  const toggleDropdown = (commentId: string) => {
+    setDropdownStates((prevState) => ({
+      ...prevState,
+      [commentId]: !prevState[commentId],
+    }));
+  };
+
+  const closeDropdown = (commentId: string) => {
+    setDropdownStates((prevState) => ({
+      ...prevState,
+      [commentId]: false,
+    }));
+  };
+
+  const isOwner = (commentUserId: string) => {
+    return postOwnerId === commentUserId;
+  };
 
   if (isPending) return <CommentLoading />;
   if (isError) return <div>에러가 발생했습니다!</div>;
 
   return (
-    <div className="mx-5 lg:max-w-[762px] lg:mx-auto mt-[14px] flex flex-col">
+    <div className="mx-5 mb-14 mt-[14px] flex flex-col lg:mx-auto lg:max-w-[762px]">
       <p className="border-b border-base-400 pb-2 font-bold text-base-800">
         댓글 {comments.length || 0}
       </p>
@@ -46,11 +113,20 @@ const CommentList = () => {
               key={comment.id}
               comment={comment}
               currentId={currentId}
-              postId={postId}
               editingCommentId={editingCommentId}
               setEditingCommentId={setEditingCommentId}
               editedComment={editedComment}
               setEditedComment={setEditedComment}
+              isDropdownOpen={dropdownStates[comment.id] || false}
+              toggleDropdown={() => toggleDropdown(comment.id)}
+              closeDropdown={() => closeDropdown(comment.id)}
+              isModalOpen={isModalOpen}
+              openModal={openModal}
+              closeModal={closeModal}
+              modalCommentId={modalCommentId}
+              handleCommentDelete={handleCommentDelete}
+              handleCommentSave={handleCommentSave}
+              isOwner={isOwner(comment.user_id)}
             />
           ))
         )}
