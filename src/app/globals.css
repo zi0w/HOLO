@@ -73,6 +73,10 @@ body {
   background-color: #ff7600 !important;
 }
 
+.swiper-pagination {
+  bottom: 0 !important;
+}
+
 .swiper-button-next,
 .swiper-button-prev {
   @apply !text-base-500;

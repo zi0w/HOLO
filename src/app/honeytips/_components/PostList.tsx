@@ -1,6 +1,5 @@
 "use client";
 
-import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
 import PostCard from "@/app/honeytips/_components/PostCard";
 import PostCardLoading from "@/app/honeytips/_components/PostCardLoading";
 import SortButton from "@/app/honeytips/_components/SortButton";
@@ -13,6 +12,7 @@ import ConfirmModal from "@/components/common/ConfirmModal";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import useAuthStore from "@/store/authStore";
+import { useModalStore } from "@/store/modalStore";
 
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -25,11 +25,7 @@ const PostList = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const {
-    isOpen: isModalOpen,
-    open: openModal,
-    close: closeModal,
-  } = useToggle();
+  const { isModalOpen, openModal, closeModal } = useModalStore();
 
   const router = useRouter();
   const searchQuery = useSearchParams();
@@ -91,7 +87,7 @@ const PostList = () => {
 
   const handleGoToPost = () => {
     if (!isAuthenticated) {
-      openModal();
+      openModal('post');
       return;
     }
     router.push(`/honeytips/post?category=${selectedCategory}`);
@@ -102,11 +98,16 @@ const PostList = () => {
     setCurrentPage(1);
   };
 
+  const handleConfirm = () => {
+    closeModal();
+    router.push("/sign-in");
+  };
+
   return (
     <section className="mx-auto mb-4">
       <ConfirmModal
         isOpen={isModalOpen}
-        onConfirm={() => router.push("/sign-in")}
+        onConfirm={handleConfirm}
         onCancel={() => closeModal()}
         text="로그인으로 이동"
       />
