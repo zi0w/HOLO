@@ -1,11 +1,12 @@
 "use client";
 
-import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
+import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { type FC, useState } from "react";
+import { type FC } from "react";
+import usePostModalStore from "@/store/mypagemodal/usePostModalStore";
 
 type WritingCardProps = {
   post: Post;
@@ -14,19 +15,26 @@ type WritingCardProps = {
 };
 
 const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {
+    isPostModalOpen,
+    isPostConfirm,
+    setIsPostModalOpen,
+    setIsPostConfirm,
+  } = usePostModalStore();
 
   const handleDelete = async () => {
     try {
       await onDelete(post.id);
-      setIsModalOpen(false);
+      setIsPostConfirm(false); // 완료 후 상태 초기화
+      setIsPostModalOpen(true); // 완료 모달 열기
     } catch (error) {
       console.error("게시글 삭제 실패:", error);
     }
   };
 
   const handleClose = () => {
-    setIsModalOpen(false);
+    setIsPostModalOpen(false);
+    setIsPostConfirm(false); // 상태 초기화
   };
 
   return (
@@ -61,13 +69,13 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
             <div className={clsx("flex w-full items-center justify-between")}>
               <h3
                 className={clsx(
-                  "line-clamp-1 text-[16px] font-medium  text-base-800]",
+                  "line-clamp-1 text-[16px] font-medium text-base-800",
                 )}
               >
                 {post.title}
               </h3>
               <span
-                className={clsx("-mt-[5px] ml-2 text-[14px]  text-base-500")}
+                className={clsx("-mt-[5px] ml-2 text-[14px] text-base-500")}
               >
                 {new Date(post.created_at)
                   .toLocaleDateString("ko-KR", {
@@ -88,7 +96,8 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              setIsModalOpen(true);
+              setIsPostConfirm(true);
+              setIsPostModalOpen(true);
             }}
             disabled={isDeleting}
             className="flex h-[28px] w-[38px] items-center justify-center border border-base-800 px-[7px] py-[6px] text-[12px] text-base-800 disabled:opacity-50"
@@ -98,10 +107,10 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
         </div>
       </div>
 
-      <ConfirmModal
-        isOpen={isModalOpen}
-        isConfirm={true}
-        text="삭제"
+      <RemoveModal
+        isOpen={isPostModalOpen}
+        isConfirm={isPostConfirm}
+        text="게시물"
         onAction={handleDelete}
         onClose={handleClose}
       />

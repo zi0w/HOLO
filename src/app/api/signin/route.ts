@@ -7,7 +7,7 @@ export const POST = async (request: Request) => {
   try {
     const supabase = await createClient(); 
 
-    // 요청 데이터 파싱 및 유효성 검사
+    
     const { email, password } = await request.json().catch(() => ({}));
 
     if (!email || !password) {
@@ -17,7 +17,7 @@ export const POST = async (request: Request) => {
       );
     }
 
-    // Supabase 인증 시도
+    
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,

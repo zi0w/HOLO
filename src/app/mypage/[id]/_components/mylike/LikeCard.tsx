@@ -1,3 +1,5 @@
+// src/app/mypage/[id]/_components/mylike/LikeCard.tsx
+
 "use client";
 
 import { formatDate } from "@/app/mypage/[id]/_components/mylike/_utils/formatDate";
@@ -44,8 +46,7 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
       <div className="flex h-[64px] w-full items-center justify-between px-5">
         <Link
           href={`/honeytips/${post.id}`}
-          className="flex flex-1 items-center gap-3
-          "
+          className="flex flex-1 items-center gap-3"
         >
           {post.post_image_url && post.post_image_url.length > 0 ? (
             <div className="relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]">
@@ -97,3 +98,5 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
 };
 
 export default MyLikeCard;
+
+

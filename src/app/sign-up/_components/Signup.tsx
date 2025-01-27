@@ -92,7 +92,9 @@ const SignUp = () => {
                   required
                 />
                 {errors.password && (
-                  <p className="text-[12px] text-primary-500">{errors.password}</p>
+                  <p className="text-[12px] text-primary-500">
+                    {errors.password}
+                  </p>
                 )}
               </div>
 
@@ -119,7 +121,7 @@ const SignUp = () => {
               className={`mt-[16px] h-[48px] w-[362px] rounded-[4px] text-[16px] font-medium text-base-50 ${
                 Object.values(errors).some((error) => error)
                   ? "cursor-not-allowed bg-gray-400"
-                  : "bg-primary-400 hover:bg-primary-500"
+                  : "bg-primary-500 hover:bg-primary-600"
               }`}
               disabled={Object.values(errors).some((error) => error)}
             >
