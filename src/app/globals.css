@@ -12,22 +12,21 @@
 }
 @font-face {
   font-family: "GmarketSansLight";
-  src: url("../assets/fonts/GmarketSansTTFLight.ttf") format("truetype");
+  src: url("../assets/fonts/GmarketSansLight.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: "GmarketSansMedium";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
-    format("woff");
+  src: url("../assets/fonts/GmarketSansMedium.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "GmarketSansBold";
-  src: url("../assets/fonts/GmarketSansTTFBold.ttf") format("truetype");
+  src: url("../assets/fonts/GmarketSansBold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
 }
@@ -74,6 +73,10 @@ body {
   background-color: #ff7600 !important;
 }
 
+.swiper-pagination {
+  bottom: 0 !important;
+}
+
 .swiper-button-next,
 .swiper-button-prev {
   @apply !text-base-500;
@@ -98,7 +101,7 @@ body {
 }
 
 .common-select {
-  @apply absolute left-0 top-10 w-full rounded-[4px] border border-base-400 bg-white overflow-hidden;
+  @apply absolute left-0 top-10 w-full overflow-hidden rounded-[4px] border border-base-400 bg-white;
 }
 .common-select-btn {
   @apply h-10 w-full cursor-pointer appearance-none rounded border border-base-400 px-3 py-2 pr-9 text-left text-sm text-base-800 focus:outline-none;

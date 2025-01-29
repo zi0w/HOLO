@@ -1,25 +1,18 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
-type ModalState = {
+type ModalStore = {
   isModalOpen: boolean;
-  isConfirm: boolean;
-  setIsModalOpen: (isModalOpen: boolean) => void;
-  setIsConfirm: (isConfirm: boolean) => void;
+  modalCommentId: string | null;
+  modalType: 'default' | 'detail' | 'form' | 'like' | 'post';
+  openModal: (type: ModalStore['modalType'], id?: string) => void;
+  closeModal: () => void;
 };
 
-const useModalStore = create<ModalState>()(
-  persist(
-    (set) => ({
-      isModalOpen: false,
-      isConfirm: false,
-      setIsModalOpen: (isModalOpen) => set({ isModalOpen }),
-      setIsConfirm: (isConfirm) => set({ isConfirm }),
-    }),
-    {
-      name: "modal-storage",
-    },
-  ),
-);
-
-export default useModalStore;
+export const useModalStore = create<ModalStore>((set) => ({
+  isModalOpen: false,
+  modalCommentId: null,
+  modalType: 'default',
+  openModal: (type: ModalStore['modalType'], id?: string) => 
+    set({ isModalOpen: true, modalType: type, modalCommentId: id || null }),
+  closeModal: () => set({ isModalOpen: false, modalType: 'default', modalCommentId: null }),
+}));

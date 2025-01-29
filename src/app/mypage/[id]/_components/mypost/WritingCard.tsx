@@ -1,11 +1,13 @@
 "use client";
 
-import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
+import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
+import { useModalStore } from "@/store/mypagemodal/useMypageModalStore";
+
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { type FC, useState } from "react";
+import { type FC } from "react";
 
 type WritingCardProps = {
   post: Post;
@@ -14,19 +16,16 @@ type WritingCardProps = {
 };
 
 const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isOpen, selectedId, modalType, openModal, closeModal } =
+    useModalStore(); // 변경된 부분
 
   const handleDelete = async () => {
     try {
       await onDelete(post.id);
-      setIsModalOpen(false);
+      closeModal();
     } catch (error) {
       console.error("게시글 삭제 실패:", error);
     }
-  };
-
-  const handleClose = () => {
-    setIsModalOpen(false);
   };
 
   return (
@@ -38,7 +37,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
       >
         <Link
           href={`/honeytips/${post.id}`}
-          className={clsx("flex flex-1 items-center gap-3")}
+          className="flex w-[calc(100%-36px)] flex-1 items-center gap-3"
         >
           {post.post_image_url && post.post_image_url.length > 0 ? (
             <div
@@ -61,13 +60,13 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
             <div className={clsx("flex w-full items-center justify-between")}>
               <h3
                 className={clsx(
-                  "line-clamp-1 text-[16px] font-medium text-[#424242]",
+                  "line-clamp-1 text-[16px] font-medium text-base-800",
                 )}
               >
                 {post.title}
               </h3>
               <span
-                className={clsx("-mt-[5px] ml-2 text-[14px] text-[#8F8F8F]")}
+                className={clsx("-mt-[5px] ml-2 text-[14px] text-base-500")}
               >
                 {new Date(post.created_at)
                   .toLocaleDateString("ko-KR", {
@@ -79,7 +78,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
                   .slice(0, -1)}
               </span>
             </div>
-            <p className={clsx("line-clamp-1 text-[14px] text-[#8F8F8F]")}>
+            <p className={clsx("line-clamp-1 text-[14px] text-base-800")}>
               {post.content}
             </p>
           </div>
@@ -88,27 +87,24 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              setIsModalOpen(true);
+              openModal(post.id, "post");
             }}
             disabled={isDeleting}
-            className="flex h-[28px] w-[38px] items-center justify-center border border-[#424242] px-[7px] py-[6px] text-[12px] text-[#424242] disabled:opacity-50"
+            className="flex h-[28px] w-[38px] items-center justify-center border border-base-800 px-[7px] py-[6px] text-[12px] text-base-800 disabled:opacity-50"
           >
             {isDeleting ? "삭제 중..." : "삭제"}
           </button>
         </div>
       </div>
 
-      <ConfirmModal
-        isOpen={isModalOpen}
-        isConfirm={true}
-        text="삭제"
+      <RemoveModal
+        isOpen={isOpen && selectedId === post.id}
+        modalType={modalType}
         onAction={handleDelete}
-        onClose={handleClose}
+        onClose={closeModal}
       />
     </>
   );
 };
 
 export default WritingCard;
-
-

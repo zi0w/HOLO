@@ -21,8 +21,8 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
       <section className="relative flex flex-col gap-5 rounded-lg border border-base-300 p-5">
         <div className="flex w-full items-start gap-[11px]">
           <div className="flex w-full flex-col">
-            <p className="mb-[7px] font-bold text-black">{post.title}</p>
-            <p className="line-clamp-3 text-base-900">{post.content}</p>
+            <p className="line-clamp-1 mb-[7px] font-bold text-black">{post.title}</p>
+            <p className="line-clamp-3 text-base-900 min-h-[72px]">{post.content}</p>
           </div>
           {post.post_image_url?.[0] && (
             <Image

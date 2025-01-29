@@ -2,7 +2,7 @@
 
 import CloseIcon from "@/assets/images/common/close-icon.svg";
 
-interface DeleteModalProps {
+type DeleteModalProps = {
   isOpen: boolean;
   isConfirm: boolean;
   onAction: () => void;
@@ -18,7 +18,7 @@ const DeleteModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-30">
+    <div className="fixed inset-0 z-10 flex items-center justify-center bg-base-800 bg-opacity-30">
       <div className="w-[80%] max-w-md rounded bg-white shadow-lg">
         <div className="p-1">
           <div className="mb-5 flex items-center justify-end">
@@ -45,6 +45,7 @@ const DeleteModal = ({
             <button
               className="common-btn type-a flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800"
               onClick={onAction}
+              
             >
               회원탈퇴
             </button>

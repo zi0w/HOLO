@@ -1,4 +1,4 @@
-// src/app/sign-up/_hooks/UseSignUpForm.ts
+
 "use client";
 
 import type { SignUpFormData } from "@/app/sign-up/_types/signupType";
@@ -10,7 +10,7 @@ export const useSignUpForm = () => {
     nickname: "",
     password: "",
     checkPassword: "",
-    profile_image_url: "", // 빈 문자열로 초기화
+    profile_image_url: "", 
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});

@@ -13,7 +13,7 @@ export const isLogin = async (): Promise<boolean> => {
       return false;
     }
 
-    return !!session?.user; // 세션에 사용자 정보가 있으면 true 반환
+    return !!session?.user; 
   } catch (err) {
     console.error("isLogin 함수 오류:", err);
     return false;
