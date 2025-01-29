@@ -7,6 +7,7 @@ import WesternFood from "@/assets/images/recommend/western-food.png";
 import Loading from "@/components/common/Loading";
 import SaveResultButton from "@/components/daily/SaveResultButton";
 import ShareLinkButton from "@/components/daily/ShareLinkButton";
+import SocialShare from "@/components/daily/SocialShare";
 import { generateShareLink } from "@/lib/utils/daily/shareLink";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
@@ -38,7 +39,9 @@ const Result = ({ answerData }: ResultProps) => {
       const recommendation = answerData
         ? await fetchRecommendation(answerData)
         : id
-          ? await fetch(`/api/recommend?id=${id}`).then((res) => res.json()).then((data) => data.data)
+          ? await fetch(`/api/recommend?id=${id}`)
+              .then((res) => res.json())
+              .then((data) => data.data)
           : null;
 
       if (!recommendation) throw new Error("추천 데이터를 볼러올 수 없습니다.");
@@ -49,7 +52,11 @@ const Result = ({ answerData }: ResultProps) => {
 
       // 공유 링크 생성
       if (answerData) {
-        const link = await generateShareLink(recommendation, "recommend/result", answerData.answer2); // 추천 결과, 음식 종류 같이 내려주기
+        const link = await generateShareLink(
+          recommendation,
+          "recommend/result",
+          answerData.answer2,
+        ); // 추천 결과, 음식 종류 같이 내려주기
         setShareLink(link);
       }
     } catch (error) {
@@ -63,13 +70,13 @@ const Result = ({ answerData }: ResultProps) => {
   }, [answerData, id]);
 
   const selectedImage =
-  menuType && foodImages[menuType] // URL 파라미터에서 menuType을 사용(공유 페이지)
-    ? foodImages[menuType] 
-    : answerData?.answer2 && foodImages[answerData.answer2] // answerData에 따른 이미지(기본 페이지)
-    || KoreanFood; // 디폴트 이미지
+    menuType && foodImages[menuType] // URL 파라미터에서 menuType을 사용(공유 페이지)
+      ? foodImages[menuType]
+      : (answerData?.answer2 && foodImages[answerData.answer2]) || // answerData에 따른 이미지(기본 페이지)
+        KoreanFood; // 디폴트 이미지
 
+  const absoluteThumbnailUrl = `${window.location.origin}${selectedImage.src}`;
 
-  
   return menu ? (
     <div
       id="result-container"
@@ -104,15 +111,25 @@ const Result = ({ answerData }: ResultProps) => {
           >
             추천 다시 받기
           </Link>
-          <Link href="/" className="mt-5 font-gmarket text-base text-primary-500">
+          <Link
+            href="/"
+            className="mt-5 font-gmarket text-base text-primary-500"
+          >
             메인으로 돌아가기
           </Link>
           <div className="mt-6 flex gap-4 pb-4">
             <SaveResultButton elementId="result-container" />
             <ShareLinkButton link={shareLink} />
+            <SocialShare
+              postUrl={shareLink}
+              title={menu}
+              description={reason}
+              thumbnail={absoluteThumbnailUrl}
+            />
           </div>
-          <span className="text-base-500 text-xs text-center mt-4">아이폰에서는 저장 기능이 원활하게 작동하지 않습니다. <br />
-                (세 번 연속 저장하시면, 완성된 이미지가 저장됩니다.)
+          <span className="mt-4 text-center text-xs text-base-500">
+            아이폰에서는 저장 기능이 원활하게 작동하지 않습니다. <br />
+            (세 번 연속 저장하시면, 완성된 이미지가 저장됩니다.)
           </span>
         </>
       )}
