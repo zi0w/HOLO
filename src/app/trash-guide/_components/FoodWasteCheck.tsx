@@ -1,14 +1,14 @@
 "use client";
 
 import { fetchOpenAiFoodWaste } from "@/app/trash-guide/_actions/fetchTrashOpenAi";
+import PersonIcon from "@/assets/images/main/bnr/person-trash.png";
 import FoodNoIcon from "@/assets/images/trash/foodwaste-no.png";
 import FoodYesIcon from "@/assets/images/trash/foodwaste-yes.png";
-import PersonIcon from "@/assets/images/main/bnr/person-trash.png";
 
+import SearchForm from "@/app/trash-guide/_components/SearchForm";
 import Loading from "@/components/common/Loading";
 import Image from "next/image";
 import { useState, type ChangeEvent } from "react";
-import SearchForm from "@/app/trash-guide/_components/SearchForm";
 
 const FoodWasteCheck = () => {
   const [foodWaste, setFoodWaste] = useState<string>("");
@@ -47,21 +47,21 @@ const FoodWasteCheck = () => {
   return (
     <div>
       <SearchForm
+        region={foodWaste}
+        isMyLocation={false}
         handleSubmit={handleSubmitFoodWaste}
         handleChange={handleChangeFoodWaste}
         isDisabled={!foodWaste}
         placeholder="달걀 껍질은 음쓰?"
       />
       {!isWasteFoodAnswer && !loading && (
-        <div className="mt-20">
-          <Image
-            src={PersonIcon}
-            className="mx-auto"
-            width={258}
-            height={298}
-            alt="사람아이콘"
-          />
-        </div>
+        <Image
+          src={PersonIcon}
+          className="absolute bottom-0 left-1/2 max-h-[275px] -translate-x-1/2 object-contain"
+          width={240}
+          height={275}
+          alt="사람아이콘"
+        />
       )}
 
       {loading && <Loading />}

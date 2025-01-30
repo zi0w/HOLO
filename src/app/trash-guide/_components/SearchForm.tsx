@@ -1,5 +1,6 @@
 import SearchIcon from "@/assets/images/trash/search-icon.svg";
 import clsx from "clsx";
+import { useEffect, useRef } from "react";
 
 type SearchFormProps = {
   region: string;
@@ -18,6 +19,12 @@ const SearchForm = ({
   isDisabled,
   placeholder,
 }: SearchFormProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <>
       <form
@@ -28,11 +35,13 @@ const SearchForm = ({
           <SearchIcon />
         </button>
         <input
+          ref={inputRef}
           type="text"
           name="prog"
           id="prog"
-          value={isMyLocation ? region : ""}
-          className="w-full border-none text-base-800 placeholder:text-xs placeholder:text-base-600 focus:bg-transparent focus:outline-none"
+          value={region}
+          disabled={isMyLocation}
+          className="w-full border-none text-base-800 placeholder:text-xs placeholder:text-base-600 focus:bg-transparent focus:outline-none lg:placeholder:text-base"
           onChange={handleChange}
           placeholder={placeholder}
         />
