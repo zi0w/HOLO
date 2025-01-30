@@ -21,7 +21,7 @@ const Home = () => {
         <div className="lg:col-start-1 lg:row-start-1">
           <Map />
         </div>
-        <div className="lg:col-start-1 lg:row-start-2 lg:flex lg:gap-6">
+        <div className="lg:col-start-1 lg:row-start-2 lg:flex lg:gap-6 lg:mt-auto">
           {/* 정책 배너 */}
           <div className="lg:flex-1">
             <PolicyAndTrashBanner isPolicy={true} />
