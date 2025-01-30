@@ -105,7 +105,7 @@ body {
 }
 
 .form-wrap label {
-  @apply cursor-pointer inline-block pl-6 text-sm text-base-800 before:absolute before:left-0 before:top-1/2 before:h-4 before:w-4 before:-translate-y-1/2 before:bg-[url('/images/chk-icon.svg')] before:bg-contain before:bg-center before:bg-no-repeat before:content-[''];
+  @apply inline-block cursor-pointer pl-6 text-sm text-base-800 before:absolute before:left-0 before:top-1/2 before:h-4 before:w-4 before:-translate-y-1/2 before:bg-[url('/images/chk-icon.svg')] before:bg-contain before:bg-center before:bg-no-repeat before:content-[''];
 }
 .form-wrap input:checked + label {
   @apply before:bg-[url('/images/chk-icon_active.svg')];
@@ -159,4 +159,12 @@ body {
 }
 .lookup-btn:disabled {
   @apply bg-base-400;
+}
+
+/* main banner */
+.mainBannerSwiper .swiper-slide {
+  @apply flex h-[120px] w-full overflow-hidden rounded;
+}
+.mainBannerSwiper > .swiper-pagination.swiper-pagination-fraction {
+  @apply shadow-custom2 !bottom-3 left-auto right-3 top-auto w-auto max-w-10 rounded border border-primary-300 bg-white px-1 text-right text-sm text-primary-800;
 }

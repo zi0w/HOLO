@@ -1,37 +1,114 @@
+"use client";
 import LogoIcon from "@/assets/images/common/logo.png";
 import BannerPcLeft from "@/assets/images/main/bnr/bnr-person.png";
 import Banner from "@/assets/images/main/bnr/bnr-person2.png";
+import FortuneCookie from "@/assets/images/main/top-banner-2.png";
+import RecommendPcLeft from "@/assets/images/main/top-banner-3_1.png";
+import RecommendPcRight from "@/assets/images/main/top-banner-3_2.png";
+import RecommendMoIcon from "@/assets/images/main/top-banner-3_mo.png";
 import Image from "next/image";
+import Link from "next/link";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Autoplay, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const MainBanner = () => {
   return (
-    <div className="relative mx-5 mb-10 flex justify-between rounded bg-primary-100 pl-5 pr-3 lg:justify-center lg:p-0 lg:h-[120px] lg:overflow-hidden lg:mx-0">
-      <Image
-        src={BannerPcLeft}
-        alt="배너 이미지"
-        width={100}
-        height={100}
-        className="hidden max-w-[100px] lg:block object-contain mt-auto mr-8"
-      />
-      <div className="mb-8 mt-6 whitespace-nowrap lg:my-auto lg:flex lg:items-center lg:gap-2">
-        <p className="mb-1 font-gmarket text-primary-900 lg:mb-0 lg:font-gmarket-bold lg:text-[22px]">
-          1인가구를 위한 정보 제공 서비스
-        </p>
-        <p className="flex items-center gap-1 font-gmarket-bold text-2xl text-primary-600 lg:text-2xl">
-          나{" "}
+    <div className="mx-5 mb-8">
+      <Swiper
+        pagination={{
+          type: "fraction",
+        }}
+        modules={[Pagination, Autoplay]}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
+        className="mainBannerSwiper"
+      >
+        <SwiperSlide className="relative flex justify-between bg-primary-100 lg:justify-center lg:overflow-hidden">
           <Image
-            src={LogoIcon}
-            alt="로고 아이콘"
-            className="max-w-[99px] object-contain"
-          />{" "}
-          산다!
-        </p>
-      </div>
-      <Image
-        src={Banner}
-        alt="배너 이미지2"
-        className="absolute bottom-0 right-2 max-w-[135px] object-contain lg:static lg:mt-auto lg:max-w-[145px]"
-      />
+            src={BannerPcLeft}
+            alt="배너 이미지"
+            width={100}
+            height={100}
+            className="mr-8 mt-auto hidden max-w-[100px] object-contain lg:block"
+          />
+          <div className="mb-8 ml-5 mt-6 whitespace-nowrap lg:my-auto lg:flex lg:items-center lg:gap-2">
+            <p className="mb-1 font-gmarket text-primary-900 lg:mb-0 lg:font-gmarket-bold lg:text-[22px]">
+              1인가구를 위한 정보 제공 서비스
+            </p>
+            <p className="flex items-center gap-1 font-gmarket-bold text-2xl text-primary-600 lg:text-2xl">
+              나{" "}
+              <Image
+                src={LogoIcon}
+                alt="로고 아이콘"
+                className="max-w-[99px] object-contain"
+              />{" "}
+              산다!
+            </p>
+          </div>
+          <Image
+            src={Banner}
+            alt="배너 이미지2"
+            className="absolute bottom-0 right-2 max-w-[135px] object-contain lg:static lg:mt-auto lg:max-w-[145px]"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Link
+            href={"recommend"}
+            className="flex w-full items-center bg-primary-50"
+          >
+            <Image
+              src={RecommendPcLeft}
+              alt="칼국수 사진"
+              width={281}
+              height={120}
+              className="hidden object-contain lg:block"
+            />
+            <p className="m-auto font-gmarket-bold text-lg text-primary-800 lg:text-2xl">
+              오늘의 메뉴! <br className="lg:hidden" />
+              추천해드려요!
+            </p>
+            <Image
+              src={RecommendMoIcon}
+              alt="음식 사진"
+              width={200}
+              height={120}
+              className="max-w-[200px] object-contain lg:hidden"
+            />
+            <Image
+              src={RecommendPcRight}
+              alt="김치찌개 사진"
+              width={283}
+              height={120}
+              className="hidden object-contain lg:block"
+            />
+          </Link>
+        </SwiperSlide>
+        <SwiperSlide>
+          <Link
+            href={"/fortune"}
+            className="flex w-full items-center justify-center bg-primary-800 lg:gap-6"
+          >
+            <Image src={FortuneCookie} alt="포츈쿠키" width={107} height={77} />
+            <p className="font-gmarket-bold text-lg text-white lg:text-2xl">
+              오늘의 운세? <br className="lg:hidden" />
+              포춘쿠키를 뽑아보세요!
+            </p>
+            <Image
+              src={FortuneCookie}
+              alt="포츈쿠키"
+              width={107}
+              height={77}
+              className="hidden -scale-x-100 lg:block"
+            />
+          </Link>
+        </SwiperSlide>
+      </Swiper>
     </div>
   );
 };
