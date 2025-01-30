@@ -26,7 +26,7 @@ const NavigateBack = () => {
   return (
     <div
       className={clsx(
-        "fixed z-10 flex h-12 w-full items-center bg-white px-5",
+        "fixed z-10 flex h-12 w-full items-center bg-white px-5 lg:hidden",
         hiddenPage && "hidden",
       )}
     >
