@@ -1,4 +1,4 @@
-import locationStore from "@/store/useLocationStore";
+import useLocationStore from "@/store/useLocationStore";
 import { useEffect } from "react";
 
 const useKakaoMap = () => {
@@ -11,7 +11,7 @@ const useKakaoMap = () => {
     onClickPlusMapLevel,
     onClickMinusMapLevel,
     onClickMoveCurrentPosition,
-  } = locationStore();
+  } = useLocationStore();
 
   useEffect(() => {
     onClickMoveCurrentPosition();
