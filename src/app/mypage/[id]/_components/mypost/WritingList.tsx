@@ -40,7 +40,8 @@ const MyWritingList = () => {
   return (
     <div className="mt-[30px] h-[442px] w-[362px] w-full flex-shrink-0 rounded-[4px] border border-base-300 bg-white pt-[10px] md:mx-auto md:mt-[15px] md:flex md:h-[442px] md:w-[549px] md:items-center">
       {currentPosts.length > 0 ? (
-        <div className="relative flex h-full flex-col lg:w-full">
+        <div className="relative flex h-full flex-col w-full">
+        {/* // <div className="relative flex h-full flex-col lg:w-full"> */}
           <div className="flex-1">
             {currentPosts.map((post) => (
               <MyWritingCard
