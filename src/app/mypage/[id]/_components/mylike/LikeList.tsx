@@ -2,20 +2,16 @@
 
 import { UseLikes } from "@/app/mypage/[id]/_components/mylike/_hooks/useMyLikes";
 import MyLikeCard from "@/app/mypage/[id]/_components/mylike/LikeCard";
+import type { Post } from "@/app/mypage/_types/myPage";
 import LoadingSmall from "@/components/common/LoadingSmall";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
-import type { Post } from "@/app/mypage/_types/myPage";
 import { useQueryClient } from "@tanstack/react-query";
 
 const MyLikeList = () => {
   const queryClient = useQueryClient();
-  
-  const {
-    likedPosts,
-    isPending,
-    handleLikeChange,
-  } = UseLikes();
+
+  const { likedPosts, isPending, handleLikeChange } = UseLikes();
 
   const {
     currentItems: currentPosts,
@@ -28,11 +24,13 @@ const MyLikeList = () => {
     goToPage,
   } = usePagination<Post>(likedPosts || [], 5);
 
-  
-  const handleLikeChangeWithRefresh = async (postId: string, action: "add" | "delete") => {
+  const handleLikeChangeWithRefresh = async (
+    postId: string,
+    action: "add" | "delete",
+  ) => {
     await handleLikeChange(postId, action);
-   
-    queryClient.invalidateQueries({ queryKey: ['likedPosts'] });
+
+    queryClient.invalidateQueries({ queryKey: ["likedPosts"] });
   };
 
   if (isPending)
@@ -43,9 +41,9 @@ const MyLikeList = () => {
     );
 
   return (
-<div className="h-full w-full pt-[10px] mt-[30px] md:mt-[15px] md:w-[549px] w-[362px] md:h-[442px] h-[442px] rounded-[4px] border border-[#E0E0E0] bg-white flex-shrink-0 md:mx-auto md:flex md:items-center">
+    <div className="mt-[30px] h-[442px] w-[362px] w-full flex-shrink-0 rounded-[4px] border border-base-300 bg-white pt-[10px] md:mx-auto md:mt-[15px] md:flex md:h-[442px] md:w-[549px] md:items-center">
       {currentPosts.length > 0 ? (
-        <div className="relative flex h-full flex-col">
+        <div className="relative flex h-full flex-col lg:w-full">
           <div className="flex-1">
             {currentPosts.map((post) => (
               <MyLikeCard
@@ -68,8 +66,7 @@ const MyLikeList = () => {
           </div>
         </div>
       ) : (
-        <p className="py-4 text-center text-base-800 md:text-center md:mx-auto md:w-[549px]">
-
+        <p className="py-4 text-center text-base-800 md:mx-auto md:w-[549px] md:text-center">
           좋아요한 게시물이 없습니다.
         </p>
       )}
@@ -78,6 +75,3 @@ const MyLikeList = () => {
 };
 
 export default MyLikeList;
-
-
-
