@@ -4,7 +4,7 @@ import ProfileEditIcon from "@/assets/images/mypage/profileedit.svg";
 import Loading from "@/components/common/Loading";
 import type { Tables } from "@/lib/types/supabase";
 import { createClient } from "@/lib/utils/supabase/client";
-import useAuthStore from "@/store/authStore";
+import useAuthStore from "@/store/useAuthStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

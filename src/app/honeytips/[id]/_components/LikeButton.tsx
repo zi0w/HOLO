@@ -27,7 +27,7 @@ const LikeButton = ({
   const isMutating = useIsMutating();
   const router = useRouter();
 
-  const { isModalOpen, openModal, closeModal } = useModalStore();
+  const { isModalOpen, openModal, closeModal, modalType } = useModalStore();
 
   const handleLikeBtn = async () => {
     const userId: Like["user_id"] | null = await getId();
@@ -69,12 +69,14 @@ const LikeButton = ({
 
   return (
     <section className="flex flex-col items-center text-2xl">
-      <ConfirmModal
-        isOpen={isModalOpen}
-        onConfirm={handleConfirm}
-        onCancel={handleCancel}
-        text="로그인으로 이동"
-      />
+      {isModalOpen && modalType === "like" && (
+        <ConfirmModal
+          isOpen={isModalOpen}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+          text="로그인으로 이동"
+        />
+      )}
       <button onClick={handleLikeBtn} disabled={!!isMutating}>
         {likeData?.length ? <YesHeart /> : <NoHeart />}
       </button>

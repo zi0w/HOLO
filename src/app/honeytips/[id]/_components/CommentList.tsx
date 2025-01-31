@@ -8,6 +8,7 @@ import {
   useUpdateCommentMutation,
 } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import { useCommentDataQuery } from "@/app/honeytips/[id]/_hooks/useCommentQuery";
+import { useDropdown } from "@/app/honeytips/[id]/_hooks/useDropdown";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import { useModalStore } from "@/store/useModalStore";
@@ -20,14 +21,12 @@ const CommentList = () => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editedComment, setEditedComment] = useState<string>("");
   const [postOwnerId, setPostOwnerId] = useState<string | null>(null);
-  const [dropdownStates, setDropdownStates] = useState<Record<string, boolean>>(
-    {},
-  );
 
   const params = useParams();
   const postId = params.id as string;
 
-  const { isModalOpen, modalCommentId, openModal, closeModal } =
+  const { isDropdownOpen, toggleDropdown, closeDropdown } = useDropdown();
+  const { isModalOpen, modalCommentId, openModal, closeModal, modalType } =
     useModalStore();
 
   const { data: comments, isError, isPending } = useCommentDataQuery(postId);
@@ -67,21 +66,7 @@ const CommentList = () => {
     });
 
     setEditingCommentId(null);
-    closeDropdown(id);
-  };
-
-  const toggleDropdown = (commentId: string) => {
-    setDropdownStates((prevState) => ({
-      ...prevState,
-      [commentId]: !prevState[commentId],
-    }));
-  };
-
-  const closeDropdown = (commentId: string) => {
-    setDropdownStates((prevState) => ({
-      ...prevState,
-      [commentId]: false,
-    }));
+    closeDropdown();
   };
 
   const isOwner = (commentUserId: string) => {
@@ -109,12 +94,13 @@ const CommentList = () => {
               setEditingCommentId={setEditingCommentId}
               editedComment={editedComment}
               setEditedComment={setEditedComment}
-              isDropdownOpen={dropdownStates[comment.id] || false}
+              isDropdownOpen={isDropdownOpen(comment.id)}
               toggleDropdown={() => toggleDropdown(comment.id)}
-              closeDropdown={() => closeDropdown(comment.id)}
+              closeDropdown={() => closeDropdown()}
               isModalOpen={isModalOpen && modalCommentId === comment.id}
               openModal={() => openModal("default", comment.id)}
               closeModal={closeModal}
+              modalType={modalType}
               handleCommentDelete={handleCommentDelete}
               handleCommentSave={handleCommentSave}
               isOwner={isOwner(comment.user_id)}
