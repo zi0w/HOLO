@@ -80,7 +80,10 @@ const useSignInMutation = (): UseMutationResult<
         return;
       }
 
-      document.cookie = `access_token=${session.access_token}; path=/; secure;`;
+      // document.cookie = `access_token=${session.access_token}; path=/; secure;`;
+      document.cookie = `access_token=${session.access_token}; path=/; secure; HttpOnly; SameSite=Strict; max-age=3600`;
+      // document.cookie =
+      //   "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; HttpOnly; SameSite=Strict";
 
       if (!user) {
         console.error("사용자 정보가 없습니다.");
