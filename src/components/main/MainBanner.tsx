@@ -13,7 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 const MainBanner = () => {
   return (
-    <div className="mx-5 mb-8">
+    <div className="mx-5 mb-8 lg:mx-0">
       <Swiper
         pagination={{
           type: "fraction",
