@@ -12,7 +12,7 @@ import ConfirmModal from "@/components/common/ConfirmModal";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import useAuthStore from "@/store/authStore";
-import { useModalStore } from "@/store/modalStore";
+import { useModalStore } from "@/store/useModalStore";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

@@ -10,7 +10,7 @@ import {
 import { useCommentDataQuery } from "@/app/honeytips/[id]/_hooks/useCommentQuery";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
-import { useModalStore } from "@/store/modalStore";
+import { useModalStore } from "@/store/useModalStore";
 import "dayjs/locale/ko";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -113,7 +113,7 @@ const CommentList = () => {
               toggleDropdown={() => toggleDropdown(comment.id)}
               closeDropdown={() => closeDropdown(comment.id)}
               isModalOpen={isModalOpen && modalCommentId === comment.id}
-              openModal={() => openModal('default', comment.id)}
+              openModal={() => openModal("default", comment.id)}
               closeModal={closeModal}
               handleCommentDelete={handleCommentDelete}
               handleCommentSave={handleCommentSave}

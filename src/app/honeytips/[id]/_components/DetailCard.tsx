@@ -11,13 +11,13 @@ import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
-import { useModalStore } from "@/store/modalStore";
+import { useModalStore } from "@/store/useModalStore";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 type DetailCardProps = {
@@ -80,7 +80,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   }, []);
 
   const handleDeleteClick = () => {
-    openModal('detail');
+    openModal("detail");
   };
 
   const handleDeletePost = async () => {
@@ -171,15 +171,14 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       <div>
         <div>
           <Swiper
-            modules={[Pagination, Navigation]}
+            modules={[Pagination]}
             spaceBetween={10}
             slidesPerView={1}
             simulateTouch={true}
             grabCursor={true}
             centeredSlides={true}
             pagination={{ clickable: true }}
-            navigation={true}
-            className="mx-auto my-4 flex h-auto max-w-[300px] items-center lg:my-6 lg:max-w-[762px] lg:!pb-8"
+            className="mx-auto my-4 !pb-8 flex h-auto max-w-[300px] items-center lg:my-6 lg:max-w-[762px]"
           >
             {postDetailData.post_image_url?.map((imageUrl, index) => (
               <SwiperSlide key={index} className="my-auto">
