@@ -9,7 +9,6 @@ import PlaceList from "@/app/map/_components/PlaceList";
 import useCategoriesSearch from "@/app/map/_hooks/useCategoriesSearch";
 import useLocationStore from "@/store/useLocationStore";
 
-
 const KakaoMap = () => {
   useKakaoLoader();
 

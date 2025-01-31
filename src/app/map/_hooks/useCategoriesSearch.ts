@@ -71,9 +71,6 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
           setPlaces(result);
         } else {
           setPlaces([]);
-          if (result.length === 0) {
-            alert("근처에 해당 시설이 없습니다.");
-          }
         }
         setReSearch(false);
         setMapLevel(5);

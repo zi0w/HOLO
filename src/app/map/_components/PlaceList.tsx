@@ -3,6 +3,7 @@
 import type { Coordinates, PlacesSearchResultItem } from "@/app/map/_types/map";
 import scrollIntoViewPlaceList from "@/app/map/_utils/scrollIntoViewPlaceList";
 import scrollToPlaceList from "@/app/map/_utils/scrollToPlaceList";
+import useLocationStore from "@/store/useLocationStore";
 import { clsx } from "clsx";
 import Link from "next/link";
 import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
@@ -43,6 +44,7 @@ const PlaceList = ({
     onClickMarker(place);
     setSelectedMarkerId(place.id);
   };
+  const { setMapLevel } = useLocationStore();
 
   // 마커를 클릭하면 해당 시설 정보로 리스트 스크롤 이동
   useEffect(() => {
@@ -73,12 +75,16 @@ const PlaceList = ({
             places.map((place, index) => (
               <div
                 key={place.id}
-                ref={(place) => {
-                  placeRef.current[index] = place;
+                ref={(el) => {
+                  placeRef.current[index] = el;
                 }}
-                className="w-full cursor-pointer rounded p-4 text-left hover:bg-primary-50"
+                className={clsx(
+                  "w-full cursor-pointer rounded p-4 text-left hover:bg-primary-50",
+                  selectedPlace?.id === place.id && "bg-primary-50",
+                )}
                 onClick={() => {
                   onClickSelectedPlace(place);
+                  setMapLevel(3);
                 }}
               >
                 <p className="font-gmarket-bold text-lg text-base-900">
@@ -123,24 +129,24 @@ const PlaceList = ({
         ref={mobileListRef}
         className="absolute bottom-[-52px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white lg:hidden"
       >
-        {places.map((place, index) => (
-          <div
-            key={place.id}
-            ref={(el) => {
-              placeRef.current[index] = el;
-            }}
-            className="w-full cursor-pointer border-b border-base-200 p-2 text-left"
-            onClick={() => {
-              onClickSelectedPlace(place);
-            }}
-          >
+        {places.length !== 0 ? (
+          places.map((place, index) => (
             <div
+              key={place.id}
+              ref={(el) => {
+                placeRef.current[index] = el;
+              }}
               className={clsx(
-                "rounded-xl p-2 hover:bg-primary-50",
+                "w-full cursor-pointer border-b border-base-200 p-2 text-left hover:bg-primary-50",
+
                 selectedPlace?.id === place.id && "bg-primary-50",
               )}
+              onClick={() => {
+                onClickSelectedPlace(place);
+                setMapLevel(3);
+              }}
             >
-              <p className="font-gmarket-bold text-lg font-bold text-base-900">
+              <p className="font-gmarket-bold text-lg text-base-900">
                 {place.place_name}
               </p>
               <p className="text-base text-base-900">{place.address_name}</p>
@@ -169,8 +175,12 @@ const PlaceList = ({
                 ""
               )}
             </div>
+          ))
+        ) : (
+          <div className="bottom-[120px] left-1/2 z-50 w-full -translate-x-1/2 text-center">
+            조건에 맞는 업체가 없습니다.
           </div>
-        ))}
+        )}
       </div>
     </>
   );
