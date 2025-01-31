@@ -3,7 +3,7 @@
 import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import ShareButton from "@/app/honeytips/[id]/_components/ShareButton";
-import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
+import { useDropdown } from "@/app/honeytips/[id]/_hooks/useDropdown";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
@@ -31,12 +31,8 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const {
-    isOpen: isDropdownOpen,
-    toggle: toggleDropdown,
-    close: closeDropdown,
-  } = useToggle();
-  const { isModalOpen, openModal, closeModal } = useModalStore();
+  const { isDropdownOpen, toggleDropdown, closeDropdown } = useDropdown();
+  const { isModalOpen, openModal, closeModal, modalType } = useModalStore();
 
   const router = useRouter();
 
@@ -118,7 +114,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         <ArrowLeftIcon />
       </button>
 
-      {isModalOpen && (
+      {isModalOpen && modalType === "detail" && (
         <ConfirmModal
           text={"삭제"}
           isOpen={isModalOpen}
@@ -152,10 +148,10 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
         {currentId === postDetailData.user_id && (
           <div className="relative">
-            <button onClick={toggleDropdown}>
+            <button onClick={() => toggleDropdown(postDetailData.id)}>
               <MenuDots />
             </button>
-            {isDropdownOpen && (
+            {isDropdownOpen(postDetailData.id) && (
               <div className="absolute right-0 top-6 z-10 w-[68px] rounded-lg border bg-white py-2">
                 <DropdownButton
                   label="수정"
@@ -178,7 +174,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
             grabCursor={true}
             centeredSlides={true}
             pagination={{ clickable: true }}
-            className="mx-auto my-4 !pb-8 flex h-auto max-w-[300px] items-center lg:my-6 lg:max-w-[762px]"
+            className="mx-auto my-4 flex h-auto max-w-[300px] items-center !pb-8 lg:my-6 lg:max-w-[762px]"
           >
             {postDetailData.post_image_url?.map((imageUrl, index) => (
               <SwiperSlide key={index} className="my-auto">

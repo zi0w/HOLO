@@ -21,6 +21,7 @@ type CommentCardProps = {
   openModal: (id: string) => void;
   closeModal: () => void;
   modalCommentId: string | null;
+  modalType: string;
   handleCommentDelete: (id: string) => void;
   handleCommentSave: (id: string) => void;
   isOwner: boolean;
@@ -40,22 +41,24 @@ const CommentCard = ({
   openModal,
   closeModal,
   modalCommentId,
+  modalType,
   handleCommentDelete,
   handleCommentSave,
   isOwner,
 }: CommentCardProps) => {
-  
   return (
     <article className="mx-5 w-full rounded-lg">
-      <ConfirmModal
-        text="삭제"
-        isOpen={isModalOpen && modalCommentId === comment.id}
-        onConfirm={() => handleCommentDelete(comment.id)}
-        onCancel={() => {
-          closeModal();
-          closeDropdown();
-        }}
-      />
+      {isModalOpen && modalType === "default" && (
+        <ConfirmModal
+          text="삭제"
+          isOpen={isModalOpen && modalCommentId === comment.id}
+          onConfirm={() => handleCommentDelete(comment.id)}
+          onCancel={() => {
+            closeModal();
+            closeDropdown();
+          }}
+        />
+      )}
 
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-[14px]">

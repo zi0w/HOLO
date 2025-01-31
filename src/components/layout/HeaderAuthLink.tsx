@@ -1,9 +1,8 @@
-
 import CustomLogoutModal from "@/app/sign-in/_components/CustomLogoutModal";
 import { useSignout } from "@/app/sign-in/_hooks/useSignout";
 import MyPageIcon from "@/assets/images/common/header/mypage.svg";
-import useAuthStore from "@/store/authStore";
 import { useSignoutModalStore } from "@/store/signoutmodal/useSignoutModalStore";
+import useAuthStore from "@/store/useAuthStore";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
@@ -95,4 +94,3 @@ const HeaderAuthLink = () => {
 };
 
 export default HeaderAuthLink;
-
