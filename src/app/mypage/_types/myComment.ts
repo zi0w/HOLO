@@ -5,11 +5,8 @@ export type User = {
   profile_image_url: string | null;
 };
 
-export type Post = {
-  title: string;
-  content:string;
-  
-};
+
+
 
 export type Comment = Tables<"comments"> & {
   users: User; 

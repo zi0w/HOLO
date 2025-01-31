@@ -1,41 +1,55 @@
+
 import CustomLogoutModal from "@/app/sign-in/_components/CustomLogoutModal";
 import { useSignout } from "@/app/sign-in/_hooks/useSignout";
 import MyPageIcon from "@/assets/images/common/header/mypage.svg";
 import useAuthStore from "@/store/authStore";
+import { useSignoutModalStore } from "@/store/signoutmodal/useSignoutModalStore";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 const HeaderAuthLink = () => {
   const { isLoggedIn } = useAuthStore();
   const pathname = usePathname();
-
   const { handleLogout, router } = useSignout();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const queryClient = useQueryClient();
+  const { openModal, setSuccess, setError, closeModal } =
+    useSignoutModalStore();
+
+  const logoutMutation = useMutation({
+    mutationFn: async () => {
+      const result = await handleLogout();
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      return result;
+    },
+    onSuccess: () => {
+      setSuccess(true);
+      setTimeout(() => {
+        closeModal(); // 모달 닫기 추가
+        router.push("/sign-in");
+        queryClient.clear();
+        queryClient.resetQueries(); // 쿼리 초기화 추가
+      }, 1000);
+    },
+    onError: (error: Error) => {
+      setError(error.message || "로그아웃 중 오류가 발생했습니다.");
+    },
+    onSettled: () => {
+      // mutation 완료 후 초기화
+      queryClient.invalidateQueries();
+    },
+  });
 
   const handleLogoutClick = () => {
-    setIsModalOpen(true);
-    setIsSuccess(false);
-    setErrorMessage(undefined);
+    openModal("header", "header-logout");
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    if (isSuccess) {
-      router.push("/sign-in");
-    }
-  };
-
-  const handleConfirmLogout = async () => {
-    const result = await handleLogout();
-    if (result.success) {
-      setIsSuccess(true);
-    } else {
-      setErrorMessage(result.error);
-    }
+  const handleConfirmLogout = async (): Promise<void> => {
+    logoutMutation.mutate();
   };
 
   if (isLoggedIn) {
@@ -58,11 +72,9 @@ const HeaderAuthLink = () => {
           로그아웃
         </button>
         <CustomLogoutModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
+          modalId="header"
+          modalType="header-logout"
           onLogout={handleConfirmLogout}
-          isSuccess={isSuccess}
-          errorMessage={errorMessage}
         />
       </>
     );
@@ -83,3 +95,4 @@ const HeaderAuthLink = () => {
 };
 
 export default HeaderAuthLink;
+
