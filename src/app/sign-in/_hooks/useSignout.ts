@@ -1,7 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/utils/supabase/client";
-import useAuthStore from "@/store/authStore";
+import useAuthStore from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 
 export const useSignout = () => {

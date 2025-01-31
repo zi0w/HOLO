@@ -77,25 +77,6 @@ body {
   bottom: 0 !important;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
-  @apply !text-base-500;
-  background-color: white;
-}
-
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 14px !important;
-}
-
-.swiper-button-next {
-  right: 0 !important;
-}
-
-.swiper-button-prev {
-  left: 0 !important;
-}
-
 .form-wrap {
   @apply relative;
 }

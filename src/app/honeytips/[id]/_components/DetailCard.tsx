@@ -3,7 +3,7 @@
 import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import ShareButton from "@/app/honeytips/[id]/_components/ShareButton";
-import { useToggle } from "@/app/honeytips/[id]/_hooks/useToggle";
+import { useDropdown } from "@/app/honeytips/[id]/_hooks/useDropdown";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
@@ -11,13 +11,13 @@ import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
-import { useModalStore } from "@/store/modalStore";
+import { useModalStore } from "@/store/useModalStore";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 type DetailCardProps = {
@@ -31,12 +31,8 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const {
-    isOpen: isDropdownOpen,
-    toggle: toggleDropdown,
-    close: closeDropdown,
-  } = useToggle();
-  const { isModalOpen, openModal, closeModal } = useModalStore();
+  const { isDropdownOpen, toggleDropdown, closeDropdown } = useDropdown();
+  const { isModalOpen, openModal, closeModal, modalType } = useModalStore();
 
   const router = useRouter();
 
@@ -80,7 +76,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   }, []);
 
   const handleDeleteClick = () => {
-    openModal('detail');
+    openModal("detail");
   };
 
   const handleDeletePost = async () => {
@@ -118,7 +114,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         <ArrowLeftIcon />
       </button>
 
-      {isModalOpen && (
+      {isModalOpen && modalType === "detail" && (
         <ConfirmModal
           text={"삭제"}
           isOpen={isModalOpen}
@@ -152,10 +148,10 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
         {currentId === postDetailData.user_id && (
           <div className="relative">
-            <button onClick={toggleDropdown}>
+            <button onClick={() => toggleDropdown(postDetailData.id)}>
               <MenuDots />
             </button>
-            {isDropdownOpen && (
+            {isDropdownOpen(postDetailData.id) && (
               <div className="absolute right-0 top-6 z-10 w-[68px] rounded-lg border bg-white py-2">
                 <DropdownButton
                   label="수정"
@@ -171,15 +167,14 @@ const DetailCard = ({ postId }: DetailCardProps) => {
       <div>
         <div>
           <Swiper
-            modules={[Pagination, Navigation]}
+            modules={[Pagination]}
             spaceBetween={10}
             slidesPerView={1}
             simulateTouch={true}
             grabCursor={true}
             centeredSlides={true}
             pagination={{ clickable: true }}
-            navigation={true}
-            className="mx-auto my-4 flex h-auto max-w-[300px] items-center lg:my-6 lg:max-w-[762px] lg:!pb-8"
+            className="mx-auto my-4 flex h-auto max-w-[300px] items-center !pb-8 lg:my-6 lg:max-w-[762px]"
           >
             {postDetailData.post_image_url?.map((imageUrl, index) => (
               <SwiperSlide key={index} className="my-auto">
@@ -188,6 +183,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                   alt={`게시물 이미지 ${index + 1}`}
                   width={800}
                   height={800}
+                  loading="lazy"
                   className="mx-auto h-[300px] w-[300px] rounded object-cover lg:h-[762px] lg:w-[762px]"
                 />
               </SwiperSlide>
