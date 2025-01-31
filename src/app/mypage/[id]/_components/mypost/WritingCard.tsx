@@ -58,16 +58,16 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
           )}
           <div className={clsx("flex min-w-0 flex-1 flex-col gap-[2px]")}>
             <div className={clsx("flex w-full items-center justify-between")}>
-              <h3
+              <p
                 className={clsx(
-                  "font-Pretendard line-clamp-1 text-[16px] text-base-800",
+                  "!font-Pretendard line-clamp-1 text-[16px] text-base-800",
                 )}
               >
                 {post.title}
-              </h3>
+              </p>
               <span
                 className={clsx(
-                  "font-Pretendard -mt-[5px] ml-2 text-[14px] text-base-500",
+                  "!font-Pretendard -mt-[5px] ml-2 text-[14px] text-base-500",
                 )}
               >
                 {new Date(post.created_at)
@@ -80,7 +80,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
                   .slice(0, -1)}
               </span>
             </div>
-            <p className={clsx("line-clamp-1 text-[14px] text-base-800")}>
+            <p className={clsx("!font-Pretendard line-clamp-1 text-[14px] text-base-800")}>
               {post.content}
             </p>
           </div>

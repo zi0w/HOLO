@@ -50,14 +50,14 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
           )}
           <div className="flex min-w-0 flex-1 flex-col gap-[2px]">
             <div className="flex w-full items-center justify-between">
-              <h3 className="line-clamp-1 text-[16px] font-Pretendard text-base-800">
+              <p className="line-clamp-1 text-[16px] !font-Pretendard text-base-800">
                 {post.title}
-              </h3>
-              <span className="-mt-[5px] font-Pretendard ml-2 text-[14px] text-base-500">
+              </p>
+              <span className="-mt-[5px] !font-Pretendard ml-2 text-[14px] text-base-500">
                 {formatDate(post.created_at)}
               </span>
             </div>
-            <p className="line-clamp-1 font-Pretendard text-[14px] text-base-800">
+            <p className="line-clamp-1 !font-Pretendard text-[14px] text-base-800">
               {post.content}
             </p>
           </div>
