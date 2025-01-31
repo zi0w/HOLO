@@ -1,4 +1,4 @@
-import locationStore from "@/store/locationStore";
+import locationStore from "@/store/useLocationStore";
 import { useEffect } from "react";
 
 const useKakaoMap = () => {

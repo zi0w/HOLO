@@ -4,7 +4,7 @@ import { fetchOpenAiDay } from "@/app/trash-guide/_actions/fetchTrashOpenAi";
 import SearchForm from "@/app/trash-guide/_components/SearchForm";
 import type { WasteDayAnswerData } from "@/app/trash-guide/_types/trashTypes";
 import Loading from "@/components/common/Loading";
-import locationStore from "@/store/locationStore";
+import locationStore from "@/store/useLocationStore";
 import { useEffect, useState } from "react";
 
 const WasteDaySelector = () => {
