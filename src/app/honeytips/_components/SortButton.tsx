@@ -12,17 +12,6 @@ const SortButton = ({ sortBy, setSortBy }: SortButtonProps) => {
     <div className="my-4 flex gap-2 lg:my-6">
       <button
         className={`rounded-lg border px-3 py-1 ${
-          sortBy === "popular"
-            ? "bg-primary-900 text-white"
-            : "border-primary-900 text-primary-900"
-        }`}
-        onClick={() => handleSort("popular")}
-      >
-        인기순
-      </button>
-
-      <button
-        className={`rounded-lg border px-3 py-1 ${
           sortBy === "recent"
             ? "bg-primary-900 text-white"
             : "border-primary-900 text-primary-900"
@@ -30,6 +19,17 @@ const SortButton = ({ sortBy, setSortBy }: SortButtonProps) => {
         onClick={() => handleSort("recent")}
       >
         최신순
+      </button>
+
+      <button
+        className={`rounded-lg border px-3 py-1 ${
+          sortBy === "popular"
+            ? "bg-primary-900 text-white"
+            : "border-primary-900 text-primary-900"
+        }`}
+        onClick={() => handleSort("popular")}
+      >
+        인기순
       </button>
     </div>
   );
