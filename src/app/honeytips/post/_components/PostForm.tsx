@@ -29,7 +29,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { isModalOpen, openModal, closeModal } = useModalStore();
+  const { isModalOpen, openModal, closeModal, modalType } = useModalStore();
 
   const mode = !!postDetailData ? "edit" : "create";
 
@@ -141,12 +141,14 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
     <div className="mx-5 lg:mx-auto lg:mt-[120px] lg:max-w-[762px]">
       <h2 className="hidden text-2xl text-base-800 lg:block">꿀팁 쓰기</h2>
       <form className="mt-5">
-        <ConfirmModal
-          text={"취소"}
-          isOpen={isModalOpen}
-          onConfirm={handleCancel}
-          onCancel={() => closeModal()}
-        />
+        {isModalOpen && modalType === "form" && (
+          <ConfirmModal
+            text={"취소"}
+            isOpen={isModalOpen}
+            onConfirm={handleCancel}
+            onCancel={() => closeModal()}
+          />
+        )}
         <section className="mb-6 flex items-center justify-between">
           <button
             type="button"

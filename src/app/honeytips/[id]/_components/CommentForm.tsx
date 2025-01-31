@@ -4,7 +4,7 @@ import { useAddCommentMutation } from "@/app/honeytips/[id]/_hooks/useCommentMut
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import ArrowGray from "@/assets/images/honeytips/arrow-up-circle.svg";
 import ArrowOrange from "@/assets/images/honeytips/comment-button.svg";
-import useAuthStore from "@/store/authStore";
+import useAuthStore from "@/store/useAuthStore";
 import { useParams } from "next/navigation";
 import { useRef } from "react";
 
