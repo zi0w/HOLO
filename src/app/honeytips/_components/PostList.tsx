@@ -11,8 +11,8 @@ import PlusButton from "@/assets/images/honeytips/plus-circle.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
-import useAuthStore from "@/store/authStore";
-import { useModalStore } from "@/store/modalStore";
+import useAuthStore from "@/store/useAuthStore";
+import { useModalStore } from "@/store/useModalStore";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,11 +20,11 @@ import { useEffect, useState } from "react";
 const PostList = () => {
   const { isLoggedIn: isAuthenticated } = useAuthStore();
   const [selectedCategory, setSelectedCategory] = useState<string>("전체");
-  const [sortBy, setSortBy] = useState<"popular" | "recent">("popular");
+  const [sortBy, setSortBy] = useState<"popular" | "recent">("recent");
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { isModalOpen, openModal, closeModal } = useModalStore();
+  const { isModalOpen, openModal, closeModal, modalType } = useModalStore();
 
   const router = useRouter();
   const searchQuery = useSearchParams();
@@ -104,12 +104,14 @@ const PostList = () => {
 
   return (
     <section className="mx-auto mb-4">
-      <ConfirmModal
-        isOpen={isModalOpen}
-        onConfirm={handleConfirm}
-        onCancel={() => closeModal()}
-        text="로그인으로 이동"
-      />
+      {isModalOpen && modalType === "post" && (
+        <ConfirmModal
+          isOpen={isModalOpen}
+          onConfirm={handleConfirm}
+          onCancel={() => closeModal()}
+          text="로그인으로 이동"
+        />
+      )}
       <div className="flex justify-between border-b border-primary-100 lg:justify-normal lg:gap-6">
         {POST_CATEGORIES.map((category) => (
           <button

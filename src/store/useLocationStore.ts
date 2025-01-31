@@ -1,4 +1,5 @@
-import type { Coordinates } from "@/app/map/_types/map";
+import type { Coordinates, PlacesSearchResultItem } from "@/app/map/_types/map";
+import type { Dispatch, SetStateAction } from "react";
 import { create } from "zustand";
 
 type MapStore = {
@@ -6,7 +7,9 @@ type MapStore = {
   mapCenter: Coordinates;
   mapLevel: number;
   geolocationError: string | null;
-
+  kakaoLoading: boolean;
+  selectedPlace: PlacesSearchResultItem | null;
+  setKakaoLoading: (loading: boolean) => void;
   setCurrentPosition: (position: Coordinates | null) => void;
   setMapCenter: (center: Coordinates) => void;
   setMapLevel: (level: number) => void;
@@ -14,8 +17,9 @@ type MapStore = {
   onClickPlusMapLevel: () => void;
   onClickMinusMapLevel: () => void;
   onClickMoveCurrentPosition: () => void;
+  setSelectedPlace: Dispatch<SetStateAction<PlacesSearchResultItem | null>>;
 };
-const locationStore = create<MapStore>((set) => ({
+const useLocationStore = create<MapStore>((set) => ({
   currentPosition: null,
   mapCenter: {
     lat: 37.56675214138411,
@@ -23,7 +27,15 @@ const locationStore = create<MapStore>((set) => ({
   },
   mapLevel: 5,
   geolocationError: null,
-
+  kakaoLoading: true,
+  selectedPlace: null,
+  setKakaoLoading: (loading) =>
+    set((state) => {
+      if (state.kakaoLoading !== loading) {
+        return { kakaoLoading: loading };
+      }
+      return state; // 상태가 동일하면 업데이트하지 않음
+    }),
   setCurrentPosition: (position) => set({ currentPosition: position }),
   setMapCenter: (center) => set({ mapCenter: center }),
   setMapLevel: (level) => set({ mapLevel: level }),
@@ -37,6 +49,11 @@ const locationStore = create<MapStore>((set) => ({
 
   onClickMoveCurrentPosition: () => {
     if (navigator.geolocation) {
+      const options = {
+        enableHighAccuracy: true,
+        maximumAge: 10000,
+        timeout: 15000,
+      };
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -44,20 +61,26 @@ const locationStore = create<MapStore>((set) => ({
           set({
             currentPosition: newPosition,
             mapCenter: newPosition,
+            geolocationError: null,
           });
         },
         (error) => {
-          console.error("위치를 가져올 수 없습니다.", error.message);
-          set({ geolocationError: error.message });
+          console.error("위치를 가져올 수 없습니다.\n", error.message);
+          set({ geolocationError: "위치 허용 여부를 확인해주세요." });
         },
+        options,
       );
     } else {
       set({
-        geolocationError:
-          "Geolocation을 사용할 수 없습니다. 위치 허용 여부를 확인해주세요.",
+        geolocationError: "위치 허용 여부를 확인해주세요.",
       });
     }
   },
+  setSelectedPlace: (place) =>
+    set((state) => ({
+      selectedPlace:
+        typeof place === "function" ? place(state.selectedPlace) : place,
+    })),
 }));
 
-export default locationStore;
+export default useLocationStore;

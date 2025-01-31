@@ -1,6 +1,6 @@
 const DetailLoading = () => {
   return (
-    <div className="mx-5 mt-5">
+    <div className="mx-5 mt-5 lg:mx-auto lg:max-w-[762px]">
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

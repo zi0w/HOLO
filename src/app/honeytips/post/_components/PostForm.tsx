@@ -7,7 +7,7 @@ import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
 import XButton from "@/assets/images/honeytips/BigX.svg";
 import Plus from "@/assets/images/honeytips/plus.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
-import { useModalStore } from "@/store/modalStore";
+import { useModalStore } from "@/store/useModalStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,7 +29,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { isModalOpen, openModal, closeModal } = useModalStore();
+  const { isModalOpen, openModal, closeModal, modalType } = useModalStore();
 
   const mode = !!postDetailData ? "edit" : "create";
 
@@ -141,12 +141,14 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
     <div className="mx-5 lg:mx-auto lg:mt-[120px] lg:max-w-[762px]">
       <h2 className="hidden text-2xl text-base-800 lg:block">꿀팁 쓰기</h2>
       <form className="mt-5">
-        <ConfirmModal
-          text={"취소"}
-          isOpen={isModalOpen}
-          onConfirm={handleCancel}
-          onCancel={() => closeModal()}
-        />
+        {isModalOpen && modalType === "form" && (
+          <ConfirmModal
+            text={"취소"}
+            isOpen={isModalOpen}
+            onConfirm={handleCancel}
+            onCancel={() => closeModal()}
+          />
+        )}
         <section className="mb-6 flex items-center justify-between">
           <button
             type="button"
@@ -256,7 +258,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
           <section className="hidden lg:block">
             <button
               type="button"
-              onClick={() => openModal('post')}
+              onClick={() => openModal("post")}
               className="mr-2 rounded border px-6 pb-1.5 pt-2 font-gmarket text-base-800"
               disabled={isLoading}
             >

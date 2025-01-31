@@ -1,6 +1,6 @@
 import { clearAllStorage } from "@/app/mypage/_utils/cleanup";
 import { deleteUserAccount, signOutUser } from "@/app/mypage/_utils/user";
-import useAuthStore from "@/store/authStore";
+import useAuthStore from "@/store/useAuthStore";
 import { useQueryClient } from "@tanstack/react-query";
 
 export const useDeleteAccount = () => {

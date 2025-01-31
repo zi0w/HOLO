@@ -38,9 +38,10 @@ const MyWritingList = () => {
     );
 
   return (
-    <div className="h-full w-full pt-[10px] mt-[30px] md:mt-[15px] md:w-[549px] w-[362px] md:h-[442px] h-[442px] rounded-[4px] border border-[#E0E0E0] bg-white flex-shrink-0 md:mx-auto md:flex md:items-center">
+    <div className="mt-[30px] h-[442px] w-[362px] w-full flex-shrink-0 rounded-[4px] border border-base-300 bg-white pt-[10px] md:mx-auto md:mt-[15px] md:flex md:h-[442px] md:w-[549px] md:items-center">
       {currentPosts.length > 0 ? (
-        <div className="relative flex h-full flex-col">
+        <div className="relative flex h-full flex-col w-full">
+        {/* // <div className="relative flex h-full flex-col lg:w-full"> */}
           <div className="flex-1">
             {currentPosts.map((post) => (
               <MyWritingCard
@@ -64,7 +65,7 @@ const MyWritingList = () => {
           </div>
         </div>
       ) : (
-        <p className="py-4 text-center text-base-800 md:text-center md:mx-auto md:w-[549px]">
+        <p className="py-4 text-center text-base-800 md:mx-auto md:w-[549px] md:text-center">
           작성한 게시물이 없습니다.
         </p>
       )}

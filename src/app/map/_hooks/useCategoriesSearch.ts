@@ -3,6 +3,7 @@ import type {
   Place,
   PlacesSearchResultItem,
 } from "@/app/map/_types/map";
+import useLocationStore from "@/store/useLocationStore";
 import {
   useCallback,
   useEffect,
@@ -12,13 +13,12 @@ import {
 } from "react";
 
 const useCategoriesSearch = (mapCenter: Coordinates | null) => {
+  const { kakaoLoading, setMapLevel } = useLocationStore();
   const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [category, setCategory] = useState<string>("맛집"); // 카테고리 선택 상태 관리
   const [places, setPlaces] = useState<PlacesSearchResultItem[]>([]); // 장소 검색 결과 리스트
   const [reSearch, setReSearch] = useState<boolean>(true);
-  const [selectedPlace, setSelectedPlace] =
-    useState<PlacesSearchResultItem | null>(null);
+  const { selectedPlace, setSelectedPlace } = useLocationStore();
 
   const [placeDetail, setPlaceDetail] = useState<Omit<
     Place,
@@ -42,6 +42,7 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
       const data = await response.json();
       const result = data.documents[0];
       if (result) {
+        console.log("result", result);
         setPlaceDetail(result);
       } else {
         alert("장소 정보를 가져오는데 실패했습니다.");
@@ -52,7 +53,7 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
     }
   };
 
-  // 마커를 클릭했을 때, 장소 정보를 가져옮
+  // 마커를 클릭했을 때, 장소 정보를 가지고 옴
   const onClickMarker = (place: PlacesSearchResultItem) => {
     setSelectedPlace(place);
     getPlaceDetail(place.place_name);
@@ -75,6 +76,7 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
           }
         }
         setReSearch(false);
+        setMapLevel(5);
       },
       {
         location: new kakao.maps.LatLng(mapCenter!.lat, mapCenter!.lng),
@@ -87,13 +89,11 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
   useEffect(() => {
     const loadKakaoMap = () => {
       if (window.kakao && window.kakao.maps) {
-        setIsLoading(true);
         searchPlaces(); // SDK 로드 완료 시 검색 실행
       }
     };
 
     if (window.kakao && window.kakao.maps) {
-      setIsLoading(true);
       searchPlaces(); // 이미 로드되어 있다면 바로 검색 실행
     } else {
       window.addEventListener("load", loadKakaoMap);
@@ -106,10 +106,10 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
 
   // 카테고리나 맵 센터가 변경될 때 검색 실행
   useEffect(() => {
-    if (isLoading && reSearch) {
+    if (reSearch) {
       searchPlaces();
     }
-  }, [category, isLoading, reSearch, mapCenter]);
+  }, [kakaoLoading, reSearch, category]);
 
   // 카테고리 변경 시 검색 트리거
   const handleCategoryChange: Dispatch<SetStateAction<string>> = useCallback(
