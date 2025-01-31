@@ -3,7 +3,9 @@ import type {
   Place,
   PlacesSearchResultItem,
 } from "@/app/map/_types/map";
+import useLocationStore from "@/store/useLocationStore";
 import { clsx } from "clsx";
+import { useRouter } from "next/navigation";
 import { type Dispatch, type SetStateAction } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 
@@ -37,12 +39,13 @@ const MapContainer = ({
   setMapCenter,
   places,
   setSelectedPlace,
-  onClickMarker,
   isMain,
   setSelectedMarkerId,
   selectedMarkerId,
 }: MapContainerProps) => {
-  const onClickChangeLocation = (
+  const router = useRouter();
+  const { setMapLevel } = useLocationStore();
+  const onClickCurrentMarker = (
     place: kakao.maps.services.PlacesSearchResultItem,
   ) => {
     setMapCenter({
@@ -50,14 +53,20 @@ const MapContainer = ({
       lng: parseFloat(place.x),
     });
     setSelectedPlace(place);
-    onClickMarker(place);
-
-    setSelectedMarkerId(place.id);
+    setMapLevel(3);
+    if (isMain) {
+      router.push("/map");
+    } else {
+      setSelectedMarkerId(place.id);
+    }
   };
   return (
     <Map
       center={mapCenter! || currentPosition} // 지도를 내 위치 기준으로 표시
-      className={clsx("h-[calc(100%-275px)] w-full", isMain && "!h-full")}
+      className={clsx(
+        "h-[calc(100%-275px)] w-full lg:h-[80%]",
+        isMain && "!h-full",
+      )}
       level={mapLevel} // 지도의 확대 레벨
       onCenterChanged={(map) => {
         // 사용자가 지도를 드래그로 이동하면 현재 지도 중심 업데이트
@@ -87,7 +96,7 @@ const MapContainer = ({
                 height: 24,
               },
             }}
-            onClick={() => onClickChangeLocation(place)}
+            onClick={() => onClickCurrentMarker(place)}
           />
           <CustomOverlayMap
             position={{
