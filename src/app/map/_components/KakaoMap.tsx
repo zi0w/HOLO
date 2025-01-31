@@ -7,7 +7,7 @@ import MapContainer from "@/app/map/_components/MapContainer";
 import MapControls from "@/app/map/_components/MapControls";
 import PlaceList from "@/app/map/_components/PlaceList";
 import useCategoriesSearch from "@/app/map/_hooks/useCategoriesSearch";
-import locationStore from "@/store/locationStore";
+import useLocationStore from "@/store/useLocationStore";
 
 const KakaoMap = () => {
   useKakaoLoader();
@@ -16,12 +16,11 @@ const KakaoMap = () => {
     mapCenter, // 현재 지도 중심 좌표
     setMapCenter, // 중심 좌표 업데이트 함수
     currentPosition, // 현재 위치
-    geolocationError, // 사용자 위치를 불러오지 못할 때 에러
     mapLevel, // 지도 확대, 축소 크기 단계 상태
     onClickPlusMapLevel, // 지도 확대 함수
     onClickMinusMapLevel, // 지도 축소 함수
     onClickMoveCurrentPosition, // 지도의 위치를 옮겼을 때, 다시 내 위치로 이동 함수
-  } = locationStore();
+  } = useLocationStore();
 
   const {
     setCategory,
@@ -38,9 +37,7 @@ const KakaoMap = () => {
   } = useCategoriesSearch(mapCenter);
 
   return (
-    <div className="relative h-[calc(100vh-124px)]">
-      {geolocationError && <div>{geolocationError}</div>}
-
+    <div className="relative h-[calc(100vh-124px)] lg:mx-28 lg:mt-28 lg:h-[80vh]">
       {/* 카테고리 검색 버튼 */}
       <CategoryButtons
         isMain={false}
