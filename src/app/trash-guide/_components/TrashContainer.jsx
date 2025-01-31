@@ -12,7 +12,7 @@ const TrashContainer = () => {
 
   const getTabStyle = (tabId) =>
     clsx(
-      "flex-1 py-2 text-center border-b-2 cursor-pointer lg:flex gap-2 lg:border lg:justify-center lg:items-center lg:rounded-[4px] lg:flex-none lg:px-3",
+      "flex-1 py-2 text-center border-b-2 cursor-pointer lg:flex gap-2 lg:border lg:justify-center lg:items-center lg:rounded lg:flex-none lg:px-3",
       {
         "border-primary-800 text-primary-800 lg:bg-primary-50":
           activeTab === tabId,

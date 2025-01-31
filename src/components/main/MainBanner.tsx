@@ -8,10 +8,6 @@ import RecommendPcRight from "@/assets/images/main/top-banner-3_2.png";
 import RecommendMoIcon from "@/assets/images/main/top-banner-3_mo.png";
 import Image from "next/image";
 import Link from "next/link";
-
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -24,7 +20,7 @@ const MainBanner = () => {
         }}
         modules={[Pagination, Autoplay]}
         autoplay={{
-          delay: 4000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         className="mainBannerSwiper"
