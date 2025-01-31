@@ -112,9 +112,9 @@ const UserProfile = () => {
   return (
     <div className="w-full bg-white pt-16">
       <div className="flex flex-col items-center">
-        <div className="flex w-full items-center px-5 pt-[5px]">
+        <div className="flex w-full items-center px-5 pt-[5px] lg:px-0 lg:pl-[calc(50vw-400px)]">
           <button className="flex items-center">
-            <h1 className="pt-[60px] font-gmarket text-[24px] font-medium leading-[32px] text-base-800">
+            <h1 className="font-gmarket-sans pt-[60px] text-[24px] font-medium leading-[32px] text-base-800">
               마이페이지
             </h1>
           </button>

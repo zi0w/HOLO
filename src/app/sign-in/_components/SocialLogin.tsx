@@ -1,12 +1,9 @@
-
 "use client";
 
-
 import { useSocialLogin } from "@/app/sign-in/_hooks/useSocialLogin";
-import githubimg from "@/assets/images/social-login/githubimg.png";
-import googleimg from "@/assets/images/social-login/googleimg.png";
-import kakaoimg from "@/assets/images/social-login/kakaoimg.png";
-import Image from "next/image";
+import GithubIcon from "@/assets/images/social-login/githubimg.svg";
+import GoogleIcon from "@/assets/images/social-login/googleimg.svg";
+import KakaoIcon from "@/assets/images/social-login/kakaoimg.svg";
 
 const SocialLogin = () => {
   const { handleSocialLogin } = useSocialLogin();
@@ -15,39 +12,21 @@ const SocialLogin = () => {
     <div className="flex items-center justify-center space-x-[24px]">
       <button
         onClick={() => handleSocialLogin("kakao")}
-        className="flex h-[40px] w-[40px] items-center justify-center rounded-full"
+        className="flex h-[48px] w-[48px] items-center justify-center rounded-full"
       >
-        <Image
-          src={kakaoimg}
-          alt="카카오 로그인"
-          width={48}
-          height={48}
-          className="object-contain"
-        />
+        <KakaoIcon width={48} height={48} className="h-[48px] w-[48px]" />
       </button>
       <button
         onClick={() => handleSocialLogin("google")}
-        className="flex h-[40px] w-[40px] items-center justify-center rounded-full"
+        className="flex h-[48px] w-[48px] items-center justify-center rounded-full"
       >
-        <Image
-          src={googleimg}
-          alt="구글 로그인"
-          width={48}
-          height={48}
-          className="object-contain"
-        />
+        <GoogleIcon width={48} height={48} className="object-cover" />
       </button>
       <button
         onClick={() => handleSocialLogin("github")}
-        className="flex h-[40px] w-[40px] items-center justify-center rounded-full"
+        className="flex h-[48px] w-[48px] items-center justify-center rounded-full"
       >
-        <Image
-          src={githubimg}
-          alt="깃허브 로그인"
-          width={48}
-          height={48}
-          className="object-cover"
-        />
+        <GithubIcon width={48} height={48} className="object-cover" />
       </button>
     </div>
   );

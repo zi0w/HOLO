@@ -60,13 +60,15 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
             <div className={clsx("flex w-full items-center justify-between")}>
               <h3
                 className={clsx(
-                  "line-clamp-1 text-[16px] font-medium text-base-800",
+                  "font-Pretendard line-clamp-1 text-[16px] text-base-800",
                 )}
               >
                 {post.title}
               </h3>
               <span
-                className={clsx("-mt-[5px] ml-2 text-[14px] text-base-500")}
+                className={clsx(
+                  "font-Pretendard -mt-[5px] ml-2 text-[14px] text-base-500",
+                )}
               >
                 {new Date(post.created_at)
                   .toLocaleDateString("ko-KR", {
@@ -90,7 +92,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
               openModal(post.id, "post");
             }}
             disabled={isDeleting}
-            className="flex h-[28px] w-[38px] items-center justify-center border border-base-800 px-[7px] py-[6px] text-[12px] text-base-800 disabled:opacity-50"
+            className="flex h-[28px] w-[38px] items-center justify-center rounded border border-base-800 px-[7px] py-[6px] text-[12px] text-base-800 disabled:opacity-50"
           >
             {isDeleting ? "삭제 중..." : "삭제"}
           </button>
