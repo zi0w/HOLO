@@ -8,7 +8,7 @@ const PolicyAndTrashBanner = ({ isPolicy }: { isPolicy: boolean }) => {
   return (
     <div
       className={clsx(
-        "m-5 flex items-end justify-between overflow-hidden rounded-[4px] lg:m-0 lg:h-full lg:flex-col lg:items-center lg:text-center",
+        "m-5 flex items-end justify-between overflow-hidden rounded-[4px] lg:m-0 lg:flex-col lg:items-center lg:text-center lg:h-full",
         isPolicy ? "bg-primary-800" : "flex-row-reverse bg-primary-100",
       )}
     >
