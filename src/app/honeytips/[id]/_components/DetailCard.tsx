@@ -183,6 +183,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                   alt={`게시물 이미지 ${index + 1}`}
                   width={800}
                   height={800}
+                  loading="lazy"
                   className="mx-auto h-[300px] w-[300px] rounded object-cover lg:h-[762px] lg:w-[762px]"
                 />
               </SwiperSlide>
