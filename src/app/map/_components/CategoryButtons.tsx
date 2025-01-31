@@ -35,12 +35,22 @@ const CategoryButtons = ({
   return (
     <>
       {/* 페이지 제목 */}
-      <div className={clsx("common-title mx-5 my-4", isMain && "!text-[22px]")}>
+      <h1
+        className={clsx(
+          "common-title mx-5 my-4 lg:mx-0",
+          isMain && "!text-[22px]",
+        )}
+      >
         우리동네 핫플
-      </div>
+      </h1>
 
       {/* 버튼 카테고리 컨테이너 */}
-      <div className="mx-5 flex overflow-x-auto [&::-webkit-scrollbar]:hidden">
+      <div
+        className={clsx(
+          "mx-5 flex overflow-x-auto [&::-webkit-scrollbar]:hidden",
+          isMain ? "lg:mx-0" : "lg:m-0 lg:gap-2",
+        )}
+      >
         {MAP_CATEGORIES.map((cate, index) => (
           <button
             key={cate.id}
@@ -49,17 +59,28 @@ const CategoryButtons = ({
               buttonRef.current[index] = categoryBtn;
             }}
             className={clsx(
-              "relative flex items-center justify-center text-sm",
+              "relative flex items-center justify-between gap-2 text-sm text-base-700",
+              isMain
+                ? ""
+                : "lg:mb-6 lg:flex lg:flex-none lg:items-center lg:justify-center lg:rounded-[4px] lg:border lg:px-4 lg:py-2 lg:after:hidden",
               selectedCategory === cate.name // 선택한 카테고리 버튼에 적용할 style
-                ? "text-primary-800 after:absolute after:bottom-0 after:h-[4px] after:w-full after:rounded-3xl after:bg-primary-500"
-                : "",
+                ? `text-primary-800 after:absolute after:bottom-0 after:h-[4px] after:w-full after:rounded-3xl after:bg-primary-500 ${isMain ? "" : "lg:border-primary-800 lg:bg-primary-50 lg:text-primary-800"}`
+                : `${isMain ? "" : "lg:border-base-500 lg:text-base-700"}`,
             )}
             onClick={() => onClickMoveCategoryBtn(cate, index)} // scrollIntoView를 적용하기 위한 함수
           >
-            <div className="mx-2 mb-2 flex h-14 w-14 flex-col items-center justify-center whitespace-nowrap">
+            <div
+              className={clsx(
+                "mb-3 flex h-14 flex-col items-center justify-between whitespace-nowrap",
+                isMain ? "" : "lg:mb-0 lg:flex lg:h-auto lg:flex-row lg:gap-2",
+                cate.id === 7 ? "" : "px-4",
+                isMain ? "" : "lg:px-0",
+              )}
+            >
               <div
                 className={clsx(
                   "flex items-center p-2",
+                  isMain ? "" : "lg:p-0",
                   selectedCategory === cate.name ? "rounded bg-primary-50" : "",
                 )}
               >
@@ -71,7 +92,10 @@ const CategoryButtons = ({
         ))}
       </div>
       <div
-        className={clsx("border-b-2 border-primary-100", isMain && "mb-5")}
+        className={clsx(
+          "mx-5 border-b-2 border-primary-100",
+          isMain ? "mb-4 lg:mx-0" : "lg:border-none",
+        )}
       ></div>
     </>
   );

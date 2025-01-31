@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 const PostList = () => {
   const { isLoggedIn: isAuthenticated } = useAuthStore();
   const [selectedCategory, setSelectedCategory] = useState<string>("전체");
-  const [sortBy, setSortBy] = useState<"popular" | "recent">("popular");
+  const [sortBy, setSortBy] = useState<"popular" | "recent">("recent");
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
