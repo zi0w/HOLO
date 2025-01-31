@@ -3,20 +3,21 @@
 import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import ShareButton from "@/app/honeytips/[id]/_components/ShareButton";
+import { useDropdown } from "@/app/honeytips/[id]/_hooks/useDropdown";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
-import Modal from "@/components/common/Modal";
-import useModalStore from "@/store/modalStore";
+import ConfirmModal from "@/components/common/ConfirmModal";
+import { useModalStore } from "@/store/useModalStore";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 type DetailCardProps = {
@@ -25,15 +26,15 @@ type DetailCardProps = {
 
 const DetailCard = ({ postId }: DetailCardProps) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [postDetailData, setPostDetailData] = useState<Post | null>(null);
   const [likesCounts, setLikesCounts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const router = useRouter();
+  const { isDropdownOpen, toggleDropdown, closeDropdown } = useDropdown();
+  const { isModalOpen, openModal, closeModal, modalType } = useModalStore();
 
-  const { setIsModalOpen, setIsConfirm, isConfirm } = useModalStore();
+  const router = useRouter();
 
   const formatDate = (date: string) => {
     return dayjs(date).format("YYYY년 MM월 DD일 HH:mm:ss");
@@ -74,19 +75,25 @@ const DetailCard = ({ postId }: DetailCardProps) => {
     fetchUserId();
   }, []);
 
-  const handleDeletePost = async (postId: Post["id"]) => {
-    setIsConfirm(true);
-    setIsModalOpen(true);
+  const handleDeleteClick = () => {
+    openModal("detail");
+  };
 
-    if (!isConfirm) return;
-
+  const handleDeletePost = async () => {
     try {
-      await deletePost(postId);
-      setIsConfirm(false);
+      await deletePost(postDetailData!.id);
+      router.push("/honeytips");
     } catch (error) {
       setIsError(true);
       console.error("게시물 삭제에 실패했습니다.", error);
+    } finally {
+      closeModal();
     }
+  };
+
+  const handleCancelDelete = () => {
+    closeModal();
+    closeDropdown();
   };
 
   if (isLoading) return <DetailLoading />;
@@ -95,19 +102,27 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   if (!postDetailData) return null;
 
   return (
-    <section className="mx-5">
+    <section className="mx-5 lg:mx-auto lg:max-w-[762px]">
+      <h2 className="mb-5 hidden text-2xl text-base-800 lg:mt-5 lg:block">
+        꿀팁 게시판
+      </h2>
       <button
         type="button"
         onClick={() => router.push("/honeytips")}
-        className="py-5"
+        className="py-5 lg:hidden"
       >
         <ArrowLeftIcon />
       </button>
-      <Modal
-        text={"삭제"}
-        onAction={() => handleDeletePost(postId)}
-        onClose={() => router.push("/honeytips")}
-      />
+
+      {isModalOpen && modalType === "detail" && (
+        <ConfirmModal
+          text={"삭제"}
+          isOpen={isModalOpen}
+          onConfirm={handleDeletePost}
+          onCancel={handleCancelDelete}
+        />
+      )}
+
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center gap-2">
@@ -133,67 +148,65 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
         {currentId === postDetailData.user_id && (
           <div className="relative">
-            <button onClick={() => setIsDropdownOpen((prev) => !prev)}>
+            <button onClick={() => toggleDropdown(postDetailData.id)}>
               <MenuDots />
             </button>
-            {isDropdownOpen && (
+            {isDropdownOpen(postDetailData.id) && (
               <div className="absolute right-0 top-6 z-10 w-[68px] rounded-lg border bg-white py-2">
                 <DropdownButton
                   label="수정"
                   href={`/honeytips/post?edit=${postDetailData.id}`}
                 />
-                <DropdownButton
-                  label="삭제"
-                  onClick={() => {
-                    setIsConfirm(true);
-                    setIsModalOpen(true);
-                  }}
-                />
+                <DropdownButton label="삭제" onClick={handleDeleteClick} />
               </div>
             )}
           </div>
         )}
       </div>
 
-      <Swiper
-        modules={[Pagination, Navigation]}
-        spaceBetween={10}
-        slidesPerView={1}
-        simulateTouch={true}
-        grabCursor={true}
-        centeredSlides={true}
-        pagination={{ clickable: true }}
-        navigation={true}
-        className="flex items-center my-4 ml-0 h-auto max-w-[300px]"
-      >
-        {postDetailData.post_image_url?.map((imageUrl, index) => (
-          <SwiperSlide
-            key={index}
-            className="my-auto"
+      <div>
+        <div>
+          <Swiper
+            modules={[Pagination]}
+            spaceBetween={10}
+            slidesPerView={1}
+            simulateTouch={true}
+            grabCursor={true}
+            centeredSlides={true}
+            pagination={{ clickable: true }}
+            className="mx-auto my-4 flex h-auto max-w-[300px] items-center !pb-8 lg:my-6 lg:max-w-[762px]"
           >
-            <Image
-              src={imageUrl}
-              alt={`게시물 이미지 ${index + 1}`}
-              width={400}
-              height={400}
-              className="rounded w-[300px] h-[300px] object-cover mx-auto"
+            {postDetailData.post_image_url?.map((imageUrl, index) => (
+              <SwiperSlide key={index} className="my-auto">
+                <Image
+                  src={imageUrl}
+                  alt={`게시물 이미지 ${index + 1}`}
+                  width={800}
+                  height={800}
+                  loading="lazy"
+                  className="mx-auto h-[300px] w-[300px] rounded object-cover lg:h-[762px] lg:w-[762px]"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
+        <div>
+          <h2 className="text-[22px] text-base-900 lg:mt-4">
+            {postDetailData.title}
+          </h2>
+          <p className="my-2 whitespace-pre-wrap text-base-800">
+            {postDetailData.content}
+          </p>
+          <div className="mt-6 flex items-start justify-center gap-3">
+            <LikeButton
+              postId={postDetailData.id}
+              likesCounts={likesCounts}
+              setLikesCounts={setLikesCounts}
             />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      <h2 className="text-[22px] text-base-900">{postDetailData.title}</h2>
-
-      <p className="mb-10 mt-2 whitespace-pre-wrap text-base-800">
-        {postDetailData.content}
-      </p>
-      <div className="flex justify-center items-start gap-3">
-        <LikeButton
-          postId={postDetailData.id}
-          likesCounts={likesCounts}
-          setLikesCounts={setLikesCounts}
-        />
-        <ShareButton url={window.location.href} />
+            <ShareButton url={window.location.href} />
+          </div>
+        </div>
       </div>
     </section>
   );

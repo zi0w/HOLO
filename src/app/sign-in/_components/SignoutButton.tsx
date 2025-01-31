@@ -1,56 +1,67 @@
+// src/app/sign-in/_components/SignoutButton.tsx
 "use client";
 
 import { useSignout } from "@/app/sign-in/_hooks/useSignout";
-import { useState } from "react";
-import CustomLogoutModal from "./CustomLogoutModal";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import LogoutModal from "./CustomLogoutModal";
+import { useSignoutModalStore } from "@/store/signoutmodal/useSignoutModalStore";
 
 const SignoutButton = () => {
   const { handleLogout, router } = useSignout();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const { openModal, setSuccess, setError, closeModal } =
+    useSignoutModalStore();
+  const queryClient = useQueryClient();
+
+  const logoutMutation = useMutation({
+    mutationFn: async () => {
+      const result = await handleLogout();
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      return result;
+    },
+    onSuccess: () => {
+      setSuccess(true);
+      setTimeout(() => {
+        closeModal();
+        router.push("/sign-in");
+        queryClient.clear();
+        queryClient.resetQueries();
+      }, 1000);
+    },
+    onError: (error: Error) => {
+      setError(error.message || "로그아웃 중 오류가 발생했습니다.");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries();
+    },
+  });
 
   const handleLogoutClick = () => {
-    setIsModalOpen(true);
-    setIsSuccess(false);
-    setErrorMessage(undefined);
+    openModal("signout", "mypage-logout");
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    if (isSuccess) {
-      router.push("/sign-in");
-    }
-  };
-
-  const handleConfirmLogout = async () => {
-    const result = await handleLogout();
-    if (result.success) {
-      setIsSuccess(true);
-    } else {
-      setErrorMessage(result.error);
-    }
+  const handleConfirmLogout = async (): Promise<void> => {
+    logoutMutation.mutate();
   };
 
   return (
     <>
       <button
         onClick={handleLogoutClick}
-        className="font-pretendard flex h-[48px] w-full items-center justify-center rounded-[4px] border border-[#FF7600] text-base text-[#FF7600] hover:bg-gray-50"
+        className="font-pretendard flex h-[48px] w-full items-center justify-center rounded-[4px] border border-primary-500 text-base text-primary-500 hover:bg-base-100 md:w-[180px]"
       >
         로그아웃
       </button>
-      <CustomLogoutModal 
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
+      <LogoutModal
+        modalId="signout"
+        modalType="mypage-logout"
         onLogout={handleConfirmLogout}
-        isSuccess={isSuccess}
-        errorMessage={errorMessage}
       />
     </>
   );
 };
 
 export default SignoutButton;
-
 

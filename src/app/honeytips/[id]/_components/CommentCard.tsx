@@ -1,67 +1,65 @@
 "use client";
 
-import {
-  useDeleteCommentMutation,
-  useUpdateCommentMutation,
-} from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import { formatDate } from "@/app/honeytips/_utils/formatDate";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
-import Modal from "@/components/common/Modal";
-import useModalStore from "@/store/modalStore";
-
+import ConfirmModal from "@/components/common/ConfirmModal";
 import Image from "next/image";
-import { useState } from "react";
 
 type CommentCardProps = {
   comment: Comment;
   currentId: string | null;
-  postId: Comment["post_id"];
+  editingCommentId: string | null;
+  setEditingCommentId: React.Dispatch<React.SetStateAction<string | null>>;
+  editedComment: string;
+  setEditedComment: React.Dispatch<React.SetStateAction<string>>;
+  isDropdownOpen: boolean;
+  toggleDropdown: () => void;
+  closeDropdown: () => void;
+  isModalOpen: boolean;
+  openModal: (id: string) => void;
+  closeModal: () => void;
+  modalCommentId: string | null;
+  modalType: string;
+  handleCommentDelete: (id: string) => void;
+  handleCommentSave: (id: string) => void;
+  isOwner: boolean;
 };
 
-const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
-  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
-  const [editedComment, setEditedComment] = useState<string>("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const { setIsModalOpen, setIsConfirm, isConfirm } = useModalStore();
-
-  const updateCommentMutation = useUpdateCommentMutation();
-  const deleteCommentMutation = useDeleteCommentMutation();
-
-  const handleCommentSave = (id: string) => {
-    if (!editedComment.trim()) {
-      alert("내용을 입력해주세요");
-      return;
-    }
-    updateCommentMutation.mutate({
-      editingComment: editedComment,
-      editingId: id,
-      postId,
-    });
-    setEditingCommentId(null);
-    setIsDropdownOpen(false);
-  };
-
-  const handleCommentDelete = (id: string) => {
-    setIsConfirm(true);
-    setIsModalOpen(true);
-  
-    if (!isConfirm) return;
-  
-    deleteCommentMutation.mutate(id, {
-      onSuccess: () => {
-        setIsModalOpen(false);
-      },
-    });
-    setIsConfirm(false);
-    setIsDropdownOpen(false);
-  };
-
+const CommentCard = ({
+  comment,
+  currentId,
+  editingCommentId,
+  setEditingCommentId,
+  editedComment,
+  setEditedComment,
+  isDropdownOpen,
+  toggleDropdown,
+  closeDropdown,
+  isModalOpen,
+  openModal,
+  closeModal,
+  modalCommentId,
+  modalType,
+  handleCommentDelete,
+  handleCommentSave,
+  isOwner,
+}: CommentCardProps) => {
   return (
     <article className="mx-5 w-full rounded-lg">
-      <Modal text={"삭제"} onAction={() => handleCommentDelete(comment.id)} />
+      {isModalOpen && modalType === "default" && (
+        <ConfirmModal
+          text="삭제"
+          isOpen={isModalOpen && modalCommentId === comment.id}
+          onConfirm={() => handleCommentDelete(comment.id)}
+          onCancel={() => {
+            closeModal();
+            closeDropdown();
+          }}
+        />
+      )}
+
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-[14px]">
           {comment.users.profile_image_url && (
@@ -71,6 +69,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
               alt="프로필 이미지"
               width={100}
               height={100}
+              loading="lazy"
             />
           )}
           <div>
@@ -81,7 +80,13 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
               <p className="text-[14px] text-base-500">
                 {formatDate(comment.created_at)}
               </p>
+              {isOwner && (
+                <p className="rounded border px-2 py-1 text-xs text-primary-500">
+                  작성자
+                </p>
+              )}
             </div>
+
             {editingCommentId === comment.id ? (
               <input
                 value={editedComment}
@@ -96,11 +101,12 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
             )}
           </div>
         </div>
+
         {currentId && currentId === comment.user_id && (
           <div className="relative">
             <button
               className="rounded-full text-gray-500"
-              onClick={() => setIsDropdownOpen((prev) => !prev)}
+              onClick={toggleDropdown}
             >
               <MenuDots />
             </button>
@@ -116,7 +122,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
                       label="취소"
                       onClick={() => {
                         setEditingCommentId(null);
-                        setIsDropdownOpen(false);
+                        closeDropdown();
                       }}
                     />
                   </>
@@ -131,7 +137,7 @@ const CommentCard = ({ comment, currentId, postId }: CommentCardProps) => {
                     />
                     <DropdownButton
                       label="삭제"
-                      onClick={() => handleCommentDelete(comment.id)}
+                      onClick={() => openModal(comment.id)}
                     />
                   </>
                 )}

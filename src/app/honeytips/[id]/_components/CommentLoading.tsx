@@ -1,6 +1,6 @@
 const CommentLoading = () => {
   return (
-    <section className="mt-4 mx-5">
+    <section className="mt-4 mx-5 lg:mx-auto lg:max-w-[762px]">
       <div className="space-y-4">
         {Array.from({ length: 3 }).map((_, index) => (
           <div

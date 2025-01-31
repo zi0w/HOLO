@@ -64,23 +64,55 @@ const PlaceList = ({
       {category ? (
         <div
           ref={desktopListRef}
-          className="absolute left-0 top-[114px] z-20 hidden max-h-[calc(100vh-188px)] w-[300px] overflow-y-auto rounded bg-white shadow-md md:block"
+          className={clsx(
+            "absolute left-0 top-[110px] z-20 hidden max-h-[80%] w-[260px] overflow-y-auto rounded-t border bg-white md:hidden lg:block",
+            places.length === 0 ? "min-h-[80%]" : "min-h-[80%]",
+          )}
         >
-          {places.map((place, index) => (
-            <div
-              key={place.id}
-              ref={(place) => {
-                placeRef.current[index] = place;
-              }}
-              className="w-full cursor-pointer rounded bg-gray-50 p-4 text-left hover:bg-gray-200"
-              onClick={() => {
-                onClickSelectedPlace(place);
-              }}
-            >
-              <p className="text-sm font-bold">{place.place_name}</p>
-              <p className="text-xs text-gray-600">{place.address_name}</p>
+          {places.length !== 0 ? (
+            places.map((place, index) => (
+              <div
+                key={place.id}
+                ref={(place) => {
+                  placeRef.current[index] = place;
+                }}
+                className="w-full cursor-pointer rounded p-4 text-left hover:bg-primary-50"
+                onClick={() => {
+                  onClickSelectedPlace(place);
+                }}
+              >
+                <p className="font-gmarket-bold text-lg text-base-900">
+                  {place.place_name}
+                </p>
+                <p className="text-base-900">{place.address_name}</p>
+                {place.phone ? (
+                  <div>
+                    <a href={`tel: ${place.phone}`} className="text-base-900">
+                      {place.phone}
+                    </a>
+                  </div>
+                ) : (
+                  <p className="text-base-900">전화번호 없음</p>
+                )}
+                {place.place_url ? (
+                  <Link
+                    href={place.place_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 underline"
+                  >
+                    상세 정보 보기
+                  </Link>
+                ) : (
+                  ""
+                )}
+              </div>
+            ))
+          ) : (
+            <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 text-center">
+              조건에 맞는 업체가 없습니다.
             </div>
-          ))}
+          )}
         </div>
       ) : (
         <div className="hidden"></div>
@@ -89,7 +121,7 @@ const PlaceList = ({
 
       <div
         ref={mobileListRef}
-        className="absolute bottom-[-52px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white md:hidden lg:hidden"
+        className="absolute bottom-[-52px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white lg:hidden"
       >
         {places.map((place, index) => (
           <div

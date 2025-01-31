@@ -1,4 +1,4 @@
-// src/app/sign-in/_types/authType.ts
+
 
 import type { User } from "@supabase/supabase-js";
 

@@ -7,15 +7,15 @@ type User = {
 
 type Post = {
   title: string;
-  users: User; // 게시글 작성자 정보
+  users: User; 
 };
 
 type CommentWithPost = {
   id: string;
   comment: string;
   created_at: string;
-  users: User; // 댓글 작성자 정보
-  posts: Post; // 게시물 정보
+  users: User; 
+  posts: Post; 
 };
 
 const supabase = createClient();

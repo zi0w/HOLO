@@ -1,11 +1,10 @@
 "use client";
 
 import { useSignUpForm } from "@/app/sign-up/_hooks/useSignUpForm";
-
+import { useSignUpMutation } from "@/app/sign-up/_hooks/useSignUpMutation";
 import { useRouter } from "next/navigation";
 import type { SignUpPayload } from "../_types/signupType";
 import SignUpModal from "./SignUpModal";
-import { useSignUpMutation } from "@/app/sign-up/_hooks/useSignUpMutation";
 
 const SignUp = () => {
   const { formData, errors, handleChange, validateAll } = useSignUpForm();
@@ -50,65 +49,79 @@ const SignUp = () => {
         <form onSubmit={handleSubmit} className="w-full">
           <div className="w-full">
             <div className="space-y-[8px]">
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="이메일을 입력해주세요."
-                className="h-[56px] w-full rounded-[4px] border border-[#999E98] bg-[#F8F9FA] px-4 text-[14px] placeholder:text-[#999] focus:outline-none"
-                required
-              />
-              {errors.email && (
-                <p className="text-[12px] text-red-500">{errors.email}</p>
-              )}
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="이메일을 입력해주세요."
+                  className="h-[56px] w-[362px] rounded-[4px] border border-base-400 bg-base-50 px-4 text-[14px] placeholder:text-base-500 focus:outline-none"
+                  required
+                />
+                {errors.email && (
+                  <p className="text-[12px] text-primary-500">{errors.email}</p>
+                )}
+              </div>
 
-              <input
-                type="text"
-                name="nickname"
-                value={formData.nickname}
-                onChange={handleChange}
-                placeholder="닉네임을 입력해주세요."
-                className="h-[56px] w-full rounded-[4px] border border-[#999E98] bg-[#F8F9FA] px-4 text-[14px] placeholder:text-[#999] focus:outline-none"
-                required
-              />
-              {errors.nickname && (
-                <p className="text-[12px] text-red-500">{errors.nickname}</p>
-              )}
+              <div>
+                <input
+                  type="text"
+                  name="nickname"
+                  value={formData.nickname}
+                  onChange={handleChange}
+                  placeholder="닉네임을 입력해주세요."
+                  className="h-[56px] w-[362px] rounded-[4px] border border-base-400 bg-base-50 px-4 text-[14px] placeholder:text-base-500 focus:outline-none"
+                  required
+                />
+                {errors.nickname && (
+                  <p className="text-[12px] text-primary-500">
+                    {errors.nickname}
+                  </p>
+                )}
+              </div>
 
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="비밀번호(영문+숫자 6-16자)"
-                className="h-[56px] w-full rounded-[4px] border border-[#999E98] bg-[#F8F9FA] px-4 text-[14px] placeholder:text-[#999] focus:outline-none"
-                required
-              />
-              {errors.password && (
-                <p className="text-[12px] text-red-500">{errors.password}</p>
-              )}
+              <div>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="비밀번호(영문+숫자 6-16자)"
+                  className="h-[56px] w-[362px] rounded-[4px] border border-base-400 bg-base-50 px-4 text-[14px] placeholder:text-base-500 focus:outline-none"
+                  required
+                />
+                {errors.password && (
+                  <p className="text-[12px] text-primary-500">
+                    {errors.password}
+                  </p>
+                )}
+              </div>
 
-              <input
-                type="password"
-                name="checkPassword"
-                value={formData.checkPassword}
-                onChange={handleChange}
-                placeholder="비밀번호 확인"
-                className="h-[56px] w-full rounded-[4px] border border-[#999E98] bg-[#F8F9FA] px-4 text-[14px] placeholder:text-[#999] focus:outline-none"
-                required
-              />
-              {errors.checkPassword && (
-                <p className="text-[12px] text-red-500">{errors.checkPassword}</p>
-              )}
+              <div>
+                <input
+                  type="password"
+                  name="checkPassword"
+                  value={formData.checkPassword}
+                  onChange={handleChange}
+                  placeholder="비밀번호 확인"
+                  className="h-[56px] w-[362px] rounded-[4px] border border-base-400 bg-base-50 px-4 text-[14px] placeholder:text-base-500 focus:outline-none"
+                  required
+                />
+                {errors.checkPassword && (
+                  <p className="text-[12px] text-primary-500">
+                    {errors.checkPassword}
+                  </p>
+                )}
+              </div>
             </div>
 
             <button
               type="submit"
-              className={`mt-[16px] h-[56px] w-full rounded-[4px] text-[16px] font-medium text-white ${
+              className={`mt-[16px] h-[48px] w-[362px] rounded-[4px] text-[16px] font-medium text-base-50 ${
                 Object.values(errors).some((error) => error)
                   ? "cursor-not-allowed bg-gray-400"
-                  : "bg-[#FF7600] hover:bg-[#E66A00]"
+                  : "bg-primary-500 hover:bg-primary-600"
               }`}
               disabled={Object.values(errors).some((error) => error)}
             >
@@ -121,7 +134,7 @@ const SignUp = () => {
           <button
             type="button"
             onClick={handleGoToLogin}
-            className="h-[56px] w-full rounded-[4px] border border-[#FF7600] text-[16px] font-medium text-[#FF7600] hover:bg-[#FF7600]/5"
+            className="h-[48px] w-[362px] rounded-[4px] border border-primary-500 text-[16px] font-medium text-primary-500 hover:bg-primary-500/5"
           >
             로그인
           </button>
@@ -138,4 +151,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-

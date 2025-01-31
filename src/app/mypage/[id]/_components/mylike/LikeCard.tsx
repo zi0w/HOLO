@@ -1,12 +1,13 @@
 "use client";
 
-import { formatDate } from "@/app/mypage/[id]/_components/mylike/_utils/formatDate";
-import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
+import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
+import { formatDate } from "./_utils/formatDate";
+
+import { useModalStore } from "@/store/mypagemodal/useMypageModalStore";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export type LikeCardProps = {
   post: Post;
@@ -14,29 +15,17 @@ export type LikeCardProps = {
 };
 
 const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirm, setIsConfirm] = useState(false);
+  const { isOpen, selectedId, modalType, openModal, closeModal } =
+    useModalStore();
 
   const handleLikeCancel = async () => {
     try {
       await onLikeChange(post.id, "delete");
-      setIsConfirm(false);
-      setIsModalOpen(false);
+      closeModal();
     } catch (error) {
       console.error("좋아요 취소 실패:", error);
-      setIsModalOpen(false);
-      setIsConfirm(false);
+      closeModal();
     }
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setIsConfirm(false);
-  };
-
-  const handleLikeClick = () => {
-    setIsConfirm(true);
-    setIsModalOpen(true);
   };
 
   return (
@@ -44,7 +33,7 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
       <div className="flex h-[64px] w-full items-center justify-between px-5">
         <Link
           href={`/honeytips/${post.id}`}
-          className="flex flex-1 items-center gap-3"
+          className="flex w-[calc(100%-28px)] flex-1 items-center gap-3"
         >
           {post.post_image_url && post.post_image_url.length > 0 ? (
             <div className="relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]">
@@ -61,14 +50,14 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
           )}
           <div className="flex min-w-0 flex-1 flex-col gap-[2px]">
             <div className="flex w-full items-center justify-between">
-              <h3 className="line-clamp-1 text-[16px] font-medium text-[#424242]">
+              <h3 className="line-clamp-1 text-[16px] font-Pretendard text-base-800">
                 {post.title}
               </h3>
-              <span className="-mt-[5px] ml-2 text-[14px] text-[#8F8F8F]">
+              <span className="-mt-[5px] font-Pretendard ml-2 text-[14px] text-base-500">
                 {formatDate(post.created_at)}
               </span>
             </div>
-            <p className="line-clamp-1 text-[14px] text-[#8F8F8F]">
+            <p className="line-clamp-1 font-Pretendard text-[14px] text-base-800">
               {post.content}
             </p>
           </div>
@@ -78,18 +67,17 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
             <MyLikeButton
               postId={post.id}
               onLikeChange={onLikeChange}
-              onClick={handleLikeClick}
+              onClick={() => openModal(post.id, "like")}
             />
           </div>
         </div>
       </div>
 
-      <ConfirmModal
-        isOpen={isModalOpen}
-        isConfirm={isConfirm}
-        text="좋아요 취소"
+      <RemoveModal
+        isOpen={isOpen && selectedId === post.id}
+        modalType={modalType}
         onAction={handleLikeCancel}
-        onClose={handleModalClose}
+        onClose={closeModal}
       />
     </>
   );

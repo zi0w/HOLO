@@ -1,25 +1,34 @@
 import MainHeader from "@/components/common/MainHeader";
 import BestPostList from "@/components/main/BestPostList";
 import PolicyAndTrashBanner from "@/components/main/PolicyAndTrashBanner";
-
 import MainBanner from "@/components/main/MainBanner";
 import Map from "@/components/main/Map";
-import DailyMenu from "@/components/main/DailyMenu";
-import DailyFortune from "@/components/main/DailyFortune";
 
 const Home = () => {
   return (
-    <div className="mt-[70px]">
-      <MainHeader />
+    <div className="mt-[70px] lg:mx-auto lg:mt-10 lg:max-w-[979px] pb-[83px] lg:pb-11">
+      <div className="lg:hidden">
+        <MainHeader />
+      </div>
       <MainBanner />
-      <Map />
-      {/* 정책 배너 */}
-      <PolicyAndTrashBanner isPolicy={true} />
-      {/* 쓰레기 배너 */}
-      <PolicyAndTrashBanner isPolicy={false} />
-      <BestPostList />
-      <DailyMenu />
-      <DailyFortune />
+      <div className="lg:grid lg:grid-cols-[597px_auto] lg:gap-4">
+        <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:h-full">
+          <BestPostList />
+        </div>
+        <div className="lg:col-start-1 lg:row-start-2 lg:mt-auto lg:flex lg:gap-6">
+          {/* 정책 배너 */}
+          <div className="lg:flex-1">
+            <PolicyAndTrashBanner isPolicy={true} />
+          </div>
+          {/* 쓰레기 배너 */}
+          <div className="lg:flex-1">
+            <PolicyAndTrashBanner isPolicy={false} />
+          </div>
+        </div>
+        <div className="mt-8 lg:col-start-1 lg:row-start-1 lg:mt-0">
+          <Map />
+        </div>
+      </div>
     </div>
   );
 };

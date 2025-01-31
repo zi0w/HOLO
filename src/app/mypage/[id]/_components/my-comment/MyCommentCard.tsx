@@ -1,34 +1,30 @@
 "use client";
 
-import ConfirmModal from "@/app/mypage/_components/ConfirmModal";
+import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { CommentWithPost } from "@/app/mypage/_types/useMyTypes";
+import { useModalStore } from "@/store/mypagemodal/useMypageModalStore";
+
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { type FC, useState } from "react";
+import { type FC } from "react";
 
 type MyCommentCardProps = {
   comment: CommentWithPost;
-  onDelete: (commentId: string) => void;
+  onDelete: (commentId: string) => Promise<void>;
 };
 
 const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirm, setIsConfirm] = useState(false);
+  const { isOpen, selectedId, modalType, openModal, closeModal } =
+    useModalStore();
 
   const handleDelete = async () => {
     try {
       await onDelete(comment.id);
-      setIsConfirm(false);
-      setIsModalOpen(true);
+      closeModal();
     } catch (error) {
       console.error("댓글 삭제 실패:", error);
     }
-  };
-
-  const handleClose = () => {
-    setIsModalOpen(false);
-    setIsConfirm(false);
   };
 
   return (
@@ -40,7 +36,7 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
       >
         <Link
           href={`/honeytips/${comment.post_id}`}
-          className={clsx("flex flex-1 items-center gap-3")}
+          className="flex w-[calc(100%-36px)] flex-1 items-center gap-3"
         >
           {comment.posts?.post_image_url &&
           comment.posts.post_image_url.length > 0 ? (
@@ -64,13 +60,15 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
             <div className={clsx("flex w-full items-center justify-between")}>
               <h3
                 className={clsx(
-                  "line-clamp-1 text-[16px] font-medium text-[#424242]",
+                  "font-Pretendard line-clamp-1 text-[16px] text-base-800",
                 )}
               >
                 {comment.posts?.title}
               </h3>
               <span
-                className={clsx("-mt-[5px] ml-2 text-[14px] text-[#8F8F8F]")}
+                className={clsx(
+                  "font-Pretendard -mt-[5px] ml-2 text-[14px] text-base-500",
+                )}
               >
                 {new Date(comment.created_at)
                   .toLocaleDateString("ko-KR", {
@@ -82,7 +80,11 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
                   .slice(0, -1)}
               </span>
             </div>
-            <p className={clsx("line-clamp-1 text-[14px] text-[#8F8F8F]")}>
+            <p
+              className={clsx(
+                "font-Pretendard line-clamp-1 text-[14px] text-base-800",
+              )}
+            >
               {comment.comment}
             </p>
           </div>
@@ -91,22 +93,20 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              setIsConfirm(true);
-              setIsModalOpen(true);
+              openModal(comment.id, "comment");
             }}
-            className="flex items-center justify-center border border-[#424242] text-[12px] text-[#424242] h-[28px] w-[38px] px-[7px] py-[6px]"
+            className="flex h-[28px] w-[38px] items-center justify-center rounded border border-base-800 px-[7px] py-[6px] text-[12px] text-base-800"
           >
             삭제
           </button>
         </div>
       </div>
 
-      <ConfirmModal
-        isOpen={isModalOpen}
-        isConfirm={isConfirm}
-        text="삭제"
+      <RemoveModal
+        isOpen={isOpen && selectedId === comment.id}
+        modalType={modalType}
         onAction={handleDelete}
-        onClose={handleClose}
+        onClose={closeModal}
       />
     </>
   );

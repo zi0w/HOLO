@@ -12,9 +12,11 @@ const config: Config = {
         "gmarket-light": ["GmarketSansLight"],
         gmarket: ["GmarketSansMedium"],
         "gmarket-bold": ["GmarketSansBold"],
+        noto: ["Noto Sans KR", "sans-serif"],
       },
       boxShadow: {
         custom: "0px 4px 10px 0px rgba(0, 0, 0, 0.15)",
+        custom2: "0px 2px 2px 0px rgba(0, 0, 0, 0.05)",
       },
       colors: {
         background: "var(--background)",

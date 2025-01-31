@@ -1,4 +1,3 @@
-// api/comments.ts
 
 import type { Comment } from "@/app/mypage/_types/useMyTypes";
 import { createClient } from "@/lib/utils/supabase/client";
