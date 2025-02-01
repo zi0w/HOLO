@@ -23,7 +23,7 @@ const SignInForm = () => {
 
   return (
     <>
-      <div className="mx-5 flex flex-col items-center pb-5">
+      <div className="mx-5 mt-6 flex flex-col items-center pb-5">
         <form onSubmit={handleLogin} className="w-full">
           <div className="w-full">
             <div className="space-y-[8px]">
@@ -62,7 +62,7 @@ const SignInForm = () => {
 
             <button
               type="submit"
-              className={`mt-[24px] h-[48px] w-[362px] rounded-[4px] text-[16px] font-medium text-base-50 ${
+              className={`mt-8 h-[48px] w-[362px] rounded-[4px] text-[16px] font-medium text-base-50 ${
                 Object.values(errors).some((error) => error)
                   ? "cursor-not-allowed bg-base-400"
                   : "bg-primary-500 hover:bg-primary-600"
@@ -74,11 +74,11 @@ const SignInForm = () => {
           </div>
         </form>
 
-        <div className="my-[32px] flex w-full justify-center">
+        <div className="my-10 flex w-full justify-center">
           <SocialLogin />
         </div>
 
-        <div className="w-full space-y-[12px]">
+        <div className=" w-full">
           <button
             type="button"
             onClick={handleGoToSignUp}
@@ -87,11 +87,11 @@ const SignInForm = () => {
             회원가입
           </button>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-6">
             <button
               type="button"
               onClick={handleGuestAccess}
-              className="text-[14px] font-normal text-primary-800 hover:text-primary-900"
+              className="text-[14px] font-normal text-base-700"
             >
               비회원으로 둘러보기
             </button>

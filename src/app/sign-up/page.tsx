@@ -16,27 +16,27 @@ export const metadata: Metadata = {
 
 const Page = () => {
   return (
-    <div className="min-h-screen w-full bg-white lg:bg-white">
-      <div className="mx-auto flex h-full w-full flex-col items-center lg:h-[1024px] lg:w-[1440px] lg:flex-row lg:justify-center lg:gap-20">
-        <div className="hidden lg:relative lg:block lg:w-[590px]">
+    <div className="h-full w-full bg-white">
+      <div className="mx-auto flex h-full w-full flex-col items-center lg:flex-row lg:justify-center lg:gap-20">
+        <div className="hidden lg:block mt-auto">
           <Image
             src={authavatar}
             alt="캐릭터 아바타"
             width={590}
             height={913}
-            className="object-contain"
-            style={{
-              maxWidth: "100%",
-              height: "auto",
-              marginTop: "55px",
-            }}
+            className="max-h-[800px] object-contain"
+            // style={{
+            //   maxWidth: "100%",
+            //   height: "auto",
+            //   // marginTop: "55px",
+            // }}
             priority
           />
         </div>
-        <div className="flex flex-col items-center pt-14 lg:mt-[55px]">
-          <div className="mb-[40px] flex flex-col items-center">
+        <div className="pt-14 lg:my-auto lg:pt-0">
+          <div className="mb-[40px] flex flex-col items-center lg:mb-0">
             <div className="relative">
-              <div className="-ml-[20px] mt-[20px]">
+              <div className="-ml-[20px] mt-[20px] lg:mt-0">
                 <Image src={splash_logo} alt="로고" width={343} height={165} />
               </div>
             </div>

@@ -93,7 +93,7 @@ const CategoryButtons = ({
       </div>
       <div
         className={clsx(
-          "mx-5 border-b-2 border-primary-100",
+          "border-b-2 border-primary-100",
           isMain ? "mb-4 lg:mx-0" : "lg:border-none",
         )}
       ></div>

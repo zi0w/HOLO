@@ -63,11 +63,11 @@ const Map = () => {
           </div>
           <Link
             href={"/map"}
-            className="mt-4 block text-center text-sm text-primary-500 lg:font-gmarket lg:text-lg"
+            className="mt-4 block text-center font-gmarket text-sm text-primary-500 lg:text-lg"
           >
             다른 장소도 궁금하다면?
           </Link>
-        </div>
+        </div> 
       ) : (
         "로딩 중..."
       )}
