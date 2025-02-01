@@ -6,8 +6,7 @@ import KoreanFood from "@/assets/images/recommend/korean-food.png";
 import WesternFood from "@/assets/images/recommend/western-food.png";
 import Loading from "@/components/common/Loading";
 import SaveResultButton from "@/components/daily/SaveResultButton";
-import ShareLinkButton from "@/components/daily/ShareLinkButton";
-import SocialShare from "@/components/daily/SocialShare";
+import ShareButton from "@/components/daily/ShareButton";
 import { generateShareLink } from "@/lib/utils/daily/shareLink";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
@@ -119,8 +118,7 @@ const Result = ({ answerData }: ResultProps) => {
           </Link>
           <div className="mt-6 flex gap-4 pb-4">
             <SaveResultButton elementId="result-container" />
-            <ShareLinkButton link={shareLink} />
-            <SocialShare
+            <ShareButton
               postUrl={shareLink}
               title={menu}
               description={reason}
