@@ -17,7 +17,7 @@ const ProgressBar = ({ start, end, label }: ProgressBarProps) => {
 
   return (
     <div className="flex flex-col items-center">
-      <span className="text-base text-base-800 font-bold">{label}</span>
+      <span className="text-base text-base-800 font-bold mt-20">{label}</span>
       <div
         className={clsx(
           "relative h-2 w-full bg-primary-100", // 공통

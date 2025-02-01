@@ -42,14 +42,14 @@ const Result = () => {
   return fortune ? (
     <div
       id="result-container"
-      className="flex flex-col items-center bg-white text-black"
+      className="flex flex-col items-center bg-white text-black mt-4"
     >
       <Image
         src={ResultFortune}
         alt="result-fortune"
         width={355}
         height={355}
-        className="mt-4"
+        className="mt-20"
       />
       <div className="flex flex-col items-center gap-3">
         <h2 className="mt-8 text-2xl">포춘쿠키 내용</h2>
@@ -89,8 +89,9 @@ const Result = () => {
       )}
     </div>
   ) : (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen items-center justify-center flex-col gap-4">
       <Loading />
+      <p className="text-center">포츈쿠키가 열리고 있습니다! <br/> 잠시만 더 기다려주세요 :)</p>
     </div>
   );
 };

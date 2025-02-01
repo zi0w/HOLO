@@ -84,7 +84,7 @@ const Result = ({ answerData }: ResultProps) => {
       <Image
         src={selectedImage}
         alt="recommended-food"
-        className="mt-4"
+        className="mt-20"
         width={355}
         height={355}
       />
@@ -133,8 +133,9 @@ const Result = ({ answerData }: ResultProps) => {
       )}
     </div>
   ) : (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen items-center justify-center flex-col gap-4">
       <Loading />
+      <p className="text-center">신중하게 메뉴를 결정중입니다. <br/> 잠시만 더 기다려주세요 :)</p>
     </div>
   );
 };

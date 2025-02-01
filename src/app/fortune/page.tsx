@@ -30,8 +30,8 @@ const fortuneImages = [
 
 const fortunePage = () => {
   return (
-    <div className="mt-5 flex h-full flex-col items-center bg-white">
-      <h1 className="text-center text-2xl text-base-800">
+    <div className="mt-4 flex h-full flex-col items-center bg-white">
+      <h1 className="text-center mt-20 text-2xl text-base-800">
         오늘의 운세를 <br />
         알려줄 포춘쿠키는?
       </h1>
