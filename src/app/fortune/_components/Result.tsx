@@ -4,7 +4,7 @@ import fetchDailyFortune from "@/app/recommend/_actions/fetchDailyFortune";
 import ResultFortune from "@/assets/images/fortune/fortune-result.png";
 import Loading from "@/components/common/Loading";
 import SaveResultButton from "@/components/daily/SaveResultButton";
-import ShareLinkButton from "@/components/daily/ShareLinkButton";
+import ShareButton from "@/components/daily/ShareButton";
 import { generateShareLink } from "@/lib/utils/daily/shareLink";
 import Image from "next/image";
 import Link from "next/link";
@@ -79,7 +79,7 @@ const Result = () => {
           </Link>
           <div className="mt-6 flex gap-4 pb-4">
             <SaveResultButton elementId="result-container" />
-            <ShareLinkButton link={shareLink} />
+            <ShareButton postUrl={shareLink} title="포춘쿠키 내용" description={fortune} thumbnail={ResultFortune.src} />
           </div>
           <span className="mt-4 text-center text-xs text-base-500">
             아이폰에서는 저장 기능이 원활하게 작동하지 않습니다. <br />

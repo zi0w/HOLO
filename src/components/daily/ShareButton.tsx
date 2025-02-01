@@ -61,7 +61,7 @@ const ShareButton = ({
     window.Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: `오늘의 추천 메뉴: ${title}`,
+        title: `오늘의 추천: ${title}`,
         description,
         imageUrl: thumbnail,
         link: {
