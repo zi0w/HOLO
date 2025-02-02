@@ -22,8 +22,8 @@ const AnswerList = <T extends string>({
           key={item}
           type="button"
           onClick={() => onAnswerSelect(item)}
-          className={clsx("border border-primary-300 h-[84px] rounded bg-primary-50 font-gmarket text-lg text-primary-500", {
-            "!bg-primary-200": selectedAnswer === item,
+          className={clsx("border border-primary-900 h-[84px] rounded bg-primary-50 font-gmarket text-lg text-primary-900", {
+            "!bg-primary-900 text-white": selectedAnswer === item,
           })}
         >
           {item}

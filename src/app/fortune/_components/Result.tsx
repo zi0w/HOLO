@@ -4,7 +4,7 @@ import fetchDailyFortune from "@/app/recommend/_actions/fetchDailyFortune";
 import ResultFortune from "@/assets/images/fortune/fortune-result.png";
 import Loading from "@/components/common/Loading";
 import SaveResultButton from "@/components/daily/SaveResultButton";
-import ShareLinkButton from "@/components/daily/ShareLinkButton";
+import ShareButton from "@/components/daily/ShareButton";
 import { generateShareLink } from "@/lib/utils/daily/shareLink";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,14 +42,14 @@ const Result = () => {
   return fortune ? (
     <div
       id="result-container"
-      className="flex flex-col items-center bg-white text-black"
+      className="flex flex-col items-center bg-white text-black mt-4"
     >
       <Image
         src={ResultFortune}
         alt="result-fortune"
         width={355}
         height={355}
-        className="mt-4"
+        className="mt-20"
       />
       <div className="flex flex-col items-center gap-3">
         <h2 className="mt-8 text-2xl">포춘쿠키 내용</h2>
@@ -79,7 +79,7 @@ const Result = () => {
           </Link>
           <div className="mt-6 flex gap-4 pb-4">
             <SaveResultButton elementId="result-container" />
-            <ShareLinkButton link={shareLink} />
+            <ShareButton postUrl={shareLink} title="포춘쿠키 내용" description={fortune} thumbnail={ResultFortune.src} />
           </div>
           <span className="mt-4 text-center text-xs text-base-500">
             아이폰에서는 저장 기능이 원활하게 작동하지 않습니다. <br />
@@ -89,8 +89,9 @@ const Result = () => {
       )}
     </div>
   ) : (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen items-center justify-center flex-col gap-4">
       <Loading />
+      <p className="text-center">포츈쿠키가 열리고 있습니다! <br/> 잠시만 더 기다려주세요 :)</p>
     </div>
   );
 };
