@@ -41,7 +41,7 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
       <div className="hidden lg:block lg:pl-14 lg:pt-12 lg:pb-14">
         <MainHeader />
       </div>
-      <nav className="flex justify-between border-t border-base-200 bg-white px-5 py-2 text-xs text-base-700 lg:h-full lg:flex-col lg:justify-normal lg:border-none lg:p-5 lg:gap-8 lg:px-14">
+      <nav className="flex justify-between border-t border-base-200 bg-white px-5 py-2 text-xs text-base-700 lg:h-full lg:flex-col lg:justify-normal lg:border-none lg:p-5 lg:gap-8 lg:px-14 pb-[calc(env(safe-area-inset-bottom)+15px)]">
         {NAVIGATION_PATHS.map((navItem) => (
           <NavLink key={navItem.path} {...navItem} />
         ))}
