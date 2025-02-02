@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 const RecommendPage = () => {
   return (
-    <div className="mt-4 flex h-full flex-col items-center bg-white lg:mt-40 lg:max-w-xl lg:justify-center lg:rounded-3xl lg:border lg:border-primary-500">
+    <div className="mt-4 flex h-full flex-col items-center bg-white lg:mt-40 lg:max-w-xl lg:mx-auto lg:justify-center lg:rounded-3xl lg:border lg:border-primary-500">
       {/* 데스크톱에서는 중앙 정렬 */}
       <h1 className="mt-20 text-2xl text-base-800 lg:mt-24">메뉴 추천</h1>
       <span className="mt-1.5 text-center text-base text-primary-800">
