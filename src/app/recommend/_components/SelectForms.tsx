@@ -36,7 +36,7 @@ const SelectForms = () => {
   };
 
   return (
-    <div className="px-5">
+    <div className="px-5 mt-4">
       {!isResultPage && (<ProgressBar start={0} end={progressPercentage} label={stepFraction}/>)}
       <Funnel>
         {[

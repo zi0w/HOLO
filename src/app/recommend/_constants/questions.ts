@@ -14,7 +14,7 @@ export const QUESTIONS:Question[] = [
     },
     {
         id: "answer2",
-        question: "어떤 음식을 당기나요?", 
+        question: "어떤 음식이 당기나요?", 
         answers: ["한식", "일식", "양식", "중식"]
     },
     {
