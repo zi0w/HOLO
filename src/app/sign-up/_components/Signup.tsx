@@ -2,6 +2,7 @@
 
 import { useSignUpForm } from "@/app/sign-up/_hooks/useSignUpForm";
 import { useSignUpMutation } from "@/app/sign-up/_hooks/useSignUpMutation";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import type { SignUpPayload } from "../_types/signupType";
 import SignUpModal from "./SignUpModal";
@@ -48,7 +49,7 @@ const SignUp = () => {
       <div className="mx-5 mt-6 flex flex-col items-center pb-5">
         <form onSubmit={handleSubmit} className="w-full">
           <div className="w-full">
-            <div className="space-y-[8px]">
+            <div className="space-y-2">
               <div>
                 <input
                   type="email"
@@ -56,11 +57,11 @@ const SignUp = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="이메일을 입력해주세요."
-                  className="h-[56px] w-[362px] rounded-[4px] border border-base-400 bg-base-50 px-4 text-[14px] placeholder:text-base-500 focus:outline-none"
+                  className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
                   required
                 />
                 {errors.email && (
-                  <p className="text-[12px] text-primary-500">{errors.email}</p>
+                  <p className="text-xs text-primary-500">{errors.email}</p>
                 )}
               </div>
 
@@ -71,13 +72,11 @@ const SignUp = () => {
                   value={formData.nickname}
                   onChange={handleChange}
                   placeholder="닉네임을 입력해주세요."
-                  className="h-[56px] w-[362px] rounded-[4px] border border-base-400 bg-base-50 px-4 text-[14px] placeholder:text-base-500 focus:outline-none"
+                  className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
                   required
                 />
                 {errors.nickname && (
-                  <p className="text-[12px] text-primary-500">
-                    {errors.nickname}
-                  </p>
+                  <p className="text-xs text-primary-500">{errors.nickname}</p>
                 )}
               </div>
 
@@ -88,13 +87,11 @@ const SignUp = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="비밀번호(영문+숫자 6-16자)"
-                  className="h-[56px] w-[362px] rounded-[4px] border border-base-400 bg-base-50 px-4 text-[14px] placeholder:text-base-500 focus:outline-none"
+                  className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
                   required
                 />
                 {errors.password && (
-                  <p className="text-[12px] text-primary-500">
-                    {errors.password}
-                  </p>
+                  <p className="text-xs text-primary-500">{errors.password}</p>
                 )}
               </div>
 
@@ -105,11 +102,11 @@ const SignUp = () => {
                   value={formData.checkPassword}
                   onChange={handleChange}
                   placeholder="비밀번호 확인"
-                  className="h-[56px] w-[362px] rounded-[4px] border border-base-400 bg-base-50 px-4 text-[14px] placeholder:text-base-500 focus:outline-none"
+                  className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
                   required
                 />
                 {errors.checkPassword && (
-                  <p className="text-[12px] text-primary-500">
+                  <p className="text-xs text-primary-500">
                     {errors.checkPassword}
                   </p>
                 )}
@@ -118,11 +115,13 @@ const SignUp = () => {
 
             <button
               type="submit"
-              className={`mt-6 h-[48px] w-[362px] rounded-[4px] text-[16px] font-medium text-base-50 ${
-                Object.values(errors).some((error) => error)
-                  ? "cursor-not-allowed bg-gray-400"
-                  : "bg-primary-500 hover:bg-primary-600"
-              }`}
+              className={clsx(
+                `mt-6 h-[48px] w-[362px] rounded-[4px] text-[16px] font-medium text-base-50 ${
+                  Object.values(errors).some((error) => error)
+                    ? "cursor-not-allowed bg-gray-400"
+                    : "bg-primary-500 hover:bg-primary-600"
+                }`,
+              )}
               disabled={Object.values(errors).some((error) => error)}
             >
               회원가입

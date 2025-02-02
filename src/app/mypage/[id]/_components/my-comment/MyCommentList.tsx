@@ -36,39 +36,39 @@ const MyCommentList = () => {
       </div>
     );
 
-  return (
-    <div className="mt-[30px] h-[442px] w-[362px] w-full flex-shrink-0 rounded-[4px] border border-base-300 bg-white pt-[10px] md:mx-auto md:mt-[15px] md:flex md:h-[442px] md:w-[549px] md:items-center">
-      {currentComments.length > 0 ? (
-        <div className="relative flex h-full flex-col w-full">
-        {/* // <div className="relative flex h-full flex-col lg:w-full"> */}
-          <div className="flex-1">
-            {currentComments.map((comment) => (
-              <MyCommentCard
-                key={comment.id}
-                comment={comment}
-                onDelete={handleDeleteWithRefresh}
+    return (
+      <div className="mt-8 h-[440px] w-full flex-shrink-0 rounded border border-base-300 bg-white pt-2.5 md:mx-auto md:mt-4 md:flex md:h-[440px] md:w-[548px] md:items-center">
+        {currentComments.length > 0 ? (
+          <div className="relative flex h-full flex-col w-full">
+            <div className="flex-1">
+              {currentComments.map((comment) => (
+                <MyCommentCard
+                  key={comment.id}
+                  comment={comment}
+                  onDelete={handleDeleteWithRefresh}
+                />
+              ))}
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-white px-20 py-4 pr-[90px]">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                startButtonIndex={startButtonIndex}
+                maxButtonsToShow={maxButtonsToShow}
+                onNextPage={nextPage}
+                onPrevPage={prevPage}
+                onGoToPage={goToPage}
               />
-            ))}
+            </div>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 bg-white px-[86px] py-4 pr-[90px]">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              startButtonIndex={startButtonIndex}
-              maxButtonsToShow={maxButtonsToShow}
-              onNextPage={nextPage}
-              onPrevPage={prevPage}
-              onGoToPage={goToPage}
-            />
-          </div>
-        </div>
-      ) : (
-        <p className="py-4 text-center text-base-800 md:mx-auto md:w-[549px] md:text-center">
-          작성한 댓글이 없습니다.
-        </p>
-      )}
-    </div>
-  );
+        ) : (
+          <p className="py-4 text-center text-base-800 md:mx-auto md:w-[548px] md:text-center">
+            작성한 댓글이 없습니다.
+          </p>
+        )}
+      </div>
+    );
+    
 };
 
 export default MyCommentList;
