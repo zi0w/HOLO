@@ -84,12 +84,19 @@ const Result = ({ answerData }: ResultProps) => {
       <Image
         src={selectedImage}
         alt="recommended-food"
-        className="mt-20"
+        className="mt-20 lg:hidden"
         width={355}
         height={355}
       />
+      <Image
+        src={selectedImage}
+        alt="recommended-food"
+        className="mt-10 hidden lg:block"
+        width={406}
+        height={406}
+      />
       <div className="flex flex-col items-center gap-3">
-        <h2 className="mt-8 text-2xl">{menu}</h2>
+        <h2 className="mt-8 text-2xl lg:mt-4">{menu}</h2>
         <p className="break-normal px-10">{reason}</p>
       </div>
 
@@ -106,7 +113,7 @@ const Result = ({ answerData }: ResultProps) => {
         <>
           <Link
             href="/recommend"
-            className="mt-6 flex h-12 w-[362px] items-center justify-center rounded bg-primary-500 font-gmarket font-normal text-white"
+            className="mt-6 flex h-12 w-[362px] items-center justify-center rounded bg-primary-500 font-gmarket font-normal text-white lg:w-[406px]"
           >
             추천 다시 받기
           </Link>
@@ -125,7 +132,7 @@ const Result = ({ answerData }: ResultProps) => {
               thumbnail={absoluteThumbnailUrl}
             />
           </div>
-          <span className="mt-4 text-center text-xs text-base-500">
+          <span className="mt-4 text-center text-xs text-base-500 lg:hidden">
             아이폰에서는 저장 기능이 원활하게 작동하지 않습니다. <br />
             (세 번 연속 저장하시면, 완성된 이미지가 저장됩니다.)
           </span>
@@ -133,7 +140,7 @@ const Result = ({ answerData }: ResultProps) => {
       )}
     </div>
   ) : (
-    <div className="flex h-screen items-center justify-center flex-col gap-4">
+    <div className="flex h-screen items-center justify-center flex-col gap-4 lg:max-h-[768px]">
       <Loading />
       <p className="text-center">신중하게 메뉴를 결정중입니다. <br/> 잠시만 더 기다려주세요 :)</p>
     </div>
