@@ -19,11 +19,13 @@ const SelectForms = () => {
     answer4: "",
   });
 
-  const currentLevel = (steps.indexOf(currentStep)) + 1;
+  const currentLevel = steps.indexOf(currentStep) + 1;
 
   const isResultPage = currentStep === steps[steps.length - 1];
-  const stepFraction = `${currentLevel}/${steps.length - 1}`
-  const progressPercentage = Math.round((currentLevel / (steps.length - 1)) * 100)
+  const stepFraction = `${currentLevel}/${steps.length - 1}`;
+  const progressPercentage = Math.round(
+    (currentLevel / (steps.length - 1)) * 100,
+  );
 
   const handleNext = (data: Partial<Answer>, nextStep: string) => {
     setAnswerData((prev) => ({ ...prev, ...data }));
@@ -36,28 +38,36 @@ const SelectForms = () => {
   };
 
   return (
-    <div className="px-5 mt-4 lg:max-w-xl lg:border lg:border-primary-500 lg:rounded-3xl lg:mb-24 lg:mx-auto lg:mt-40 lg:px-20">
-      {!isResultPage && (<ProgressBar start={0} end={progressPercentage} label={stepFraction}/>)}
-      <Funnel>
-        {[
-          ...QUESTIONS.map((q, index) => (
-            <Step key={q.id} name={q.id}>
-              <Question
-                question={q.question}
-                selectedAnswer={answerData[q.id]}
-                answerItems={q.answers}
-                onNext={(data) => handleNext(data, steps[index + 1])}
-                onPrev={(data) => handlePrev(data, steps[index - 1])}
-                fieldKey={q.id}
-              />
-            </Step>
-          )),
-          // 배열로 묶였기에 key 필요
-          <Step key="result" name={steps[4]}> 
-            <Result answerData={answerData} />
-          </Step>,
-        ]}
-      </Funnel>
+    <div className="block items-center justify-center lg:flex lg:h-screen">
+      <div className="mt-4 w-full px-5 lg:mx-auto lg:max-w-xl lg:rounded-3xl lg:border lg:border-primary-500 lg:px-20">
+        {!isResultPage && (
+          <ProgressBar
+            start={0}
+            end={progressPercentage}
+            label={stepFraction}
+          />
+        )}
+        <Funnel>
+          {[
+            ...QUESTIONS.map((q, index) => (
+              <Step key={q.id} name={q.id}>
+                <Question
+                  question={q.question}
+                  selectedAnswer={answerData[q.id]}
+                  answerItems={q.answers}
+                  onNext={(data) => handleNext(data, steps[index + 1])}
+                  onPrev={(data) => handlePrev(data, steps[index - 1])}
+                  fieldKey={q.id}
+                />
+              </Step>
+            )),
+            // 배열로 묶였기에 key 필요
+            <Step key="result" name={steps[4]}>
+              <Result answerData={answerData} />
+            </Step>,
+          ]}
+        </Funnel>
+      </div>
     </div>
   );
 };
