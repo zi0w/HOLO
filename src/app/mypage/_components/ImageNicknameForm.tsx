@@ -1,4 +1,3 @@
-// src/app/mypage/_components/ImageNicknameForm.tsx
 "use client";
 
 import { PasswordChangeModal } from "@/app/mypage/_components/PasswordChangeModal";

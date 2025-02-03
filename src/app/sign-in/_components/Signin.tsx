@@ -6,7 +6,7 @@ import useSignInMutation from "@/app/sign-in/_hooks/useSignInMutation";
 import { useSignInNavigation } from "@/app/sign-in/_hooks/useSignInNavigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SignInSchemaType, signInSchema } from "../_types/signInSchema";
+import { SignInSchemaType, signInSchema } from "@/app/sign-in/_types/signInSchema";
 import clsx from "clsx";
 
 const SignInForm = () => {

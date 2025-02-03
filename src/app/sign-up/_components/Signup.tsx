@@ -5,9 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { SignUpSchemaType, signUpSchema } from "../_types/signupSchema";
-import type { SignUpPayload } from "../_types/signupType";
-import SignUpModal from "./SignUpModal";
+import { SignUpSchemaType, signUpSchema } from "@/app/sign-up/_types/signupSchema";
+import type { SignUpPayload } from "@/app/sign-up/_types/signupType";
+import SignUpModal from "@/app/sign-up/_components/SignUpModal";
 
 const SignUp = () => {
   const {

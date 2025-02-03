@@ -4,7 +4,9 @@ import ProfileEditIcon from "@/assets/images/mypage/profileedit.svg";
 import Loading from "@/components/common/Loading";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useProfileChange } from "../_hooks/useProfileChangeHooks";
+import { useProfileChange } from "@/app/mypage/_hooks/useProfileChangeHooks";
+
+
 
 const UserProfile = () => {
   const router = useRouter();

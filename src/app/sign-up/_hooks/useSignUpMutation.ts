@@ -1,8 +1,8 @@
+import type { SignUpPayload } from "@/app/sign-up/_types/signupType";
 import type { Database } from "@/lib/types/supabase";
 import { createClient } from "@/lib/utils/supabase/client";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import type { SignUpPayload } from "../_types/signupType";
 
 const supabase = createClient();
 
@@ -122,4 +122,3 @@ export const useSignUpMutation = () => {
     closeModal,
   };
 };
-
