@@ -149,3 +149,17 @@ body {
 .mainBannerSwiper > .swiper-pagination.swiper-pagination-fraction {
   @apply shadow-custom2 !bottom-3 left-auto right-3 top-auto w-auto max-w-10 rounded border border-primary-300 bg-white px-1 text-right text-sm text-primary-800;
 }
+.mainBannerSwiper > .swiper-button-prev ,
+.mainBannerSwiper > .swiper-button-next {
+  @apply bg-white/40 p-[5px];
+}
+.mainBannerSwiper > .swiper-button-prev {
+  @apply rounded-l;
+}
+.mainBannerSwiper > .swiper-button-next {
+  @apply rounded-r;
+}
+.mainBannerSwiper > .swiper-button-prev:after ,
+.mainBannerSwiper > .swiper-button-next:after {
+  @apply text-sm text-base-700 font-semibold;
+}

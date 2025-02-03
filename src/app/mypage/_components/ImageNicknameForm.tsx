@@ -12,6 +12,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import clsx from "clsx";
 
 const ImageNicknameForm = () => {
   const router = useRouter();
@@ -160,8 +161,8 @@ const ImageNicknameForm = () => {
   return (
     <>
       <div className="flex min-h-screen items-center justify-center bg-white">
-        <div className="relative h-[874px] w-[402px] bg-white px-5">
-          <h1 className="pt-[60px] font-gmarket text-[24px] font-medium leading-[32px] text-base-800">
+        <div className="relative h-[872px] w-[400px] bg-white px-5">
+          <h1 className="pt-16 font-gmarket text-2xl font-medium leading-8 text-base-800">
             프로필 수정
           </h1>
           <div className="relative mx-auto mt-8 h-[120px] w-[120px]">
@@ -192,34 +193,34 @@ const ImageNicknameForm = () => {
           </div>
           <div className="mt-12 space-y-4">
             <div className="space-y-2">
-              <label className="font-gmarket text-[14px] font-normal leading-[20px] text-base-800">
+              <label className="font-gmarket text-sm font-normal leading-5 text-base-800">
                 닉네임
               </label>
               <input
                 type="text"
                 value={nickname}
                 onChange={(e) => handleNicknameChange(e.target.value)}
-                className={`h-[56px] w-full rounded-[4px] border px-4 text-[14px] text-base-800 ${
+                className={clsx(`h-14 w-full rounded border px-4 text-sm text-base-800 ${
                   nicknameError ? "border-primary-500" : "border-base-500"
-                }`}
+                }`)}
               />
               {nicknameError && (
                 <p className="mt-1 text-sm text-primary-500">{nicknameError}</p>
               )}
             </div>
             <div className="space-y-2">
-              <label className="font-gmarket text-[14px] font-normal leading-[20px] text-base-800">
+              <label className="font-gmarket text-sm font-normal leading-5 text-base-800">
                 비밀번호
               </label>
               <div className="relative">
                 <input
                   type="password"
                   value="●●●●●●●●●●●●"
-                  className="h-[56px] w-full rounded-[4px] border border-base-500 px-4 text-[14px] text-base-500"
+                  className="h-14 w-full rounded border border-base-500 px-4 text-sm text-base-500"
                   readOnly
                 />
                 <button
-                  className="absolute right-4 top-1/2 flex h-[28px] w-[37px] -translate-y-1/2 items-center justify-center gap-2 rounded-[4px] border border-base-500 text-[14px] font-medium text-base-800"
+                  className="absolute right-4 top-1/2 flex h-7 w-9 -translate-y-1/2 items-center justify-center gap-2 rounded border border-base-500 text-sm font-medium text-base-800"
                   onClick={handlePasswordEditOpen}
                 >
                   수정
@@ -229,13 +230,13 @@ const ImageNicknameForm = () => {
           </div>
           <div className="absolute bottom-14 left-5 right-5 space-y-4">
             <button
-              className="h-[48px] w-full rounded-[4px] border border-base-800 text-[16px] font-medium text-base-800"
+              className="h-12 w-full rounded border border-base-400 text-base font-medium text-base-800"
               onClick={handleCancel}
             >
               취소
             </button>
             <button
-              className="h-[48px] w-full rounded-[4px] bg-primary-500 text-[16px] font-medium text-base-50"
+              className="h-12 w-full rounded bg-primary-500 text-base font-medium text-base-50"
               onClick={handleSave}
             >
               저장
@@ -244,7 +245,7 @@ const ImageNicknameForm = () => {
         </div>
       </div>
       {isModalOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
           <PasswordChangeModal
             isOpen={isModalOpen}
             onClose={handlePasswordEditClose}
@@ -255,11 +256,15 @@ const ImageNicknameForm = () => {
         <ProfileModal
           isOpen={isProfileModalOpen}
           message="프로필 업데이트가 완료되었습니다."
-          onClose={handleProfileModalClose} // 마이페이지로 이동
+          onClose={handleProfileModalClose}
         />
       )}
     </>
   );
+  
 };
 
 export default ImageNicknameForm;
+
+
+

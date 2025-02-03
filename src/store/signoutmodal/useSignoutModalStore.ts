@@ -1,4 +1,3 @@
-// store/logoutModal/useLogoutModalStore.ts
 import { create } from "zustand";
 
 export type LogoutModalType = 'header-logout' | 'mypage-logout';
@@ -38,3 +37,8 @@ export const useSignoutModalStore = create<SignoutModalState>((set) => ({
   setSuccess: (value) => set({ isSuccess: value }),
   setError: (message) => set({ errorMessage: message }),
 }));
+
+
+
+
+

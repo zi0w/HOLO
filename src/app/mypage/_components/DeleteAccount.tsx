@@ -51,7 +51,8 @@ const DeleteAccount = () => {
     <>
       <button
         onClick={handleDeleteClick}
-        className="font-pretendard mb-[56px] flex h-[48px] w-full items-center justify-center rounded-[4px] border border-[#E0E0E0] text-base text-[#8F8F8F] hover:bg-gray-50 lg:w-[180px] lg:border-[#BDBDBD] lg:px-4 lg:py-[14px] lg:mb-0"
+        className="mb-14 flex h-12 w-full items-center justify-center rounded border border-base-400 text-base-800 hover:bg-base-50 lg:w-44 lg:border-base-400 lg:px-4 lg:py-3.5 lg:mb-0"
+
       >
         회원탈퇴
       </button>

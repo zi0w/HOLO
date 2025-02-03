@@ -20,7 +20,7 @@ const Layout = ({ question, onPrev, children, handleClick, selectedAnswer }: Lay
       {children}
 
       {/* 버튼 컨테이너 */}
-      <div className="mb-32 mt-10 flex gap-2 w-full max-w-md">
+      <div className="mb-32 mt-10 flex gap-2 w-full max-w-md lg:mb-10">
         <button
           type="button"
           onClick={onPrev}
