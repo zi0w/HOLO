@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 };
 const Map = () => {
   return (
-    <div className="my-8">
+    <>
       <KakaoMap />
-    </div>
+    </>
   );
 };
 

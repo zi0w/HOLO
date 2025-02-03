@@ -29,6 +29,7 @@ const useLocationStore = create<MapStore>((set) => ({
   geolocationError: null,
   kakaoLoading: true,
   selectedPlace: null,
+  
   setKakaoLoading: (loading) =>
     set((state) => {
       if (state.kakaoLoading !== loading) {
