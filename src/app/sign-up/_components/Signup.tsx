@@ -1,43 +1,46 @@
 "use client";
 
-import { useSignUpForm } from "@/app/sign-up/_hooks/useSignUpForm";
 import { useSignUpMutation } from "@/app/sign-up/_hooks/useSignUpMutation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import type { SignUpPayload } from "../_types/signupType";
-import SignUpModal from "./SignUpModal";
+import { useForm } from "react-hook-form";
+import { SignUpSchemaType, signUpSchema } from "@/app/sign-up/_types/signupSchema";
+import type { SignUpPayload } from "@/app/sign-up/_types/signupType";
+import SignUpModal from "@/app/sign-up/_components/SignUpModal";
 
 const SignUp = () => {
-  const { formData, errors, handleChange, validateAll } = useSignUpForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpSchemaType>({
+    resolver: zodResolver(signUpSchema),
+    mode: "onChange",
+  });
+
   const { mutate, modalState, closeModal } = useSignUpMutation();
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const newErrors = await validateAll();
-
-    if (Object.keys(newErrors).length > 0) {
-      if (newErrors.nickname === "이미 사용 중인 닉네임입니다.") {
-        alert(
-          "중복된 닉네임으로는 회원가입이 불가능합니다. 다른 닉네임을 사용해주세요.",
-        );
-        return;
-      }
-      alert("입력한 정보에 오류가 있습니다. 다시 확인해주세요.");
-      return;
-    }
-
+  const onSubmit = async (data: SignUpSchemaType) => {
     const signUpData: SignUpPayload = {
-      email: formData.email,
-      password: formData.password,
-      nickname: formData.nickname,
-      ...(formData.profile_image_url &&
-        formData.profile_image_url.trim() !== "" && {
-          profile_image_url: formData.profile_image_url,
+      email: data.email,
+      password: data.password,
+      nickname: data.nickname,
+      ...(data.profile_image_url &&
+        data.profile_image_url.trim() !== "" && {
+          profile_image_url: data.profile_image_url,
         }),
     };
 
     mutate(signUpData);
+  };
+
+  const handleModalClose = () => {
+    closeModal();
+    if (modalState.message === "회원가입이 완료되었습니다.") {
+      router.push("/sign-in");
+    }
   };
 
   const handleGoToLogin = () => {
@@ -47,67 +50,61 @@ const SignUp = () => {
   return (
     <>
       <div className="mx-5 mt-6 flex flex-col items-center pb-5">
-        <form onSubmit={handleSubmit} className="w-full">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           <div className="w-full">
             <div className="space-y-2">
               <div>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="이메일을 입력해주세요."
+                  placeholder="example@email.com"
                   className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
-                  required
+                  {...register("email")}
                 />
                 {errors.email && (
-                  <p className="text-xs text-primary-500">{errors.email}</p>
+                  <p className="text-xs text-primary-500">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
               <div>
                 <input
                   type="text"
-                  name="nickname"
-                  value={formData.nickname}
-                  onChange={handleChange}
-                  placeholder="닉네임을 입력해주세요."
+                  placeholder="2~20자의 한글, 영문, 숫자, 특수문자(._-)"
                   className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
-                  required
+                  {...register("nickname")}
                 />
                 {errors.nickname && (
-                  <p className="text-xs text-primary-500">{errors.nickname}</p>
+                  <p className="text-xs text-primary-500">
+                    {errors.nickname.message}
+                  </p>
                 )}
               </div>
 
               <div>
                 <input
                   type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="비밀번호(영문+숫자 6-16자)"
+                  placeholder="8~16자의 영문, 숫자, 특수문자 조합"
                   className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
-                  required
+                  {...register("password")}
                 />
                 {errors.password && (
-                  <p className="text-xs text-primary-500">{errors.password}</p>
+                  <p className="text-xs text-primary-500">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
               <div>
                 <input
                   type="password"
-                  name="checkPassword"
-                  value={formData.checkPassword}
-                  onChange={handleChange}
-                  placeholder="비밀번호 확인"
+                  placeholder="비밀번호 재입력"
                   className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
-                  required
+                  {...register("checkPassword")}
                 />
                 {errors.checkPassword && (
                   <p className="text-xs text-primary-500">
-                    {errors.checkPassword}
+                    {errors.checkPassword.message}
                   </p>
                 )}
               </div>
@@ -116,24 +113,23 @@ const SignUp = () => {
             <button
               type="submit"
               className={clsx(
-                `mt-6 h-[48px] w-[362px] rounded-[4px] text-[16px] font-medium text-base-50 ${
-                  Object.values(errors).some((error) => error)
-                    ? "cursor-not-allowed bg-gray-400"
-                    : "bg-primary-500 hover:bg-primary-600"
-                }`,
+                `mt-6 h-12 w-[362px] rounded text-base font-medium text-base-50`,
+                Object.keys(errors).length > 0
+                  ? "cursor-not-allowed bg-gray-400"
+                  : "bg-primary-500 hover:bg-primary-600",
               )}
-              disabled={Object.values(errors).some((error) => error)}
+              disabled={Object.keys(errors).length > 0}
             >
               회원가입
             </button>
           </div>
         </form>
 
-        <div className="mt-[16px] w-full">
+        <div className="mt-4 w-full">
           <button
             type="button"
             onClick={handleGoToLogin}
-            className="h-[48px] w-[362px] rounded-[4px] border border-primary-500 text-[16px] font-medium text-primary-500 hover:bg-primary-500/5"
+            className="h-12 w-[362px] rounded border border-primary-500 text-base font-medium text-primary-500 hover:bg-primary-500/5"
           >
             로그인
           </button>
@@ -143,10 +139,12 @@ const SignUp = () => {
       <SignUpModal
         isOpen={modalState.isOpen}
         message={modalState.message}
-        onClose={closeModal}
+        onClose={handleModalClose}
       />
     </>
   );
 };
 
 export default SignUp;
+
+

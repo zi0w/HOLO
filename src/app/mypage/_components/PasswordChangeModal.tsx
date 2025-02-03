@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { createClient } from "@/lib/utils/supabase/client";
-import ProfileModal from "@/app/mypage/_components/ProfileModal"; 
+import { usePasswordChange } from "../_hooks/usePasswordChangeHooks";
+import ProfileModal from "@/app/mypage/_components/ProfileModal";
 import CancelIcon from "@/assets/images/mypage/cancel.svg";
 import { useRouter } from "next/navigation";
 
@@ -15,72 +14,19 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const {
+    password,
+    confirmPassword,
+    passwordError,
+    confirmPasswordError,
+    isProfileModalOpen,
+    setIsProfileModalOpen,
+    handlePasswordChange,
+    handleConfirmPasswordChange,
+    handleSave
+  } = usePasswordChange();
   
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); // ProfileModal 상태 추가
-  const supabase = createClient();
   const router = useRouter();
-
-  const validatePasswords = () => {
-    let isValid = true;
-
-    if (password.length < 8) {
-      setPasswordError("비밀번호는 최소 8자 이상이어야 합니다.");
-      isValid = false;
-    } else {
-      setPasswordError("");
-    }
-
-    if (password !== confirmPassword) {
-      setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
-      isValid = false;
-    } else {
-      setConfirmPasswordError("");
-    }
-
-    return isValid;
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-    if (e.target.value.length < 8) {
-      setPasswordError("비밀번호는 최소 8자 이상이어야 합니다.");
-    } else {
-      setPasswordError("");
-    }
-  };
-
-  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-    if (e.target.value !== password) {
-      setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
-    } else {
-      setConfirmPasswordError("");
-    }
-  };
-
-  const handleSave = async () => {
-    if (!validatePasswords()) return;
-
-    try {
-      const { error } = await supabase.auth.updateUser({
-        password: password,
-      });
-
-      if (error) {
-        setPasswordError("비밀번호 변경에 실패했습니다.");
-        return;
-      }
-
-      setIsProfileModalOpen(true); // 비밀번호 변경 성공 시 모달 열기
-    } catch (error) {
-      console.error("비밀번호 변경 오류:", error);
-      setPasswordError("비밀번호 변경에 실패했습니다.");
-    }
-  };
 
   if (!isOpen) return null;
 
@@ -114,7 +60,7 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
                 <input
                   id="password"
                   type="password"
-                  placeholder="비밀번호"
+                  placeholder="8~16자의 영문, 숫자, 특수문자 조합"
                   value={password}
                   onChange={handlePasswordChange}
                   className="w-full rounded border border-base-500 px-3 py-4 font-gmarket text-sm placeholder:leading-5 placeholder:text-base-500"
@@ -134,7 +80,7 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
                 <input
                   id="confirm-password"
                   type="password"
-                  placeholder="비밀번호 확인"
+                  placeholder="비밀번호 재입력"
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
                   className="w-full rounded border border-base-500 px-3 py-4 font-gmarket text-sm placeholder:leading-5 placeholder:text-base-500"
@@ -174,20 +120,5 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
       )}
     </>
   );
-  
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

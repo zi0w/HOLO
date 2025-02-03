@@ -25,11 +25,7 @@ const Page = () => {
             width={590}
             height={913}
             className="max-h-[800px] object-contain"
-            // style={{
-            //   maxWidth: "100%",
-            //   height: "auto",
-            //   // marginTop: "55px",
-            // }}
+           
             priority
           />
         </div>

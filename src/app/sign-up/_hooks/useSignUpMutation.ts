@@ -1,24 +1,19 @@
+import type { SignUpPayload } from "@/app/sign-up/_types/signupType";
 import type { Database } from "@/lib/types/supabase";
 import { createClient } from "@/lib/utils/supabase/client";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import type { SignUpPayload } from "../_types/signupType";
 import { useState } from "react";
 
 const supabase = createClient();
 
 export const useSignUpMutation = () => {
-  const router = useRouter();
   const [modalState, setModalState] = useState({
     isOpen: false,
-    message: ""
+    message: "",
   });
 
   const closeModal = () => {
-    setModalState(prev => ({ ...prev, isOpen: false }));
-    if (modalState.message === "회원가입이 완료되었습니다.") {
-      router.push("/sign-in");
-    }
+    setModalState({ isOpen: false, message: "" });
   };
 
   const mutation = useMutation({
@@ -95,6 +90,9 @@ export const useSignUpMutation = () => {
           }
         }
 
+        // 회원가입 성공 후 즉시 로그아웃 수행
+        await supabase.auth.signOut();
+
         return authData;
       } catch (error) {
         console.error("Signup error:", error);
@@ -107,14 +105,13 @@ export const useSignUpMutation = () => {
     onSuccess: () => {
       setModalState({
         isOpen: true,
-        message: "회원가입이 완료되었습니다."
+        message: "회원가입이 완료되었습니다.",
       });
     },
     onError: (error: Error) => {
-      console.error("회원가입 중 오류:", error);
       setModalState({
         isOpen: true,
-        message: error.message
+        message: error.message,
       });
     },
   });
@@ -122,8 +119,6 @@ export const useSignUpMutation = () => {
   return {
     ...mutation,
     modalState,
-    closeModal
+    closeModal,
   };
 };
-
-

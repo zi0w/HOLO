@@ -46,13 +46,13 @@ export const signUp = async ({
     throw new Error("사용자 데이터가 생성되지 않았습니다");
   }
 
-  // 트리거에서 처리되므로 사용자 정보를 별도로 저장하지 않음
+  
   return {
     message: "회원가입이 완료되었습니다",
     user: {
       email,
       nickname,
-      profile_image_url: "", // 필요 시 값을 채워넣으세요
+      profile_image_url: "", 
     },
     session: data.session,
   };
