@@ -10,6 +10,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useProfileChange } from "../_hooks/useProfileChangeHooks";
+import { useEffect } from "react";
 
 const ImageNicknameForm = () => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const ImageNicknameForm = () => {
 
   const {
     nickname,
+    setNickname,
     isNicknameValid,
     nicknameError,
     handleNicknameChange,
@@ -33,21 +35,20 @@ const ImageNicknameForm = () => {
     previewUrl,
     fileInputRef,
     handleImageChange,
-    handleSave,
+    // handleSave,
     handlePasswordEditOpen,
     handlePasswordEditClose,
     handleImageButtonClick,
     handleProfileModalClose,
+    handleCancel,
+    handleSaveClick,
   } = useProfileChange();
 
-  const handleCancel = () => {
-    router.push("/mypage");
-  };
-
-  const handleSaveClick = async () => {
-    if (!isNicknameValid || !(await checkNicknameDuplicate(nickname))) return;
-    handleSave(nickname);
-  };
+  useEffect(() => {
+    if (userData?.nickname) {
+      setNickname(userData.nickname);
+    }
+  }, [userData?.nickname, setNickname]);
 
   if (isLoading || !userData) {
     return (
@@ -132,13 +133,13 @@ const ImageNicknameForm = () => {
           <div className="absolute bottom-14 left-5 right-5 space-y-4">
             <button
               className="h-12 w-full rounded border border-base-400 text-base font-medium text-base-800"
-              onClick={handleCancel}
+              onClick={() => handleCancel(router)}
             >
               취소
             </button>
             <button
               className="h-12 w-full rounded bg-primary-500 text-base font-medium text-base-50"
-              onClick={handleSaveClick}
+              onClick={() => handleSaveClick(isNicknameValid, checkNicknameDuplicate, nickname)}
             >
               저장
             </button>
@@ -168,3 +169,5 @@ const ImageNicknameForm = () => {
 };
 
 export default ImageNicknameForm;
+
+

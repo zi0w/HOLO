@@ -1,9 +1,9 @@
-// src/app/mypage/_hooks/useProfileChangeHooks.ts
-import { createClient } from "@/lib/utils/supabase/client";
 import type { Tables } from "@/lib/types/supabase";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState, useEffect, useRef } from "react";
+import { createClient } from "@/lib/utils/supabase/client";
 import useAuthStore from "@/store/useAuthStore";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useEffect, useRef, useState } from "react";
 
 export const useProfileChange = () => {
   const { user } = useAuthStore();
@@ -73,6 +73,19 @@ export const useProfileChange = () => {
       queryClient.invalidateQueries({ queryKey: ["userInfo", user?.id] });
     },
   });
+
+  const handleCancel = (router: AppRouterInstance) => {
+    router.push("/mypage");
+  };
+
+  const handleSaveClick = async (
+    isNicknameValid: boolean,
+    checkNicknameDuplicate: (nickname: string) => Promise<boolean>,
+    nickname: string,
+  ) => {
+    if (!isNicknameValid || !(await checkNicknameDuplicate(nickname))) return;
+    handleSave(nickname);
+  };
 
   useEffect(() => {
     if (userData) {
@@ -167,13 +180,16 @@ export const useProfileChange = () => {
     isLoading,
     localImageUrl,
     nickname,
+    setNickname,
+    handleCancel,
+    handleSaveClick,
     isModalOpen,
     isProfileModalOpen,
     profileImage,
     previewUrl,
     fileInputRef,
     handleNicknameUpdate: updateProfileMutation.mutate,
-    handleProfileImageUpdate: (url: string) => 
+    handleProfileImageUpdate: (url: string) =>
       updateProfileMutation.mutate({ profile_image_url: url }),
     handleImageChange,
     handleSave,
@@ -183,6 +199,3 @@ export const useProfileChange = () => {
     handleProfileModalClose,
   };
 };
-
-
-

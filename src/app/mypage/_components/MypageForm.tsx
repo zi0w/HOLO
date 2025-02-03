@@ -62,11 +62,12 @@ const Mypageform = () => {
     }
   };
   return (
-    <div className="relative bg-white">
+    <div className="md:translate-y-[-60px] translate-y-[-40px]
+ relative  bg-white">
       <div className="pt-[5px]">
         <UserProfile />
       </div>
-  
+
       <div className="mt-16">
         <div className="flex justify-center gap-16">
           <div className="relative">
@@ -82,12 +83,10 @@ const Mypageform = () => {
               좋아요
             </button>
             {activeSection === "likes" && (
-              <div
-                className="absolute top-[calc(100%+1px)] left-0 h-0.5 w-full bg-primary-500"
-              />
+              <div className="absolute left-0 top-[calc(100%+1px)] h-0.5 w-full bg-primary-500" />
             )}
           </div>
-  
+
           <div className="relative">
             <button
               onClick={() => handleSectionChange("comments")}
@@ -101,12 +100,10 @@ const Mypageform = () => {
               댓글
             </button>
             {activeSection === "comments" && (
-              <div
-                className="absolute top-[calc(100%+1px)] left-0 h-0.5 w-full bg-primary-500"
-              />
+              <div className="absolute left-0 top-[calc(100%+1px)] h-0.5 w-full bg-primary-500" />
             )}
           </div>
-  
+
           <div className="relative">
             <button
               onClick={() => handleSectionChange("myPosts")}
@@ -120,22 +117,16 @@ const Mypageform = () => {
               내가 쓴 글
             </button>
             {activeSection === "myPosts" && (
-              <div
-                className="absolute top-[calc(100%+1px)] left-0 h-0.5 w-full bg-primary-500"
-              />
+              <div className="absolute left-0 top-[calc(100%+1px)] h-0.5 w-full bg-primary-500" />
             )}
           </div>
         </div>
       </div>
-      <div
-        className="mt-1 w-full border-t border-primary-100 bg-primary-100 md:mx-auto md:w-[548px]"
-      />
-  
+      <div className="mt-1 w-full border-t border-primary-100 bg-primary-100 md:mx-auto md:w-[548px]" />
+
       <div>{renderSection()}</div>
-  
-      <div
-        className="mx-5 mt-5 flex flex-col lg:mx-auto lg:flex-row lg:items-center lg:justify-center lg:gap-2"
-      >
+
+      <div className="mx-5 mt-5 flex flex-col lg:mx-auto lg:flex-row lg:items-center lg:justify-center lg:gap-2">
         <SignoutButton />
         <div className="mt-4 lg:mt-0">
           <DeleteAccount />
@@ -143,9 +134,6 @@ const Mypageform = () => {
       </div>
     </div>
   );
-  
 };
 
 export default Mypageform;
-
-

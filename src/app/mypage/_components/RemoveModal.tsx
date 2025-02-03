@@ -15,7 +15,7 @@ const getModalText = (type: ModalType | null) => {
     case "comment":
       return "댓글을 삭제";
     case "like":
-      return "좋아요 취소";
+      return "좋아요를 삭제";
     case "post":
       return "게시물을 삭제";
     default:

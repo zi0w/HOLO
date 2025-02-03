@@ -133,6 +133,7 @@ export const useUpdateUserInfo = (userId: string) => {
     isEmailValid,
     emailError,
     nickname,
+    setNickname,
     isNicknameValid,
     nicknameError,
     handleEmailChange,
