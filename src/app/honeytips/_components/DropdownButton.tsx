@@ -16,10 +16,16 @@ const DropdownButton = ({ label, onClick, href }: DropdownButtonProps) => {
         {label}
       </Link>
     );
-  } 
+  }
 
   return (
-    <button className={baseStyles} onClick={onClick}>
+    <button
+      id="dropdown-button"
+      type="button"
+      aria-label="드롭다운 메뉴"
+      className={baseStyles}
+      onClick={onClick}
+    >
       {label}
     </button>
   );

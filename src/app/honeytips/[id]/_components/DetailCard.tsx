@@ -107,7 +107,9 @@ const DetailCard = ({ postId }: DetailCardProps) => {
         꿀팁 게시판
       </h2>
       <button
+        id="back-button"
         type="button"
+        aria-label="뒤로 가기"
         onClick={() => router.push("/honeytips")}
         className="py-5 lg:hidden"
       >
@@ -148,7 +150,12 @@ const DetailCard = ({ postId }: DetailCardProps) => {
 
         {currentId === postDetailData.user_id && (
           <div className="relative">
-            <button onClick={() => toggleDropdown(postDetailData.id)}>
+            <button
+              id="menu-button"
+              type="button"
+              aria-label="게시글 수정/삭제"
+              onClick={() => toggleDropdown(postDetailData.id)}
+            >
               <MenuDots />
             </button>
             {isDropdownOpen(postDetailData.id) && (

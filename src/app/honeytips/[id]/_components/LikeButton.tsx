@@ -77,7 +77,13 @@ const LikeButton = ({
           text="로그인으로 이동"
         />
       )}
-      <button onClick={handleLikeBtn} disabled={!!isMutating}>
+      <button
+        id="like-button"
+        type="button"
+        aria-label="좋아요"
+        onClick={handleLikeBtn}
+        disabled={!!isMutating}
+      >
         {likeData?.length ? <YesHeart /> : <NoHeart />}
       </button>
       <p className="text-[14px] text-primary-500">{likesCounts}</p>

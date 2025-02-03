@@ -151,7 +151,9 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
         )}
         <section className="mb-6 flex items-center justify-between">
           <button
+            id="cancel-button"
             type="button"
+            aria-label="게시글 작성 취소"
             onClick={() => openModal("form")}
             className="rounded py-1.5 pr-6 text-base-700 lg:hidden"
             disabled={isLoading}
@@ -163,7 +165,9 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             onChange={setCategory}
           />
           <button
+            typeof="save-button"
             type="button"
+            aria-label="게시글 등록"
             onClick={handleSubmit}
             className={clsx(
               "hover: rounded py-1.5 pl-6 text-base-700 hover:text-primary-500 lg:hidden",
@@ -207,7 +211,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             id="content"
             onChange={(e) => setContent(e.target.value)}
             placeholder="내용을 입력해주세요."
-            className="h-[297px] w-full rounded-md border border-base-400 p-2 focus:border-primary-400 focus:outline-none lg:mt-3"
+            className="h-[297px] w-full resize-none rounded-md border border-base-400 p-2 focus:border-primary-400 focus:outline-none lg:mt-3"
             rows={10}
             disabled={isLoading}
           />
@@ -245,7 +249,9 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
 
                 {imageUrls[index] && (
                   <button
+                    typeof="remove-button"
                     type="button"
+                    aria-label="이미지 삭제"
                     onClick={() => handleImageDelete(index)}
                     className="absolute right-0 top-0 p-1 text-black"
                   >
@@ -257,7 +263,9 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
           </section>
           <section className="hidden lg:block">
             <button
+              id="cancel-button"
               type="button"
+              aria-label="게시글 작성 취소"
               onClick={() => openModal("form")}
               className="mr-2 rounded border border-base-400 px-6 pb-1.5 pt-2 font-gmarket text-base-800"
               disabled={isLoading}
@@ -265,7 +273,9 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
               취소
             </button>
             <button
+              id="save-button"
               type="button"
+              aria-label="게시글 등록"
               onClick={handleSubmit}
               className={clsx(
                 "rounded border border-primary-500 bg-primary-500 px-6 pb-1.5 pt-2 font-gmarket text-white",

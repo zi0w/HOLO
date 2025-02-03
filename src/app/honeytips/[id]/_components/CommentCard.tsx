@@ -105,6 +105,9 @@ const CommentCard = ({
         {currentId && currentId === comment.user_id && (
           <div className="relative">
             <button
+              id="menu-button"
+              type="button"
+              aria-label="댓글 수정/삭제"
               className="rounded-full text-gray-500"
               onClick={toggleDropdown}
             >

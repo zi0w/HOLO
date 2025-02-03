@@ -115,6 +115,8 @@ const PostList = () => {
       <div className="flex justify-between border-b border-primary-100 lg:justify-normal lg:gap-6">
         {POST_CATEGORIES.map((category) => (
           <button
+            id="category-button"
+            type="button"
             key={category}
             className={clsx(
               "relative flex justify-center py-3 font-semibold text-base-500 transition-colors",
@@ -140,6 +142,9 @@ const PostList = () => {
 
       <div className="fixed bottom-14 right-4 z-50 lg:bottom-10 lg:right-10">
         <button
+          id="post-button"
+          type="button"
+          aria-label="게시글 작성"
           onClick={handleGoToPost}
           className="relative flex items-center justify-center rounded-full"
         >
