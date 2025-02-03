@@ -45,7 +45,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="mx-5 flex flex-col items-center pb-5">
+      <div className="mx-5 mt-6 flex flex-col items-center pb-5">
         <form onSubmit={handleSubmit} className="w-full">
           <div className="w-full">
             <div className="space-y-[8px]">
@@ -118,7 +118,7 @@ const SignUp = () => {
 
             <button
               type="submit"
-              className={`mt-[16px] h-[48px] w-[362px] rounded-[4px] text-[16px] font-medium text-base-50 ${
+              className={`mt-6 h-[48px] w-[362px] rounded-[4px] text-[16px] font-medium text-base-50 ${
                 Object.values(errors).some((error) => error)
                   ? "cursor-not-allowed bg-gray-400"
                   : "bg-primary-500 hover:bg-primary-600"

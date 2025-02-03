@@ -110,11 +110,11 @@ const Mypageform = () => {
             )}
           </div>
 
-          <div className={clsx("relative")}>
+          <div className="relative">
             <button
               onClick={() => handleSectionChange("myPosts")}
               className={clsx(
-                "font-pretendard px-2 text-base font-medium",
+                " px-2 text-base font-medium",
                 activeSection === "myPosts"
                   ? "text-[#FF7600]"
                   : "text-[#8F8F8F]",
@@ -133,20 +133,18 @@ const Mypageform = () => {
         </div>
       </div>
       <div
-        className={clsx(
-          "mt-1 w-full border-t border-[#FFE4CC] bg-[#FFE4CC] md:mx-auto md:h-[1px] md:w-[549px]",
-        )}
+        className={clsx("mt-1 w-full border-t border-[#FFE4CC] bg-[#FFE4CC] ")}
       />
 
       <div>{renderSection()}</div>
 
       <div
         className={clsx(
-          "mx-[20px] mt-[20px] flex flex-col lg:mx-auto lg:flex-row lg:items-center lg:justify-center lg:gap-2",
+          "mx-5 mt-5 flex flex-col lg:mx-auto lg:flex-row lg:items-center lg:justify-center lg:gap-2",
         )}
       >
         <SignoutButton />
-        <div className={clsx("mt-[16px] lg:mt-0")}>
+        <div className={clsx("mt-4 lg:mt-0")}>
           <DeleteAccount />
         </div>
       </div>

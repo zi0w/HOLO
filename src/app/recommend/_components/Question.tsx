@@ -38,6 +38,7 @@ const Question = <T extends keyof Answer>({
       question={question}
       onPrev={onPrev ? handlePrev : undefined}
       handleClick={handleNext}
+      selectedAnswer={currentAnswer}
     >
       <AnswerList
         selectedAnswer={currentAnswer}
