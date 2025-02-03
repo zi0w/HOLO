@@ -94,7 +94,7 @@ const MainBanner = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div className="flex w-full items-center justify-center bg-primary-700 lg:gap-6">
-            <Image src={FortuneCookie} alt="포츈쿠키" width={107} height={77} />
+            <Image src={FortuneCookie} alt="포춘쿠키" width={107} height={77} />
             <div className="text-center">
               <p className="font-gmarket-bold text-lg text-primary-50 lg:text-2xl">
                 오늘의 운세? <br className="lg:hidden" />
@@ -109,7 +109,7 @@ const MainBanner = () => {
             </div>
             <Image
               src={FortuneCookie}
-              alt="포츈쿠키"
+              alt="포춘쿠키"
               width={107}
               height={77}
               className="hidden -scale-x-100 lg:block"
