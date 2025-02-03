@@ -42,7 +42,6 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
       const data = await response.json();
       const result = data.documents[0];
       if (result) {
-        console.log("result", result);
         setPlaceDetail(result);
       } else {
         alert("장소 정보를 가져오는데 실패했습니다.");
@@ -71,9 +70,6 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
           setPlaces(result);
         } else {
           setPlaces([]);
-          if (result.length === 0) {
-            alert("근처에 해당 시설이 없습니다.");
-          }
         }
         setReSearch(false);
         setMapLevel(5);

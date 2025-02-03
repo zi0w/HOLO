@@ -61,97 +61,91 @@ const Mypageform = () => {
         return null;
     }
   };
-
   return (
     <div className="relative bg-white">
-      <div className={clsx("mt-[-5px]")}>
+      <div className="pt-[5px]">
         <UserProfile />
       </div>
-
-      <div className="mt-[60px]">
+  
+      <div className="mt-16">
         <div className="flex justify-center gap-16">
-          <div className={clsx("relative")}>
+          <div className="relative">
             <button
               onClick={() => handleSectionChange("likes")}
               className={clsx(
-                "font-pretendard px-2 text-base font-medium",
-                activeSection === "likes" ? "text-[#FF7600]" : "text-[#8F8F8F]",
+                "px-2 text-base font-medium",
+                activeSection === "likes"
+                  ? "text-primary-500"
+                  : "text-base-500",
               )}
             >
               좋아요
             </button>
             {activeSection === "likes" && (
               <div
-                className={clsx(
-                  "absolute -bottom-1 left-0 h-[2px] w-full bg-[#FF7600]",
-                )}
+                className="absolute top-[calc(100%+1px)] left-0 h-0.5 w-full bg-primary-500"
               />
             )}
           </div>
-
-          <div className={clsx("relative")}>
+  
+          <div className="relative">
             <button
               onClick={() => handleSectionChange("comments")}
               className={clsx(
-                "font-pretendard px-2 text-base font-medium",
+                "px-2 text-base font-medium",
                 activeSection === "comments"
-                  ? "text-[#FF7600]"
-                  : "text-[#8F8F8F]",
+                  ? "text-primary-500"
+                  : "text-base-500",
               )}
             >
               댓글
             </button>
             {activeSection === "comments" && (
               <div
-                className={clsx(
-                  "absolute -bottom-1 left-0 h-[2px] w-full bg-[#FF7600]",
-                )}
+                className="absolute top-[calc(100%+1px)] left-0 h-0.5 w-full bg-primary-500"
               />
             )}
           </div>
-
-          <div className={clsx("relative")}>
+  
+          <div className="relative">
             <button
               onClick={() => handleSectionChange("myPosts")}
               className={clsx(
-                "font-pretendard px-2 text-base font-medium",
+                "px-2 text-base font-medium",
                 activeSection === "myPosts"
-                  ? "text-[#FF7600]"
-                  : "text-[#8F8F8F]",
+                  ? "text-primary-500"
+                  : "text-base-500",
               )}
             >
               내가 쓴 글
             </button>
             {activeSection === "myPosts" && (
               <div
-                className={clsx(
-                  "absolute -bottom-1 left-0 h-[2px] w-full bg-[#FF7600]",
-                )}
+                className="absolute top-[calc(100%+1px)] left-0 h-0.5 w-full bg-primary-500"
               />
             )}
           </div>
         </div>
       </div>
       <div
-        className={clsx(
-          "mt-1 w-full border-t border-[#FFE4CC] bg-[#FFE4CC] md:mx-auto md:h-[1px] md:w-[549px]",
-        )}
+        className="mt-1 w-full border-t border-primary-100 bg-primary-100 md:mx-auto md:w-[548px]"
       />
-
+  
       <div>{renderSection()}</div>
-
+  
       <div
-        className={clsx(
-          "mx-[20px] mt-[20px] flex flex-col lg:mx-auto lg:flex-row lg:items-center lg:justify-center lg:gap-2",
-        )}
+        className="mx-5 mt-5 flex flex-col lg:mx-auto lg:flex-row lg:items-center lg:justify-center lg:gap-2"
       >
         <SignoutButton />
-        <div className={clsx("mt-[16px] lg:mt-0")}>
+        <div className="mt-4 lg:mt-0">
           <DeleteAccount />
         </div>
       </div>
     </div>
   );
+  
 };
 
 export default Mypageform;
+
+

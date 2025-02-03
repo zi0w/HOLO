@@ -4,11 +4,9 @@ import useKakaoLoader from "@/app/map/_hooks/useKakaoLoader";
 
 import CategoryButtons from "@/app/map/_components/CategoryButtons";
 import MapContainer from "@/app/map/_components/MapContainer";
-import MapControls from "@/app/map/_components/MapControls";
 import PlaceList from "@/app/map/_components/PlaceList";
 import useCategoriesSearch from "@/app/map/_hooks/useCategoriesSearch";
 import useLocationStore from "@/store/useLocationStore";
-
 
 const KakaoMap = () => {
   useKakaoLoader();
@@ -32,54 +30,56 @@ const KakaoMap = () => {
     setSelectedPlace,
     setPlaceDetail,
     category,
-    onClickReSearch,
     setSelectedMarkerId,
     selectedMarkerId,
   } = useCategoriesSearch(mapCenter);
 
   return (
-    <div className="relative h-[calc(100vh-124px)] lg:mx-28 lg:mt-28 lg:h-[80vh]">
+    <div className="h-[calc(100vh-124px)] lg:ml-28 lg:h-[65vh]">
       {/* 카테고리 검색 버튼 */}
-      <CategoryButtons
-        isMain={false}
-        setCategory={setCategory}
-        setSelectedPlace={setSelectedPlace}
-        setPlaceDetail={setPlaceDetail}
-      />
+      <div className="lg:mt-28">
+        <CategoryButtons
+          isMain={false}
+          setCategory={setCategory}
+          setSelectedPlace={setSelectedPlace}
+          setPlaceDetail={setPlaceDetail}
+        />
+      </div>
 
-      <MapContainer
-        mapCenter={mapCenter}
-        currentPosition={currentPosition}
-        mapLevel={mapLevel}
-        setMapCenter={setMapCenter}
-        places={places}
-        setSelectedPlace={setSelectedPlace}
-        onClickMarker={onClickMarker}
-        selectedPlace={selectedPlace}
-        placeDetail={placeDetail}
-        setPlaceDetail={setPlaceDetail}
-        isMain={false}
-        setSelectedMarkerId={setSelectedMarkerId}
-        selectedMarkerId={selectedMarkerId}
-      />
+      <div className="flex h-full flex-row lg:mr-9">
+        {/* 장소 리스트 */}
+        <PlaceList
+          places={places}
+          setMapCenter={setMapCenter}
+          setSelectedPlace={setSelectedPlace}
+          onClickMarker={onClickMarker}
+          selectedPlace={selectedPlace}
+          category={category}
+          setSelectedMarkerId={setSelectedMarkerId}
+          onClickPlusMapLevel={onClickPlusMapLevel}
+          onClickMinusMapLevel={onClickMinusMapLevel}
+          onClickMoveCurrentPosition={onClickMoveCurrentPosition}
+        />
 
-      {/* 데스크톱과 태블릿용 리스트 */}
-      <PlaceList
-        places={places}
-        setMapCenter={setMapCenter}
-        setSelectedPlace={setSelectedPlace}
-        onClickMarker={onClickMarker}
-        selectedPlace={selectedPlace}
-        category={category}
-        setSelectedMarkerId={setSelectedMarkerId}
-      />
-      {/* 줌 컨트롤 버튼 */}
-      <MapControls
-        onClickPlusMapLevel={onClickPlusMapLevel}
-        onClickMinusMapLevel={onClickMinusMapLevel}
-        onClickMoveCurrentPosition={onClickMoveCurrentPosition}
-        onClickReSearch={onClickReSearch}
-      />
+        <MapContainer
+          mapCenter={mapCenter}
+          currentPosition={currentPosition}
+          mapLevel={mapLevel}
+          setMapCenter={setMapCenter}
+          places={places}
+          setSelectedPlace={setSelectedPlace}
+          onClickMarker={onClickMarker}
+          selectedPlace={selectedPlace}
+          placeDetail={placeDetail}
+          setPlaceDetail={setPlaceDetail}
+          isMain={false}
+          setSelectedMarkerId={setSelectedMarkerId}
+          selectedMarkerId={selectedMarkerId}
+          onClickPlusMapLevel={onClickPlusMapLevel}
+          onClickMinusMapLevel={onClickMinusMapLevel}
+          onClickMoveCurrentPosition={onClickMoveCurrentPosition}
+        />
+      </div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ const PolicyAndTrashBanner = ({ isPolicy }: { isPolicy: boolean }) => {
   return (
     <div
       className={clsx(
-        "m-5 flex items-end justify-between overflow-hidden rounded-[4px] lg:m-0 lg:flex-col lg:items-center lg:text-center lg:h-full",
+        "m-5 flex items-end justify-between overflow-hidden rounded-[4px] lg:m-0 lg:h-full lg:flex-col lg:items-center lg:text-center",
         isPolicy ? "bg-primary-800" : "flex-row-reverse bg-primary-100",
       )}
     >
@@ -33,7 +33,7 @@ const PolicyAndTrashBanner = ({ isPolicy }: { isPolicy: boolean }) => {
         </p>
         <Link
           href={isPolicy ? "/policy" : "/trash-guide"}
-          className="mb-4 inline-block w-full whitespace-nowrap rounded-md bg-primary-500 px-5 py-2 text-center font-gmarket-light text-sm text-white lg:px-4 lg:w-auto"
+          className="mb-4 inline-block w-full whitespace-nowrap rounded-md bg-primary-500 px-5 py-2 text-center font-gmarket-light text-sm text-white lg:w-auto lg:px-4"
         >
           {isPolicy ? "청년정책 알아보기" : "우리동네 쓰레기 정보"} &gt;
         </Link>
@@ -42,7 +42,7 @@ const PolicyAndTrashBanner = ({ isPolicy }: { isPolicy: boolean }) => {
         src={isPolicy ? PolicyIcon : TrashIcon}
         alt="사람 아이콘"
         className={clsx(
-          "object-contain lg:ml-0 lg:max-h-none lg:w-full lg:max-w-[290px]",
+          "h-auto w-auto object-contain lg:ml-0 lg:max-h-none lg:w-full lg:max-w-[290px]",
           isPolicy ? "max-h-[140px]" : "ml-7 max-w-[100px]",
           !isPolicy && "lg:h-[248px] lg:scale-x-[-1]",
         )}

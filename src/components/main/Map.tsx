@@ -10,7 +10,12 @@ import Link from "next/link";
 
 const Map = () => {
   useKakaoLoader();
-  const { kakaoLoading } = useLocationStore();
+  const {
+    kakaoLoading,
+    onClickPlusMapLevel,
+    onClickMinusMapLevel,
+    onClickMoveCurrentPosition,
+  } = useLocationStore();
 
   const {
     mapCenter, // 현재 지도 중심 좌표
@@ -33,7 +38,7 @@ const Map = () => {
   return (
     <>
       {!kakaoLoading ? (
-        <div className="relative">
+        <>
           {/* 카테고리 검색 버튼 */}
           <CategoryButtons
             isMain={true}
@@ -42,7 +47,7 @@ const Map = () => {
             setPlaceDetail={setPlaceDetail}
           />
 
-          <div className="mx-5 h-[220px] lg:mx-0 lg:h-[505px]">
+          <div className="mx-5 h-[220px] lg:mx-0 lg:h-[504px]">
             <Link href={"/map"}>
               <MapContainer
                 mapCenter={mapCenter}
@@ -58,16 +63,19 @@ const Map = () => {
                 isMain={true}
                 setSelectedMarkerId={setSelectedMarkerId}
                 selectedMarkerId={selectedMarkerId}
+                onClickPlusMapLevel={onClickPlusMapLevel}
+                onClickMinusMapLevel={onClickMinusMapLevel}
+                onClickMoveCurrentPosition={onClickMoveCurrentPosition}
               />
             </Link>
           </div>
           <Link
             href={"/map"}
-            className="mt-4 block text-center text-sm text-primary-500 lg:font-gmarket lg:text-lg"
+            className="mt-4 block text-center font-gmarket text-sm text-primary-500 lg:text-lg"
           >
             다른 장소도 궁금하다면?
           </Link>
-        </div>
+        </>
       ) : (
         "로딩 중..."
       )}

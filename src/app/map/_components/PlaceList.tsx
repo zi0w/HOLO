@@ -1,11 +1,16 @@
 "use client";
 
+import MapControls from "@/app/map/_components/MapControls";
 import type { Coordinates, PlacesSearchResultItem } from "@/app/map/_types/map";
 import scrollIntoViewPlaceList from "@/app/map/_utils/scrollIntoViewPlaceList";
 import scrollToPlaceList from "@/app/map/_utils/scrollToPlaceList";
+import None from "@/assets/images/map/none.svg";
+import useLocationStore from "@/store/useLocationStore";
 import { clsx } from "clsx";
 import Link from "next/link";
 import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
+import { BottomSheet } from "react-spring-bottom-sheet";
+import "react-spring-bottom-sheet/dist/style.css";
 
 type PlaceListProps = {
   places: PlacesSearchResultItem[];
@@ -17,6 +22,9 @@ type PlaceListProps = {
   selectedPlace: PlacesSearchResultItem | null;
   category: string;
   setSelectedMarkerId: Dispatch<SetStateAction<string | null>>;
+  onClickPlusMapLevel: () => void;
+  onClickMinusMapLevel: () => void;
+  onClickMoveCurrentPosition: () => void;
 };
 
 const PlaceList = ({
@@ -27,11 +35,13 @@ const PlaceList = ({
   selectedPlace,
   category,
   setSelectedMarkerId,
+  onClickPlusMapLevel,
+  onClickMinusMapLevel,
+  onClickMoveCurrentPosition,
 }: PlaceListProps) => {
   const placeRef = useRef<(HTMLDivElement | null)[]>([]);
   const desktopListRef = useRef<HTMLDivElement | null>(null);
   const mobileListRef = useRef<HTMLDivElement | null>(null);
-
   const onClickSelectedPlace = (
     place: kakao.maps.services.PlacesSearchResultItem,
   ) => {
@@ -43,6 +53,8 @@ const PlaceList = ({
     onClickMarker(place);
     setSelectedMarkerId(place.id);
   };
+  const { setMapLevel } = useLocationStore();
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
 
   // 마커를 클릭하면 해당 시설 정보로 리스트 스크롤 이동
   useEffect(() => {
@@ -61,117 +73,152 @@ const PlaceList = ({
   return (
     <>
       {/* 데스크탑 테블릿 리스트 */}
-      {category ? (
-        <div
-          ref={desktopListRef}
-          className={clsx(
-            "absolute left-0 top-[110px] z-20 hidden max-h-[80%] w-[260px] overflow-y-auto rounded-t border bg-white md:hidden lg:block",
-            places.length === 0 ? "min-h-[80%]" : "min-h-[80%]",
-          )}
-        >
-          {places.length !== 0 ? (
-            places.map((place, index) => (
-              <div
-                key={place.id}
-                ref={(place) => {
-                  placeRef.current[index] = place;
-                }}
-                className="w-full cursor-pointer rounded p-4 text-left hover:bg-primary-50"
-                onClick={() => {
-                  onClickSelectedPlace(place);
-                }}
-              >
-                <p className="font-gmarket-bold text-lg text-base-900">
-                  {place.place_name}
-                </p>
-                <p className="text-base-900">{place.address_name}</p>
-                {place.phone ? (
-                  <div>
-                    <a href={`tel: ${place.phone}`} className="text-base-900">
-                      {place.phone}
-                    </a>
-                  </div>
-                ) : (
-                  <p className="text-base-900">전화번호 없음</p>
-                )}
-                {place.place_url ? (
-                  <Link
-                    href={place.place_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline"
-                  >
-                    상세 정보 보기
-                  </Link>
-                ) : (
-                  ""
-                )}
+      {!isMobile && (
+        <>
+          <div
+            ref={desktopListRef}
+            className="z-20 hidden lg:block lg:w-[260px] lg:overflow-y-auto lg:rounded-t lg:border lg:bg-white"
+          >
+            {places.length !== 0 ? (
+              places.map((place, index) => (
+                <div
+                  key={place.id}
+                  ref={(el) => {
+                    placeRef.current[index] = el;
+                  }}
+                  className={clsx(
+                    "w-full cursor-pointer border-b border-base-200 p-5 text-left hover:bg-primary-50",
+                    selectedPlace?.id === place.id && "bg-primary-50",
+                  )}
+                  onClick={() => {
+                    onClickSelectedPlace(place);
+                    setMapLevel(3);
+                  }}
+                >
+                  <p className="mb-1 font-gmarket-bold text-lg text-base-900">
+                    {place.place_name}
+                  </p>
+                  <p className="text-base-900">{place.address_name}</p>
+                  {place.phone ? (
+                    <div>
+                      <a href={`tel: ${place.phone}`} className="text-base-900">
+                        {place.phone}
+                      </a>
+                    </div>
+                  ) : (
+                    <p className="text-base-900">전화번호 없음</p>
+                  )}
+                  {place.place_url && (
+                    <Link
+                      href={place.place_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline"
+                    >
+                      상세 정보 보기
+                    </Link>
+                  )}
+                </div>
+              ))
+            ) : (
+              <div className="flex h-full w-full flex-col items-center justify-center space-y-3">
+                <None />
+                <p>조건에 맞는 업체가 없습니다.</p>
               </div>
-            ))
-          ) : (
-            <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 text-center">
-              조건에 맞는 업체가 없습니다.
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="hidden"></div>
+            )}
+          </div>
+        </>
       )}
       {/* 모바일용 리스트 */}
-
-      <div
-        ref={mobileListRef}
-        className="absolute bottom-[-52px] z-10 flex max-h-[230px] w-full flex-col overflow-y-auto rounded-t-xl border border-primary-200 bg-white lg:hidden"
-      >
-        {places.map((place, index) => (
-          <div
-            key={place.id}
-            ref={(el) => {
-              placeRef.current[index] = el;
+      {isMobile && (
+        <>
+          <BottomSheet
+            open={true}
+            snapPoints={({ maxHeight }) => {
+              if (places.length === 0) {
+                return [180, 75]; // 픽셀 단위로 최소 높이 지정
+              } else if (places.length === 1) {
+                return [220, 75]; // 한 개 항목일 때의 높이
+              } else {
+                return [maxHeight * 0.3, 75, maxHeight * 0.86];
+              }
             }}
-            className="w-full cursor-pointer border-b border-base-200 p-2 text-left"
-            onClick={() => {
-              onClickSelectedPlace(place);
-            }}
+            defaultSnap={({ lastSnap, snapPoints }) =>
+              lastSnap ?? snapPoints[0]
+            }
+            expandOnContentDrag
+            blocking={false} // 배경 클릭 방지 비활성화
+            className="absolute z-10 h-auto bg-transparent"
+            footer={
+              <div className="h-6 bg-transparent" /> // 푸터에 여백 추가
+            }
           >
-            <div
-              className={clsx(
-                "rounded-xl p-2 hover:bg-primary-50",
-                selectedPlace?.id === place.id && "bg-primary-50",
-              )}
-            >
-              <p className="font-gmarket-bold text-lg font-bold text-base-900">
-                {place.place_name}
-              </p>
-              <p className="text-base text-base-900">{place.address_name}</p>
-              {place.phone ? (
-                <div>
-                  <a
-                    href={`tel: ${place.phone}`}
-                    className="text-base text-base-900"
+            <div ref={mobileListRef} className="min-h-[100px]">
+              {places.length !== 0 ? (
+                places.map((place, index) => (
+                  <div
+                    key={place.id}
+                    ref={(el) => {
+                      placeRef.current[index] = el;
+                    }}
+                    className={clsx(
+                      "w-full cursor-pointer border-b border-base-200 p-5 text-left hover:bg-primary-50",
+
+                      selectedPlace?.id === place.id && "bg-primary-50",
+                    )}
+                    onClick={() => {
+                      onClickSelectedPlace(place);
+                      setMapLevel(3);
+                    }}
                   >
-                    {place.phone}
-                  </a>
+                    <p className="mb-1 font-gmarket-bold text-lg text-base-900">
+                      {place.place_name}
+                    </p>
+                    <p className="text-base text-base-900">
+                      {place.address_name}
+                    </p>
+                    {place.phone ? (
+                      <div>
+                        <a
+                          href={`tel: ${place.phone}`}
+                          className="text-base text-base-900"
+                        >
+                          {place.phone}
+                        </a>
+                      </div>
+                    ) : (
+                      <p className="text-base-900">전화번호 없음</p>
+                    )}
+                    {place.place_url && (
+                      <Link
+                        href={place.place_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline"
+                      >
+                        상세 정보 보기
+                      </Link>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className="mt-4 flex flex-col items-center justify-center space-y-3">
+                  <None />
+                  <p>조건에 맞는 업체가 없습니다.</p>
                 </div>
-              ) : (
-                <p className="text-base-900">전화번호 없음</p>
-              )}
-              {place.place_url ? (
-                <Link
-                  href={place.place_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 underline"
-                >
-                  상세 정보 보기
-                </Link>
-              ) : (
-                ""
               )}
             </div>
+          </BottomSheet>
+
+          <div className="absolute bottom-72 right-4 z-10">
+            <MapControls
+              onClickPlusMapLevel={onClickPlusMapLevel}
+              onClickMinusMapLevel={onClickMinusMapLevel}
+              onClickMoveCurrentPosition={onClickMoveCurrentPosition}
+            />
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </>
   );
 };

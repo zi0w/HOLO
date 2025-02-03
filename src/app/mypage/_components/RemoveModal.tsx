@@ -32,8 +32,8 @@ const RemoveModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-base-800 bg-opacity-30">
-      <div className="w-[80%] max-w-md rounded bg-white shadow-lg">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-base-800 bg-opacity-30">
+      <div className="w-4/5 max-w-md rounded bg-white shadow-lg">
         <div className="p-1">
           <div className="mb-5 flex items-center justify-end">
             <button onClick={onClose}>

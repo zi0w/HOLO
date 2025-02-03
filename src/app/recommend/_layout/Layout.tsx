@@ -1,32 +1,45 @@
-import Link from "next/link";
+import clsx from "clsx";
 import type { ReactNode } from "react";
 
 type LayoutProps = {
-    question: string;
-    onPrev?: () => void;
-    children: ReactNode;
-    handleClick?: () => void;
-}
+  question: string;
+  onPrev?: () => void;
+  children: ReactNode;
+  handleClick?: () => void;
+  selectedAnswer?: string;
+};
 
-const Layout = ({ question, onPrev, children, handleClick }: LayoutProps) => {
+const Layout = ({ question, onPrev, children, handleClick, selectedAnswer }: LayoutProps) => {
+  const isDisabled = !selectedAnswer; // 선택된 답변이 없으면 버튼 비활성화
+
   return (
-    <div className="h-full flex flex-col items-center">
+    <div className="flex h-full flex-col items-center">
       <header>
-        <h1 className="text-2xl mt-10 text-base-800">{question}</h1>
+        <h1 className="mt-10 text-2xl text-base-800">{question}</h1>
       </header>
       {children}
-      <div className="mt-10 flex gap-4 mb-32">
-        {onPrev ? (
-          <button type="button" onClick={onPrev} className="w-[177px] h-12 rounded border border-base-400 font-gmarket text-base-800">
-            이전
-          </button>
-        ) : (
-          // TODO: 이전으로 안가짐
-          <Link href="/recommend">
-            이전
-          </Link>
-        )}
-        <button type="button" onClick={handleClick} className="w-[177px] h-12 rounded bg-primary-500 font-gmarket text-white">
+
+      {/* 버튼 컨테이너 */}
+      <div className="mb-32 mt-10 flex gap-2 w-full max-w-md lg:mb-10">
+        <button
+          type="button"
+          onClick={onPrev}
+          className="h-12 flex-1 w-full rounded border border-primary-500 font-gmarket text-primary-500"
+        >
+          이전
+        </button>
+
+        <button
+          type="button"
+          onClick={handleClick}
+          className={clsx(
+            "h-12 flex-1 rounded font-gmarket w-full",
+            isDisabled
+              ? "bg-base-400 text-white cursor-not-allowed"
+              : "bg-primary-500 text-white"
+          )}
+          disabled={isDisabled}
+        >
           다음
         </button>
       </div>

@@ -1,4 +1,4 @@
-// hooks/useGuestAccess.ts
+
 import { create } from "zustand";
 
 export type GuestState = {

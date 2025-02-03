@@ -2,6 +2,7 @@ import "@/app/globals.css";
 import MainContainer from "@/components/layout/MainContainer";
 import TQProvider from "@/components/providers/TQProvider";
 import type { Metadata } from "next";
+import Script from "next/script";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -28,6 +29,10 @@ const RootLayout = ({
           <MainContainer>{children}</MainContainer>
         </TQProvider>
       </body>
+      <Script
+        src="https://developers.kakao.com/sdk/js/kakao.js"
+        strategy="afterInteractive"
+      />
     </html>
   );
 };

@@ -11,7 +11,7 @@ const SigninModal = ({ isOpen, message, onClose }: SigninModalProps) => {
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-base-800 bg-opacity-30">
-      <div className="w-[80%] max-w-md rounded bg-base-50 shadow-lg">
+      <div className="w-4/5 max-w-md rounded bg-base-50 shadow-lg">
         <div className="p-1">
           <div className="mb-5 flex items-center justify-end">
             <button onClick={onClose}>
@@ -34,6 +34,10 @@ const SigninModal = ({ isOpen, message, onClose }: SigninModalProps) => {
 };
 
 export default SigninModal;
+
+
+
+
 
 
 
