@@ -28,17 +28,16 @@ const HeaderAuthLink = () => {
     onSuccess: () => {
       setSuccess(true);
       setTimeout(() => {
-        closeModal(); // 모달 닫기 추가
+        closeModal();
         router.push("/sign-in");
         queryClient.clear();
-        queryClient.resetQueries(); // 쿼리 초기화 추가
+        queryClient.resetQueries();
       }, 1000);
     },
     onError: (error: Error) => {
       setError(error.message || "로그아웃 중 오류가 발생했습니다.");
     },
     onSettled: () => {
-      // mutation 완료 후 초기화
       queryClient.invalidateQueries();
     },
   });
@@ -57,7 +56,7 @@ const HeaderAuthLink = () => {
         <Link
           href="/mypage"
           className={clsx(
-            "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-[180px] lg:items-start lg:text-lg",
+            "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-44 lg:items-start lg:text-lg",
             pathname.startsWith("/mypage") && "text-primary-500",
           )}
         >
@@ -77,20 +76,23 @@ const HeaderAuthLink = () => {
         />
       </>
     );
-  }
-
-  return (
+    }
+    
+    return (
     <Link
       href="/sign-in"
       className={clsx(
-        "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-[180px] lg:items-start lg:text-lg",
+        "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-44 lg:items-start lg:text-lg",
         pathname.startsWith("/mypage") && "text-primary-500",
       )}
     >
       <MyPageIcon className="lg:hidden" />
       로그인
     </Link>
-  );
+    );
+    
 };
 
 export default HeaderAuthLink;
+
+
