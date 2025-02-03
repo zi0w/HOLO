@@ -18,8 +18,9 @@ const NavLink = ({ path, label, icon: Icon }: (typeof NAVIGATION_PATHS)[0]) => {
     <Link
       href={path}
       className={clsx(
-        "flex flex-col items-center justify-between font-gmarket lg:text-lg lg:items-start text-base-800",
+        "flex flex-col items-center justify-between lg:items-start lg:text-lg",
         isActive && "font-gmarket-bold text-primary-500",
+        !isActive && "font-gmarket text-base-800",
       )}
     >
       <Icon
@@ -38,10 +39,10 @@ const Header = ({ allHidden }: { allHidden: boolean }) => {
         allHidden && "hidden",
       )}
     >
-      <div className="hidden lg:block lg:pl-14 lg:pt-12 lg:pb-14">
+      <div className="hidden lg:block lg:pb-14 lg:pl-14 lg:pt-12">
         <MainHeader />
       </div>
-      <nav className="flex justify-between border-t border-base-200 bg-white px-5 py-2 text-xs text-base-700 lg:h-full lg:flex-col lg:justify-normal lg:border-none lg:p-5 lg:gap-8 lg:px-14 pb-[calc(env(safe-area-inset-bottom)+15px)]">
+      <nav className="flex justify-between border-t border-base-200 bg-white px-5 py-2 pb-[calc(env(safe-area-inset-bottom)+15px)] text-xs text-base-700 lg:h-full lg:flex-col lg:justify-normal lg:gap-8 lg:border-none lg:p-5 lg:px-14">
         {NAVIGATION_PATHS.map((navItem) => (
           <NavLink key={navItem.path} {...navItem} />
         ))}
