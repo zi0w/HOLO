@@ -106,7 +106,7 @@ const Result = () => {
       <div className="flex h-screen w-full flex-col items-center justify-center gap-4 lg:mx-auto lg:max-h-[700px] lg:max-w-lg lg:rounded-3xl lg:border lg:border-primary-500">
         <Loading />
         <p className="text-center">
-          포츈쿠키가 열리고 있습니다! <br /> 잠시만 더 기다려주세요 :)
+          포춘쿠키가 열리고 있습니다! <br /> 잠시만 더 기다려주세요 :)
         </p>
       </div>
     </div>
