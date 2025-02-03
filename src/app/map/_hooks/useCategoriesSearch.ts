@@ -42,7 +42,6 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
       const data = await response.json();
       const result = data.documents[0];
       if (result) {
-        console.log("result", result);
         setPlaceDetail(result);
       } else {
         alert("장소 정보를 가져오는데 실패했습니다.");

@@ -12,7 +12,7 @@ const useScrollIntoViewCategoryBtn = (
       "place_id" | "x" | "y" | "road_address_name"
     > | null>
   >, // 특정 장소 선택 시 디테일 정보 상태 업데이트 함수
-  setSelectedCategory: Dispatch<SetStateAction<string>>, // 선택된 카테고리 버튼 상태 업데이트 함수,
+  setSelectedCategory: (category: string) => void, // 선택된 카테고리 버튼 상태 업데이트 함수,
 ) => {
   const buttonRef = useRef<(HTMLButtonElement | null)[]>([]); // 버튼 엘리먼트 참조를 위한 ref
 

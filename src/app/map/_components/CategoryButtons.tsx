@@ -48,7 +48,7 @@ const CategoryButtons = ({
       <div
         className={clsx(
           "mx-5 flex overflow-x-auto [&::-webkit-scrollbar]:hidden",
-          isMain ? "lg:mx-0" : "lg:m-0 lg:gap-2",
+          isMain ? "lg:mx-0" : "lg:m-0 lg:mr-9 lg:gap-2",
         )}
       >
         {MAP_CATEGORIES.map((cate, index) => (
