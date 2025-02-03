@@ -40,9 +40,8 @@ const Result = () => {
   }, [id]);
 
   return fortune ? (
-    <div className="block items-center justify-center lg:flex lg:h-screen">
+    <div id="result-container" className="block items-center justify-center lg:flex lg:h-screen">
       <div
-        id="result-container"
         className="mt-4 flex flex-col items-center bg-white text-black lg:mx-auto lg:max-w-lg lg:rounded-3xl lg:border lg:border-primary-500"
       >
         <Image
@@ -67,7 +66,7 @@ const Result = () => {
         {id ? (
           <Link
             href="/fortune"
-            className="mt-6 flex h-12 w-[362px] items-center justify-center rounded bg-primary-500 font-gmarket font-normal text-white"
+            className="mt-6 flex h-12 w-[362px] items-center justify-center rounded bg-primary-500 font-gmarket font-normal text-white mb-10"
           >
             나도 하러 가기
           </Link>
