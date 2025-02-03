@@ -1,12 +1,10 @@
 "use client";
 
+import { useProfileChange } from "@/app/mypage/_hooks/useProfileChangeHooks";
 import ProfileEditIcon from "@/assets/images/mypage/profileedit.svg";
 import Loading from "@/components/common/Loading";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useProfileChange } from "@/app/mypage/_hooks/useProfileChangeHooks";
-
-
 
 const UserProfile = () => {
   const router = useRouter();
@@ -21,7 +19,6 @@ const UserProfile = () => {
   const defaultImageUrl =
     "https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/e6a1c347-c123-40c4-ae51-fdc0ffcb910e-1737345924767.jpg";
 
-  
   const handleBlur = () => {
     if (userData?.nickname) {
       handleNicknameUpdate({ nickname: userData.nickname });
@@ -41,7 +38,7 @@ const UserProfile = () => {
       <div className="flex flex-col items-center">
         <div className="flex w-full items-center px-5 pt-[5px] lg:px-0 lg:pl-[calc(50vw-400px)]">
           <button className="flex items-center">
-            <h1 className="pt-16 font-gmarket text-2xl font-medium leading-8 text-base-800">
+            <h1 className="common-title pt-16 text-2xl font-medium leading-8 text-base-800">
               마이페이지
             </h1>
           </button>
@@ -82,4 +79,3 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
-
