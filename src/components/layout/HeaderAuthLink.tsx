@@ -57,7 +57,8 @@ const HeaderAuthLink = () => {
           href="/mypage"
           className={clsx(
             "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-44 lg:items-start lg:text-lg",
-            pathname.startsWith("/mypage") && "text-primary-500",
+            pathname.startsWith("/mypage") &&
+              "font-gmarket-bold text-primary-500",
           )}
         >
           <MyPageIcon className="mb-1 lg:hidden" />
@@ -79,16 +80,17 @@ const HeaderAuthLink = () => {
     }
     
     return (
-    <Link
-      href="/sign-in"
-      className={clsx(
-        "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-44 lg:items-start lg:text-lg",
-        pathname.startsWith("/mypage") && "text-primary-500",
-      )}
-    >
-      <MyPageIcon className="lg:hidden" />
-      로그인
-    </Link>
+      <Link
+        href="/sign-in"
+        className={clsx(
+          "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-44 lg:items-start lg:text-lg",
+          pathname.startsWith("/mypage") &&
+            "font-gmarket-bold text-primary-500",
+        )}
+      >
+        <MyPageIcon className="lg:hidden" />
+        로그인
+      </Link>
     );
     
 };
