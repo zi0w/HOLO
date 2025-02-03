@@ -28,8 +28,11 @@ const CategorySelectModal = ({
   return (
     <div className="relative">
       <button
+        id="chevron-button"
+        type="button"
+        aria-label="카테고리 선택"
         onClick={handleButtonClick}
-        className="flex items-center justify-between rounded-md px-2 py-1 font-bold text-base-800 lg:w-[120px] lg:border lg:border-base-400 lg:min-h-10"
+        className="flex items-center justify-between rounded-md px-2 py-1 font-bold text-base-800 lg:min-h-10 lg:w-[120px] lg:border lg:border-base-400"
       >
         {selectedCategory}
         <ChevronDown />
@@ -37,7 +40,7 @@ const CategorySelectModal = ({
 
       {isModalOpen && (
         <div
-          className="absolute z-10 mt-1 w-[68px] lg:w-[120px] rounded-lg border bg-white py-1 shadow-md"
+          className="absolute z-10 mt-1 w-[68px] rounded-lg border bg-white py-1 shadow-md lg:w-[120px]"
           onClick={() => setIsModalOpen(false)}
         >
           <ul className="flex flex-col items-center">

@@ -11,6 +11,9 @@ const SortButton = ({ sortBy, setSortBy }: SortButtonProps) => {
   return (
     <div className="my-4 flex gap-2 lg:my-6">
       <button
+        id="sort-recent-button"
+        type="button"
+        aria-label="최신순 정렬"
         className={`rounded-lg border px-3 py-1 ${
           sortBy === "recent"
             ? "bg-primary-900 text-white"
@@ -22,6 +25,9 @@ const SortButton = ({ sortBy, setSortBy }: SortButtonProps) => {
       </button>
 
       <button
+        id="sort-popular-button"
+        type="button"
+        aria-label="인기순 정렬"
         className={`rounded-lg border px-3 py-1 ${
           sortBy === "popular"
             ? "bg-primary-900 text-white"
