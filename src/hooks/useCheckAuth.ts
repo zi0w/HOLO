@@ -1,8 +1,8 @@
 "use client";
 
-import { createClient } from "@/lib/utils/supabase/client"; // Supabase 클라이언트 가져오기
+import { createClient } from "@/lib/utils/supabase/client"; 
 import useAuthStore from "@/store/useAuthStore";
-import { Session } from "@supabase/supabase-js"; // Supabase의 Session 타입 가져오기
+import { Session } from "@supabase/supabase-js"; 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -11,7 +11,7 @@ const useCheckAuth = () => {
   const setAuth = useAuthStore((state) => state.setAuth);
 
   useEffect(() => {
-    const supabase = createClient(); // Supabase 클라이언트 초기화
+    const supabase = createClient(); 
 
     const checkAuthState = async () => {
       const { data, error } = await supabase.auth.getSession();
@@ -25,14 +25,14 @@ const useCheckAuth = () => {
         const { user, access_token, refresh_token, expires_in, token_type } =
           data.session;
 
-        // 닉네임 설정: 소셜 제공자의 닉네임 또는 기본값 설정
+        
         const nickname =
           user.user_metadata?.nickname ??
           user.user_metadata?.full_name ??
           user.user_metadata?.name ??
           "익명 사용자";
 
-        // Zustand 상태 업데이트
+        
         setAuth(
           {
             id: user.id,
@@ -45,17 +45,16 @@ const useCheckAuth = () => {
             refresh_token,
             expires_in,
             token_type,
-            user, // 사용자 정보도 포함
-          } as Session, // Session 타입으로 명시적으로 캐스팅
+            user, 
+          } as Session, 
         );
 
-        // alert("로그인 성공!");
-        // router.push("/"); // 로그인 페이지로 이동
+       
       }
     };
 
     checkAuthState();
-  }, [setAuth, router]); // supabase.auth는 필요하지 않음
+  }, [setAuth, router]); 
 };
 
 export default useCheckAuth;

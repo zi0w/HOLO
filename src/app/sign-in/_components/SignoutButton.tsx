@@ -1,4 +1,3 @@
-// src/app/sign-in/_components/SignoutButton.tsx
 "use client";
 
 import { useSignout } from "@/app/sign-in/_hooks/useSignout";

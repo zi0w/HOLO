@@ -11,7 +11,7 @@ const SignUpModal = ({ isOpen, message, onClose }: SignUpModalProps) => {
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-base-800 bg-opacity-30">
-      <div className="w4/5 max-w-md rounded bg-base-50 shadow-lg">
+      <div className="w-4/5 max-w-md rounded bg-base-50 shadow-lg">
         <div className="p-1">
           <div className="mb-5 flex items-center justify-end">
             <button onClick={onClose}>
