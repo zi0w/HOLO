@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 const HoneyTipsPage = () => {
   return (
-    <div className="mx-5 mt-5 min-h-screen lg:relative lg:max-w-[762px] lg:mx-auto">
+    <div className="mx-5 mt-5 pb-16 min-h-screen lg:relative lg:max-w-[762px] lg:pb-4 lg:mx-auto">
       <section>
         <div>
           <h1 className="common-title mb-4">꿀팁 게시판</h1>

@@ -138,7 +138,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
   const isSubmitDisabled = !title.trim() || !content.trim() || isLoading;
 
   return (
-    <div className="mx-5 lg:mx-auto lg:mt-[120px] lg:max-w-[762px]">
+    <div className="mx-5 lg:mx-auto lg:mt-[60px] lg:max-w-[762px]">
       <h2 className="hidden text-2xl text-base-800 lg:block">꿀팁 쓰기</h2>
       <form className="mt-5">
         {isModalOpen && modalType === "form" && (
@@ -153,7 +153,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
           <button
             type="button"
             onClick={() => openModal("form")}
-            className="rounded px-3 py-1.5 text-base-800 lg:hidden"
+            className="rounded py-1.5 pr-6 text-base-700 lg:hidden"
             disabled={isLoading}
           >
             취소
@@ -166,7 +166,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             type="button"
             onClick={handleSubmit}
             className={clsx(
-              "hover: rounded px-3 py-1.5 text-base-800 hover:text-primary-500 lg:hidden",
+              "hover: rounded py-1.5 pl-6 text-base-700 hover:text-primary-500 lg:hidden",
               {
                 "cursor-not-allowed opacity-50": isSubmitDisabled,
               },
@@ -190,7 +190,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력해주세요."
-            className="w-full rounded-md border border-primary-200 p-2 lg:mt-3"
+            className="w-full rounded-md border border-base-400 p-2 focus:border-primary-400 focus:outline-none lg:mt-3"
             disabled={isLoading}
           />
         </section>
@@ -207,7 +207,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             id="content"
             onChange={(e) => setContent(e.target.value)}
             placeholder="내용을 입력해주세요."
-            className="h-[297px] w-full rounded-md border border-primary-200 p-2 lg:mt-3"
+            className="h-[297px] w-full rounded-md border border-base-400 p-2 focus:border-primary-400 focus:outline-none lg:mt-3"
             rows={10}
             disabled={isLoading}
           />
@@ -219,7 +219,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
               <article key={index} className="relative w-full">
                 <label
                   htmlFor={`image-upload-${index}`}
-                  className="flex aspect-square cursor-pointer items-center justify-center rounded-md border border-primary-200"
+                  className="flex aspect-square cursor-pointer items-center justify-center rounded-md border border-base-400"
                 >
                   {imageUrls[index] ? (
                     <Image
@@ -258,8 +258,8 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
           <section className="hidden lg:block">
             <button
               type="button"
-              onClick={() => openModal("post")}
-              className="mr-2 rounded border px-6 pb-1.5 pt-2 font-gmarket text-base-800"
+              onClick={() => openModal("form")}
+              className="mr-2 rounded border border-base-400 px-6 pb-1.5 pt-2 font-gmarket text-base-800"
               disabled={isLoading}
             >
               취소
@@ -268,7 +268,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
               type="button"
               onClick={handleSubmit}
               className={clsx(
-                "rounded border bg-primary-500 px-6 pb-1.5 pt-2 font-gmarket text-white",
+                "rounded border border-primary-500 bg-primary-500 px-6 pb-1.5 pt-2 font-gmarket text-white",
                 {
                   "cursor-not-allowed opacity-50": isSubmitDisabled,
                 },
