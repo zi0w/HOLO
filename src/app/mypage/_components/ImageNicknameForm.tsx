@@ -9,7 +9,7 @@ import useAuthStore from "@/store/useAuthStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useProfileChange } from "../_hooks/useProfileChangeHooks";
+import { useProfileChange } from "@/app/mypage/_hooks/useProfileChangeHooks";
 import { useEffect } from "react";
 
 const ImageNicknameForm = () => {

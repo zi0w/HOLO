@@ -2,8 +2,7 @@
 
 import ProfileModal from "@/app/mypage/_components/ProfileModal";
 import CancelIcon from "@/assets/images/mypage/cancel.svg";
-// import { useRouter } from "next/navigation";
-import { usePasswordChange } from "../_hooks/usePasswordChangeHooks";
+import { usePasswordChange } from "@/app/mypage/_hooks/usePasswordChangeHooks";
 
 type PasswordChangeModalProps = {
   isOpen: boolean;
@@ -26,7 +25,7 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
     handleSave,
   } = usePasswordChange();
 
-  // const router = useRouter();
+  
 
   if (!isOpen) return null;
 
