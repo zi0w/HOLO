@@ -32,7 +32,7 @@ const SearchForm = () => {
           value={searchQuery}
           onChange={handleSearch}
           placeholder="키워드를 입력해주세요."
-          className="h-[40px] w-full rounded border px-11 py-2"
+          className="h-[40px] w-full rounded border px-11 py-2 focus:border-primary-400 focus:outline-none"
         />
       </div>
     </form>

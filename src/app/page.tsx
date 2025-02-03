@@ -11,7 +11,7 @@ const Home = () => {
         <MainHeader />
       </div>
       <MainBanner />
-      <div className="lg:grid lg:grid-cols-[597px_auto] lg:gap-4">
+      <div className="lg:grid lg:grid-cols-[597px_auto] lg:justify-between lg:gap-4">
         <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:h-full">
           <BestPostList />
         </div>

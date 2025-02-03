@@ -1,6 +1,6 @@
 import CloseIcon from "@/assets/images/common/close-icon.svg";
 import { useSignoutModalStore, type LogoutModalType } from "@/store/signoutmodal/useSignoutModalStore";
-
+import clsx from "clsx";
 
 type LogoutModalProps = {
   modalId: string;
@@ -13,7 +13,7 @@ const LogoutModal = ({ modalId, modalType, onLogout }: LogoutModalProps) => {
     isOpen,
     selectedId,
     modalType: currentModalType,
-    isSuccess,
+    
     errorMessage,
     closeModal,
     setSuccess,
@@ -27,6 +27,7 @@ const LogoutModal = ({ modalId, modalType, onLogout }: LogoutModalProps) => {
     try {
       await onLogout();
       setSuccess(true);
+      closeModal(); 
     } catch (error) {
       setError(
         error instanceof Error
@@ -45,28 +46,26 @@ const LogoutModal = ({ modalId, modalType, onLogout }: LogoutModalProps) => {
               <CloseIcon />
             </button>
           </div>
-          <p className="font-pretendard text-center text-base text-base-800">
+          <p className={clsx("text-center text-base text-base-800")}>
             {errorMessage
               ? errorMessage
-              : isSuccess
-                ? "로그아웃되었습니다."
-                : "로그아웃 하시겠습니까?"}
+              : "로그아웃 하시겠습니까?"}
           </p>
         </div>
         <div className="mt-12 flex">
-          {!isSuccess && !errorMessage && (
+          {!errorMessage && (
             <button
               onClick={closeModal}
-              className="font-pretendard flex-1 !rounded-none !rounded-bl border border-base-300 !text-lg text-base-800"
+              className="flex-1 !rounded-none !rounded-bl border border-base-300 !text-lg text-base-800"
             >
               취소
             </button>
           )}
           <button
-            className="common-btn type-a font-pretendard flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800"
-            onClick={isSuccess || errorMessage ? closeModal : handleLogout}
+            className={clsx("common-btn type-a  flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800")}
+            onClick={errorMessage ? closeModal : handleLogout}
           >
-            {isSuccess || errorMessage ? "확인" : "로그아웃"}
+            {errorMessage ? "확인" : "로그아웃"}
           </button>
         </div>
       </div>
@@ -75,4 +74,5 @@ const LogoutModal = ({ modalId, modalType, onLogout }: LogoutModalProps) => {
 };
 
 export default LogoutModal;
+
 

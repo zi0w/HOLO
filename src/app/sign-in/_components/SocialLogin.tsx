@@ -9,27 +9,32 @@ const SocialLogin = () => {
   const { handleSocialLogin } = useSocialLogin();
 
   return (
-    <div className="flex items-center justify-center space-x-[24px]">
+    <div className="flex items-center justify-center space-x-6">
       <button
         onClick={() => handleSocialLogin("kakao")}
-        className="flex h-[48px] w-[48px] items-center justify-center rounded-full"
+        className="flex h-12 w-12 items-center justify-center rounded-full"
       >
-        <KakaoIcon width={48} height={48} className="h-[48px] w-[48px]" />
+        <KakaoIcon width={48} height={48} className="h-12 w-12" />
       </button>
       <button
         onClick={() => handleSocialLogin("google")}
-        className="flex h-[48px] w-[48px] items-center justify-center rounded-full"
+        className="flex h-12 w-12 items-center justify-center rounded-full"
       >
         <GoogleIcon width={48} height={48} className="object-cover" />
       </button>
       <button
         onClick={() => handleSocialLogin("github")}
-        className="flex h-[48px] w-[48px] items-center justify-center rounded-full"
+        className="flex h-12 w-12 items-center justify-center rounded-full"
       >
         <GithubIcon width={48} height={48} className="object-cover" />
       </button>
     </div>
   );
+  
 };
 
 export default SocialLogin;
+
+
+
+

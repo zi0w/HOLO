@@ -36,11 +36,11 @@ const useAuthStore = create<AuthState>()(
           user: null,
           session: null,
         }));
-        localStorage.removeItem("auth-storage"); // 로컬스토리지에서 auth-storage 삭제
+        localStorage.removeItem("auth-storage"); 
       },
     }),
     {
-      name: "auth-storage", // 로컬스토리지에 저장될 키 이름
+      name: "auth-storage", 
     },
   ),
 );

@@ -147,5 +147,19 @@ body {
   @apply flex h-[120px] w-full overflow-hidden rounded;
 }
 .mainBannerSwiper > .swiper-pagination.swiper-pagination-fraction {
-  @apply shadow-custom2 !bottom-3 left-auto right-3 top-auto w-auto max-w-10 rounded border border-primary-300 bg-white px-1 text-right text-sm text-primary-800;
+  @apply !bottom-3 left-auto right-3 top-auto w-auto max-w-10 rounded border border-primary-300 bg-white px-1 text-right text-sm text-primary-800 shadow-custom2;
+}
+.mainBannerSwiper > .swiper-button-prev,
+.mainBannerSwiper > .swiper-button-next {
+  @apply h-6 w-[18px] bg-white/40 m-0 -translate-y-1/2;
+}
+.mainBannerSwiper > .swiper-button-prev {
+  @apply rounded-l;
+}
+.mainBannerSwiper > .swiper-button-next {
+  @apply rounded-r;
+}
+.mainBannerSwiper > .swiper-button-prev:after,
+.mainBannerSwiper > .swiper-button-next:after {
+  @apply text-sm font-semibold text-base-700;
 }

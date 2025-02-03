@@ -7,7 +7,7 @@ const supabase = createClient();
  * @param {string} userId - 사용자 ID
  * @returns {Promise<{ nickname: string; profile_image_url: string } | null>} - 사용자 정보 객체 또는 null
  */
-export async function fetchUserInfo(userId: string) {
+export  const fetchUserInfo = async (userId: string) => {
   const { data, error } = await supabase
     .from("users")
     .select("nickname, profile_image_url")

@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const supabase = createClient();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export  const handler = async(req: NextApiRequest, res: NextApiResponse) =>{
   if (req.method === "POST") {
     const { nickname } = req.body;
 

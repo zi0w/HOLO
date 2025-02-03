@@ -30,13 +30,13 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
 
   return (
     <>
-      <div className="flex h-[64px] w-full items-center justify-between px-5">
+      <div className="flex h-16 w-full items-center justify-between px-5">
         <Link
           href={`/honeytips/${post.id}`}
           className="flex w-[calc(100%-28px)] flex-1 items-center gap-3"
         >
           {post.post_image_url && post.post_image_url.length > 0 ? (
-            <div className="relative h-[48px] w-[48px] shrink-0 overflow-hidden rounded-[4px]">
+            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded">
               <Image
                 src={post.post_image_url[0]}
                 alt={post.title}
@@ -46,18 +46,18 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
               />
             </div>
           ) : (
-            <div className="h-[48px] w-[48px] shrink-0" />
+            <div className="h-12 w-12 shrink-0" />
           )}
-          <div className="flex min-w-0 flex-1 flex-col gap-[2px]">
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <div className="flex w-full items-center justify-between">
-              <p className="line-clamp-1 text-[16px] !font-Pretendard text-base-800">
+              <p className="line-clamp-1 text-base text-base-800">
                 {post.title}
               </p>
-              <span className="-mt-[5px] !font-Pretendard ml-2 text-[14px] text-base-500">
+              <span className="-mt-1 ml-2 text-sm text-base-500">
                 {formatDate(post.created_at)}
               </span>
             </div>
-            <p className="line-clamp-1 !font-Pretendard text-[14px] text-base-800">
+            <p className="line-clamp-1 text-sm text-base-800">
               {post.content}
             </p>
           </div>
@@ -72,7 +72,7 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
           </div>
         </div>
       </div>
-
+  
       <RemoveModal
         isOpen={isOpen && selectedId === post.id}
         modalType={modalType}
@@ -81,6 +81,11 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
       />
     </>
   );
+  
 };
 
 export default MyLikeCard;
+
+
+
+
