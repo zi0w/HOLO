@@ -16,16 +16,15 @@ export const metadata: Metadata = {
 
 const Page = () => {
   return (
-    <div className="h-full w-full bg-white">
+    <div className="h-screen w-full bg-white">
       <div className="mx-auto flex h-full w-full flex-col items-center lg:flex-row lg:justify-center lg:gap-20">
-        <div className="hidden lg:block mt-auto">
+        <div className="mt-auto hidden lg:block">
           <Image
             src={authavatar}
             alt="캐릭터 아바타"
             width={590}
             height={913}
             className="max-h-[800px] object-contain"
-           
             priority
           />
         </div>

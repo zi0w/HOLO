@@ -45,11 +45,17 @@ export const useSignUpMutation = () => {
           throw new Error("사용자 ID를 생성할 수 없습니다.");
         }
 
-        const { data: existingUser } = await supabase
+        
+        const { data: existingUser, error: selectError } = await supabase
           .from("users")
           .select("id")
           .eq("id", authData.user.id)
-          .single();
+          .maybeSingle();  
+
+        if (selectError) {
+          console.error("Select error:", selectError);
+          throw new Error("사용자 정보 조회 중 오류가 발생했습니다.");
+        }
 
         if (existingUser) {
           const { error: updateError } = await supabase
@@ -90,9 +96,7 @@ export const useSignUpMutation = () => {
           }
         }
 
-        // 회원가입 성공 후 즉시 로그아웃 수행
         await supabase.auth.signOut();
-
         return authData;
       } catch (error) {
         console.error("Signup error:", error);
@@ -122,3 +126,4 @@ export const useSignUpMutation = () => {
     closeModal,
   };
 };
+

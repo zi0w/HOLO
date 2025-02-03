@@ -1,14 +1,13 @@
 "use client";
 
-import { usePasswordChange } from "../_hooks/usePasswordChangeHooks";
 import ProfileModal from "@/app/mypage/_components/ProfileModal";
 import CancelIcon from "@/assets/images/mypage/cancel.svg";
-import { useRouter } from "next/navigation";
+import { usePasswordChange } from "@/app/mypage/_hooks/usePasswordChangeHooks";
 
 type PasswordChangeModalProps = {
   isOpen: boolean;
   onClose: () => void;
-}
+};
 
 export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
   isOpen,
@@ -23,10 +22,10 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
     setIsProfileModalOpen,
     handlePasswordChange,
     handleConfirmPasswordChange,
-    handleSave
+    handleSave,
   } = usePasswordChange();
+
   
-  const router = useRouter();
 
   if (!isOpen) return null;
 
@@ -37,18 +36,18 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
           <div className="px-5 py-10">
             <button
               className="absolute right-4 top-4"
-              onClick={() => router.push("/mypage")}
+              onClick={onClose}
             >
-              <CancelIcon 
-                width={24} 
-                height={24} 
-                className="transition-transform hover:scale-110" 
+              <CancelIcon
+                width={24}
+                height={24}
+                className="transition-transform hover:scale-110"
               />
             </button>
             <h1 className="mb-8 font-gmarket-bold text-2xl leading-8 text-base-800">
               비밀번호 수정
             </h1>
-  
+
             <div className="space-y-4">
               <div>
                 <label
@@ -66,10 +65,12 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
                   className="w-full rounded border border-base-500 px-3 py-4 font-gmarket text-sm placeholder:leading-5 placeholder:text-base-500"
                 />
                 {passwordError && (
-                  <p className="mt-1 text-sm text-primary-500">{passwordError}</p>
+                  <p className="mt-1 text-sm text-primary-500">
+                    {passwordError}
+                  </p>
                 )}
               </div>
-  
+
               <div>
                 <label
                   htmlFor="confirm-password"
@@ -86,15 +87,17 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
                   className="w-full rounded border border-base-500 px-3 py-4 font-gmarket text-sm placeholder:leading-5 placeholder:text-base-500"
                 />
                 {confirmPasswordError && (
-                  <p className="mt-1 text-sm text-primary-500">{confirmPasswordError}</p>
+                  <p className="mt-1 text-sm text-primary-500">
+                    {confirmPasswordError}
+                  </p>
                 )}
               </div>
             </div>
           </div>
-  
+
           <div className="flex w-full border-t border-base-500">
             <button
-              className="flex-1 rounded-bl-md bg-base-0 py-3 text-center text-base-800"
+              className="bg-base-0 flex-1 rounded-bl-md py-3 text-center text-base-800"
               onClick={onClose}
             >
               취소
@@ -121,4 +124,3 @@ export const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
     </>
   );
 };
-
