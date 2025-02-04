@@ -1,41 +1,12 @@
 "use server";
 
-import OpenAI from "openai";
+import { fetchOpenAIResponse } from "@/lib/utils/openai";
 
 const fetchDailyFortune = async (): Promise<string> => {
-  const openai = new OpenAI({ apiKey: process.env.OPEN_AI_API_KEY });
+  const prompt =
+    "내 오늘 운세를 알려줘! 존댓말로 다른 내용 없이 딱 운세 내용 요약 10글자 이내로 짧게 키워드로만 적고, 부연 설명 두 줄 정도로 나눠서 알려줘 그리고 꼭 요약 키워드와 부연 설명을 슬래시로 나눠서 보내줘 그리고 슬래시와 글 사이에는 무조건 스페이스 한 번씩 넣어줘 그리고 영어는 절대 포함시키지 말아줘 매 요청마다 내용이 중복되지 않게 긍정적인 내용 50% 확률, 부정적인 내용 50% 확률로 둘 중 하나 선택해서 얘기해줘";
 
-  try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      store: true,
-      messages: [
-        {
-          role: "user",
-          content:
-            "내 오늘 운세를 알려줘! 다른 내용 없이 딱 운세 내용만 한 줄로 알려줘 매 요청마다 내용이 중복되지 않게 긍정적인 내용 50% 확률, 부정적인 내용 50% 확률로 둘 중 하나 선택해서 얘기해줘",
-        },
-      ],
-    });
-
-    return completion.choices[0].message.content as string;
-  } catch (error) {
-    console.error(error);
-    throw new Error("오늘의 운세 받아오는 데에 실패했습니다.");
-  }
+  return fetchOpenAIResponse(prompt, "오늘의 운세 받아오는 데에 실패했습니다.");
 };
 
 export default fetchDailyFortune;
-
-// "use server";
-
-// import { fetchOpenAIResponse } from "@/utils/openai";
-
-// const fetchDailyFortune = async (): Promise<string> => {
-//   const prompt =
-//     "내 오늘 운세를 알려줘! 다른 내용 없이 딱 운세 내용만 한 줄로 알려줘 매 요청마다 내용이 중복되지 않게 긍정적인 내용 50% 확률, 부정적인 내용 50% 확률로 둘 중 하나 선택해서 얘기해줘";
-
-//   return fetchOpenAIResponse(prompt, "오늘의 운세 받아오는 데에 실패했습니다.");
-// };
-
-// export default fetchDailyFortune;
