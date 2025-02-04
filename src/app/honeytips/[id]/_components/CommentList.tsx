@@ -12,7 +12,7 @@ import { useDropdown } from "@/app/honeytips/[id]/_hooks/useDropdown";
 import Error from "@/app/honeytips/[id]/error";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
-import { useModalStore } from "@/store/useModalStore";
+import { useModalStore } from "@/store/useHoneytipsModalStore";
 import "dayjs/locale/ko";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -78,11 +78,11 @@ const CommentList = () => {
   if (isError) return <Error />;
 
   return (
-    <div className="mx-5 pb-20 mt-[14px] flex flex-col lg:mx-auto lg:max-w-[762px] lg:pb-4">
+    <div className="mx-5 mt-[14px] flex flex-col pb-20 lg:mx-auto lg:max-w-[762px] lg:pb-4">
       <p className="border-b border-base-400 pb-2 font-bold text-base-800">
         댓글 {comments.length || 0}
       </p>
-      <section className="my-5 flex flex-col items-center justify-center gap-3 rounded">
+      <ul className="my-5 flex flex-col items-center justify-center gap-3 rounded">
         {comments.length === 0 ? (
           <p className="text-sm text-base-400">입력된 댓글이 없습니다.</p>
         ) : (
@@ -109,7 +109,7 @@ const CommentList = () => {
             />
           ))
         )}
-      </section>
+      </ul>
       <CommentForm />
     </div>
   );
