@@ -1,9 +1,11 @@
 "use client";
+import LocationModal from "@/app/map/_components/LocationModal";
 import useKakaoLoader from "@/app/map/_hooks/useKakaoLoader";
 import { fetchOpenAiDay } from "@/app/trash-guide/_actions/fetchTrashOpenAi";
 import SearchForm from "@/app/trash-guide/_components/SearchForm";
 import type { WasteDayAnswerData } from "@/app/trash-guide/_types/trashTypes";
 import Loading from "@/components/common/Loading";
+import { useLocationModalStore } from "@/store/locationmodal/useLocationModal";
 import locationStore from "@/store/useLocationStore";
 import { useEffect, useState } from "react";
 
@@ -14,15 +16,19 @@ const WasteDaySelector = () => {
   const [isValidAddress, setIsValidAddress] = useState<boolean>(false);
   const [isMyLocation, setIsMyLocation] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const { isOpen, modalType, closeModal } = useLocationModalStore();
+  const [isModalConfirmed, setIsModalConfirmed] = useState(false);
 
+  const handleAction = () => {
+    setIsMyLocation(false);
+    setIsModalConfirmed(true);
+    closeModal();
+  };
   // TODO: useLocationStore 로 변경
   const getCurrentPosition = locationStore(
     (state) => state.onClickMoveCurrentPosition,
   );
   const currentPosition = locationStore((state) => state.currentPosition);
-
-  useKakaoLoader();
-
   useEffect(() => {
     if (isMyLocation && currentPosition?.lng && currentPosition?.lat) {
       if (!window.kakao?.maps) {
@@ -52,6 +58,7 @@ const WasteDaySelector = () => {
       );
     }
   }, [currentPosition, isMyLocation]);
+  useKakaoLoader();
 
   const handleFetchWasteDay = async (): Promise<void> => {
     setLoading(true);
@@ -82,23 +89,23 @@ const WasteDaySelector = () => {
     setIsValidAddress(addressPattern.test(value));
   };
 
-  const handleMyLocationChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setIsMyLocation(e.target.checked);
+  const handleMyLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      try {
-        await getCurrentPosition();
-      } catch (error) {
-        console.error(error);
-        setRegion("위치 정보를 가져올 수 없습니다.");
-        setIsValidAddress(false);
-      }
+      setIsMyLocation(e.target.checked);
+      setIsModalConfirmed(false);
+      getCurrentPosition();
     } else {
+      setIsMyLocation(false);
       setRegion("");
       setIsValidAddress(false);
     }
   };
+
+  useEffect(() => {
+    if (isOpen && !isModalConfirmed) {
+      setIsMyLocation(true);
+    }
+  }, [isOpen, isModalConfirmed]);
 
   return (
     <div>
@@ -138,6 +145,12 @@ const WasteDaySelector = () => {
           ))}
         </ul>
       )}
+      <LocationModal
+        isOpen={isOpen}
+        modalType={modalType}
+        onAction={handleAction}
+        onClose={closeModal}
+      />
     </div>
   );
 };
