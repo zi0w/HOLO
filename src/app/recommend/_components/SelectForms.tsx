@@ -1,5 +1,6 @@
 "use client";
 
+import { Funnel, Step } from "@/app/recommend/_components/Funnel";
 import ProgressBar from "@/app/recommend/_components/ProgressBar";
 import Question from "@/app/recommend/_components/Question";
 import Result from "@/app/recommend/_components/Result";
@@ -11,7 +12,7 @@ import { useState } from "react";
 const steps = [...QUESTIONS.map((q) => q.id), "result"];
 
 const SelectForms = () => {
-  const { Funnel, Step, next, prev, currentStep } = useFunnel(steps[0]);
+  const { next, prev, currentStep } = useFunnel(steps[0]);
   const [answerData, setAnswerData] = useState<Answer>({
     answer1: "",
     answer2: "",
@@ -47,7 +48,7 @@ const SelectForms = () => {
             label={stepFraction}
           />
         )}
-        <Funnel>
+        <Funnel currentStep={currentStep}>
           {[
             ...QUESTIONS.map((q, index) => (
               <Step key={q.id} name={q.id}>
