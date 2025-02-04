@@ -265,7 +265,7 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             <button
               id="cancel-button"
               type="button"
-              aaria-label="게시글 작성 취소"
+              aria-label="게시글 작성 취소"
               onClick={() => openModal("form")}
               className="mr-2 rounded border px-6 pb-1.5 pt-2 font-gmarket text-base-800"
               disabled={isLoading}
