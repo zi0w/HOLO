@@ -73,10 +73,15 @@ const MapContainer = ({
     if (selectedPlace && !isMain) onClickCurrentMarker(selectedPlace);
   }, []);
   return (
-    <div className="relative h-full w-full lg:w-[1048px]">
+    <div
+      className={clsx(
+        "relative h-full w-full lg:w-[1048px]",
+        isMain && "lg:w-full",
+      )}
+    >
       <Map
         center={mapCenter! || currentPosition} // 지도를 내 위치 기준으로 표시
-        className={clsx("h-full w-full rounded", isMain && "lg:w-[57%]")}
+        className={clsx("h-full w-full rounded")}
         level={mapLevel} // 지도의 확대 레벨
         onCenterChanged={(map) => {
           // 사용자가 지도를 드래그로 이동하면 현재 지도 중심 업데이트
