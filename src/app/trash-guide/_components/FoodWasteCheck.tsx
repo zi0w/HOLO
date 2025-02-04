@@ -61,12 +61,12 @@ const FoodWasteCheck = () => {
           width={240}
           height={275}
           alt="사람아이콘"
+          loading="lazy"
         />
       )}
 
       {loading && <Loading />}
 
-      {/* TODO: 에러 메시지 추가 */}
       {error && <p className="mt-4 text-center text-red-500">{error}</p>}
 
       {isWasteFoodAnswer && !loading && (
