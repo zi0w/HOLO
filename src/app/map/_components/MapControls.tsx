@@ -2,7 +2,7 @@ import LocationModal from "@/app/map/_components/LocationModal";
 import Location from "@/assets/images/map/location.svg";
 import Minus from "@/assets/images/map/minus.svg";
 import Plus from "@/assets/images/map/plus.svg";
-import { useLocationModalStore } from "@/store/locationmodal/useLocationModal";
+import { useLocationModalStore } from "@/store/locationmodal/useLocationModalStore";
 
 type MapControlsProps = {
   onClickPlusMapLevel: () => void;

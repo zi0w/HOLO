@@ -1,5 +1,5 @@
 import type { Coordinates, PlacesSearchResultItem } from "@/app/map/_types/map";
-import { useLocationModalStore } from "@/store/locationmodal/useLocationModal";
+import { useLocationModalStore } from "@/store/locationmodal/useLocationModalStore";
 import type { Dispatch, SetStateAction } from "react";
 import { create } from "zustand";
 

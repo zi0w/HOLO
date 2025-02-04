@@ -69,40 +69,24 @@ const FoodWasteCheck = () => {
       {/* TODO: 에러 메시지 추가 */}
       {error && <p className="mt-4 text-center text-red-500">{error}</p>}
 
-      {isWasteFoodAnswer && !loading ? (
+      {isWasteFoodAnswer && !loading && (
         <div className="my-14 text-center">
           <strong className="font-bold text-primary-500">
             {submittedFoodWaste}
           </strong>
-          {wasteFoodAnswer ? (
-            <>
-              <p className="mb-4 mt-1 text-sm text-base-700">
-                {submittedFoodWaste}은(는) 음식물 쓰레기가 맞습니다!
-              </p>
-              <Image
-                src={FoodYesIcon}
-                width={200}
-                height={200}
-                className="mx-auto"
-                alt="음쓰아이콘"
-              />
-            </>
-          ) : (
-            <>
-              <p className="mb-4 mt-1 text-sm text-base-700">
-                {submittedFoodWaste}은(는) 음식물 쓰레기가 아닙니다!
-              </p>
-              <Image
-                src={FoodNoIcon}
-                width={200}
-                height={200}
-                className="mx-auto"
-                alt="음쓰아이콘"
-              />
-            </>
-          )}
+          <p className="mb-4 mt-1 text-sm text-base-700">
+            {submittedFoodWaste}은(는) 음식물 쓰레기가
+            {wasteFoodAnswer ? " 맞습니다!" : " 아닙니다!"}
+          </p>
+          <Image
+            src={wasteFoodAnswer ? FoodYesIcon : FoodNoIcon}
+            width={200}
+            height={200}
+            className="mx-auto"
+            alt="음쓰아이콘"
+          />
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

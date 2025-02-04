@@ -10,7 +10,7 @@ import { useState } from "react";
 const TrashContainer = () => {
   const [activeTab, setActiveTab] = useState("wasteDay");
 
-  const getTabStyle = (tabId) =>
+  const getTabStyle = (tabId: string) =>
     clsx(
       "flex-1 py-2 text-center border-b-2 cursor-pointer lg:flex gap-2 lg:border lg:justify-center lg:items-center lg:rounded lg:flex-none lg:px-3",
       {
@@ -22,7 +22,7 @@ const TrashContainer = () => {
     );
 
   return (
-    <div>
+    <>
       <h1 className="common-title mb-6 hidden !text-[22px] lg:block">
         {activeTab === "wasteDay" ? "지역별 쓰레기 정보" : "음식물 쓰레기 정보"}
       </h1>
@@ -43,7 +43,7 @@ const TrashContainer = () => {
       <div className="mt-16">
         <TrashLayoutBox isWasteDay={activeTab === "wasteDay"} />
       </div>
-    </div>
+    </>
   );
 };
 
