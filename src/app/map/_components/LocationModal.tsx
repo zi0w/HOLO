@@ -1,6 +1,9 @@
 "use client";
 import CloseIcon from "@/assets/images/common/close-icon.svg";
-import type { LocationModalType } from "@/store/locationmodal/useLocationModal";
+import {
+  useLocationModalStore,
+  type LocationModalType,
+} from "@/store/locationmodal/useLocationModal";
 
 type ModalContent = {
   mainText: string;
@@ -23,7 +26,7 @@ const defaultModalContent: Record<LocationModalType, ModalContent> = {
     buttonText: "설정으로 이동",
   },
   guide: {
-    mainText: "지도 서비스 사용을 위해\n권한을 허용해주세요.",
+    mainText: "위치 서비스 사용을 위해\n권한을 허용해주세요.",
     buttonText: "확인",
   },
 };
@@ -42,10 +45,18 @@ const LocationModal = ({
   onAction,
   onClose,
 }: LocationModalProps) => {
+  const { onActionCallback } = useLocationModalStore();
+
   if (!isOpen) return null;
+
   const { mainText, buttonText } = getModalContent(modalType, customText);
+
+  const handleAction = () => {
+    onAction();
+    onActionCallback?.();
+  };
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-base-800 bg-opacity-30">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-base-800 bg-opacity-30">
       <div className="w-4/5 max-w-md rounded bg-white shadow-lg">
         <div className="p-1">
           <div className="mb-5 flex items-center justify-end">
@@ -56,15 +67,9 @@ const LocationModal = ({
           <p className="whitespace-pre-line text-center">{mainText}</p>
         </div>
         <div className="mt-12 flex">
-          {/* <button
-            onClick={onClose}
-            className="flex-1 !rounded-none !rounded-bl border border-base-300 !text-lg"
-          >
-            취소
-          </button> */}
           <button
             className="common-btn type-a flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800"
-            onClick={onAction}
+            onClick={handleAction}
           >
             {buttonText}
           </button>
