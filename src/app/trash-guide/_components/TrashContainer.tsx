@@ -10,7 +10,7 @@ import { useState } from "react";
 const TrashContainer = () => {
   const [activeTab, setActiveTab] = useState("wasteDay");
 
-  const getTabStyle = (tabId) =>
+  const getTabStyle = (tabId: string) =>
     clsx(
       "flex-1 py-2 text-center border-b-2 cursor-pointer lg:flex gap-2 lg:border lg:justify-center lg:items-center lg:rounded lg:flex-none lg:px-3",
       {
