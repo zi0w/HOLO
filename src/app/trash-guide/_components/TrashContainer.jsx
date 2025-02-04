@@ -22,7 +22,7 @@ const TrashContainer = () => {
     );
 
   return (
-    <div>
+    <>
       <h1 className="common-title mb-6 hidden !text-[22px] lg:block">
         {activeTab === "wasteDay" ? "지역별 쓰레기 정보" : "음식물 쓰레기 정보"}
       </h1>
@@ -43,7 +43,7 @@ const TrashContainer = () => {
       <div className="mt-16">
         <TrashLayoutBox isWasteDay={activeTab === "wasteDay"} />
       </div>
-    </div>
+    </>
   );
 };
 
