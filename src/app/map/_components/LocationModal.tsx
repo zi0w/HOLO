@@ -3,7 +3,7 @@ import CloseIcon from "@/assets/images/common/close-icon.svg";
 import {
   useLocationModalStore,
   type LocationModalType,
-} from "@/store/locationmodal/useLocationModal";
+} from "@/store/locationmodal/useLocationModalStore";
 
 type ModalContent = {
   mainText: string;
