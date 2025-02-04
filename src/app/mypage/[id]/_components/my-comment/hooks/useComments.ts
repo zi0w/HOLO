@@ -84,7 +84,7 @@ export const useComments = () => {
   >({
     mutationFn: deleteComment,
     onMutate: async (commentId) => {
-      // 모든 관련 쿼리 취소
+      
       await queryClient.cancelQueries({ queryKey: ["comments", userId] });
       await queryClient.cancelQueries({ queryKey: ["myLikes", userId] });
 
@@ -97,18 +97,18 @@ export const useComments = () => {
       const postId = targetComment?.post_id;
 
       if (postId) {
-        // 게시물 관련 쿼리도 취소
+        
         await queryClient.cancelQueries({ queryKey: ["post", postId] });
         await queryClient.cancelQueries({ queryKey: ["comments", postId] });
       }
 
-      // 낙관적 업데이트
+     
       queryClient.setQueryData<CommentWithPost[]>(
         ["comments", userId],
         (old = []) => old.filter((comment) => comment.id !== commentId),
       );
 
-      // 게시물의 댓글 목록도 낙관적 업데이트
+      
       if (postId) {
         queryClient.setQueryData<PostComment[]>(
           ["comments", postId],
@@ -129,12 +129,12 @@ export const useComments = () => {
     },
     onSuccess: async (_, commentId, context) => {
       if (context?.postId) {
-        // 게시물 관련 쿼리 무효화
+       
         await queryClient.invalidateQueries({ queryKey: ["post", context.postId] });
         await queryClient.invalidateQueries({ queryKey: ["comments", context.postId] });
         await queryClient.invalidateQueries({ queryKey: ["postComments", context.postId] });
       }
-      // 마이페이지 관련 쿼리 무효화
+      
       await queryClient.invalidateQueries({ queryKey: ["comments", userId] });
       await queryClient.invalidateQueries({ queryKey: ["myLikes", userId] });
     },
