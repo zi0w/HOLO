@@ -3,13 +3,13 @@
 import PostCard from "@/app/honeytips/_components/PostCard";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { fetchPostsData } from "@/app/honeytips/_utils/post";
-import LoadingSmall from "@/components/common/LoadingSmall";
+import BestPostLoading from "@/components/common/BestPostLoading";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const useMediaQuery = (query: string): boolean => {
   const [matches, setMatches] = useState(false);
-  
+
   useEffect(() => {
     const media = window.matchMedia(query);
     if (media.matches !== matches) {
@@ -52,12 +52,12 @@ const BestPostList = () => {
   if (loading)
     return (
       <div className="mb-4">
-        <LoadingSmall />
+        <BestPostLoading />
       </div>
     );
 
   return (
-    <div className="relative mx-5 lg:mx-auto lg:max-w-[358px] lg:mt-4">
+    <div className="relative mx-5 lg:mx-auto lg:mt-4 lg:max-w-[358px]">
       <h2 className="common-title !text-[22px]">꿀팁 게시판</h2>
       <ul className="mt-4 flex flex-col gap-4">
         {bestPosts.map((post) => (
@@ -71,7 +71,7 @@ const BestPostList = () => {
       </ul>
       <Link
         href="/honeytips"
-        className="font-gmarket mb-[34px] mt-[18px] flex justify-center text-sm text-primary-500 lg:text-lg"
+        className="mb-[34px] mt-[18px] flex justify-center font-gmarket text-sm text-primary-500 lg:text-lg"
       >
         더 많은 글들 보러가기
       </Link>
