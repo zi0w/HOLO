@@ -3,7 +3,6 @@ import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();
 
-// 포스트 디테일 불러오기
 export const fetchPostDetail = async (id: Post["id"]) => {
   try {
     if (!id) return null;
@@ -25,7 +24,6 @@ export const fetchPostDetail = async (id: Post["id"]) => {
   }
 };
 
-// 포스트 삭제
 export const deletePost = async (id: Post["id"]) => {
   try {
     const { data: detailData, error } = await supabase

@@ -29,8 +29,8 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
               className="aspect-square h-[103px] w-[103px] rounded object-cover"
               src={post.post_image_url[0]}
               alt="게시글 이미지"
-              width={100}
-              height={100}
+              width={105}
+              height={105}
               loading="lazy"
             />
           )}
@@ -44,8 +44,8 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
                   className="h-[21px] w-[21px] rounded-full"
                   src={post.users.profile_image_url}
                   alt="프로필 이미지"
-                  width={100}
-                  height={100}
+                  width={25}
+                  height={25}
                   loading="lazy"
                 />
               )}
