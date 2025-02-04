@@ -12,7 +12,7 @@ import ConfirmModal from "@/components/common/ConfirmModal";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import useAuthStore from "@/store/useAuthStore";
-import { useModalStore } from "@/store/useModalStore";
+import { useModalStore } from "@/store/useHoneytipsModalStore";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -155,7 +155,7 @@ const PostList = () => {
 
       <SortButton sortBy={sortBy} setSortBy={setSortBy} />
 
-      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
+      <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
         {isLoading ? (
           <PostCardLoading />
         ) : currentPosts.length > 0 ? (
@@ -172,7 +172,7 @@ const PostList = () => {
             해당 카테고리에 대한 포스트가 없습니다.
           </p>
         )}
-      </section>
+      </ul>
 
       <Pagination
         currentPage={currentPage}

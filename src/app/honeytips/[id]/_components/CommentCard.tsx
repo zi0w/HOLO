@@ -47,7 +47,7 @@ const CommentCard = ({
   isOwner,
 }: CommentCardProps) => {
   return (
-    <article className="mx-5 w-full rounded-lg">
+    <li className="mx-5 w-full rounded-lg">
       {isModalOpen && modalType === "default" && (
         <ConfirmModal
           text="삭제"
@@ -149,7 +149,7 @@ const CommentCard = ({
           </div>
         )}
       </div>
-    </article>
+    </li>
   );
 };
 
