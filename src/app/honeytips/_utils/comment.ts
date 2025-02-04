@@ -4,7 +4,6 @@ import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();
 
-// 코멘트 데이터 불러오기
 export const fetchCommentData = async (postId: Comment["post_id"]) => {
   try {
     const { data: commentData, error } = await supabase
@@ -22,7 +21,6 @@ export const fetchCommentData = async (postId: Comment["post_id"]) => {
   }
 };
 
-// 코멘트 저장
 export const addComment = async (newComment: {
   comment: Comment["comment"];
   postId: Comment["post_id"];
@@ -55,7 +53,6 @@ export const addComment = async (newComment: {
   }
 };
 
-// 코멘트 수정
 type updateCommentProps = {
   editingComment: Comment["comment"];
   editingId: Comment["id"];
@@ -84,7 +81,6 @@ export const updateComment = async ({
   }
 };
 
-// 코멘트 삭제
 export const deleteComment = async (id: Comment["id"]) => {
   console.log('supabase_id', id)
   try {

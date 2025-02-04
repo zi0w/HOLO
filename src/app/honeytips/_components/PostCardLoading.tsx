@@ -48,7 +48,6 @@ const PostCardLoading = () => {
           ))}
         </div>
 
-        {/* lg 이상일 때 */}
         <div className="hidden lg:block">
           <div className="flex flex-col gap-6">
             {Array.from({ length: 3 }).map((_, index) => (

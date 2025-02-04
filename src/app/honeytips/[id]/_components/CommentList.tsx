@@ -9,6 +9,7 @@ import {
 } from "@/app/honeytips/[id]/_hooks/useCommentMutaion";
 import { useCommentDataQuery } from "@/app/honeytips/[id]/_hooks/useCommentQuery";
 import { useDropdown } from "@/app/honeytips/[id]/_hooks/useDropdown";
+import Error from "@/app/honeytips/[id]/error";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import { useModalStore } from "@/store/useModalStore";
@@ -74,10 +75,10 @@ const CommentList = () => {
   };
 
   if (isPending) return <CommentLoading />;
-  if (isError) return <div>에러가 발생했습니다!</div>;
+  if (isError) return <Error />;
 
   return (
-    <div className="mx-5 mb-20 mt-[14px] flex flex-col lg:mx-auto lg:max-w-[762px] lg:pb-4">
+    <div className="mx-5 pb-20 mt-[14px] flex flex-col lg:mx-auto lg:max-w-[762px] lg:pb-4">
       <p className="border-b border-base-400 pb-2 font-bold text-base-800">
         댓글 {comments.length || 0}
       </p>
