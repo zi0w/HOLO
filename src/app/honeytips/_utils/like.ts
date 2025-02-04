@@ -4,7 +4,6 @@ import { createClient } from "@/lib/utils/supabase/client";
 
 const supabase = createClient();
 
-// 좋아요 데이터 불러오기
 export const fetchLikesData = async (postId: Like["post_id"]) => {
   try {
     const user_id = await getId();
@@ -30,7 +29,6 @@ type deleteLikeProps = {
   postId: Like["post_id"];
 };
 
-// 좋아요 삭제
 export const deleteLike = async ({ userId, postId }: deleteLikeProps) => {
   try {
     const { data: likesData, error } = await supabase
@@ -52,7 +50,6 @@ type addLikeProps = {
   postId: Like["post_id"];
 };
 
-// 좋아요 저장
 export const addLike = async ({ userId, postId }: addLikeProps) => {
   try {
     const { data: likesData, error } = await supabase.from("likes").insert([
