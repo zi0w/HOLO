@@ -1,4 +1,5 @@
 import type { Coordinates, PlacesSearchResultItem } from "@/app/map/_types/map";
+import { useLocationModalStore } from "@/store/locationmodal/useLocationModal";
 import type { Dispatch, SetStateAction } from "react";
 import { create } from "zustand";
 
@@ -19,6 +20,7 @@ type MapStore = {
   onClickMoveCurrentPosition: () => void;
   setSelectedPlace: Dispatch<SetStateAction<PlacesSearchResultItem | null>>;
 };
+
 const useLocationStore = create<MapStore>((set) => ({
   currentPosition: null,
   mapCenter: {
@@ -29,7 +31,7 @@ const useLocationStore = create<MapStore>((set) => ({
   geolocationError: null,
   kakaoLoading: true,
   selectedPlace: null,
-  
+
   setKakaoLoading: (loading) =>
     set((state) => {
       if (state.kakaoLoading !== loading) {
@@ -67,14 +69,12 @@ const useLocationStore = create<MapStore>((set) => ({
         },
         (error) => {
           console.error("위치를 가져올 수 없습니다.\n", error.message);
-          set({ geolocationError: "위치 허용 여부를 확인해주세요." });
+          useLocationModalStore.getState().openModal("location-error", "guide");
         },
         options,
       );
     } else {
-      set({
-        geolocationError: "위치 허용 여부를 확인해주세요.",
-      });
+      useLocationModalStore.getState().openModal("location-error", "guide");
     }
   },
   setSelectedPlace: (place) =>

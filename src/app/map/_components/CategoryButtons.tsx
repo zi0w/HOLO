@@ -2,7 +2,7 @@ import useScrollIntoViewCategoryBtn from "@/app/map/_hooks/useScrollIntoViewCate
 import type { Place } from "@/app/map/_types/map";
 import { MAP_CATEGORIES } from "@/app/map/constants/categories";
 import clsx from "clsx";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useRef, useState, type Dispatch, type SetStateAction } from "react";
 
 type CategoryButtonsProps = {
   setCategory: Dispatch<SetStateAction<string>>;
@@ -32,6 +32,33 @@ const CategoryButtons = ({
     setSelectedCategory,
   );
 
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  let isDragging = false;
+  let startX = 0;
+  let scrollLeft = 0;
+
+  // 마우스를 눌렀을 때 드래그 시작
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    isDragging = true;
+    startX = e.pageX - scrollRef.current.offsetLeft; // 현재 마우스 X 좌표
+    scrollLeft = scrollRef.current.scrollLeft; // 현재 스크롤 위치 저장
+  };
+
+  // 마우스를 움직일 때 스크롤 이동
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft; // 현재 마우스 위치
+    const walk = (x - startX) * 0.8; // 빠르게 조정
+    scrollRef.current.scrollLeft = scrollLeft - walk; // 스크롤 위치 이동
+  };
+
+  // 마우스를 놓았을 때 드래그 종료
+  const handleMouseUp = () => {
+    isDragging = false;
+  };
+
   return (
     <>
       {/* 페이지 제목 */}
@@ -46,10 +73,15 @@ const CategoryButtons = ({
 
       {/* 버튼 카테고리 컨테이너 */}
       <div
+        ref={scrollRef}
         className={clsx(
           "mx-5 flex overflow-x-auto [&::-webkit-scrollbar]:hidden",
           isMain ? "lg:mx-0" : "lg:m-0 lg:mr-9 lg:gap-2",
         )}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseUp}
+        onMouseUp={handleMouseUp}
       >
         {MAP_CATEGORIES.map((cate, index) => (
           <button

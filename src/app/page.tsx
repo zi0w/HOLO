@@ -1,12 +1,12 @@
 import MainHeader from "@/components/common/MainHeader";
 import BestPostList from "@/components/main/BestPostList";
-import PolicyAndTrashBanner from "@/components/main/PolicyAndTrashBanner";
 import MainBanner from "@/components/main/MainBanner";
 import Map from "@/components/main/Map";
+import PolicyAndTrashBanner from "@/components/main/PolicyAndTrashBanner";
 
 const Home = () => {
   return (
-    <div className="mt-[70px] lg:mx-auto lg:mt-10 lg:max-w-[979px] pb-[83px] lg:pb-11">
+    <div className="mt-[70px] pb-[83px] lg:mx-auto lg:mt-10 lg:max-w-[979px] lg:pb-11">
       <div className="lg:hidden">
         <MainHeader />
       </div>
