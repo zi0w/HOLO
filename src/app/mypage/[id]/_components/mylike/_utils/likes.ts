@@ -1,4 +1,3 @@
-// api/likes.ts
 
 import type { Post } from "@/app/mypage/_types/myPage";
 import { createClient } from "@/lib/utils/supabase/client";

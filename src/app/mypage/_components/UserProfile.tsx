@@ -25,6 +25,25 @@ const UserProfile = () => {
     }
   };
 
+  const handleImageError = async (
+    e: React.SyntheticEvent<HTMLImageElement, Event>,
+  ) => {
+    const target = e.target as HTMLImageElement;
+    if (target.src !== defaultImageUrl) {
+      try {
+        const response = await fetch(target.src);
+        const blob = await response.blob();
+        const file = new File([blob], "profile.webp", { type: blob.type });
+        await handleProfileImageUpdate(file);
+      } catch {
+        target.src = defaultImageUrl;
+        handleProfileImageUpdate(
+          new File([defaultImageUrl], "default.jpg", { type: "image/jpeg" }),
+        );
+      }
+    }
+  };
+
   if (isLoading || !userData) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -38,7 +57,7 @@ const UserProfile = () => {
       <div className="flex flex-col items-center">
         <div className="flex w-full items-center px-5 pt-[5px] lg:px-0 lg:pl-[calc(50vw-400px)]">
           <button className="flex items-center">
-            <h1 className="common-title pt-16 text-2xl font-medium leading-8 text-base-800">
+            <h1 className="common-title text-2xl font-medium leading-8 text-base-800">
               마이페이지
             </h1>
           </button>
@@ -48,14 +67,13 @@ const UserProfile = () => {
           <Image
             src={localImageUrl || defaultImageUrl}
             alt="프로필 이미지"
-            fill
-            className="rounded-full object-cover"
+            width={128}
+            height={128}
+            className="h-[128px] w-[128px] rounded-full object-cover"
             priority
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = defaultImageUrl;
-              handleProfileImageUpdate(defaultImageUrl);
-            }}
+            quality={75}
+            sizes="128px"
+            onError={handleImageError}
           />
           <button
             onClick={() => router.push("/mypage/edit")}
@@ -79,3 +97,4 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+

@@ -62,7 +62,7 @@ const Mypageform = () => {
     }
   };
   return (
-    <div className="-md:translatey-15 -translatey-10 relative bg-white">
+    <div className="md:-translatey-15 -translatey-10 relative bg-white">
       <div className="pt-[5px]">
         <UserProfile />
       </div>
@@ -127,7 +127,7 @@ const Mypageform = () => {
 
       <div className="mx-5 mt-5 flex flex-col lg:mx-auto lg:flex-row lg:items-center lg:justify-center lg:gap-2">
         <SignoutButton />
-        <div className="mt-4 lg:mt-0">
+        <div className="mb-5 mt-4 lg:mt-0">
           <DeleteAccount />
         </div>
       </div>

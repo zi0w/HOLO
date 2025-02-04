@@ -29,8 +29,8 @@ export const fetchMyPostsData = async (userId: string): Promise<Post[]> => {
   return data || [];
 };
 
-export const deletePost = async (postId: string): Promise<void> => {
-  const { error } = await supabase.from("posts").delete().eq("id", postId);
+// export const deletePost = async (postId: string): Promise<void> => {
+//   const { error } = await supabase.from("posts").delete().eq("id", postId);
 
-  if (error) throw error;
-};
+//   if (error) throw error;
+// };
