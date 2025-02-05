@@ -17,9 +17,8 @@ const UserProfile = () => {
   } = useProfileChange();
 
   const defaultImageUrl =
-    'https://szwenodhezhbcfhbuckz.supabase.co/storage/v1/object/public/profile_image//default-avatar-icon-of-social-media-user-vector.jpg'
+    "https://szwenodhezhbcfhbuckz.supabase.co/storage/v1/object/public/profile_image//default-avatar-icon-of-social-media-user-vector.jpg";
 
- 
   const handleBlur = () => {
     if (userData?.nickname) {
       handleNicknameUpdate({ nickname: userData.nickname });
@@ -54,7 +53,7 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="w-full bg-white pt-16">
+    <div className="w-full bg-white pt-12 lg:pt-6">
       <div className="flex flex-col items-center">
         <div className="flex w-full items-center px-5 pt-[5px] lg:px-0 lg:pl-[calc(50vw-400px)]">
           <button className="flex items-center">
@@ -98,4 +97,3 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
-

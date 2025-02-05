@@ -84,7 +84,7 @@ const CommentList = () => {
       </p>
       <ul className="my-5 flex flex-col items-center justify-center gap-3 rounded">
         {comments.length === 0 ? (
-          <p className="text-sm text-base-400">입력된 댓글이 없습니다.</p>
+          <li className="text-sm text-base-400">입력된 댓글이 없습니다.</li>
         ) : (
           comments.map((comment) => (
             <CommentCard

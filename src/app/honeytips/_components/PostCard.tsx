@@ -48,8 +48,8 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
                     className="h-[21px] w-[21px] rounded-full"
                     src={post.users.profile_image_url}
                     alt="프로필 이미지"
-                    width={25}
-                    height={25}
+                    width={21}
+                    height={21}
                     loading="lazy"
                   />
                 )}
