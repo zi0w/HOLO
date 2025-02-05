@@ -4,6 +4,7 @@ import { fetchPolicyList } from "@/app/policy/_actions/fetchPolicyList";
 import PolicyFilter from "@/app/policy/_components/PolicyFilter";
 import PolicyResult from "@/app/policy/_components/PolicyResult";
 import { REGION_CODES } from "@/app/policy/_constants/region";
+import type { PolicyData } from "@/app/policy/_types/policy";
 import Loading from "@/components/common/Loading";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
@@ -28,14 +29,15 @@ const PolicyCont = () => {
     isLoading,
     error,
     refetch,
-  } = useQuery({
+  } = useQuery<PolicyData[]>({
     queryKey: ["policies"],
     queryFn: async () => {
       const regionCode = REGION_CODES[filters.region];
-      return fetchPolicyList({
+      const response = await fetchPolicyList({
         bizTycdSel: filters.field,
         srchPolyBizSecd: regionCode,
       });
+      return response as PolicyData[];
     },
     enabled: shouldFetch && !!filters.region && !!filters.field,
   });
@@ -49,7 +51,7 @@ const PolicyCont = () => {
     nextPage,
     prevPage,
     goToPage,
-  } = usePagination(policyData || [], 6);
+  } = usePagination<PolicyData>(policyData || [], 6);
 
   const handleFilterChange = (
     key: keyof Omit<SearchFilters, "pageIndex">,
