@@ -28,7 +28,7 @@ const ProfileImageUploader = ({
         <Image
           src={previewUrl || defaultImageUrl}
           alt="프로필 이미지"
-          fill
+          priority
           className="object-cover"
           onError={(e) => {
             const target = e.target as HTMLImageElement;

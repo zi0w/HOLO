@@ -1,6 +1,6 @@
-// lib/utils/supabase/client.ts
-import type { Database } from "@/lib/types/supabase"; // Database 타입 임포트
-import { createServerClient } from "@supabase/ssr"; // Supabase SSR 클라이언트 임포트
+
+import type { Database } from "@/lib/types/supabase"; 
+import { createServerClient } from "@supabase/ssr"; 
 import { cookies } from "next/headers";
 
 export const createClient = async (useAdmin: boolean = false) => {
