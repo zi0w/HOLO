@@ -57,12 +57,12 @@ const ImageNicknameForm = () => {
       return;
     }
     if (!isNicknameValid) {
-      alert("닉네임 형식이 올바르지 않습니다.");
+     
       return;
     }
     const isDuplicate = await checkNicknameDuplicate(nickname);
     if (!isDuplicate) {
-      alert("이미 사용 중인 닉네임입니다.");
+     
       return;
     }
     handleSaveClick(isNicknameValid, checkNicknameDuplicate, nickname);
