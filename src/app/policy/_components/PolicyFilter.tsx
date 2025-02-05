@@ -46,9 +46,9 @@ const PolicyFilter = ({
   fieldSelected,
   onRegionChange,
   onFieldChange,
-  onSearch,
+  // TODO: onSearch,
 }: PolicyFilterProps) => {
-  const isDisabled = !regionSelected || !fieldSelected;
+  // TODO: const isDisabled = !regionSelected || !fieldSelected;
 
   return (
     <div>
