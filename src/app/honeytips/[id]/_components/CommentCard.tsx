@@ -64,7 +64,7 @@ const CommentCard = ({
         <div className="flex items-center gap-[14px]">
           {comment.users.profile_image_url && (
             <Image
-              className="h-[50px] w-[50px] rounded-full"
+              className="h-[50px] w-[50px] rounded-full object-cover"
               src={comment.users.profile_image_url}
               alt="프로필 이미지"
               width={50}

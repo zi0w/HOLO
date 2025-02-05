@@ -1,7 +1,7 @@
 "use client";
-
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { CommentWithPost } from "@/app/mypage/_types/useMyTypes";
+import LogoImage from "@/assets/images/common/logo.png";
 import { useModalStore } from "@/store/useMypageModalStore";
 
 import Image from "next/image";
@@ -33,20 +33,20 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
           href={`/honeytips/${comment.post_id}`}
           className="flex w-[calc(100%-36px)] flex-1 items-center gap-3"
         >
-          {comment.posts?.post_image_url &&
-          comment.posts.post_image_url.length > 0 ? (
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded">
-              <Image
-                src={comment.posts.post_image_url[0]}
-                alt={`게시글 이미지`}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          ) : (
-            <div className="h-12 w-12 shrink-0" />
-          )}
+          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded">
+            <Image
+              src={
+                comment.posts?.post_image_url &&
+                comment.posts.post_image_url.length > 0
+                  ? comment.posts.post_image_url[0]
+                  : LogoImage
+              }
+              alt={`게시글 이미지`}
+              fill
+              className=" bg-primary-50  object-contain"
+              priority
+            />
+          </div>
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <div className="flex w-full items-center justify-between">
               <p className="line-clamp-1 text-base text-base-800">

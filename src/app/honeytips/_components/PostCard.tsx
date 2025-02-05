@@ -45,7 +45,7 @@ const PostCard = ({ post, likesCount, commentsCount }: PostCardProps) => {
               <div className="flex items-center">
                 {post.users?.profile_image_url && (
                   <Image
-                    className="h-[21px] w-[21px] rounded-full"
+                    className="h-[21px] w-[21px] rounded-full object-cover"
                     src={post.users.profile_image_url}
                     alt="프로필 이미지"
                     width={21}
