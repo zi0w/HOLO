@@ -6,10 +6,12 @@ import { Suspense } from "react";
 
 const SharedResultPage = () => {
   return (
-    <div className="bg-white text-black">
-      <Suspense fallback={<Loading />}>
-        <Result />
-      </Suspense>
+    <div className="block items-center justify-center lg:flex lg:h-screen">
+      <div className="mt-4 w-full px-5 pb-5 lg:mx-auto lg:max-w-xl lg:rounded-3xl lg:border lg:border-primary-500 lg:px-20">
+        <Suspense fallback={<Loading />}>
+          <Result />
+        </Suspense>
+      </div>
     </div>
   );
 };
