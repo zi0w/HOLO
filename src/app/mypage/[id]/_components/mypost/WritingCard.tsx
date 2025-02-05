@@ -2,8 +2,7 @@
 
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
-import { useModalStore } from "@/store/mypagemodal/useMypageModalStore";
-
+import { useModalStore } from "@/store/useMypageModalStore";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +16,7 @@ type WritingCardProps = {
 
 const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
   const { isOpen, selectedId, modalType, openModal, closeModal } =
-    useModalStore(); 
+    useModalStore();
 
   const handleDelete = async () => {
     try {
@@ -64,9 +63,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
                   .slice(0, -1)}
               </span>
             </div>
-            <p className="line-clamp-1 text-sm text-base-800">
-              {post.content}
-            </p>
+            <p className="line-clamp-1 text-sm text-base-800">{post.content}</p>
           </div>
         </Link>
         <div className="ml-4 flex items-center">
@@ -82,7 +79,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
           </button>
         </div>
       </div>
-  
+
       <RemoveModal
         isOpen={isOpen && selectedId === post.id}
         modalType={modalType}
@@ -91,12 +88,6 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
       />
     </>
   );
-  
 };
 
 export default WritingCard;
-
-
-
-
-

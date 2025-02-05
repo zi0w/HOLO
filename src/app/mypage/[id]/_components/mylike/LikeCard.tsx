@@ -1,10 +1,10 @@
 "use client";
 
+import { formatDate } from "@/app/mypage/[id]/_components/mylike/_utils/formatDate";
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
-import { formatDate } from "@/app/mypage/[id]/_components/mylike/_utils/formatDate";
-import { useModalStore } from "@/store/mypagemodal/useMypageModalStore";
+import { useModalStore } from "@/store/useMypageModalStore";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -56,9 +56,7 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
                 {formatDate(post.created_at)}
               </span>
             </div>
-            <p className="line-clamp-1 text-sm text-base-800">
-              {post.content}
-            </p>
+            <p className="line-clamp-1 text-sm text-base-800">{post.content}</p>
           </div>
         </Link>
         <div className="ml-4 flex items-center">
@@ -71,7 +69,7 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
           </div>
         </div>
       </div>
-  
+
       <RemoveModal
         isOpen={isOpen && selectedId === post.id}
         modalType={modalType}
@@ -80,11 +78,6 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
       />
     </>
   );
-  
 };
 
 export default MyLikeCard;
-
-
-
-
