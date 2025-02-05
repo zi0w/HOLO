@@ -168,9 +168,9 @@ const PostList = () => {
             />
           ))
         ) : (
-          <p className="col-span-full text-center text-gray-500">
+          <li className="col-span-full text-center text-gray-500">
             해당 카테고리에 대한 포스트가 없습니다.
-          </p>
+          </li>
         )}
       </ul>
 
