@@ -3,7 +3,9 @@
 import MyCommentList from "@/app/mypage/[id]/_components/my-comment/MyCommentList";
 import MyLikeList from "@/app/mypage/[id]/_components/mylike/LikeList";
 import MyWritingList from "@/app/mypage/[id]/_components/mypost/WritingList";
+import ContentSkeletion from "@/app/mypage/_components/ContentSkeleton";
 import DeleteAccount from "@/app/mypage/_components/DeleteAccount";
+import ProfileSkeleton from "@/app/mypage/_components/ProfileSkeleton";
 
 import UserProfile from "@/app/mypage/_components/UserProfile";
 import type { ActiveSection } from "@/app/mypage/_types/myPage";
@@ -61,8 +63,18 @@ const Mypageform = () => {
         return null;
     }
   };
+
+  if (isInitialLoad) {
+    return (
+      <>
+        <ProfileSkeleton />
+        <ContentSkeletion />
+      </>
+    );
+  }
+
   return (
-    <div className="md:-translatey-15 -translatey-10 relative bg-white">
+    <div className="lg:-translatey-15 -translatey-10 relative bg-white">
       <div className="pt-[5px]">
         <UserProfile />
       </div>
@@ -121,7 +133,7 @@ const Mypageform = () => {
           </div>
         </div>
       </div>
-      <div className="mt-1 w-full border-t border-primary-100 bg-primary-100 md:mx-auto md:w-[548px]" />
+      <div className="mt-1 w-full border-t border-primary-100 bg-primary-100 lg:mx-auto lg:w-[548px]" />
 
       <div>{renderSection()}</div>
 
