@@ -133,9 +133,10 @@ const DetailCard = ({ postId }: DetailCardProps) => {
               <Image
                 src={postDetailData.users.profile_image_url}
                 alt={`${postDetailData.users.nickname}의 프로필 이미지`}
-                width={50}
-                height={50}
+                width={42}
+                height={42}
                 className="h-[42px] w-[42px] rounded-full"
+                priority
               />
             )}
           </div>
@@ -191,7 +192,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                   alt={`게시물 이미지 ${index + 1}`}
                   width={762}
                   height={762}
-                  loading="lazy"
+                  priority
                   className="mx-auto h-[300px] w-[300px] rounded object-cover lg:h-[762px] lg:w-[762px]"
                 />
               </SwiperSlide>

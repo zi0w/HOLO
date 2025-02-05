@@ -67,8 +67,8 @@ const CommentCard = ({
               className="h-[50px] w-[50px] rounded-full"
               src={comment.users.profile_image_url}
               alt="프로필 이미지"
-              width={55}
-              height={55}
+              width={50}
+              height={50}
               loading="lazy"
             />
           )}
