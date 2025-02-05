@@ -56,7 +56,7 @@ const SignUp = () => {
               <div>
                 <input
                   type="email"
-                  placeholder="example@email.com"
+                  placeholder="아이디"
                   className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
                   {...register("email")}
                 />
@@ -70,7 +70,7 @@ const SignUp = () => {
               <div>
                 <input
                   type="text"
-                  placeholder="2~20자의 한글, 영문, 숫자, 특수문자(._-)"
+                  placeholder="닉네임"
                   className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
                   {...register("nickname")}
                 />
@@ -84,7 +84,7 @@ const SignUp = () => {
               <div>
                 <input
                   type="password"
-                  placeholder="8~16자의 영문, 숫자, 특수문자 조합"
+                  placeholder="비빌번호"
                   className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
                   {...register("password")}
                 />
@@ -98,7 +98,7 @@ const SignUp = () => {
               <div>
                 <input
                   type="password"
-                  placeholder="비밀번호 재입력"
+                  placeholder="비밀번호 확인"
                   className="h-14 w-[360px] rounded border border-base-400 bg-base-50 px-4 text-sm placeholder:text-base-500 focus:outline-none"
                   {...register("checkPassword")}
                 />
