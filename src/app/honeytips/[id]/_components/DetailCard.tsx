@@ -1,11 +1,11 @@
 "use client";
 
 import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
+import DropdownButton from "@/app/honeytips/[id]/_components/DropdownButton";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import ShareButton from "@/app/honeytips/[id]/_components/ShareButton";
 import { useDropdown } from "@/app/honeytips/[id]/_hooks/useDropdown";
 import Error from "@/app/honeytips/[id]/error";
-import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
 import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
