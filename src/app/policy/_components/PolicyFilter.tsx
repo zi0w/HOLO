@@ -68,9 +68,10 @@ const PolicyFilter = ({
       </div>
       <button
         type="button"
-        onClick={onSearch}
+        //TODO: onClick={onSearch}
         className="lookup-btn"
-        disabled={isDisabled}
+        disabled
+        //TODO: disabled={isDisabled}
       >
         조회
       </button>
