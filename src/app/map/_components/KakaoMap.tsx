@@ -1,17 +1,18 @@
 "use client";
 
-import useKakaoLoader from "@/app/map/_hooks/useKakaoLoader";
-
 import CategoryButtons from "@/app/map/_components/CategoryButtons";
 import MapContainer from "@/app/map/_components/MapContainer";
 import PlaceList from "@/app/map/_components/PlaceList";
+import SkeletonMap from "@/app/map/_components/SkeletonMap";
 import useCategoriesSearch from "@/app/map/_hooks/useCategoriesSearch";
+import useKakaoLoader from "@/app/map/_hooks/useKakaoLoader";
 import useLocationStore from "@/store/useLocationStore";
 
 const KakaoMap = () => {
   useKakaoLoader();
 
   const {
+    kakaoLoading,
     mapCenter, // 현재 지도 중심 좌표
     setMapCenter, // 중심 좌표 업데이트 함수
     currentPosition, // 현재 위치
@@ -35,52 +36,60 @@ const KakaoMap = () => {
   } = useCategoriesSearch(mapCenter);
 
   return (
-    <div className="h-[calc(100vh-124px)] lg:ml-28 lg:h-[65vh]">
-      {/* 카테고리 검색 버튼 */}
-      <div className="lg:mt-28">
-        <CategoryButtons
-          isMain={false}
-          setCategory={setCategory}
-          setSelectedPlace={setSelectedPlace}
-          setPlaceDetail={setPlaceDetail}
-        />
-      </div>
+    <>
+      <div className="h-[calc(100vh-124px)] lg:ml-28 lg:h-[65vh]">
+        {/* 카테고리 검색 버튼 */}
+        <div className="lg:mt-28">
+          <CategoryButtons
+            isMain={false}
+            setCategory={setCategory}
+            setSelectedPlace={setSelectedPlace}
+            setPlaceDetail={setPlaceDetail}
+          />
+        </div>
 
-      <div className="flex h-full flex-row lg:mr-9">
-        {/* 장소 리스트 */}
-        <PlaceList
-          places={places}
-          setMapCenter={setMapCenter}
-          setSelectedPlace={setSelectedPlace}
-          onClickMarker={onClickMarker}
-          selectedPlace={selectedPlace}
-          category={category}
-          setSelectedMarkerId={setSelectedMarkerId}
-          onClickPlusMapLevel={onClickPlusMapLevel}
-          onClickMinusMapLevel={onClickMinusMapLevel}
-          onClickMoveCurrentPosition={onClickMoveCurrentPosition}
-        />
-
-        <MapContainer
-          mapCenter={mapCenter}
-          currentPosition={currentPosition}
-          mapLevel={mapLevel}
-          setMapCenter={setMapCenter}
-          places={places}
-          setSelectedPlace={setSelectedPlace}
-          onClickMarker={onClickMarker}
-          selectedPlace={selectedPlace}
-          placeDetail={placeDetail}
-          setPlaceDetail={setPlaceDetail}
-          isMain={false}
-          setSelectedMarkerId={setSelectedMarkerId}
-          selectedMarkerId={selectedMarkerId}
-          onClickPlusMapLevel={onClickPlusMapLevel}
-          onClickMinusMapLevel={onClickMinusMapLevel}
-          onClickMoveCurrentPosition={onClickMoveCurrentPosition}
-        />
+        <div className="flex h-full flex-row lg:mr-9">
+          {kakaoLoading ? (
+            <>
+              <SkeletonMap />
+            </>
+          ) : (
+            <>
+              <PlaceList
+                places={places}
+                setMapCenter={setMapCenter}
+                setSelectedPlace={setSelectedPlace}
+                onClickMarker={onClickMarker}
+                selectedPlace={selectedPlace}
+                category={category}
+                setSelectedMarkerId={setSelectedMarkerId}
+                onClickPlusMapLevel={onClickPlusMapLevel}
+                onClickMinusMapLevel={onClickMinusMapLevel}
+                onClickMoveCurrentPosition={onClickMoveCurrentPosition}
+              />
+              <MapContainer
+                mapCenter={mapCenter}
+                currentPosition={currentPosition}
+                mapLevel={mapLevel}
+                setMapCenter={setMapCenter}
+                places={places}
+                setSelectedPlace={setSelectedPlace}
+                onClickMarker={onClickMarker}
+                selectedPlace={selectedPlace}
+                placeDetail={placeDetail}
+                setPlaceDetail={setPlaceDetail}
+                isMain={false}
+                setSelectedMarkerId={setSelectedMarkerId}
+                selectedMarkerId={selectedMarkerId}
+                onClickPlusMapLevel={onClickPlusMapLevel}
+                onClickMinusMapLevel={onClickMinusMapLevel}
+                onClickMoveCurrentPosition={onClickMoveCurrentPosition}
+              />
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default KakaoMap;

@@ -5,7 +5,7 @@ import { fetchOpenAiDay } from "@/app/trash-guide/_actions/fetchTrashOpenAi";
 import SearchForm from "@/app/trash-guide/_components/SearchForm";
 import type { WasteDayAnswerData } from "@/app/trash-guide/_types/trashTypes";
 import Loading from "@/components/common/Loading";
-import { useLocationModalStore } from "@/store/locationmodal/useLocationModal";
+import { useLocationModalStore } from "@/store/useLocationModalStore";
 import locationStore from "@/store/useLocationStore";
 import { useEffect, useState } from "react";
 

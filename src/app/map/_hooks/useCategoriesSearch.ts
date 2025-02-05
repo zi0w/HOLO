@@ -1,3 +1,5 @@
+"use client";
+
 import type {
   Coordinates,
   Place,
@@ -13,12 +15,12 @@ import {
 } from "react";
 
 const useCategoriesSearch = (mapCenter: Coordinates | null) => {
-  const { kakaoLoading, setMapLevel } = useLocationStore();
   const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
   const [category, setCategory] = useState<string>("맛집"); // 카테고리 선택 상태 관리
   const [places, setPlaces] = useState<PlacesSearchResultItem[]>([]); // 장소 검색 결과 리스트
   const [reSearch, setReSearch] = useState<boolean>(true);
-  const { selectedPlace, setSelectedPlace } = useLocationStore();
+  const { selectedPlace, setSelectedPlace, kakaoLoading, setMapLevel } =
+    useLocationStore();
 
   const [placeDetail, setPlaceDetail] = useState<Omit<
     Place,
@@ -44,11 +46,11 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
       if (result) {
         setPlaceDetail(result);
       } else {
-        alert("장소 정보를 가져오는데 실패했습니다.");
+        throw new Error("장소 정보를 가져오는데 실패했습니다.");
       }
     } catch (error) {
-      console.error("장소 정보 요청에 실패하였습니다.", error);
-      alert("장소 정보 요청에 실패하였습니다.");
+      console.error(error);
+      throw new Error("장소 정보를 가져오는데 실패했습니다.");
     }
   };
 
@@ -58,7 +60,7 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
     getPlaceDetail(place.place_name);
   };
 
-  // mapCenter가 변경될 때마다 places를 업데이트하는 함수
+  // 맵 센터를 기준으로 카테고리 장소를 검색하는 함수
   const searchPlaces = () => {
     if (!window.kakao || !window.kakao.maps) return;
 
