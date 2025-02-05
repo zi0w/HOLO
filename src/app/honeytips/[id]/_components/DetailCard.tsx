@@ -135,7 +135,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                 alt={`${postDetailData.users.nickname}의 프로필 이미지`}
                 width={42}
                 height={42}
-                className="h-[42px] w-[42px] rounded-full"
+                className="h-[42px] w-[42px] rounded-full object-cover"
                 priority
               />
             )}
