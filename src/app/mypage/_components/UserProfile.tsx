@@ -2,7 +2,6 @@
 
 import { useProfileChange } from "@/app/mypage/_hooks/useProfileChangeHooks";
 import ProfileEditIcon from "@/assets/images/mypage/profileedit.svg";
-import Loading from "@/components/common/Loading";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -10,7 +9,6 @@ const UserProfile = () => {
   const router = useRouter();
   const {
     userData,
-    isLoading,
     localImageUrl,
     handleNicknameUpdate,
     handleProfileImageUpdate,
@@ -43,14 +41,6 @@ const UserProfile = () => {
       }
     }
   };
-
-  if (isLoading || !userData) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loading />
-      </div>
-    );
-  }
 
   return (
     <div className="w-full bg-white pt-12 lg:pt-6">
@@ -88,7 +78,7 @@ const UserProfile = () => {
             onBlur={handleBlur}
             className="flex h-8 items-center justify-center text-lg font-medium text-base-800 focus:outline-none"
           >
-            {userData.nickname || ""}
+            {userData?.nickname || ""}
           </div>
         </div>
       </div>
