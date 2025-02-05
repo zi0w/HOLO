@@ -22,19 +22,11 @@ const MyCommentList = () => {
     goToPage,
   } = usePagination(comments, 5);
 
- 
   const handleDeleteWithRefresh = async (commentId: string) => {
     await handleDelete(commentId);
-   
+
     queryClient.invalidateQueries({ queryKey: ["comments"] });
   };
-
-  if (isLoading)
-    return (
-      <div>
-        <LoadingSmall />
-      </div>
-    );
 
   return (
     <div className="mx-5 mt-8 h-[440px] w-[100%-40px] flex-shrink-0 rounded border border-base-300 bg-white pt-2.5 lg:mx-auto lg:mt-4 lg:flex lg:h-[440px] lg:w-[548px] lg:items-center">
@@ -62,9 +54,9 @@ const MyCommentList = () => {
           </div>
         </div>
       ) : (
-        <p className="py-4 text-center text-base-800 md:mx-auto md:w-[548px] md:text-center">
-          작성한 댓글이 없습니다.
-        </p>
+        <div className="py-4 text-center text-base-800 lg:mx-auto lg:w-[548px] lg:text-center">
+          {isLoading ? <LoadingSmall /> : "작성한 댓글이 없습니다."}
+        </div>
       )}
     </div>
   );
