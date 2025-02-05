@@ -24,7 +24,9 @@ export const fetchPolicyApi = async ({ queryParams }: FetchPolicyParams) => {
   const url = `${API_URL}?${params.toString()}`;
 
   const res = await fetch(url, {
-    cache: "no-store",
+    next: {
+      revalidate: 604800, // 1주일마다
+    },
   });
 
   if (!res.ok) {
