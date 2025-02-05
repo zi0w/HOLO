@@ -14,8 +14,9 @@ import { useEffect, useState } from "react";
 const Result = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const [fortune, setFortune] = useState<string>("");
   const [shareLink, setShareLink] = useState<string>("");
+  const [fortune, setFortune] = useState<string>("");
+  const [reason, setReason] = useState<string>("");
 
   const getDailyFortune = async () => {
     try {
@@ -26,7 +27,10 @@ const Result = () => {
         : await fetchDailyFortune();
 
       if (!result) throw new Error("운세 데이터를 볼러올 수 없습니다.");
-      setFortune(result);
+
+      const [fortunePart, reasonPart] = result.split(" / ");
+      setFortune(fortunePart);
+      setReason(reasonPart);
 
       const link = await generateShareLink(result, "fortune/result");
       setShareLink(link);
@@ -40,10 +44,11 @@ const Result = () => {
   }, [id]);
 
   return fortune ? (
-    <div id="result-container" className="block items-center justify-center lg:flex lg:h-screen">
-      <div
-        className="mt-4 flex flex-col items-center bg-white text-black lg:mx-auto lg:max-w-lg lg:rounded-3xl lg:border lg:border-primary-500"
-      >
+    <div
+      id="result-container"
+      className="block items-center justify-center lg:flex lg:h-screen"
+    >
+      <div className="lg:w-[512px] mt-4 flex flex-col items-center bg-white text-black lg:mx-auto lg:rounded-3xl lg:border lg:border-primary-500">
         <Image
           src={Fortune}
           alt="result-fortune"
@@ -59,14 +64,14 @@ const Result = () => {
           className="mt-10 hidden lg:block"
         />
         <div className="flex flex-col items-center gap-3">
-          <h2 className="mt-8 text-2xl">포춘쿠키 내용</h2>
-          <p className="break-normal px-10">{fortune}</p>
+          <h2 className="mt-8 text-2xl">{fortune}</h2>
+          <p className="break-normal px-10">{reason}</p>
         </div>
 
         {id ? (
           <Link
             href="/fortune"
-            className="mt-6 flex h-12 w-[362px] items-center justify-center rounded bg-primary-500 font-gmarket font-normal text-white mb-10"
+            className="mb-10 mt-6 flex h-12 w-[362px] items-center justify-center rounded bg-primary-500 font-gmarket font-normal text-white"
           >
             나도 하러 가기
           </Link>

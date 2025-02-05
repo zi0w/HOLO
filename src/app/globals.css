@@ -8,6 +8,7 @@
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
     format("woff");
   font-weight: 400;
+  font-display: swap;
   font-style: normal;
 }
 @font-face {
@@ -15,6 +16,7 @@
   src: url("../assets/fonts/GmarketSansLight.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -22,6 +24,7 @@
   src: url("../assets/fonts/GmarketSansMedium.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -29,6 +32,7 @@
   src: url("../assets/fonts/GmarketSansBold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 * {
@@ -151,7 +155,7 @@ body {
 }
 .mainBannerSwiper > .swiper-button-prev,
 .mainBannerSwiper > .swiper-button-next {
-  @apply h-6 w-[18px] bg-white/40 m-0 -translate-y-1/2;
+  @apply m-0 h-6 w-[18px] -translate-y-1/2 bg-white/40;
 }
 .mainBannerSwiper > .swiper-button-prev {
   @apply rounded-l;

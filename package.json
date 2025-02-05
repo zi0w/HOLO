@@ -27,6 +27,7 @@
     "react-kakao-maps-sdk": "^1.1.27",
     "react-spring-bottom-sheet": "^3.4.1",
     "relative-time": "^1.0.0",
+    "sharp": "^0.33.5",
     "swiper": "^11.2.0",
     "uuid": "^11.0.5",
     "xml2js": "^0.6.2",
@@ -34,6 +35,7 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^7.0.2",
     "@svgr/webpack": "^8.1.0",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^20",
@@ -41,6 +43,7 @@
     "@types/react-dom": "^18",
     "@types/uuid": "^10.0.0",
     "@types/xml2js": "^0.4.14",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.2.20",
     "kakao.maps.d.ts": "^0.1.40",
@@ -49,6 +52,8 @@
     "prettier-plugin-tailwindcss": "^0.6.9",
     "supabase": "^2.2.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "terser-webpack-plugin": "^5.3.11",
+    "typescript": "^5",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }

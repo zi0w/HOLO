@@ -4,6 +4,7 @@ import DetailLoading from "@/app/honeytips/[id]/_components/DetailLoading";
 import LikeButton from "@/app/honeytips/[id]/_components/LikeButton";
 import ShareButton from "@/app/honeytips/[id]/_components/ShareButton";
 import { useDropdown } from "@/app/honeytips/[id]/_hooks/useDropdown";
+import Error from "@/app/honeytips/[id]/error";
 import DropdownButton from "@/app/honeytips/_components/DropdownButton";
 import type { Post } from "@/app/honeytips/_types/honeytips.type";
 import { getId } from "@/app/honeytips/_utils/auth";
@@ -11,7 +12,7 @@ import { deletePost, fetchPostDetail } from "@/app/honeytips/_utils/detail";
 import ArrowLeftIcon from "@/assets/images/common/arrow-left-icon.svg";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
-import { useModalStore } from "@/store/useModalStore";
+import { useModalStore } from "@/store/useHoneytipsModalStore";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Image from "next/image";
@@ -97,7 +98,7 @@ const DetailCard = ({ postId }: DetailCardProps) => {
   };
 
   if (isLoading) return <DetailLoading />;
-  if (isError) return <div>에러가 발생했습니다.</div>;
+  if (isError) return <Error />;
 
   if (!postDetailData) return null;
 
@@ -132,8 +133,8 @@ const DetailCard = ({ postId }: DetailCardProps) => {
               <Image
                 src={postDetailData.users.profile_image_url}
                 alt={`${postDetailData.users.nickname}의 프로필 이미지`}
-                width={100}
-                height={100}
+                width={50}
+                height={50}
                 className="h-[42px] w-[42px] rounded-full"
               />
             )}
@@ -188,8 +189,8 @@ const DetailCard = ({ postId }: DetailCardProps) => {
                 <Image
                   src={imageUrl}
                   alt={`게시물 이미지 ${index + 1}`}
-                  width={800}
-                  height={800}
+                  width={762}
+                  height={762}
                   loading="lazy"
                   className="mx-auto h-[300px] w-[300px] rounded object-cover lg:h-[762px] lg:w-[762px]"
                 />

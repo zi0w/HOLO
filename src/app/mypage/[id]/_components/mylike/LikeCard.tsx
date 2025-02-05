@@ -3,8 +3,7 @@
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
-import { formatDate } from "./_utils/formatDate";
-
+import { formatDate } from "@/app/mypage/[id]/_components/mylike/_utils/formatDate";
 import { useModalStore } from "@/store/mypagemodal/useMypageModalStore";
 import Image from "next/image";
 import Link from "next/link";

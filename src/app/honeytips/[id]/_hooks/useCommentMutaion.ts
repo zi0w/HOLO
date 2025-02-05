@@ -8,7 +8,6 @@ import {
 } from "@/app/honeytips/_utils/comment";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-// 코멘트 추가
 export const useAddCommentMutation = () => {
   const queryClient = useQueryClient();
 
@@ -27,7 +26,6 @@ export const useAddCommentMutation = () => {
   });
 };
 
-// 코멘트 수정
 type MutationVariable = {
   editingComment: Comment["comment"];
   editingId: Comment["id"];
@@ -49,7 +47,6 @@ export const useUpdateCommentMutation = () => {
         postId,
       ]);
 
-      // 수정하려는 댓글만 업데이트
       queryClient.setQueryData<Comment[]>(["comments", postId], (prev) =>
         prev?.map((comment) =>
           comment.id === editingId
@@ -60,7 +57,6 @@ export const useUpdateCommentMutation = () => {
       return { previousComments };
     },
     onError: (_, __, context) => {
-      // 오류 발생 시, 이전 데이터를 복원
       if (context?.previousComments) {
         queryClient.setQueryData(
           ["comments", context.previousComments[0].post_id],
@@ -68,18 +64,12 @@ export const useUpdateCommentMutation = () => {
         );
       }
     },
-    onSuccess: (_, { postId }) => {
-      // 댓글 업데이트 성공 후 해당 댓글 목록을 새로고침
-      queryClient.invalidateQueries({ queryKey: ["comments", postId] });
-    },
     onSettled: (_, __, { postId }) => {
-      // 성공/실패 여부에 관계없이 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: ["comments", postId] });
     },
   });
 };
 
-// 코멘트 삭제
 export const useDeleteCommentMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<unknown, Error, Comment["id"]>({

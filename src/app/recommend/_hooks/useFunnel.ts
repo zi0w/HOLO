@@ -1,14 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState, type ReactElement, type ReactNode } from "react";
-
-export type StepProps = {
-  name: string;
-  children: ReactNode;
-};
-
-type FunnelProps = {
-  children: Array<ReactElement<StepProps>>;
-};
+import { useEffect, useState } from "react";
 
 export const useFunnel = (initialStep: string) => {
   const searchParams = useSearchParams();
@@ -27,17 +18,6 @@ export const useFunnel = (initialStep: string) => {
     }
   }, [searchParams]);
 
-  const Step = ({ children }: StepProps): ReactElement => {
-    return <>{children}</>;
-  };
-
-  const Funnel = ({ children }: FunnelProps) => {
-    const steps = children.filter((child) => child.type === Step);
-    const activeStep = steps.find((child) => child.props.name === currentStep);
-    return activeStep || null;
-  };
-
-
   const updateStep = (step: string): void => {
     setCurrentStep(step);
     window.history.pushState(null, "", `?step=${step}`);
@@ -47,9 +27,9 @@ export const useFunnel = (initialStep: string) => {
     updateStep(nextStep);
   };
 
-  const prev = (prevStep: string): void => { // TODO: next랑 합치기
+  const prev = (prevStep: string): void => {
     updateStep(prevStep);
   };
 
-  return { Funnel, Step, next, prev, currentStep };
+  return { next, prev, currentStep };
 };

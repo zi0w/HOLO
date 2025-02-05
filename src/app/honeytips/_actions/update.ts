@@ -14,7 +14,6 @@ type updatePostProps = {
   userId: Post["user_id"];
 };
 
-// 포스트 수정
 export const updatePost = async ({
   postId,
   updatedTitle,

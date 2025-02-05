@@ -30,7 +30,7 @@ const NavigateBack = () => {
         hiddenPage && "hidden",
       )}
     >
-      <button onClick={handleBack}>
+      <button onClick={handleBack} type="button" aria-label="뒤로가기">
         <ArrowLeftIcon />
       </button>
     </div>

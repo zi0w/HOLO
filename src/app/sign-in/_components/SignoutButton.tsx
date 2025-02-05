@@ -1,9 +1,9 @@
 "use client";
 
+import LogoutModal from "@/app/sign-in/_components/CustomLogoutModal";
 import { useSignout } from "@/app/sign-in/_hooks/useSignout";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import LogoutModal from "./CustomLogoutModal";
 import { useSignoutModalStore } from "@/store/signoutmodal/useSignoutModalStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const SignoutButton = () => {
   const { handleLogout, router } = useSignout();
@@ -48,7 +48,7 @@ const SignoutButton = () => {
     <>
       <button
         onClick={handleLogoutClick}
-        className="flex h-12 w-full items-center justify-center rounded border border-primary-500 text-base text-primary-500 hover:bg-base-100 lg:w-44"
+        className="flex h-12 w-full items-center justify-center rounded border border-primary-500 text-base text-primary-500 hover:bg-base-100 lg:mb-5 lg:w-44"
       >
         로그아웃
       </button>
@@ -62,5 +62,3 @@ const SignoutButton = () => {
 };
 
 export default SignoutButton;
-
-

@@ -7,7 +7,7 @@ import CategorySelectModal from "@/app/honeytips/post/_components/SelectModal";
 import XButton from "@/assets/images/honeytips/BigX.svg";
 import Plus from "@/assets/images/honeytips/plus.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
-import { useModalStore } from "@/store/useModalStore";
+import { useModalStore } from "@/store/useHoneytipsModalStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -265,7 +265,8 @@ const PostForm = ({ postDetailData }: PostFormProps) => {
             <button
               id="cancel-button"
               type="button"
-              onClick={() => openModal('form')}
+              aria-label="게시글 작성 취소"
+              onClick={() => openModal("form")}
               className="mr-2 rounded border px-6 pb-1.5 pt-2 font-gmarket text-base-800"
               disabled={isLoading}
             >

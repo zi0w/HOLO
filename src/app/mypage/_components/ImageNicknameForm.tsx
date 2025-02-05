@@ -2,6 +2,7 @@
 
 import { PasswordChangeModal } from "@/app/mypage/_components/PasswordChangeModal";
 import ProfileModal from "@/app/mypage/_components/ProfileModal";
+import { useProfileChange } from "@/app/mypage/_hooks/useProfileChangeHooks";
 import { useUpdateUserInfo } from "@/app/mypage/_hooks/useUpdateUserInfo";
 import ImageEditIcon from "@/assets/images/mypage/imageedit.svg";
 import Loading from "@/components/common/Loading";
@@ -9,7 +10,6 @@ import useAuthStore from "@/store/useAuthStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useProfileChange } from "@/app/mypage/_hooks/useProfileChangeHooks";
 import { useEffect } from "react";
 
 const ImageNicknameForm = () => {
@@ -35,7 +35,6 @@ const ImageNicknameForm = () => {
     previewUrl,
     fileInputRef,
     handleImageChange,
-    // handleSave,
     handlePasswordEditOpen,
     handlePasswordEditClose,
     handleImageButtonClick,
@@ -49,6 +48,23 @@ const ImageNicknameForm = () => {
       setNickname(userData.nickname);
     }
   }, [userData?.nickname, setNickname]);
+
+  const handleNicknameSubmit = async () => {
+    if (nickname === userData?.nickname) {
+      handleSaveClick(true, async () => true, nickname);
+      return;
+    }
+    if (!isNicknameValid) {
+      alert("닉네임 형식이 올바르지 않습니다.");
+      return;
+    }
+    const isDuplicate = await checkNicknameDuplicate(nickname);
+    if (!isDuplicate) {
+      alert("이미 사용 중인 닉네임입니다.");
+      return;
+    }
+    handleSaveClick(isNicknameValid, checkNicknameDuplicate, nickname);
+  };
 
   if (isLoading || !userData) {
     return (
@@ -69,9 +85,16 @@ const ImageNicknameForm = () => {
             <Image
               src={previewUrl || defaultImageUrl}
               alt="프로필 이미지"
-              fill
-              className="rounded-full object-cover"
+              width={120}
+              height={120}
+              className="h-[120px] w-[120px] rounded-full object-cover"
               priority
+              quality={75}
+              sizes="120px"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = defaultImageUrl;
+              }}
             />
             <input
               type="file"
@@ -83,6 +106,7 @@ const ImageNicknameForm = () => {
             <button
               className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full"
               onClick={handleImageButtonClick}
+              aria-label="이미지 수정"
             >
               <ImageEditIcon
                 width={32}
@@ -93,17 +117,20 @@ const ImageNicknameForm = () => {
           </div>
           <div className="mt-12 space-y-4">
             <div className="space-y-2">
-              <label className="font-gmarket text-sm font-normal leading-5 text-base-800">
+              <label
+                htmlFor="nickname"
+                className="font-gmarket text-sm font-normal leading-5 text-base-800"
+              >
                 닉네임
               </label>
               <input
+                id="nickname"
                 type="text"
                 value={nickname}
                 onChange={(e) => handleNicknameChange(e.target.value)}
                 className={clsx(
-                  `h-14 w-full rounded border px-4 text-sm text-base-800 ${
-                    nicknameError ? "border-primary-500" : "border-base-500"
-                  }`,
+                  `h-14 w-full rounded border px-4 text-sm text-base-800`,
+                  nicknameError ? "border-primary-500" : "border-base-500",
                 )}
               />
               {nicknameError && (
@@ -111,11 +138,15 @@ const ImageNicknameForm = () => {
               )}
             </div>
             <div className="space-y-2">
-              <label className="font-gmarket text-sm font-normal leading-5 text-base-800">
+              <label
+                htmlFor="password"
+                className="font-gmarket text-sm font-normal leading-5 text-base-800"
+              >
                 비밀번호
               </label>
               <div className="relative">
                 <input
+                  id="password"
                   type="password"
                   value="●●●●●●●●●●●●"
                   className="h-14 w-full rounded border border-base-500 px-4 text-sm text-base-500"
@@ -130,16 +161,16 @@ const ImageNicknameForm = () => {
               </div>
             </div>
           </div>
-          <div className="absolute bottom-14 left-5 right-5 space-y-4">
+          <div className="absolute bottom-14 left-5 right-5">
             <button
-              className="h-12 w-full rounded border border-base-400 text-base font-medium text-base-800"
+              className="mb-4 h-12 w-full rounded border border-base-400 text-base font-medium text-base-800"
               onClick={() => handleCancel(router)}
             >
               취소
             </button>
             <button
-              className="h-12 w-full rounded bg-primary-500 text-base font-medium text-base-50"
-              onClick={() => handleSaveClick(isNicknameValid, checkNicknameDuplicate, nickname)}
+              className="mb-4 h-12 w-full rounded bg-primary-500 text-base font-medium text-base-50"
+              onClick={handleNicknameSubmit}
             >
               저장
             </button>
@@ -169,5 +200,4 @@ const ImageNicknameForm = () => {
 };
 
 export default ImageNicknameForm;
-
 

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HOLO",
     description: "1인가구를 위한 정보 제공 서비스, 나 HOLO 산다!",
-    url: "https://localhost:3000",
+    url: `${process.env.NEXT_PUBLIC_API_URL}`,
   },
 };
 

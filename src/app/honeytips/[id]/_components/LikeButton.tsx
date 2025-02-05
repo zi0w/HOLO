@@ -7,7 +7,7 @@ import { getId } from "@/app/honeytips/_utils/auth";
 import YesHeart from "@/assets/images/honeytips/love_selected_42.svg";
 import NoHeart from "@/assets/images/honeytips/love_unselected_42.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
-import { useModalStore } from "@/store/useModalStore";
+import { useModalStore } from "@/store/useHoneytipsModalStore";
 import { useIsMutating } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
