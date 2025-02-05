@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { createClient } from "@/lib/utils/supabase/client";
 
 type SocialProvider = "github" | "google" | "kakao";

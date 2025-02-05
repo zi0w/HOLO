@@ -35,7 +35,7 @@ const SignInForm = () => {
               <div>
                 <input
                   type="email"
-                  placeholder="아이디(이메일)"
+                  placeholder="이메일을 입력해주세요"
                   className="h-14 w-[360px] rounded border border-base-500 bg-base-50 px-4 text-sm placeholder:text-base-500 valid:bg-base-50 focus:outline-none"
                   {...register("email")}
                 />

@@ -1,8 +1,8 @@
 import CustomLogoutModal from "@/app/sign-in/_components/CustomLogoutModal";
 import { useSignout } from "@/app/sign-in/_hooks/useSignout";
 import MyPageIcon from "@/assets/images/common/header/mypage.svg";
-import { useSignoutModalStore } from "@/store/signoutmodal/useSignoutModalStore";
 import useAuthStore from "@/store/useAuthStore";
+import { useSignoutModalStore } from "@/store/useSignoutModalStore";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
@@ -77,24 +77,20 @@ const HeaderAuthLink = () => {
         />
       </>
     );
-    }
-    
-    return (
-      <Link
-        href="/sign-in"
-        className={clsx(
-          "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-44 lg:items-start lg:text-lg",
-          pathname.startsWith("/mypage") &&
-            "font-gmarket-bold text-primary-500",
-        )}
-      >
-        <MyPageIcon className="lg:hidden" />
-        로그인
-      </Link>
-    );
-    
+  }
+
+  return (
+    <Link
+      href="/sign-in"
+      className={clsx(
+        "flex flex-col items-center justify-between font-gmarket text-base-800 lg:mt-44 lg:items-start lg:text-lg",
+        pathname.startsWith("/mypage") && "font-gmarket-bold text-primary-500",
+      )}
+    >
+      <MyPageIcon className="lg:hidden" />
+      로그인
+    </Link>
+  );
 };
 
 export default HeaderAuthLink;
-
-

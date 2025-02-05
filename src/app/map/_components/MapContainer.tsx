@@ -1,3 +1,5 @@
+"use client";
+
 import MapControls from "@/app/map/_components/MapControls";
 import type {
   Coordinates,
@@ -53,6 +55,8 @@ const MapContainer = ({
 }: MapContainerProps) => {
   const router = useRouter();
   const { setMapLevel } = useLocationStore();
+
+  // 검색된 마커들 중 특정 마커를 클릭했을 때 맵 확대
   const onClickCurrentMarker = (
     place: kakao.maps.services.PlacesSearchResultItem,
   ) => {
@@ -69,9 +73,11 @@ const MapContainer = ({
       setSelectedMarkerId(place.id);
     }
   };
+
   useEffect(() => {
     if (selectedPlace && !isMain) onClickCurrentMarker(selectedPlace);
   }, []);
+
   return (
     <div
       className={clsx(

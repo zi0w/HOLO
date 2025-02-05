@@ -1,5 +1,5 @@
 import type { Coordinates, PlacesSearchResultItem } from "@/app/map/_types/map";
-import { useLocationModalStore } from "@/store/locationmodal/useLocationModalStore";
+import { useLocationModalStore } from "@/store/useLocationModalStore";
 import type { Dispatch, SetStateAction } from "react";
 import { create } from "zustand";
 
@@ -67,8 +67,7 @@ const useLocationStore = create<MapStore>((set) => ({
             geolocationError: null,
           });
         },
-        (error) => {
-          console.error("위치를 가져올 수 없습니다.\n", error.message);
+        () => {
           useLocationModalStore.getState().openModal("location-error", "guide");
         },
         options,

@@ -5,6 +5,8 @@ import MapContainer from "@/app/map/_components/MapContainer";
 import useCategoriesSearch from "@/app/map/_hooks/useCategoriesSearch";
 import useKakaoLoader from "@/app/map/_hooks/useKakaoLoader";
 import useKakaoMap from "@/app/map/_hooks/useKakaoMap";
+import CategoryButtonLoading from "@/components/common/CategoryButtonLoading";
+import MapLoading from "@/components/common/MapLoading";
 import useLocationStore from "@/store/useLocationStore";
 import Link from "next/link";
 
@@ -77,7 +79,10 @@ const Map = () => {
           </Link>
         </>
       ) : (
-        "로딩 중..."
+        <>
+          <CategoryButtonLoading />
+          <MapLoading />
+        </>
       )}
     </>
   );

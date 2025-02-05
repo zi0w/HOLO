@@ -1,7 +1,7 @@
 "use client";
 
 import CloseIcon from "@/assets/images/common/close-icon.svg";
-import type { ModalType } from "@/store/mypagemodal/useMypageModalStore";
+import type { ModalType } from "@/store/useMypageModalStore";
 
 type RemoveModalProps = {
   isOpen: boolean;

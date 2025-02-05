@@ -40,7 +40,7 @@ const CategorySelectModal = ({
 
       {isModalOpen && (
         <div
-          className="absolute z-10 mt-1 w-[68px] rounded-lg border bg-white py-1 shadow-md lg:w-[120px]"
+          className="absolute z-10 w-[68px] mt-2 rounded-lg border bg-white py-1 shadow-md lg:w-[120px]"
           onClick={() => setIsModalOpen(false)}
         >
           <ul className="flex flex-col items-center">

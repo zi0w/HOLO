@@ -42,6 +42,10 @@ const PlaceList = ({
   const placeRef = useRef<(HTMLDivElement | null)[]>([]);
   const desktopListRef = useRef<HTMLDivElement | null>(null);
   const mobileListRef = useRef<HTMLDivElement | null>(null);
+  const { setMapLevel } = useLocationStore();
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+
+  // 리스트에서 특정 장소를 클릭하면 맵에 해당 장소 마커 표시
   const onClickSelectedPlace = (
     place: kakao.maps.services.PlacesSearchResultItem,
   ) => {
@@ -53,8 +57,6 @@ const PlaceList = ({
     onClickMarker(place);
     setSelectedMarkerId(place.id);
   };
-  const { setMapLevel } = useLocationStore();
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
 
   // 마커를 클릭하면 해당 시설 정보로 리스트 스크롤 이동
   useEffect(() => {
@@ -77,7 +79,9 @@ const PlaceList = ({
         <>
           <div
             ref={desktopListRef}
-            className="z-10 hidden lg:block lg:w-[260px] lg:overflow-y-auto lg:rounded-t lg:border lg:bg-white"
+            className="hidden lg:block lg:w-[260px] lg:overflow-y-auto lg:rounded-t lg:border lg:bg-white"
+            role="region"
+            aria-label="검색된 장소 목록"
           >
             {places.length !== 0 ? (
               places.map((place, index) => (
@@ -121,7 +125,11 @@ const PlaceList = ({
                 </div>
               ))
             ) : (
-              <div className="flex h-full w-full flex-col items-center justify-center space-y-3">
+              <div
+                className="flex h-full w-full flex-col items-center justify-center space-y-3"
+                role="alert"
+                aria-label="검색 결과 없음"
+              >
                 <None />
                 <p>조건에 맞는 업체가 없습니다.</p>
               </div>
@@ -134,13 +142,14 @@ const PlaceList = ({
         <>
           <BottomSheet
             open={true}
+            aria-labelledby="place-list-title"
             snapPoints={({ maxHeight }) => {
               if (places.length === 0) {
-                return [180, 75]; // 픽셀 단위로 최소 높이 지정
+                return [180, 80]; // 픽셀 단위로 최소 높이 지정
               } else if (places.length === 1) {
-                return [220, 75]; // 한 개 항목일 때의 높이
+                return [220, 80]; // 한 개 항목일 때의 높이
               } else {
-                return [maxHeight * 0.3, 75, maxHeight * 0.86];
+                return [maxHeight * 0.3, 80, maxHeight * 0.86];
               }
             }}
             defaultSnap={({ lastSnap, snapPoints }) =>
@@ -152,11 +161,25 @@ const PlaceList = ({
             footer={
               <div className="h-6 bg-transparent" /> // 푸터에 여백 추가
             }
+            aria-label="장소 목록 패널"
+            role="dialog"
+            aria-modal="true"
+            aria-describedby="place-list-description"
           >
-            <div ref={mobileListRef} className="min-h-[100px]">
+            <div
+              ref={mobileListRef}
+              role="region"
+              aria-label="검색된 장소 목록"
+              id="place-list-description"
+              className="min-h-[100px]"
+            >
+              <h2 id="place-list-title" className="sr-only">
+                검색된 장소 목록
+              </h2>
               {places.length !== 0 ? (
                 places.map((place, index) => (
                   <div
+                    aria-label="장소 정보"
                     key={place.id}
                     ref={(el) => {
                       placeRef.current[index] = el;
@@ -202,7 +225,11 @@ const PlaceList = ({
                   </div>
                 ))
               ) : (
-                <div className="mt-4 flex flex-col items-center justify-center space-y-3">
+                <div
+                  className="mt-4 flex flex-col items-center justify-center space-y-3"
+                  role="alert"
+                  aria-label="검색 결과 없음"
+                >
                   <None />
                   <p>조건에 맞는 업체가 없습니다.</p>
                 </div>
@@ -210,7 +237,11 @@ const PlaceList = ({
             </div>
           </BottomSheet>
 
-          <div className="absolute bottom-72 right-4 z-10">
+          <div
+            className="absolute bottom-72 right-4 z-10"
+            role="group"
+            aria-label="지도 컨트롤"
+          >
             <MapControls
               onClickPlusMapLevel={onClickPlusMapLevel}
               onClickMinusMapLevel={onClickMinusMapLevel}

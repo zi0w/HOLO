@@ -15,9 +15,11 @@ import { useEffect } from "react";
 const ImageNicknameForm = () => {
   const router = useRouter();
   const { user } = useAuthStore();
-  const defaultImageUrl =
-    "https://eqanvaummffjgxyujqru.supabase.co/storage/v1/object/public/profile_image/e6a1c347-c123-40c4-ae51-fdc0ffcb910e-1737345924767.jpg";
 
+  const defaultImageUrl =
+    "https://szwenodhezhbcfhbuckz.supabase.co/storage/v1/object/public/profile_image//default-avatar-icon-of-social-media-user-vector.jpg";
+
+ 
   const {
     nickname,
     setNickname,
@@ -200,4 +202,3 @@ const ImageNicknameForm = () => {
 };
 
 export default ImageNicknameForm;
-
