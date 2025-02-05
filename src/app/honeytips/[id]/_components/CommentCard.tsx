@@ -1,6 +1,6 @@
 "use client";
 
-import DropdownButton from "@/app/honeytips/_components/DropdownButton";
+import DropdownButton from "@/app/honeytips/[id]/_components/DropdownButton";
 import type { Comment } from "@/app/honeytips/_types/honeytips.type";
 import { formatDate } from "@/app/honeytips/_utils/formatDate";
 import MenuDots from "@/assets/images/honeytips/more-horizontal.svg";
