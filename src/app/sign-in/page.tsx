@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "로그인페이지",
     description: "로그인 을 통해 HoLo 여러가지 서비스를 체험함수있습니다.",
-    url: "https://holo-psi.vercel.app/sign-in",
+    url: `${process.env.NEXT_PUBLIC_API_URL}/sign-in`,
   },
 };
 
@@ -25,7 +25,6 @@ const Page = () => {
             width={590}
             height={913}
             className="max-h-[800px] object-contain"
-            
             priority
           />
         </div>

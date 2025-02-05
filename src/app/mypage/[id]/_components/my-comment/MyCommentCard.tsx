@@ -2,8 +2,7 @@
 
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { CommentWithPost } from "@/app/mypage/_types/useMyTypes";
-import { useModalStore } from "@/store/mypagemodal/useMypageModalStore";
-
+import { useModalStore } from "@/store/useMypageModalStore";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -81,7 +80,7 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
           </button>
         </div>
       </div>
-  
+
       <RemoveModal
         isOpen={isOpen && selectedId === comment.id}
         modalType={modalType}
@@ -90,10 +89,6 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
       />
     </>
   );
-  
-  
 };
 
 export default MyCommentCard;
-
-

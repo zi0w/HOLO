@@ -2,7 +2,7 @@
 
 import LogoutModal from "@/app/sign-in/_components/CustomLogoutModal";
 import { useSignout } from "@/app/sign-in/_hooks/useSignout";
-import { useSignoutModalStore } from "@/store/signoutmodal/useSignoutModalStore";
+import { useSignoutModalStore } from "@/store/useSignoutModalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const SignoutButton = () => {

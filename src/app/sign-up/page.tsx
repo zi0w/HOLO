@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "회원가입 페이지",
     description: "회원가입 을 통해 HoLo 의 구성원 이 될수있습니다.",
-    url: "https://holo-psi.vercel.app/sign-up",
+    url: `${process.env.NEXT_PUBLIC_API_URL}/sign-up`,
   },
 };
 

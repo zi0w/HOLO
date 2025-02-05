@@ -1,5 +1,8 @@
 import CloseIcon from "@/assets/images/common/close-icon.svg";
-import { useSignoutModalStore, type LogoutModalType } from "@/store/signoutmodal/useSignoutModalStore";
+import {
+  useSignoutModalStore,
+  type LogoutModalType,
+} from "@/store/useSignoutModalStore";
 import clsx from "clsx";
 
 type LogoutModalProps = {
@@ -13,7 +16,7 @@ const LogoutModal = ({ modalId, modalType, onLogout }: LogoutModalProps) => {
     isOpen,
     selectedId,
     modalType: currentModalType,
-    
+
     errorMessage,
     closeModal,
     setSuccess,
@@ -27,7 +30,7 @@ const LogoutModal = ({ modalId, modalType, onLogout }: LogoutModalProps) => {
     try {
       await onLogout();
       setSuccess(true);
-      closeModal(); 
+      closeModal();
     } catch (error) {
       setError(
         error instanceof Error
@@ -47,9 +50,7 @@ const LogoutModal = ({ modalId, modalType, onLogout }: LogoutModalProps) => {
             </button>
           </div>
           <p className={clsx("text-center text-base text-base-800")}>
-            {errorMessage
-              ? errorMessage
-              : "로그아웃 하시겠습니까?"}
+            {errorMessage ? errorMessage : "로그아웃 하시겠습니까?"}
           </p>
         </div>
         <div className="mt-12 flex">
@@ -62,7 +63,9 @@ const LogoutModal = ({ modalId, modalType, onLogout }: LogoutModalProps) => {
             </button>
           )}
           <button
-            className={clsx("common-btn type-a  flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800")}
+            className={clsx(
+              "common-btn type-a flex-1 !rounded-t-none !rounded-bl-none !text-base text-base-800",
+            )}
             onClick={errorMessage ? closeModal : handleLogout}
           >
             {errorMessage ? "확인" : "로그아웃"}
@@ -74,5 +77,3 @@ const LogoutModal = ({ modalId, modalType, onLogout }: LogoutModalProps) => {
 };
 
 export default LogoutModal;
-
-
