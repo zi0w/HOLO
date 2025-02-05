@@ -2,14 +2,12 @@
 
 import { createClient } from "@/lib/utils/supabase/server";
 
-
-export async function signOutAction() {
+export const signOutAction = async () => {
   try {
     const supabase = await createClient();
     const { error } = await supabase.auth.signOut();
 
     if (error) throw error;
-
 
     return { success: true };
   } catch (error: unknown) {
@@ -19,4 +17,4 @@ export async function signOutAction() {
     }
     return { success: false, error: errorMessage };
   }
-}
+};
