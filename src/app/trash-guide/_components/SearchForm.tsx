@@ -31,7 +31,7 @@ const SearchForm = ({
         onSubmit={handleSubmit}
         className="common-form focus-within:border-primary-400"
       >
-        <button type="submit" disabled={isDisabled}>
+        <button type="submit" disabled={isDisabled} aria-label="검색">
           <SearchIcon />
         </button>
         <input
@@ -48,6 +48,7 @@ const SearchForm = ({
       </form>
       <button
         type="submit"
+        aria-label="조회"
         disabled={isDisabled}
         onClick={handleSubmit}
         className={clsx(

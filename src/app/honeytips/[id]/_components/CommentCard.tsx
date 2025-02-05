@@ -47,7 +47,7 @@ const CommentCard = ({
   isOwner,
 }: CommentCardProps) => {
   return (
-    <article className="mx-5 w-full rounded-lg">
+    <li className="mx-5 w-full rounded-lg">
       {isModalOpen && modalType === "default" && (
         <ConfirmModal
           text="삭제"
@@ -67,8 +67,8 @@ const CommentCard = ({
               className="h-[50px] w-[50px] rounded-full"
               src={comment.users.profile_image_url}
               alt="프로필 이미지"
-              width={100}
-              height={100}
+              width={55}
+              height={55}
               loading="lazy"
             />
           )}
@@ -105,6 +105,9 @@ const CommentCard = ({
         {currentId && currentId === comment.user_id && (
           <div className="relative">
             <button
+              id="menu-button"
+              type="button"
+              aria-label="댓글 수정/삭제"
               className="rounded-full text-gray-500"
               onClick={toggleDropdown}
             >
@@ -146,7 +149,7 @@ const CommentCard = ({
           </div>
         )}
       </div>
-    </article>
+    </li>
   );
 };
 

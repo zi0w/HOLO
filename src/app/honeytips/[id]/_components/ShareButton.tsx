@@ -19,7 +19,13 @@ const ShareButton = ({ url }: ShareButtonProps) => {
   };
 
   return (
-    <button type="button" onClick={handleShareUrl} className="mt-1">
+    <button
+      id="share-button"
+      type="button"
+      aria-label="게시글 공유"
+      onClick={handleShareUrl}
+      className="mt-1"
+    >
       <ShareIcon />
     </button>
   );

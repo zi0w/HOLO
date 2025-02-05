@@ -1,3 +1,4 @@
+import { uploadProfileImageFile } from "@/app/mypage/_utils/myImageUtils";
 import type { Tables } from "@/lib/types/supabase";
 import { createClient } from "@/lib/utils/supabase/client";
 import useAuthStore from "@/store/useAuthStore";
@@ -124,24 +125,10 @@ export const useProfileChange = () => {
       }
 
       if (profileImage) {
-        const fileExt = profileImage.name.split(".").pop();
-        const fileName = `${user.id}-${Date.now()}.${fileExt}`;
-
-        const uploadResult = await supabase.storage
-          .from("profile_image")
-          .upload(fileName, profileImage);
-
-        if (uploadResult.error) {
-          throw new Error("프로필 업데이트에 실패했습니다");
-        }
-
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from("profile_image").getPublicUrl(fileName);
-
+        const optimizedImageUrl = await uploadProfileImageFile(profileImage);
         const updateResult = await supabase
           .from("users")
-          .update({ profile_image_url: publicUrl })
+          .update({ profile_image_url: optimizedImageUrl })
           .eq("id", user.id);
 
         if (updateResult.error) {
@@ -175,6 +162,16 @@ export const useProfileChange = () => {
     setIsProfileModalOpen(false);
   };
 
+  const handleProfileImageUpdate = async (file: File) => {
+    try {
+      const optimizedImageUrl = await uploadProfileImageFile(file);
+      await updateProfileMutation.mutate({ profile_image_url: optimizedImageUrl });
+      setLocalImageUrl(optimizedImageUrl);
+    } catch (error) {
+      console.error("프로필 이미지 업데이트 실패:", error);
+    }
+  };
+
   return {
     userData,
     isLoading,
@@ -189,8 +186,7 @@ export const useProfileChange = () => {
     previewUrl,
     fileInputRef,
     handleNicknameUpdate: updateProfileMutation.mutate,
-    handleProfileImageUpdate: (url: string) =>
-      updateProfileMutation.mutate({ profile_image_url: url }),
+    handleProfileImageUpdate,
     handleImageChange,
     handleSave,
     handlePasswordEditOpen,
@@ -199,3 +195,4 @@ export const useProfileChange = () => {
     handleProfileModalClose,
   };
 };
+

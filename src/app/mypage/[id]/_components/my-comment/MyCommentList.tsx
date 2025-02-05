@@ -22,10 +22,10 @@ const MyCommentList = () => {
     goToPage,
   } = usePagination(comments, 5);
 
-  // 댓글 삭제 핸들러
+ 
   const handleDeleteWithRefresh = async (commentId: string) => {
     await handleDelete(commentId);
-    // 데이터 갱신
+   
     queryClient.invalidateQueries({ queryKey: ["comments"] });
   };
 
@@ -36,39 +36,38 @@ const MyCommentList = () => {
       </div>
     );
 
-    return (
-      <div className="mt-8 h-[440px] w-full flex-shrink-0 rounded border border-base-300 bg-white pt-2.5 md:mx-auto md:mt-4 md:flex md:h-[440px] md:w-[548px] md:items-center">
-        {currentComments.length > 0 ? (
-          <div className="relative flex h-full flex-col w-full">
-            <div className="flex-1">
-              {currentComments.map((comment) => (
-                <MyCommentCard
-                  key={comment.id}
-                  comment={comment}
-                  onDelete={handleDeleteWithRefresh}
-                />
-              ))}
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-white px-20 py-4 pr-[90px]">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                startButtonIndex={startButtonIndex}
-                maxButtonsToShow={maxButtonsToShow}
-                onNextPage={nextPage}
-                onPrevPage={prevPage}
-                onGoToPage={goToPage}
+  return (
+    <div className="mx-5 mt-8 h-[440px] w-[100%-40px] flex-shrink-0 rounded border border-base-300 bg-white pt-2.5 lg:mx-auto lg:mt-4 lg:flex lg:h-[440px] lg:w-[548px] lg:items-center">
+      {currentComments.length > 0 ? (
+        <div className="relative flex h-full w-full flex-col">
+          <div className="flex-1">
+            {currentComments.map((comment) => (
+              <MyCommentCard
+                key={comment.id}
+                comment={comment}
+                onDelete={handleDeleteWithRefresh}
               />
-            </div>
+            ))}
           </div>
-        ) : (
-          <p className="py-4 text-center text-base-800 md:mx-auto md:w-[548px] md:text-center">
-            작성한 댓글이 없습니다.
-          </p>
-        )}
-      </div>
-    );
-    
+          <div className="absolute bottom-0 left-0 right-0 bg-white px-20 py-4 pr-[90px]">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              startButtonIndex={startButtonIndex}
+              maxButtonsToShow={maxButtonsToShow}
+              onNextPage={nextPage}
+              onPrevPage={prevPage}
+              onGoToPage={goToPage}
+            />
+          </div>
+        </div>
+      ) : (
+        <p className="py-4 text-center text-base-800 md:mx-auto md:w-[548px] md:text-center">
+          작성한 댓글이 없습니다.
+        </p>
+      )}
+    </div>
+  );
 };
 
 export default MyCommentList;

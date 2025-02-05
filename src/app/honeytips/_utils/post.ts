@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 
 const supabase = createClient();
 
-// 포스트 데이터 불러오기
 export const fetchPostsData = async () => {
   try {
     const { data: postsData, error } = await supabase
@@ -24,7 +23,6 @@ export const fetchPostsData = async () => {
   }
 };
 
-// 포스트 이미지 URL 불러오기
 export const uploadPostImageFile = async (file: File) => {
   try {
     const compressedFile = await convertImageFormat(file, "image/webp");
@@ -46,7 +44,6 @@ export const uploadPostImageFile = async (file: File) => {
   }
 };
 
-// 이미지 포맷 변환
 const convertImageFormat = (file: File, format: string): Promise<File> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -93,7 +90,6 @@ type addPostProps = {
   newCategory: Post["categories"];
 };
 
-// 포스트 저장
 export const addPost = async ({
   newTitle,
   newContent,

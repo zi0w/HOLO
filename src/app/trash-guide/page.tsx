@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <div className="mx-auto px-5 pt-12 lg:max-w-[550px] lg:px-0">
+    <div className="mx-auto px-5 pb-[70px] pt-12 lg:max-w-[550px] lg:px-0 lg:pb-0">
       <TrashContainer />
       <div className="mt-4 text-center text-xs text-base-600">
         <p>AI를 기반으로 한 답변이므로 확실치 않을 수 있습니다.</p>

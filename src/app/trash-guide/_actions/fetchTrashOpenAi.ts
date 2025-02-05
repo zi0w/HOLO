@@ -1,21 +1,12 @@
 "use server";
 
 import type { WasteSchedule } from "@/app/trash-guide/_types/trashTypes";
-import OpenAI from "openai";
-
-const OPENAI_CONFIG = {
-  model: "gpt-4o-mini",
-  store: true,
-} as const;
+import { fetchOpenAIResponse } from "@/lib/utils/openai";
 
 const ERROR_MESSAGES = {
   TRASH_SCHEDULE: "쓰레기 배출을 알려주는 OpenAI 오류가 발생했습니다.",
   FOOD_WASTE: "음식물쓰레기 여부를 알려주는 OpenAI 오류가 발생했습니다.",
 } as const;
-
-const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_API_KEY,
-});
 
 // 프롬프트
 const createSchedulePrompt = (regionData: string) =>
@@ -55,27 +46,17 @@ export const fetchOpenAiDay = async (
   regionData: string,
 ): Promise<WasteSchedule[]> => {
   try {
-    const completion = await openai.chat.completions.create({
-      ...OPENAI_CONFIG,
-      messages: [
-        {
-          role: "user",
-          content: createSchedulePrompt(regionData),
-        },
-      ],
-    });
+    const completionContent = await fetchOpenAIResponse(
+      createSchedulePrompt(regionData),
+      ERROR_MESSAGES.TRASH_SCHEDULE,
+    );
 
-    const completionContent = completion.choices[0].message.content;
     if (!completionContent) return [];
 
-    const result = completionContent
+    return completionContent
       .split("\n")
-      .map((item) => {
-        return item.replace("- ", "").trim();
-      })
-      .filter((item) => {
-        return item && item.includes(":");
-      })
+      .map((item) => item.replace("- ", "").trim())
+      .filter((item) => item && item.includes(":"))
       .map((item) => {
         const [wasteName, wasteDay] = item
           .split(":")
@@ -83,31 +64,18 @@ export const fetchOpenAiDay = async (
         return wasteName && wasteDay ? { [wasteName]: wasteDay } : null;
       })
       .filter((item) => item !== null);
-    return result;
   } catch (error) {
-    console.error("쓰레기 배출 일정 조회 오류입니다.", error);
-    throw new Error(ERROR_MESSAGES.TRASH_SCHEDULE);
+    console.error(error);
+    throw new Error("쓰레기 배출 정보를 가져오는데 실패했습니다.");
   }
 };
 
 // 음식물 쓰레기 여부
 export const fetchOpenAiFoodWaste = async (foodWasteData: string) => {
-  try {
-    const completion = await openai.chat.completions.create({
-      ...OPENAI_CONFIG,
-      messages: [
-        {
-          role: "user",
-          content: createFoodWastePrompt(foodWasteData),
-        },
-      ],
-    });
+  const content = await fetchOpenAIResponse(
+    createFoodWastePrompt(foodWasteData),
+    ERROR_MESSAGES.FOOD_WASTE,
+  );
 
-    return {
-      content: completion.choices[0]?.message?.content ?? "",
-    };
-  } catch (error) {
-    console.error("음식물 쓰레기 분류 조회 오류입니다.", error);
-    throw new Error(ERROR_MESSAGES.FOOD_WASTE);
-  }
+  return { content };
 };

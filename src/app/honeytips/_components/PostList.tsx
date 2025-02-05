@@ -12,7 +12,7 @@ import ConfirmModal from "@/components/common/ConfirmModal";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
 import useAuthStore from "@/store/useAuthStore";
-import { useModalStore } from "@/store/useModalStore";
+import { useModalStore } from "@/store/useHoneytipsModalStore";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -115,6 +115,8 @@ const PostList = () => {
       <div className="flex justify-between border-b border-primary-100 lg:justify-normal lg:gap-6">
         {POST_CATEGORIES.map((category) => (
           <button
+            id="category-button"
+            type="button"
             key={category}
             className={clsx(
               "relative flex justify-center py-3 font-semibold text-base-500 transition-colors",
@@ -140,6 +142,9 @@ const PostList = () => {
 
       <div className="fixed bottom-14 right-4 z-50 lg:bottom-10 lg:right-10">
         <button
+          id="post-button"
+          type="button"
+          aria-label="게시글 작성"
           onClick={handleGoToPost}
           className="relative flex items-center justify-center rounded-full"
         >
@@ -150,7 +155,7 @@ const PostList = () => {
 
       <SortButton sortBy={sortBy} setSortBy={setSortBy} />
 
-      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
+      <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
         {isLoading ? (
           <PostCardLoading />
         ) : currentPosts.length > 0 ? (
@@ -167,7 +172,7 @@ const PostList = () => {
             해당 카테고리에 대한 포스트가 없습니다.
           </p>
         )}
-      </section>
+      </ul>
 
       <Pagination
         currentPage={currentPage}

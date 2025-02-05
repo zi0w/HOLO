@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 const HoneyTipsPage = () => {
   return (
-    <div className="mx-5 mt-5 pb-16 min-h-screen lg:relative lg:max-w-[762px] lg:pb-4 lg:mx-auto">
+    <div className="mx-5 mt-5 min-h-screen pb-16 lg:relative lg:mx-auto lg:max-w-[762px] lg:pb-4">
       <section>
         <div>
           <h1 className="common-title mb-4">꿀팁 게시판</h1>
@@ -26,7 +26,6 @@ const HoneyTipsPage = () => {
         <section className="mb-2">
           <SearchForm />
         </section>
-
         <section>
           <Suspense fallback={<Loading />}>
             <PostList />

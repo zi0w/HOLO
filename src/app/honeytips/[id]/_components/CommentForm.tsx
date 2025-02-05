@@ -34,8 +34,8 @@ const CommentForm = () => {
       >
         <div className="relative w-full">
           <input
-            className="h-[40px] w-full flex-grow rounded border border-base-400 py-1 pl-2 pr-12 text-sm focus:border-primary-400 focus:outline-none"
             type="text"
+            className="h-[40px] w-full flex-grow rounded border border-base-400 py-1 pl-2 pr-12 text-sm focus:border-primary-400 focus:outline-none"
             placeholder={
               isAuthenticated ? "댓글을 입력해주세요." : "로그인이 필요합니다."
             }
@@ -43,8 +43,10 @@ const CommentForm = () => {
             disabled={!isAuthenticated}
           />
           <button
-            className="disabled: absolute right-1 top-1/2 -translate-y-1/2 transform px-1 text-3xl hover:disabled:cursor-not-allowed"
+            id="comment-button"
             type="submit"
+            aria-label="댓글 등록"
+            className="disabled: absolute right-1 top-1/2 -translate-y-1/2 transform px-1 text-3xl hover:disabled:cursor-not-allowed"
             disabled={!isAuthenticated}
           >
             {isAuthenticated ? <ArrowOrange /> : <ArrowGray />}

@@ -1,9 +1,11 @@
 "use client";
+import LocationModal from "@/app/map/_components/LocationModal";
 import useKakaoLoader from "@/app/map/_hooks/useKakaoLoader";
 import { fetchOpenAiDay } from "@/app/trash-guide/_actions/fetchTrashOpenAi";
 import SearchForm from "@/app/trash-guide/_components/SearchForm";
+import WasteDayResult from "@/app/trash-guide/_components/WasteDayResult";
 import type { WasteDayAnswerData } from "@/app/trash-guide/_types/trashTypes";
-import Loading from "@/components/common/Loading";
+import { useLocationModalStore } from "@/store/locationmodal/useLocationModalStore";
 import locationStore from "@/store/useLocationStore";
 import { useEffect, useState } from "react";
 
@@ -11,17 +13,25 @@ const WasteDaySelector = () => {
   const [region, setRegion] = useState<string>("");
   const [wasteDayAnswer, setWasteDayAnswer] =
     useState<WasteDayAnswerData>(null);
+
   const [isValidAddress, setIsValidAddress] = useState<boolean>(false);
   const [isMyLocation, setIsMyLocation] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
 
-  // TODO: useLocationStore 로 변경
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const { isOpen, modalType, closeModal } = useLocationModalStore();
+
+  const handleAction = () => {
+    setIsMyLocation(false);
+    closeModal();
+  };
+
   const getCurrentPosition = locationStore(
     (state) => state.onClickMoveCurrentPosition,
   );
-  const currentPosition = locationStore((state) => state.currentPosition);
 
-  useKakaoLoader();
+  const currentPosition = locationStore((state) => state.currentPosition);
 
   useEffect(() => {
     if (isMyLocation && currentPosition?.lng && currentPosition?.lat) {
@@ -53,16 +63,21 @@ const WasteDaySelector = () => {
     }
   }, [currentPosition, isMyLocation]);
 
+  useKakaoLoader();
+
   const handleFetchWasteDay = async (): Promise<void> => {
     setLoading(true);
+    setError(null);
     try {
       const result = await fetchOpenAiDay(region);
       if (result) {
         setWasteDayAnswer(result);
+      } else {
+        setError("조회된 결과가 없습니다.");
       }
     } catch (error) {
       console.error(error);
-      throw Error("쓰레기 배출 요일을 알려주는 OpenAI 오류가 발생했습니다.");
+      throw new Error("쓰레기 배출 요일을 조회하는 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
@@ -82,19 +97,12 @@ const WasteDaySelector = () => {
     setIsValidAddress(addressPattern.test(value));
   };
 
-  const handleMyLocationChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setIsMyLocation(e.target.checked);
+  const handleMyLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      try {
-        await getCurrentPosition();
-      } catch (error) {
-        console.error(error);
-        setRegion("위치 정보를 가져올 수 없습니다.");
-        setIsValidAddress(false);
-      }
+      setIsMyLocation(e.target.checked);
+      getCurrentPosition();
     } else {
+      setIsMyLocation(false);
       setRegion("");
       setIsValidAddress(false);
     }
@@ -123,21 +131,17 @@ const WasteDaySelector = () => {
         isDisabled={!isValidAddress}
         placeholder="시군구동 형식으로 입력해주세요 (예: 서울시 강남구 역삼동)"
       />
-      {loading && <Loading />}
-      {!loading && wasteDayAnswer && wasteDayAnswer.length > 0 && (
-        <ul className="mt-5 grid gap-5">
-          {wasteDayAnswer.map((answer, i) => (
-            <li key={i}>
-              {Object.entries(answer).map(([waste, day]) => (
-                <div key={waste} className="text-base-800">
-                  <strong>{waste}</strong>
-                  <p className="mt-1">{day}</p>
-                </div>
-              ))}
-            </li>
-          ))}
-        </ul>
-      )}
+      <WasteDayResult
+        loading={loading}
+        error={error}
+        wasteDayAnswer={wasteDayAnswer}
+      />
+      <LocationModal
+        isOpen={isOpen}
+        modalType={modalType}
+        onAction={handleAction}
+        onClose={closeModal}
+      />
     </div>
   );
 };

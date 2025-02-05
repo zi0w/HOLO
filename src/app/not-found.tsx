@@ -14,10 +14,10 @@ const Error = () => {
         alt="에러 이미지"
         className=""
       />
-      <h2 className="mt-8 text-[52px] text-primary-500">ERROR</h2>
-      <h3 className="text-[22px] text-base-800">앗! 에러가 발생했어요</h3>
-      <p className="mt-5 text-base-800">죄송합니다.</p>
-      <p className="mb-5 text-base-800">잠시 후 다시 시도해주세요.</p>
+      <h2 className="mt-8 text-[52px] text-primary-500">404</h2>
+      <h3 className="text-[22px] text-base-800">페이지를 찾을 수 없습니다.</h3>
+      <p className="mt-5 text-base-800">페이지가 존재하지 않거나,</p>
+      <p className="mb-5 text-base-800">일시적으로 사용이 중단된 페이지입니다.</p>
       <Link
         href="/"
         className="max-h-12 w-full max-w-[362px] rounded border border-primary-500 bg-primary-500 pb-6 pt-3 text-center font-gmarket text-white"

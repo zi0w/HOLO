@@ -7,7 +7,7 @@ import { getId } from "@/app/honeytips/_utils/auth";
 import YesHeart from "@/assets/images/honeytips/love_selected_42.svg";
 import NoHeart from "@/assets/images/honeytips/love_unselected_42.svg";
 import ConfirmModal from "@/components/common/ConfirmModal";
-import { useModalStore } from "@/store/useModalStore";
+import { useModalStore } from "@/store/useHoneytipsModalStore";
 import { useIsMutating } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
@@ -77,7 +77,13 @@ const LikeButton = ({
           text="로그인으로 이동"
         />
       )}
-      <button onClick={handleLikeBtn} disabled={!!isMutating}>
+      <button
+        id="like-button"
+        type="button"
+        aria-label="좋아요"
+        onClick={handleLikeBtn}
+        disabled={!!isMutating}
+      >
         {likeData?.length ? <YesHeart /> : <NoHeart />}
       </button>
       <p className="text-[14px] text-primary-500">{likesCounts}</p>

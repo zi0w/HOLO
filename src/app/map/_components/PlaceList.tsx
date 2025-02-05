@@ -77,7 +77,7 @@ const PlaceList = ({
         <>
           <div
             ref={desktopListRef}
-            className="z-20 hidden lg:block lg:w-[260px] lg:overflow-y-auto lg:rounded-t lg:border lg:bg-white"
+            className="z-10 hidden lg:block lg:w-[260px] lg:overflow-y-auto lg:rounded-t lg:border lg:bg-white"
           >
             {places.length !== 0 ? (
               places.map((place, index) => (

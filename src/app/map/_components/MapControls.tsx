@@ -1,6 +1,8 @@
+import LocationModal from "@/app/map/_components/LocationModal";
 import Location from "@/assets/images/map/location.svg";
 import Minus from "@/assets/images/map/minus.svg";
 import Plus from "@/assets/images/map/plus.svg";
+import { useLocationModalStore } from "@/store/locationmodal/useLocationModalStore";
 
 type MapControlsProps = {
   onClickPlusMapLevel: () => void;
@@ -13,6 +15,12 @@ const MapControls = ({
   onClickMinusMapLevel,
   onClickMoveCurrentPosition,
 }: MapControlsProps) => {
+  const { isOpen, modalType, closeModal } = useLocationModalStore();
+
+  const handleAction = () => {
+    closeModal();
+  };
+
   return (
     <>
       {/* 내 위치 버튼*/}
@@ -36,6 +44,13 @@ const MapControls = ({
           <Minus className="mx-auto" />
         </button>
       </div>
+
+      <LocationModal
+        isOpen={isOpen}
+        modalType={modalType}
+        onAction={handleAction}
+        onClose={closeModal}
+      />
     </>
   );
 };
