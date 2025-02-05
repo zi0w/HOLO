@@ -83,18 +83,27 @@ const PolicyCont = () => {
         <Loading />
       ) : (
         <>
-          <PolicyResult error={error} policyData={currentPolicyData} />
-          {policyData && policyData.length > 0 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              startButtonIndex={startButtonIndex}
-              maxButtonsToShow={maxButtonsToShow}
-              onNextPage={nextPage}
-              onPrevPage={prevPage}
-              onGoToPage={goToPage}
-            />
-          )}
+          <p className="mb-4 mt-5 break-keep text-sm text-base-800 [text-rendering:optimizeLegibility]">
+            현재 청년 정책 정보를 제공하는 API가 사정상 2월까지 일시적으로
+            중단됩니다. <br />
+            이용에 불편을 드려 죄송하며, 빠르게 복구하도록 노력하겠습니다.
+          </p>
+
+          {/* TODO */}
+          <div className="hidden">
+            <PolicyResult error={error} policyData={currentPolicyData} />
+            {policyData && policyData.length > 0 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                startButtonIndex={startButtonIndex}
+                maxButtonsToShow={maxButtonsToShow}
+                onNextPage={nextPage}
+                onPrevPage={prevPage}
+                onGoToPage={goToPage}
+              />
+            )}
+          </div>
         </>
       )}
     </div>

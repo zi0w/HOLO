@@ -75,7 +75,7 @@ const Mypageform = () => {
 
   return (
     <div className="lg:-translatey-15 -translatey-10 relative bg-white">
-      <div className="pt-[5px]">
+      <div className="">
         <UserProfile />
       </div>
 
