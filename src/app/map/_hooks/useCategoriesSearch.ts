@@ -83,25 +83,6 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
     );
   };
 
-  // 카카오맵 SDK 로드 확인
-  useEffect(() => {
-    const loadKakaoMap = () => {
-      if (window.kakao && window.kakao.maps) {
-        searchPlaces(); // SDK 로드 완료 시 검색 실행
-      }
-    };
-
-    if (window.kakao && window.kakao.maps) {
-      searchPlaces(); // 이미 로드되어 있다면 바로 검색 실행
-    } else {
-      window.addEventListener("load", loadKakaoMap);
-    }
-
-    return () => {
-      window.removeEventListener("load", loadKakaoMap);
-    };
-  }, []);
-
   // 카테고리나 맵 센터가 변경될 때 검색 실행
   useEffect(() => {
     if (reSearch) {
@@ -127,6 +108,7 @@ const useCategoriesSearch = (mapCenter: Coordinates | null) => {
 
   return {
     setCategory: handleCategoryChange,
+    searchPlaces,
     places,
     onClickMarker,
     selectedPlace,

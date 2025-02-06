@@ -27,6 +27,7 @@ const Map = () => {
   } = useKakaoMap();
 
   const {
+    searchPlaces,
     setCategory,
     places,
     onClickMarker,
@@ -52,6 +53,7 @@ const Map = () => {
           <div className="mx-5 h-[220px] lg:mx-0 lg:h-[504px]">
             <Link href={"/map"}>
               <MapContainer
+                searchPlaces={searchPlaces}
                 mapCenter={mapCenter}
                 currentPosition={currentPosition}
                 mapLevel={mapLevel}
