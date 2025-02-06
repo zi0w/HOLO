@@ -1,9 +1,9 @@
 "use client";
-import LogoImage from "@/assets/images/common/logo.png";  
 import { formatDate } from "@/app/mypage/[id]/_components/mylike/_utils/formatDate";
 import MyLikeButton from "@/app/mypage/_components/MyLikeButton";
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
+import mypagedefaultimg from "@/assets/images/mypage/mypagedefaultimg.jpeg";
 import { useModalStore } from "@/store/useMypageModalStore";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,19 +34,19 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
           href={`/honeytips/${post.id}`}
           className="flex w-[calc(100%-28px)] flex-1 items-center gap-3"
         >
-        <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded ">
-  <Image
-    src={
-      post.post_image_url && post.post_image_url.length > 0
-        ? post.post_image_url[0]
-        : LogoImage
-    }
-    alt={post.title}
-    fill
-    className=" bg-primary-50  object-contain"
-    priority
-  />
-</div>
+          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded">
+            <Image
+              src={
+                post.post_image_url && post.post_image_url.length > 0
+                  ? post.post_image_url[0]
+                  : mypagedefaultimg
+              }
+              alt={post.title}
+              fill
+              className="bg-primary-50 object-cover"
+              priority
+            />
+          </div>
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <div className="flex w-full items-center justify-between">
               <p className="line-clamp-1 text-base text-base-800">

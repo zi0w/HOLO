@@ -1,7 +1,7 @@
 "use client";
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { Post } from "@/app/mypage/_types/myPage";
-import LogoImage from "@/assets/images/common/logo.png";
+import mypagedefaultimg from "@/assets/images/mypage/mypagedefaultimg.jpeg";
 import { useModalStore } from "@/store/useMypageModalStore";
 
 import Image from "next/image";
@@ -39,11 +39,11 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
               src={
                 post.post_image_url && post.post_image_url.length > 0
                   ? post.post_image_url[0]
-                  : LogoImage
+                  : mypagedefaultimg
               }
               alt={`게시글 이미지`}
               fill
-              className=" bg-primary-50 object-contain"
+              className="rounded object-cover"
               priority
             />
           </div>

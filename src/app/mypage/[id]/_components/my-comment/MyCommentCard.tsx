@@ -1,7 +1,7 @@
 "use client";
 import RemoveModal from "@/app/mypage/_components/RemoveModal";
 import type { CommentWithPost } from "@/app/mypage/_types/useMyTypes";
-import LogoImage from "@/assets/images/common/logo.png";
+import mypagedefaultimg from "@/assets/images/mypage/mypagedefaultimg.jpeg";
 import { useModalStore } from "@/store/useMypageModalStore";
 
 import Image from "next/image";
@@ -39,11 +39,11 @@ const MyCommentCard: FC<MyCommentCardProps> = ({ comment, onDelete }) => {
                 comment.posts?.post_image_url &&
                 comment.posts.post_image_url.length > 0
                   ? comment.posts.post_image_url[0]
-                  : LogoImage
+                  : mypagedefaultimg
               }
               alt={`게시글 이미지`}
               fill
-              className=" bg-primary-50  object-contain"
+              className="object-cover"
               priority
             />
           </div>
