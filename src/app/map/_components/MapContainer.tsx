@@ -1,6 +1,7 @@
 "use client";
 
 import MapControls from "@/app/map/_components/MapControls";
+import useKakaoMap from "@/app/map/_hooks/useKakaoMap";
 import type {
   Coordinates,
   Place,
@@ -13,6 +14,8 @@ import React, { useEffect, type Dispatch, type SetStateAction } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 
 type MapContainerProps = {
+  searchPlaces: () => void;
+
   mapCenter: Coordinates | null;
   currentPosition: Coordinates | null;
   mapLevel: number;
@@ -39,10 +42,7 @@ type MapContainerProps = {
 };
 
 const MapContainer = ({
-  mapCenter,
-  currentPosition,
-  mapLevel,
-  setMapCenter,
+  searchPlaces,
   places,
   setSelectedPlace,
   isMain,
@@ -74,8 +74,19 @@ const MapContainer = ({
     }
   };
 
+  const {
+    mapCenter, // 현재 지도 중심 좌표
+    setMapCenter, // 중심 좌표 업데이트 함수
+    currentPosition, // 현재 위치
+    mapLevel,
+  } = useKakaoMap();
+
   useEffect(() => {
     if (selectedPlace && !isMain) onClickCurrentMarker(selectedPlace);
+  }, []);
+
+  useEffect(() => {
+    searchPlaces();
   }, []);
 
   return (
