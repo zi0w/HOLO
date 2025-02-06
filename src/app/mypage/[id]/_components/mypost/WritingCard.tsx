@@ -43,7 +43,7 @@ const WritingCard: FC<WritingCardProps> = ({ post, onDelete, isDeleting }) => {
               }
               alt={`게시글 이미지`}
               fill
-              className="rounded object-cover"
+              className="object-cover"
               priority
             />
           </div>

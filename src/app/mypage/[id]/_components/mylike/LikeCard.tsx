@@ -43,7 +43,7 @@ const MyLikeCard = ({ post, onLikeChange }: LikeCardProps) => {
               }
               alt={post.title}
               fill
-              className="bg-primary-50 object-cover"
+              className="object-cover"
               priority
             />
           </div>
