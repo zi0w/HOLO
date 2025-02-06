@@ -176,6 +176,102 @@
 <br />
 
 # 🎥 시연 영상
+<details>
+<summary>전체 페이지 웹과 반응형 시연</summary>
+<div markdown="1">
+  
+![전체 페이지 웹과 반응형 시연](https://github.com/user-attachments/assets/b0c1259a-1c60-4157-947d-1dba145899b9)
+
+</div>
+</details>
+<details>
+<summary>로그인 및 회원가입 페이지</summary>
+<div markdown="1">
+  
+![로그인 및 회원가입 페이지](https://github.com/user-attachments/assets/ffe0cc9a-6b44-445b-b3b0-7415cd2d8642)
+
+</div>
+</details>
+<details>
+<summary>마이페이지 프로필 정보 수정, 회원탈퇴, 로그아웃</summary>
+<div markdown="1">
+  
+![마이페이지 프로필 정보 수정, 회원탈퇴, 로그아웃](https://github.com/user-attachments/assets/725ad71f-d4e9-4cfb-b17e-336a31175914)
+
+</div>
+</details>
+<details>
+<summary>마이페이지 좋아요, 댓글, 내가 쓴 글 목록 및 삭제</summary>
+<div markdown="1">
+  
+![마이페이지 좋아요, 댓글, 내가 쓴 글 목록 및 삭제](https://github.com/user-attachments/assets/4b0f422a-acf7-4f21-8318-f9583f7ca0a0)
+
+</div>
+</details>
+<details>
+<summary>오늘의 메뉴 추천</summary>
+<div markdown="1">
+  
+![음식 추천](https://github.com/user-attachments/assets/6031ee5e-42f2-4056-8aec-b21ad968c91c)
+
+</div>
+</details>
+<details>
+<summary>오늘의 운세</summary>
+<div markdown="1">
+  
+![포춘 쿠키](https://github.com/user-attachments/assets/284771f9-e990-44b2-bad7-bf2183881159)
+
+</div>
+</details>
+<details>
+<summary>쓰레기 정보 페이지</summary>
+<div markdown="1">
+
+![쓰레기 페이지](https://github.com/user-attachments/assets/4a0f6c5b-03f9-4cd2-9c93-054a96d6782a)
+
+</div>
+</details>
+<details>
+<summary>음식물 쓰레기 정보 페이지</summary>
+<div markdown="1">
+
+![음식물 페이지](https://github.com/user-attachments/assets/bf085dbc-164b-4876-ab3d-398b8ee3ab49)
+
+</div>
+</details>
+<details>
+<summary>청년 정책 페이지</summary>
+<div markdown="1">
+  
+![청년 정책 페이지](https://github.com/user-attachments/assets/c856adb3-f0f6-472d-a984-5fd3cc71a2e7)
+
+</div>
+</details>
+<details>
+<summary>꿀팁 게시판 페이지 소개</summary>
+<div markdown="1">
+  
+![꿀팁 게시판 페이지 소개](https://github.com/user-attachments/assets/9b95bdbb-5dde-49ff-af67-ec7ab2d5d92a)
+
+</div>
+</details>
+<details>
+<summary>꿀팁 게시판 댓글, 좋아요, 글작성 CRUD</summary>
+<div markdown="1">
+  
+![꿀팁 게시판 댓글, 좋아요, 글작성 CRUD](https://github.com/user-attachments/assets/98cacfa0-4baa-4f1e-82fc-a783a94295d0)
+
+</div>
+</details>
+<details>
+<summary>동네 핫플 페이지</summary>
+<div markdown="1">
+  
+![맵 페이지](https://github.com/user-attachments/assets/bd565316-5ca0-426d-991e-7234e0ddbdc6)
+
+</div>
+</details>
 
 <br />
 
