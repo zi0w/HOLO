@@ -8,7 +8,7 @@ import type { PolicyData } from "@/app/policy/_types/policy";
 import Loading from "@/components/common/Loading";
 import Pagination from "@/components/common/Pagination";
 import usePagination from "@/hooks/usePagination";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 type SearchFilters = {
@@ -28,7 +28,7 @@ const PolicyCont = () => {
     isPending,
     error,
     refetch,
-  } = useQuery<PolicyData["result"]["youthPolicyList"]>({
+  } = useSuspenseQuery<PolicyData["result"]["youthPolicyList"]>({
     queryKey: ["policies"],
     queryFn: async () => {
       const regionCode = REGION_CODES[filters.region];
@@ -54,8 +54,6 @@ const PolicyCont = () => {
     policyData || [],
     6,
   );
-
-
 
   const handleFilterChange = (
     key: keyof Omit<SearchFilters, "pageNum">,
