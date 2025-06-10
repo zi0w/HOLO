@@ -14,7 +14,7 @@ const openai = new OpenAI({
 export const fetchOpenAIResponse = async (
   prompt: string,
   errorMessage: string,
-): Promise<string | null> => {
+): Promise<string> => {
   try {
     const completion = await openai.chat.completions.create({
       ...OPENAI_CONFIG,
@@ -26,7 +26,7 @@ export const fetchOpenAIResponse = async (
       ],
     });
 
-    return completion.choices[0].message.content || null;
+    return completion.choices[0].message.content || "";
   } catch (error) {
     console.error(error);
     throw new Error(errorMessage);
