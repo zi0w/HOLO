@@ -1,0 +1,19 @@
+{
+  "name": "HOLO",
+  "short_name": "HOLO",
+  "description": "1인가구를 위한 정보 제공 서비스, 나 HOLO 산다!",
+  "icons": [
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#FF7600",
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "scope": "/"
+}
