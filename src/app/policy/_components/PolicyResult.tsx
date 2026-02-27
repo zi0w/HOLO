@@ -6,7 +6,7 @@ import { useState } from "react";
 
 type PolicyResultProps = {
   error: Error | null;
-  policyData: PolicyData[] | null;
+  policyData: PolicyData["result"]["youthPolicyList"] | null;
 };
 
 const PolicyResult = ({ error, policyData }: PolicyResultProps) => {
@@ -24,11 +24,12 @@ const PolicyResult = ({ error, policyData }: PolicyResultProps) => {
     );
   }
 
-  const handleClick = (e: React.MouseEvent, bizId: string) => {
+  const handleClick = (e: React.MouseEvent, plcyNo: string) => {
     e.preventDefault();
     setIsLoadingPage(true);
-    router.push(`/policy/${bizId}`);
+    router.push(`/policy/${plcyNo}`);
   };
+
   return (
     <div className="mt-8 border-t-2 border-base-500">
       {isLoadingPage ? (
@@ -36,7 +37,7 @@ const PolicyResult = ({ error, policyData }: PolicyResultProps) => {
       ) : (
         policyData?.map((policy) => (
           <PolicyLink
-            key={policy.bizId}
+            key={policy.plcyNo}
             policy={policy}
             onClick={handleClick}
           />
