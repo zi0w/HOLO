@@ -5,17 +5,17 @@ const PolicyLink = ({
   policy,
   onClick,
 }: {
-  policy: PolicyData;
-  onClick: (e: React.MouseEvent, bizId: string) => void;
+  policy: PolicyData["result"]["youthPolicyList"][0];
+  onClick: (e: React.MouseEvent, plcyNo: string) => void;
 }) => {
   return (
     <Link
-      key={policy.bizId}
-      href={`/policy/${policy.bizId}`}
-      className="block cursor-pointer rounded border-b border-base-300 px-3 py-2 transition-colors duration-200 text-base-800 hover:bg-primary-50"
-      onClick={(e) => onClick(e, policy.bizId)}
+      key={policy.plcyNo}
+      href={`/policy/${policy.plcyNo}`}
+      className="block cursor-pointer rounded border-b border-base-300 px-3 py-2 text-base-800 transition-colors duration-200 hover:bg-primary-50"
+      onClick={(e) => onClick(e, policy.plcyNo)}
     >
-      {policy.polyBizSjnm}
+      {policy.plcyNm}
     </Link>
   );
 };

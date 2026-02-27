@@ -1,12 +1,16 @@
 export type PolicyData = {
-  rnum: number; // row 번호
-  bizId: string; // 정책 ID
-  polyBizSjnm: string; // 정책명
-  cnsgNmor: string; // 운영기관명
-  polyItcnCn: string; // 정책소개
-  sporCn: string; // 지원내용
-  rqutPrdCn: string; // 사업신청기간내용
-  rqutProcCn: string; // 신청절차내용
-  rqutUrla: string; // 신청사이트주소
-  rfcSiteUrla1: string; // 참고사이트URL주소
+  result: {
+    youthPolicyList: {
+      plcyNo: string; // 정책 번호
+      plcyNm: string; // 정책명
+      sprvsnInstCdNm: string; // 운영기관명
+      plcyExplnCn: string; // 정책소개
+      plcySprtCn: string; // 지원내용
+      bizPrdBgngYmd: string; // 사업기간시작일자
+      bizPrdEndYmd: string; // 사업기간종료일자
+      plcyAplyMthdCn: string; // 신청절차내용
+      aplyUrlAddr: string; // 신청사이트주소
+      refUrlAddr1?: string; // 참고사이트
+    }[];
+  };
 };

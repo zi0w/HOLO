@@ -46,10 +46,8 @@ const PolicyFilter = ({
   fieldSelected,
   onRegionChange,
   onFieldChange,
-  // TODO: onSearch,
+  onSearch,
 }: PolicyFilterProps) => {
-  // TODO: const isDisabled = !regionSelected || !fieldSelected;
-
   return (
     <div>
       <div className="grid grid-cols-2 gap-2">
@@ -66,13 +64,7 @@ const PolicyFilter = ({
           placeholder="정책 분야 선택"
         />
       </div>
-      <button
-        type="button"
-        //TODO: onClick={onSearch}
-        className="lookup-btn"
-        disabled
-        //TODO: disabled={isDisabled}
-      >
+      <button type="button" onClick={onSearch} className="lookup-btn">
         조회
       </button>
     </div>

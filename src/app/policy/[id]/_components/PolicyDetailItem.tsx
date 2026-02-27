@@ -1,20 +1,20 @@
 "use client";
 
-import useFormatPolicyField from "@/app/policy/[id]/_hooks/useFormatPolicyField";
-import type { PolicyData } from "@/app/policy/_types/policy";
+import Link from "next/link";
 
 type PolicyDetailItemProps = {
   fieldName: string;
   displayName: string;
-  policyInfo: PolicyData;
+  value?: string;
 };
 
 const PolicyDetailItem = ({
   fieldName,
   displayName,
-  policyInfo,
+  value,
 }: PolicyDetailItemProps) => {
-  const formatPolicyField = useFormatPolicyField(policyInfo);
+  const isUrl = value?.includes("http");
+  const displayValue = value?.trim() === "" || value === null ? "-" : value;
 
   return (
     <li
@@ -22,21 +22,18 @@ const PolicyDetailItem = ({
       className="flex flex-col gap-1 break-keep text-base-700"
     >
       <strong className="text-xs">{displayName}</strong>
-      <p className="text-sm">
-        {formatPolicyField(fieldName as keyof PolicyData)}
-
-        {/* 
-        TODO: 후에 링크 추가 필요
+      {isUrl ? (
         <Link
-          href={policyData as string}
+          href={value as string}
           target="_blank"
           rel="noopener noreferrer"
           className="break-words text-link underline"
         >
-          {policyData}
-        </Link> 
-        */}
-      </p>
+          {displayValue}
+        </Link>
+      ) : (
+        <p className="text-sm">{displayValue}</p>
+      )}
     </li>
   );
 };

@@ -1,16 +1,16 @@
 export const POLICY_CATEGORIES = [
-  { id: 0, name: "일자리 분야", code: "023010" },
-  { id: 1, name: "주거 분야", code: "023020" },
-  { id: 2, name: "교육 분야", code: "023030" },
-  { id: 3, name: "복지.문화 분야", code: "023040" },
-  { id: 4, name: "참여, 권리 분야", code: "023050" },
+  { id: 0, name: "주거", code: "주거" },
+  { id: 1, name: "참여권리", code: "참여권리" },
+  { id: 2, name: "복지문화", code: "복지문화" },
+  { id: 3, name: "일자리", code: "일자리" },
 ];
 export const POLICY_DISPLAY_NAMES = {
-  cnsgNmor: "운영기관명",
-  polyItcnCn: "정책 소개",
-  sporCn: "지원 내용",
-  rqutPrdCn: "사업 신청 기간",
-  rqutProcCn: "신청 절차",
-  rqutUrla: "신청 사이트 주소",
-  rfcSiteUrla1: "참고 사이트",
+  sprvsnInstCdNm: "운영기관명",
+  plcyExplnCn: "정책 소개",
+  plcySprtCn: "지원 내용",
+  bizPrdBgngYmd: "사업 기간 시작 일자",
+  bizPrdEndYmd: "사업 기간 종료 일자",
+  plcyAplyMthdCn: "신청 절차",
+  aplyUrlAddr: "신청 사이트 주소",
+  refUrlAddr1: "참고 사이트",
 } as const;
